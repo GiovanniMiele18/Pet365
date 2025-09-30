@@ -29,6 +29,10 @@ public class Animale {
     @OneToMany(mappedBy = "animale", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FotoAnimale> fotoAnimali = new ArrayList<>();
 
+    @OneToMany(mappedBy = "animale", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Documento> documenti = new ArrayList<>();
+
+
     // ✅ Costruttore vuoto richiesto da Hibernate
     public Animale() {}
 
@@ -82,4 +86,7 @@ public class Animale {
         f.setAnimale(this);
         this.fotoAnimali.add(f);
     }
+
+    public List<Documento> getDocumenti() { return documenti; }
+    public void setDocumenti(List<Documento> documenti) { this.documenti = documenti; }
 }

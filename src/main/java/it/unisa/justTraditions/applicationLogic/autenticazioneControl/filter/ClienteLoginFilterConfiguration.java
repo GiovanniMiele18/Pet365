@@ -32,7 +32,8 @@ public class ClienteLoginFilterConfiguration {
             "/visualizzazionePrenotazioniPersonali",
             "/cancellazioneAccount",
             "/effettuaPrenotazione",
-            "/immagineanimale"   // 🔒 nuova protezione qui
+            "/immagineanimale",  // 🔒 nuova protezione qui
+            "/documenti/aggiungi/"
     );
 
     return registrationBean;

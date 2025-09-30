@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head>
+    <th:block th:include="fragments/head"></th:block>
+    <title>Pet365 - Aggiungi Documento</title>
+</head>
+
+<body>
+<th:block th:include="fragments/navbar"></th:block>
+
+<div class="row">
+    <div class="card card-register mx-auto mt-5 col-md-6">
+        <div class="card-header text-center">➕ Aggiungi Documento</div>
+        <div class="card-body card-header" align="center">
+
+            <!-- Form documento -->
+            <form th:action="@{/documenti/salva}" th:object="${documentoForm}"
+                  method="post" enctype="multipart/form-data">
+
+                <!-- ID Animale (hidden) -->
+                <input type="hidden" th:field="*{animaleId}"/>
+
+                <label>Nome Documento:</label>
+                <input type="text" th:field="*{nome}" required><br>
+
+                <label>Descrizione:</label>
+                <textarea th:field="*{descrizione}"></textarea><br>
+
+                <label>Tipo Documento:</label>
+                <input type="text" th:field="*{tipo}" placeholder="PDF, Certificato, ecc."><br>
+
+                <label>Carica File:</label>
+                <input type="file" th:field="*{file}"
+                       accept="image/*,.pdf,.doc,.docx" required><br><br>
+
+                <button type="submit" class="btn btn-success">Salva Documento</button>
+                <a href="javascript:history.back()" class="btn btn-secondary">Annulla</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<th:block th:include="fragments/footbar"></th:block>
+<th:block th:include="fragments/scripts"></th:block>
+<script src="/js/navbar.js"></script>
+</body>
+</html>

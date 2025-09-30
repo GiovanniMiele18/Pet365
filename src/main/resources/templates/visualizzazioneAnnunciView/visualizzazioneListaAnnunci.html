@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <th:block th:include="fragments/head"></th:block>
+    <title>Just Traditions - Admin</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="wrapper">
+    <nav id="sidebar" class="sidebar js-sidebar">
+        <div class="sidebar-content js-simplebar">
+            <a class="sidebar-brand" href="/homeAmministratore">
+                <span class="align-middle">Admin Just Traditions</span>
+            </a>
+
+            <ul class="sidebar-nav">
+                <li class="sidebar-header">
+                    Pages
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/homeAmministratore">
+                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/logoutAmministratore">
+                        <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Log out</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/visualizzazioneAmministratori">
+                        <i class="align-middle" data-feather="users"></i> <span class="align-middle">Gestione Amministratori</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item active">
+                    <a class="sidebar-link" href="/visualizzazioneAmministratori">
+                        <i class="align-middle" data-feather="inbox"></i> <span class="align-middle">Annunci</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+    </nav>
+
+    <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-toggle js-sidebar-toggle">
+                <i class="hamburger align-self-center"></i>
+            </a>
+
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+                    <a><strong>BENVENUTO</strong>
+                        <span th:text="${amministratore.nome} + ' '+ ${amministratore.cognome}"></span>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="content">
+            <div class="container-fluid p-0">
+
+                <h1 class="h3 mb-3"><strong>Announcements</strong> Dashboard</h1>
+
+
+                <div class="row">
+
+                    <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+                        <div class="card flex-fill w-100">
+                            <div class="card-header">
+                                <form method="get" action="/visualizzazioneListaAnnunci">
+
+                                    <select name="stato">
+                                        <option value="">Tutti gli stati</option>
+                                        <option value="PROPOSTO">Proposto</option>
+                                        <option value="APPROVATO">Approvato</option>
+                                        <option value="IN_REVISIONE">In revisione</option>
+                                        <option value="RIFIUTATO">Rifiutato</option>
+                                    </select>
+                                    <input type="submit">
+                                </form>
+                            </div>
+                            <table class="table align-middle mb-0 bg-white">
+                                <thead class="bg-light">
+                                <tr>
+                                    <th>Nome attività</th>
+                                    <th>Stato</th>
+                                    <th>Indirizzo</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="annuncio :${annunci}">
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="ms-3">
+                                                <p class="fw-bold mb-1" th:text="${annuncio.nomeAttivita}"></p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span th:if="${annuncio.getStato()} == ${annuncio.stato.PROPOSTO}"
+                                              class="badge badge-primary rounded-pill d-inline">PROPOSTO</span>
+                                        <span th:if="${annuncio.getStato()} == ${annuncio.stato.IN_REVISIONE}"
+                                              class="badge badge-warning rounded-pill d-inline">IN REVISIONE</span>
+                                        <span th:if="${annuncio.getStato()} == ${annuncio.stato.APPROVATO}"
+                                              class="badge badge-success rounded-pill d-inline">APPROVATO</span>
+                                        <span th:if="${annuncio.getStato()} == ${annuncio.stato.RIFIUTATO}"
+                                              class="badge badge-danger rounded-pill d-inline">RIFIUTATO</span>
+                                    </td>
+                                    <td class="fw-bold mb-1" th:text="${annuncio.indirizzoAttivita}"></td>
+                                    <td>
+                                        <a th:href="@{/modificaStatoAnnuncio(idAnnuncio=${annuncio.id})}"
+                                           class="btn-ls"><em class="fa fa-pencil">Modifica
+                                            Stato</em></a><br><br>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </main>
+
+
+    </div>
+</div>
+
+<!-- Page navigation -->
+
+<div class="paging-wrapper d-flex flex-wrap justify-content-center mt-3">
+    <form th:method="get" th:action="@{/visualizzazioneListaAnnunci}">
+        <input type="hidden" th:name="stato" th:value="${stato}">
+        <input type="hidden" th:name="pagina" th:value="${pagina -1}">
+
+
+        <button th:if="${pagina > 0}" type="submit" value="Precedente" class="btn btn-primary">Precedente</button>
+        <button th:unless="${pagina > 0}" type="submit" value="Precedente" class="btn btn-primary" disabled>Precedente
+        </button>
+
+    </form>
+
+    <strong class="paging-wrapper d-flex flex-wrap justify-content-center mt-3"
+            th:text="'Pagina:'+${pagina+1}"></strong>
+
+    <form th:method="get" th:action="@{/visualizzazioneListaAnnunci}">
+        <input type="hidden" th:name="stato" th:value="${stato}">
+        <input type="hidden" th:name="pagina" th:value="${pagina +1}">
+
+        <button th:if="${pagineTotali -1 > pagina}" type="submit" value="Precedente" class="btn btn-primary">
+            Successivo
+        </button>
+        <button th:unless="${pagineTotali -1 > pagina}" type="submit" value="Precedente" class="btn btn-primary"
+                disabled>Successivo
+        </button>
+    </form>
+
+
+</div>
+
+<script src="https://unpkg.com/@adminkit/core@latest/dist/js/app.js"></script>
+
+
+</body>
+
+</html>

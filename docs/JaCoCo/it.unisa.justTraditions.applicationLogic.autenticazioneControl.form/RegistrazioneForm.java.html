@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegistrazioneForm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.autenticazioneControl.form</a> &gt; <span class="el_source">RegistrazioneForm.java</span></div><h1>RegistrazioneForm.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.autenticazioneControl.form;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+/**
+ * Classe che rappresenta il form per la Registrazione di un Cliente.
+ */
+@IsArtigianoConstraint
+public class RegistrazioneForm {
+  @NotBlank(message = &quot;Nome vuoto&quot;)
+  @Size(max = 30, message = &quot;Nome troppo lungo&quot;)
+  private String nome;
+
+  @NotBlank(message = &quot;Cognome vuoto&quot;)
+  @Size(max = 30, message = &quot;Cognome troppo lungo&quot;)
+  private String cognome;
+
+  @NotBlank(message = &quot;Codice Fiscale vuoto&quot;)
+  @Pattern(regexp = &quot;^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$&quot;,
+      message = &quot;Formato codice fiscale errato&quot;)
+  @Size(max = 16, message = &quot;Codice Fiscale troppo lungo&quot;)
+  private String codiceFiscale;
+
+  @NotBlank(message = &quot;Email vuota&quot;)
+  @Email(message = &quot;Formato email errato&quot;)
+  @Size(max = 319, message = &quot;Email troppo lunga&quot;)
+  @ExistsEmailConstraint
+  private String email;
+
+  @NotBlank(message = &quot;Password vuota&quot;)
+  @Pattern(
+      regexp = &quot;^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*\\p{Punct})[A-Za-z\\d\\p{Punct}]{8,}$&quot;,
+      message =
+          &quot;La password deve contenere almeno 8 caratteri, di cui almeno una lettera maiuscola, &quot;
+              + &quot;almeno una minuscola, almeno un numero e almeno un carattere speciale&quot;
+  )
+  private String password;
+
+  @NotNull(message = &quot;Parametro artigiano mancante&quot;)
+  private Boolean artigiano;
+
+  @Size(max = 27, message = &quot;Iban troppo lungo&quot;)
+  private String iban;
+
+<span class="nc" id="L49">  public RegistrazioneForm() {</span>
+<span class="nc" id="L50">  }</span>
+
+  public String getNome() {
+<span class="nc" id="L53">    return nome;</span>
+  }
+
+  public void setNome(String nome) {
+<span class="nc" id="L57">    this.nome = nome;</span>
+<span class="nc" id="L58">  }</span>
+
+  public String getCognome() {
+<span class="nc" id="L61">    return cognome;</span>
+  }
+
+  public void setCognome(String cognome) {
+<span class="nc" id="L65">    this.cognome = cognome;</span>
+<span class="nc" id="L66">  }</span>
+
+  public String getCodiceFiscale() {
+<span class="nc" id="L69">    return codiceFiscale;</span>
+  }
+
+  public void setCodiceFiscale(String codiceFiscale) {
+<span class="nc" id="L73">    this.codiceFiscale = codiceFiscale;</span>
+<span class="nc" id="L74">  }</span>
+
+  public String getEmail() {
+<span class="nc" id="L77">    return email;</span>
+  }
+
+  public void setEmail(String email) {
+<span class="nc" id="L81">    this.email = email;</span>
+<span class="nc" id="L82">  }</span>
+
+  public String getPassword() {
+<span class="nc" id="L85">    return password;</span>
+  }
+
+  public void setPassword(String password) {
+<span class="nc" id="L89">    this.password = password;</span>
+<span class="nc" id="L90">  }</span>
+
+  public Boolean isArtigiano() {
+<span class="nc" id="L93">    return this.artigiano;</span>
+  }
+
+  public Boolean getArtigiano() {
+<span class="nc" id="L97">    return this.artigiano;</span>
+  }
+
+  public void setArtigiano(Boolean artigiano) {
+<span class="nc" id="L101">    this.artigiano = artigiano;</span>
+<span class="nc" id="L102">  }</span>
+
+  public String getIban() {
+<span class="nc" id="L105">    return iban;</span>
+  }
+
+  public void setIban(String iban) {
+<span class="nc" id="L109">    this.iban = iban;</span>
+<span class="nc" id="L110">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

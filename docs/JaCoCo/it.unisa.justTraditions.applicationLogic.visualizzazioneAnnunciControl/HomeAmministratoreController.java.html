@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HomeAmministratoreController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.visualizzazioneAnnunciControl</a> &gt; <span class="el_source">HomeAmministratoreController.java</span></div><h1>HomeAmministratoreController.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.visualizzazioneAnnunciControl;
+
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.dao.AnnuncioDao;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Annuncio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * Implementa il controller la visualizzazione della home degli amministratori.
+ */
+@Controller
+@RequestMapping(&quot;/homeAmministratore&quot;)
+<span class="fc" id="L18">public class HomeAmministratoreController {</span>
+
+  private static final String homeAmministratoreView =
+      &quot;visualizzazioneAnnunciView/homeAmministratore&quot;;
+
+  @Autowired
+  private AnnuncioDao annuncioDao;
+
+  /**
+   * Implementa la funzionalità di smistare
+   * l Amministratore alle view di visualizzazioneAnnunciView/homeAmministratore.
+   *
+   * @param model Utilizzato per passare degli attributi alla view.
+   * @return Restituisce la view da reindirizzare.
+   */
+  @GetMapping
+  public String get(Model model) {
+<span class="nc" id="L35">    model.addAttribute(&quot;annunci&quot;, annuncioDao.findAll(PageRequest.of(</span>
+        0,
+        8,
+<span class="nc" id="L38">        Sort.by(Sort.Direction.DESC, &quot;id&quot;)</span>
+<span class="nc" id="L39">    )).getContent());</span>
+
+<span class="nc" id="L41">    model.addAttribute(&quot;annuncirifiutati&quot;, annuncioDao.countByStato(Annuncio.Stato.RIFIUTATO));</span>
+<span class="nc" id="L42">    model.addAttribute(&quot;annunciapprovati&quot;, annuncioDao.countByStato(Annuncio.Stato.APPROVATO));</span>
+<span class="nc" id="L43">    model.addAttribute(&quot;annunciproposti&quot;, annuncioDao.countByStato(Annuncio.Stato.PROPOSTO));</span>
+<span class="nc" id="L44">    model.addAttribute(&quot;annunciinrevisione&quot;, annuncioDao.countByStato(Annuncio.Stato.IN_REVISIONE));</span>
+
+<span class="nc" id="L46">    return homeAmministratoreView;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

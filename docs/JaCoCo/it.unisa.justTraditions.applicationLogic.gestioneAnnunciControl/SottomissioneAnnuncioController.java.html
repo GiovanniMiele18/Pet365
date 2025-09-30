@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SottomissioneAnnuncioController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl</a> &gt; <span class="el_source">SottomissioneAnnuncioController.java</span></div><h1>SottomissioneAnnuncioController.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl;
+
+import it.unisa.justTraditions.applicationLogic.autenticazioneControl.util.SessionCliente;
+import it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form.AnnuncioForm;
+import it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form.VisitaForm;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Annuncio;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Foto;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Visita;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.dao.ArtigianoDao;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Artigiano;
+import jakarta.validation.Valid;
+import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+
+/**
+ * Implementa il controller per la sottomissione Di un Annuncio.
+ */
+@Controller
+@RequestMapping(&quot;/sottomissioneAnnuncio&quot;)
+<span class="fc" id="L28">public class SottomissioneAnnuncioController {</span>
+
+  private static final String sottomissioneAnnuncioView =
+      &quot;gestioneAnnunciView/sottomissioneAnnuncio&quot;;
+  private static final String modificaAnnuncioSuccessView =
+      &quot;gestioneAnnunciView/modificaAnnuncioSuccess&quot;;
+
+  @Autowired
+  private SessionCliente sessionCliente;
+
+  @Autowired
+  private ArtigianoDao artigianoDao;
+
+  /**
+   * Implementa la funzionalità di smistare l'Artigiano sulla view di
+   * gestioneAnnunciView/sottomissioneAnnuncio.
+   *
+   * @param annuncioForm Utilizzato per mappare il Form della view.
+   * @return Restituisce la view da reindirizzare.
+   */
+  @GetMapping
+  public String get(@ModelAttribute AnnuncioForm annuncioForm) {
+<span class="nc" id="L50">    return sottomissioneAnnuncioView;</span>
+  }
+
+  /**
+   * Implementa la funzionalità di Sottomissione di un annuncio.
+   *
+   * @param annuncioForm  Utilizzato per mappare il Form della view.
+   * @param bindingResult Utilizzato per mappare gli errori dei dati di annuncioForm.
+   * @param model         Utilizzato per passare degli attributi alla view.
+   * @return Restituisce la view da reindirizzare.
+   */
+  @PostMapping
+  public String post(@ModelAttribute @Valid AnnuncioForm annuncioForm,
+                     BindingResult bindingResult, Model model) {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">    if (bindingResult.hasErrors()) {</span>
+<span class="fc" id="L65">      return sottomissioneAnnuncioView;</span>
+    }
+
+<span class="fc" id="L68">    Annuncio annuncio = new Annuncio(</span>
+<span class="fc" id="L69">        annuncioForm.getNomeAttivita(),</span>
+<span class="fc" id="L70">        annuncioForm.getProvinciaAttivita(),</span>
+<span class="fc" id="L71">        annuncioForm.getIndirizzoAttivita(),</span>
+<span class="fc" id="L72">        annuncioForm.getDescrizione(),</span>
+<span class="fc" id="L73">        annuncioForm.getServiziOfferti(),</span>
+<span class="fc" id="L74">        annuncioForm.getNumMaxPersonePerVisita(),</span>
+<span class="fc" id="L75">        annuncioForm.getPrezzoVisita(),</span>
+        Annuncio.Stato.PROPOSTO
+    );
+
+<span class="fc bfc" id="L79" title="All 2 branches covered.">    for (MultipartFile file : annuncioForm.getFoto()) {</span>
+      try {
+<span class="fc" id="L81">        annuncio.addFoto(new Foto(file.getBytes()));</span>
+<span class="nc" id="L82">      } catch (IOException e) {</span>
+<span class="nc" id="L83">        model.addAttribute(&quot;erroreFile&quot;, true);</span>
+<span class="nc" id="L84">        return sottomissioneAnnuncioView;</span>
+<span class="fc" id="L85">      }</span>
+<span class="fc" id="L86">    }</span>
+
+<span class="fc bfc" id="L88" title="All 2 branches covered.">    for (VisitaForm visitaForm : annuncioForm.getVisite()) {</span>
+<span class="fc" id="L89">      annuncio.addVisita(new Visita(</span>
+<span class="fc" id="L90">          visitaForm.getGiorno(),</span>
+<span class="fc" id="L91">          visitaForm.getOrarioInizio(),</span>
+<span class="fc" id="L92">          visitaForm.getOrarioFine(),</span>
+<span class="fc" id="L93">          true</span>
+      ));
+<span class="fc" id="L95">    }</span>
+
+<span class="fc" id="L97">    Artigiano artigiano = (Artigiano) sessionCliente.getCliente().get();</span>
+<span class="fc" id="L98">    artigiano.addAnnuncio(annuncio);</span>
+<span class="fc" id="L99">    artigianoDao.save(artigiano);</span>
+
+<span class="fc" id="L101">    return modificaAnnuncioSuccessView;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

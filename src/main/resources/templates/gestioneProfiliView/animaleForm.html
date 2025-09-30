@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head>
+  <th:block th:include="fragments/head"></th:block>
+  <title>Just Traditions - Aggiungi Animale</title>
+</head>
+
+<body>
+<th:block th:include="fragments/navbar"></th:block>
+
+<div class="row">
+  <div class="card card-register mx-auto mt-5 col-md-6">
+    <div class="card-header text-center">Aggiungi Animale</div>
+    <div class="card-body card-header" align="center">
+
+      <form th:action="@{/aggiungiAnimale}" th:object="${animaleForm}"
+            method="post" enctype="multipart/form-data">
+
+        <label>Nome:</label>
+        <input type="text" th:field="*{nome}" required><br>
+
+        <label>Specie:</label>
+        <input type="text" th:field="*{specie}" required><br>
+
+        <label>Razza:</label>
+        <input type="text" th:field="*{razza}"><br>
+
+        <label>Età:</label>
+        <input type="number" th:field="*{eta}" min="0"><br>
+
+        <label>Sesso:</label>
+        <select th:field="*{sesso}">
+          <option value="M">Maschio</option>
+          <option value="F">Femmina</option>
+        </select><br>
+
+        <label>Peso (kg):</label>
+        <input type="number" step="0.1" th:field="*{peso}" min="0"><br>
+
+        <label>Colore:</label>
+        <input type="text" th:field="*{colore}"><br>
+
+        <label>Note:</label>
+        <textarea th:field="*{note}"></textarea><br>
+
+        <label>Foto:</label>
+        <input type="file" th:field="*{foto}" multiple><br>
+
+        <button type="submit">Aggiungi Animale</button>
+      </form>
+
+
+
+    </div>
+  </div>
+</div>
+
+<th:block th:include="fragments/footbar"></th:block>
+<th:block th:include="fragments/scripts"></th:block>
+<script src="/js/navbar.js"></script>
+
+</body>
+</html>

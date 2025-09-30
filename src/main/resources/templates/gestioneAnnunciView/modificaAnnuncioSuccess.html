@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head>
+    <th:block th:include="fragments/head"></th:block>
+    <title>Just Traditions - Operazione riuscita</title>
+</head>
+
+<body>
+
+<th:block th:if="${isAmministratore} == null" th:include="fragments/navbar"></th:block>
+
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="text-center row">
+        <div class=" col-md-6">
+            <img style="width: 350px; height: 270px;" src="https://bit.ly/3w76ceZ" alt=""
+                 class="img-fluid">
+        </div>
+
+        <div class=" col-md-6 mt-5">
+            <p class="fs-3">L'operazione effettuata sull'annuncio è andata a buon fine</p>
+            <a th:if="${isAmministratore} != null" href="/homeAmministratore" class="btn btn-primary">Vai alla Home</a>
+            <a th:unless="${isAmministratore} != null" href="/" class="btn btn-primary">Vai alla Home</a>
+        </div>
+
+    </div>
+</div>
+
+<th:block th:include="fragments/footbar"></th:block>
+
+<th:block th:include="fragments/scripts"></th:block>
+<script src="/js/navbar.js"></script>
+</body>
+
+</html>

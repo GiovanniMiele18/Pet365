@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AggiuntaAmministratoreForm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.gestioneProfiliControl.form</a> &gt; <span class="el_source">AggiuntaAmministratoreForm.java</span></div><h1>AggiuntaAmministratoreForm.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.gestioneProfiliControl.form;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+/**
+ * Classe che rappresenta il form l'aggiunta di un amministratore.
+ */
+public class AggiuntaAmministratoreForm {
+
+  @NotBlank(message = &quot;Nome vuoto&quot;)
+  @Size(max = 30, message = &quot;Nome troppo lungo&quot;)
+  private String nome;
+
+  @NotBlank(message = &quot;Cognome vuoto&quot;)
+  @Size(max = 30, message = &quot;Cognome troppo lungo&quot;)
+  private String cognome;
+
+  @NotBlank(message = &quot;Email vuota&quot;)
+  @Email(message = &quot;Formato email errato&quot;)
+  @Size(max = 319, message = &quot;Email troppo lunga&quot;)
+  @ExistsEmailAmministratoreConstraint
+  private String email;
+
+  @NotBlank(message = &quot;Password vuota&quot;)
+  @Pattern(
+      regexp = &quot;^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*\\p{Punct})[A-Za-z\\d\\p{Punct}]{8,}$&quot;,
+      message =
+          &quot;La password deve contenere almeno 8 caratteri, di cui almeno una lettera maiuscola, &quot;
+              + &quot;almeno una minuscola, almeno un numero e almeno un carattere speciale&quot;
+  )
+  private String password;
+
+
+<span class="nc" id="L37">  public AggiuntaAmministratoreForm() {</span>
+<span class="nc" id="L38">  }</span>
+
+  /**
+   * Costruttore di un amministratore.
+   *
+   * @param nome     Nome dell amministratore.
+   * @param cognome  cognome dell amministratore.
+   * @param email    email dell amministratore.
+   * @param password password dell amministratore.
+   */
+<span class="nc" id="L48">  public AggiuntaAmministratoreForm(String nome, String cognome, String email, String password) {</span>
+<span class="nc" id="L49">    this.nome = nome;</span>
+<span class="nc" id="L50">    this.cognome = cognome;</span>
+<span class="nc" id="L51">    this.email = email;</span>
+<span class="nc" id="L52">    this.password = password;</span>
+<span class="nc" id="L53">  }</span>
+
+  public String getNome() {
+<span class="nc" id="L56">    return nome;</span>
+  }
+
+  public void setNome(String nome) {
+<span class="nc" id="L60">    this.nome = nome;</span>
+<span class="nc" id="L61">  }</span>
+
+  public String getCognome() {
+<span class="nc" id="L64">    return cognome;</span>
+  }
+
+  public void setCognome(String cognome) {
+<span class="nc" id="L68">    this.cognome = cognome;</span>
+<span class="nc" id="L69">  }</span>
+
+  public String getEmail() {
+<span class="nc" id="L72">    return email;</span>
+  }
+
+  public void setEmail(String email) {
+<span class="nc" id="L76">    this.email = email;</span>
+<span class="nc" id="L77">  }</span>
+
+  public String getPassword() {
+<span class="nc" id="L80">    return password;</span>
+  }
+
+  public void setPassword(String password) {
+<span class="nc" id="L84">    this.password = password;</span>
+<span class="nc" id="L85">  }</span>
+
+  @Override
+  public String toString() {
+<span class="nc" id="L89">    final StringBuilder sb = new StringBuilder(&quot;AggiuntaAmministratoreForm{&quot;);</span>
+<span class="nc" id="L90">    sb.append(&quot;nome='&quot;).append(nome).append('\'');</span>
+<span class="nc" id="L91">    sb.append(&quot;, cognome='&quot;).append(cognome).append('\'');</span>
+<span class="nc" id="L92">    sb.append(&quot;, email='&quot;).append(email).append('\'');</span>
+<span class="nc" id="L93">    sb.append(&quot;, password='&quot;).append(password).append('\'');</span>
+<span class="nc" id="L94">    sb.append('}');</span>
+<span class="nc" id="L95">    return sb.toString();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

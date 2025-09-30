@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ModificaStatoAnnuncioForm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form</a> &gt; <span class="el_source">ModificaStatoAnnuncioForm.java</span></div><h1>ModificaStatoAnnuncioForm.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form;
+
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Annuncio;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+/**
+ * Classe che rappresenta il form per la Modifica di un Annuncio.
+ */
+@NuovoStatoIsValidConstraint
+@MotivoDelRifiutoIsValidConstraint
+public class ModificaStatoAnnuncioForm {
+
+  @NotNull(message = &quot;Id annuncio assente&quot;)
+  private Long idAnnuncio;
+
+  @NotNull(message = &quot;Nuovo stato non presente&quot;)
+  private Annuncio.Stato nuovoStato;
+
+
+  @Size(max = 255, message = &quot;Motivo del rifiuto deve essere compreso tra 1 e 255&quot;)
+  private String motivoDelRifiuto;
+
+<span class="fc" id="L24">  public ModificaStatoAnnuncioForm() {</span>
+<span class="fc" id="L25">  }</span>
+
+  /**
+   * Costruttore di ModificaStatoAnnuncioForm.
+   *
+   * @param idAnnuncio       id del annuncio da modificare.
+   * @param nuovoStato       nuovo stato dell annuncio.
+   * @param motivoDelRifiuto motivo del rifiuto del annuncio.
+   */
+  public ModificaStatoAnnuncioForm(Long idAnnuncio, Annuncio.Stato nuovoStato,
+<span class="nc" id="L35">                                   String motivoDelRifiuto) {</span>
+<span class="nc" id="L36">    this.idAnnuncio = idAnnuncio;</span>
+<span class="nc" id="L37">    this.nuovoStato = nuovoStato;</span>
+<span class="nc" id="L38">    this.motivoDelRifiuto = motivoDelRifiuto;</span>
+<span class="nc" id="L39">  }</span>
+
+  public Long getIdAnnuncio() {
+<span class="fc" id="L42">    return idAnnuncio;</span>
+  }
+
+  public void setIdAnnuncio(Long idAnnuncio) {
+<span class="fc" id="L46">    this.idAnnuncio = idAnnuncio;</span>
+<span class="fc" id="L47">  }</span>
+
+  public Annuncio.Stato getNuovoStato() {
+<span class="fc" id="L50">    return nuovoStato;</span>
+  }
+
+  public void setNuovoStato(
+      Annuncio.Stato nuovoStato) {
+<span class="fc" id="L55">    this.nuovoStato = nuovoStato;</span>
+<span class="fc" id="L56">  }</span>
+
+  public String getMotivoDelRifiuto() {
+<span class="fc" id="L59">    return motivoDelRifiuto;</span>
+  }
+
+  public void setMotivoDelRifiuto(String motivoDelRifiuto) {
+<span class="fc" id="L63">    this.motivoDelRifiuto = motivoDelRifiuto;</span>
+<span class="fc" id="L64">  }</span>
+
+  @Override
+  public String toString() {
+<span class="fc" id="L68">    final StringBuilder sb = new StringBuilder(&quot;ModificaStatoAnnuncioForm{&quot;);</span>
+<span class="fc" id="L69">    sb.append(&quot;idAnnuncio=&quot;).append(idAnnuncio);</span>
+<span class="fc" id="L70">    sb.append(&quot;, nuovoStato=&quot;).append(nuovoStato);</span>
+<span class="fc" id="L71">    sb.append(&quot;, motivoDelRifiuto='&quot;).append(motivoDelRifiuto).append('\'');</span>
+<span class="fc" id="L72">    sb.append('}');</span>
+<span class="fc" id="L73">    return sb.toString();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

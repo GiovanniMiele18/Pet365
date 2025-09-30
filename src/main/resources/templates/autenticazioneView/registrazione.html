@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <th:block th:insert="~{fragments/head}"></th:block>
+    <title>Pet365 - Registrazione</title>
+    <style>
+        /* Sfondo pagina */
+        body {
+            background: linear-gradient(135deg, #013220 0%, #021f13 100%);
+            color: #FFD700;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h1 {
+            color: #FFD700;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Card */
+        .card {
+            background-color: #01402b;
+            border: 2px solid #FFD700;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+        }
+
+        .card-title {
+            color: #FFD700;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        /* Input */
+        .form-control {
+            border: 1px solid #FFD700;
+            background-color: #022a1c;
+            color: #FFD700;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #FFD700;
+            box-shadow: 0 0 8px #FFD700;
+            background-color: #013220;
+            color: #FFD700;
+        }
+
+        /* Errori */
+        .invalid-feedback {
+            display: block;
+            color: #FF6666 !important;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .form-control.is-invalid {
+            border-color: #FF6666 !important;
+            background-color: #022a1c !important;
+            color: #FFD700 !important;
+            box-shadow: 0 0 5px #FF6666;
+        }
+
+        /* Bottone */
+        .btn-primary {
+            background-color: #FFD700;
+            color: #013220;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #e6c200;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Link */
+        a {
+            color: #FFD700;
+            text-decoration: underline;
+        }
+        a:hover {
+            color: #ffffff;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .col-5 {
+                width: 90% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<th:block th:insert="~{fragments/navbar}"></th:block>
+<br><br>
+
+<center><h1>Registrazione</h1></center>
+<br><br>
+
+<div class="container-fluid">
+    <div class="row d-flex justify-content-center">
+        <div class="col-5 align-self-center">
+            <!-- Card registrazione -->
+            <div class="card">
+                <div class="card-body p-4">
+                    <form th:action="@{/registrazione}" th:object="${registrazioneForm}" method="post">
+                        <h5 class="card-title">Nome</h5>
+                        <div class="form-group mb-3">
+                            <input type="text" th:field="*{nome}" class="form-control" placeholder="Nome" required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                        </div>
+
+                        <h5 class="card-title">Cognome</h5>
+                        <div class="form-group mb-3">
+                            <input type="text" th:field="*{cognome}" class="form-control" placeholder="Cognome" required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}"></div>
+                        </div>
+
+                        <h5 class="card-title">Codice Fiscale</h5>
+                        <div class="form-group mb-3">
+                            <input type="text" th:field="*{codiceFiscale}"
+                                   pattern="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$"
+                                   class="form-control" placeholder="Codice Fiscale" required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('codiceFiscale')}" th:errors="*{codiceFiscale}"></div>
+                        </div>
+
+                        <h5 class="card-title">E-mail</h5>
+                        <div class="form-group mb-3">
+                            <input type="email" th:field="*{email}" class="form-control" placeholder="Inserisci email" required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                        </div>
+
+                        <h5 class="card-title">Password</h5>
+                        <div class="form-group mb-3">
+                            <input type="password" th:field="*{password}" class="form-control" placeholder="Password" required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                        </div>
+
+                        <button type="submit" class="col-md-12 btn btn-primary mb-2">Registrati</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Card login -->
+            <div class="card mt-3">
+                <div class="card-body text-center">
+                    <small>Sei già registrato? Clicca <a th:href="@{/login}">qui</a>.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br>
+<th:block th:insert="~{fragments/footbar}"></th:block>
+<th:block th:insert="~{fragments/scripts}"></th:block>
+
+<script src="/js/navbar.js"></script>
+
+</body>
+</html>

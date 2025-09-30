@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head>
+    <th:block th:insert="~{fragments/head}"></th:block>
+    <title>PET365 - HomePage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+            color: #222; /* Puoi cambiare colore */
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px; /* lunghezza del trattino */
+            height: 6px; /* spessore */
+            background: linear-gradient(90deg, #007bff, #00c3ff); /* effetto figo */
+            border-radius: 3px;
+        }
+
+
+        .services .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .services .card {
+            background: #fff;
+            border-radius: 1rem;
+            padding: 1.5rem 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+
+            /* altezza uniforme */
+            min-height: 320px; /* puoi regolare */
+        }
+
+        .services .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .services .card img {
+            max-height: 120px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        .services .card h5 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .services .card p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        /* Fa scivolare il bottone in basso */
+        .services .card a {
+            margin-top: auto;
+        }
+
+        .services .btn-sm {
+            padding: 0.35rem 0.9rem;
+            font-size: 0.85rem;
+            border-radius: 20px;
+        }
+
+        /* --- Preloader --- */
+        #preloader {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background-color:#fff; display:flex; justify-content:center; align-items:center; z-index:9999;
+        }
+        #preloader img { width:150px; height:auto; animation:expandRotate 2s forwards; }
+        @keyframes expandRotate {
+            0% { transform: scale(1) rotate(0deg); opacity:1; }
+            50% { transform: scale(3) rotate(180deg); opacity:1; }
+            100% { transform: scale(20) rotate(360deg); opacity:0; }
+        }
+
+        #main-content { opacity:0; transition: opacity 0.5s ease-in; }
+        body { font-family: 'Poppins', sans-serif; background-color:#f9f9f9; color:#333; overflow-x:hidden; }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(-45deg, #3d8b37, #f5c300, #6aa84f, #ffd700);
+            background-size: 400% 400%;
+            color: #fff;
+            padding: 100px 20px;
+            text-align:center;
+            animation: gradientBG 15s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position:0% 50%; }
+            50% { background-position:100% 50%; }
+            100% { background-position:0% 50%; }
+        }
+        .hero h1 { font-size:3.5rem; font-weight:700; margin-bottom:20px; }
+        .hero p { font-size:1.5rem; margin-bottom:30px; }
+
+        /* Pulsanti Hero e generici */
+        .btn-primary {
+            background-color:#3d8b37; border-color:#f5c300;
+            border-radius:50px; font-weight:600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.1) rotate(-2deg);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background-color:#6aa84f;
+            border-color:#ffd700;
+        }
+        .btn-outline-primary {
+            color:#3d8b37; border-color:#3d8b37;
+            transition: all 0.3s ease;
+        }
+        .btn-outline-primary:hover {
+            background-color:#3d8b37; color:#fff; transform: scale(1.05);
+        }
+        .btn-outline-success { transition:0.3s; }
+        .btn-outline-success:hover { transform: scale(1.05); background-color:#3d8b37; color:#fff; }
+
+        /* Card generiche */
+        .card { border-radius:20px; overflow:hidden; transition: transform 0.4s ease, box-shadow 0.4s ease; perspective:1000px; }
+        .card-inner { transition: transform 0.3s ease; transform-style: preserve-3d; }
+        .card:hover .card-inner { transform: rotateY(8deg) rotateX(5deg) scale(1.05); }
+        .card img { transition: transform 0.4s ease; }
+        .card:hover img { transform: scale(1.1); }
+
+        /* Annunci in evidenza */
+        .annuncio-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .annuncio-card:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+
+        /* Fade-in */
+        .fade-in { opacity:0; transform: translateY(20px); transition: all 0.8s ease; }
+        .fade-in.visible { opacity:1; transform: translateY(0); }
+
+        /* Carousel caption */
+        .carousel-caption { background: rgba(0,0,0,0.4); border-radius:15px; padding:10px 20px; }
+        .carousel-caption h5 { font-size:1.5rem; font-weight:600; color:#ffd700; }
+    </style>
+</head>
+
+<body>
+<!-- Preloader -->
+<div id="preloader">
+    <img src="https://i.imgur.com/mYm8eGJ.png" alt="Pet365 Logo">
+</div>
+
+<div id="main-content">
+    <th:block th:insert="~{fragments/navbar}"></th:block>
+
+    <!-- Hero -->
+    <section class="hero fade-in">
+        <h1>Benvenuto su PET365!</h1>
+        <p>Il mondo degli animali a portata di click: petsitter, veterinari, shop e servizi professionali.</p>
+        <a href="#annunci" class="btn btn-primary btn-lg">Scopri Ora</a>
+    </section>
+
+    <!-- Servizi principali -->
+    <section class="services py-4 bg-light fade-in">
+        <div class="container text-center">
+            <h2 class="section-title">I nostri servizi principali</h2>
+
+            <div class="services-grid">
+
+                <!-- Petsitter -->
+                <div class="card">
+                    <img src="https://i.postimg.cc/SQvhW1MC/petsitter.png" alt="Petsitter">
+                    <h5>Petsitter</h5>
+                    <p>Trova il petsitter ideale vicino a te.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Veterinari h24 -->
+                <div class="card">
+                    <img src="https://i.postimg.cc/1RrLB9Yk/telemedicina.png" alt="Veterinari h24">
+                    <h5>Veterinari h24</h5>
+                    <p>Prenota visite e consulenze professionali in qualsiasi momento.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Shop -->
+                <div class="card">
+                    <img src="https://i.postimg.cc/rm95BtS2/shop.png" alt="Shop">
+                    <h5>Shop</h5>
+                    <p>Acquista prodotti e accessori per animali.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Docce & Toelettatura -->
+                <div class="card">
+                    <img src="https://i.imgur.com/BFKYOER.png" alt="Docce & Toelettatura">
+                    <h5>Docce & Toelettatura</h5>
+                    <p>Servizi professionali di lavaggio e cura.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Addestramento -->
+                <div class="card">
+                    <img src="https://i.imgur.com/DjhAKhT.png" alt="Addestramento">
+                    <h5>Addestramento</h5>
+                    <p>Corsi e sessioni per educare il tuo animale.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Pensioni -->
+                <div class="card">
+                    <img src="https://i.imgur.com/301DK6F.png" alt="Pensioni">
+                    <h5>Pensioni</h5>
+                    <p>Strutture sicure per ospitare i tuoi animali durante le assenze.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Commemorazioni -->
+                <div class="card">
+                    <img src="https://i.imgur.com/aO56kf4.png" alt="Commemorazioni e Servizi Funebri">
+                    <h5>Commemorazioni e Servizi Funebri</h5>
+                    <p>Supporto per onorare e ricordare i tuoi animali.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Servizi di Accoppiamento -->
+                <div class="card">
+                    <img src="https://i.imgur.com/K9FhX5o.png" alt="Servizi di Accoppiamento">
+                    <h5>Servizi di Accoppiamento</h5>
+                    <p>Supporto professionale per accoppiamento e gestione riproduttiva.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Compra o Adotta un Cucciolo -->
+                <div class="card">
+                    <img src="https://i.imgur.com/n9CHvOL.png" alt="Compra o Adotta un Cucciolo">
+                    <h5>Compra o Adotta un Cucciolo</h5>
+                    <p>Trova un nuovo amico a quattro zampe da accogliere in famiglia.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Sfilate & Eventi -->
+                <div class="card">
+                    <img src="https://i.imgur.com/gRQu7Kz.png" alt="Sfilate & Eventi">
+                    <h5>Sfilate & Eventi</h5>
+                    <p>Partecipa a sfilate, raduni ed eventi esclusivi.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Trasporto Sicuro -->
+                <div class="card">
+                    <img src="https://i.imgur.com/WOFShJ6.png" alt="Trasporto Sicuro per Animali">
+                    <h5>Trasporto Sicuro</h5>
+                    <p>Spostamenti sicuri da punto A a punto B.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Assicurazione Animali -->
+                <div class="card">
+                    <img src="https://i.postimg.cc/R0kt6LTB/assic.png" alt="Assicurazione Animali">
+                    <h5>Assicurazione Animali</h5>
+                    <p>Proteggi la salute del tuo animale con polizze personalizzate.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Pet Photography -->
+                <div class="card">
+                    <img src="https://i.postimg.cc/s27X8d5k/fotografia.png" alt="Pet Photography">
+                    <h5>Pet Photography</h5>
+                    <p>Servizi fotografici professionali per i momenti più belli.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Terapie e Benessere -->
+                <div class="card">
+                    <img src="https://i.postimg.cc/ydxGxBn5/terapia.png" alt="Terapie e Benessere">
+                    <h5>Terapie e Benessere</h5>
+                    <p>Massaggi, fisioterapia e trattamenti rilassanti per animali.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+                <!-- Nutrizione personalizzata -->
+                <div class="card">
+                    <img src="https://i.postimg.cc/8kM5wrhZ/nutrizione.png" alt="Terapie e Benessere">
+                    <h5>Nutrizione personalizzata</h5>
+                    <p>Nutrizione personalizzata: consulenze nutrizionali e piani alimentari su misura, anche con possibilità di cucine dedicate o consegna pasti freschi.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Scopri</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Annunci in evidenza -->
+    <section id="annunci" class="py-5 fade-in">
+        <div class="container text-center">
+            <h1 class="mb-4">Annunci in evidenza</h1>
+            <div class="d-flex flex-wrap justify-content-center mt-3">
+                <div th:each="annuncio : ${annunci}" class="card m-3 annuncio-card" style="width: 15rem;">
+                    <img th:src="@{/img(id=${annuncio.getFoto().get(0).id})}" class="card-img-top" style="width:240px;height:225px;" alt="foto annuncio">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <h5 th:text="${annuncio.nomeAttivita}" class="card-title"></h5>
+                        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-success">Vai alla scheda</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <th:block th:insert="~{fragments/footbar}"></th:block>
+    <th:block th:insert="~{fragments/scripts}"></th:block>
+    <script src="/js/navbar.js"></script>
+</div>
+
+<!-- Script Preloader + Fade-in -->
+<script>
+    const preloader = document.getElementById('preloader');
+    const mainContent = document.getElementById('main-content');
+    preloader.querySelector('img').addEventListener('animationend', () => {
+        preloader.style.display = 'none';
+        mainContent.style.opacity = '1';
+        document.body.style.overflow = 'auto';
+    });
+
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = { threshold:0.2, rootMargin:"0px 0px -50px 0px" };
+    const appearOnScroll = new IntersectionObserver(function(entries, observer){
+        entries.forEach(entry => {
+            if(!entry.isIntersecting) return;
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        });
+    }, appearOptions);
+    faders.forEach(fader => { appearOnScroll.observe(fader); });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

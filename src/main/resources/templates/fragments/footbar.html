@@ -1,0 +1,113 @@
+<footer th:fragment="footbar" class="page-footer center-on-small-only custom-footer">
+
+    <!--Footer Links-->
+    <div class="container">
+        <div class="row">
+
+            <!--First column-->
+            <div class="col-md-4">
+                <h5 class="title mb-4 mt-3 font-bold">PET365</h5>
+                <img src="https://i.imgur.com/mYm8eGJ.png" style="width: 125px;">
+            </div>
+            <!--/.First column-->
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!--Second column-->
+            <div class="col-md-2 mx-auto">
+                <h5 class="title mb-4 mt-3 font-bold">DA AGGIUNGERE</h5>
+                <ul>
+                    <li><a href="/ricercaAnnunci?nomeAttivita=&provincia=Milano">ADD</a></li>
+                    <li><a href="/ricercaAnnunci?nomeAttivita=&provincia=Torino">ADD</a></li>
+                    <li><a href="/ricercaAnnunci?nomeAttivita=&provincia=Napoli">ADD</a></li>
+                    <li><a href="/ricercaAnnunci?nomeAttivita=&provincia=Bari">ADD</a></li>
+                </ul>
+            </div>
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!--Third column-->
+            <div class="col-md-2 mx-auto">
+                <h5 class="title mb-4 mt-3 font-bold">Maggiori Informazioni</h5>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/ricercaAnnunci">Annunci</a></li>
+                    <li><a href="/chisiamo">Chi siamo?</a></li>
+                </ul>
+            </div>
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!--Fourth column-->
+            <div class="col-md-2 mx-auto">
+                <h5 class="title mb-4 mt-3 font-bold ">Support</h5>
+                <ul>
+                    <li><a th:if="${cliente != null}"
+                           th:href="@{'mailto:pet365support@gmail.com?subject=Domanda generale&body=Salve sono l utente, ' + ${cliente.nome} +' '+ ${cliente.cognome}+' il mio codice fiscale è il seguente: '+${cliente.codiceFiscale}+' e vi scrivo per la seguente problematica:'}">Inviaci
+                        una mail</a></li>
+                    <li><a th:if="${cliente == null}"
+                           th:href="@{'mailto:pet365support?subject=Domanda generale&body=Salve sono un utente non registrato e vi scrivo per la seguente problematica:'}">Inviaci
+                        una mail</a></li>
+                    <li><a href="/loginAmministratore">Area Staff</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="call-to-action">
+        <div class="container-fluid">
+            <p>©&nbsp;<strong>Copyright 2025 - PET365 v1.0</strong><br><strong>Tutti i diritti sono riservati ai corrispettivi proprietari.</strong></p>
+        </div>
+    </div>
+
+</footer>
+
+<style>
+    /* Sovrascrive eventuali classi bg-dark di Bootstrap */
+    .custom-footer {
+        background-color: #013220 !important; /* verde scuro */
+        color: #FFD700 !important; /* oro */
+        padding-top: 40px;
+        padding-bottom: 20px;
+    }
+
+    /* Titoli */
+    .custom-footer .title {
+        color: #FFD700 !important;
+        font-weight: bold;
+    }
+
+    /* Link */
+    .custom-footer a {
+        color: #FFD700 !important;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .custom-footer a:hover {
+        color: #ffffff !important;
+    }
+
+    /* HR linee */
+    .custom-footer hr {
+        border-top: 1px solid #FFD700 !important;
+    }
+
+    /* Copyright */
+    .custom-footer .call-to-action {
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: #FFD700 !important;
+        font-weight: 500;
+    }
+
+    /* Immagine logo */
+    .custom-footer img {
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+</style>

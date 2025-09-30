@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap + MDB + FontAwesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css">
+    <link rel="shortcut icon"
+          href="https://favicon-generator.org/favicon-generator/htdocs/favicons/2022-12-30/d3f3b5e9f0d2ed5a7e3c4d3025ab6734.ico.png"/>
+
+    <title>I miei Animali - Pet365</title>
+
+    <style>
+        /* Sfondo pagina */
+        body {
+            background: linear-gradient(135deg, #0a6847, #064d36, #0a6847);
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Card oro-verde */
+        .premium-card {
+            border: 2px solid #c9a84e;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+            background: #fffaf0;
+            color: #0a6847;
+            margin-bottom: 20px;
+        }
+
+        .premium-header {
+            background: linear-gradient(90deg, #0a6847, #c9a84e);
+            color: white;
+            padding: 15px;
+            border-radius: 12px 12px 0 0;
+            font-weight: bold;
+        }
+
+        /* Immagine animale */
+        .animal-img {
+            border-radius: 12px;
+            border: 3px solid #c9a84e;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        /* Bottoni */
+        .btn-premium {
+            background-color: #0a6847;
+            color: white;
+            border: none;
+        }
+        .btn-premium:hover {
+            background-color: #c9a84e;
+            color: #fff;
+        }
+
+        /* Osso Point */
+        .osso-box {
+            border: 2px dashed #c9a84e;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: #c9a84e;
+            background: #0a6847;
+        }
+
+        /* Carosello fade */
+        .carousel-item {
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out;
+        }
+        .carousel-item.active {
+            opacity: 1;
+        }
+
+        /* Carosello istantaneo */
+        .carousel-item {
+            transition: none !important; /* cambio slide immediato */
+        }
+
+        /* Frecce */
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            filter: invert(1) sepia(100%) hue-rotate(20deg) saturate(300%);
+        }
+
+        /* Nome Cliente */
+        .client-name {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #c9a84e;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px #0a6847;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<th:block th:include="fragments/navbar"></th:block>
+
+<div class="container mt-4">
+
+    <!-- Nome cliente -->
+    <div class="client-name">
+        👤 <span th:text="${cliente.nome} + ' ' + ${cliente.cognome}">Mario Rossi</span>
+    </div>
+
+    <!-- Osso Point -->
+    <div class="osso-box mb-4">
+        🦴 <span>120</span> Osso Point
+    </div>
+
+    <!-- Carosello Animali -->
+    <div id="animaliCarousel" class="carousel slide" data-bs-interval="false">
+        <div class="carousel-inner">
+
+            <!-- Ciclo animali -->
+            <div th:each="animale, iterStat : ${cliente.animali}"
+                 th:classappend="${iterStat.index == 0} ? ' active' : ''"
+                 class="carousel-item">
+
+                <!-- Card animale -->
+                <div class="premium-card">
+                    <div class="premium-header d-flex justify-content-between align-items-center">
+                        <h4 th:text="${animale.nome}">Nome Animale</h4>
+                        <a href="/aggiungiAnimale" class="btn btn-premium">➕ Aggiungi Animale</a>
+                    </div>
+
+                    <div class="row p-4">
+                        <!-- Foto -->
+                        <div class="col-md-4 text-center">
+                            <img th:if="${!#lists.isEmpty(animale.fotoAnimali)}"
+                                 th:src="@{'/immagineanimale?id=' + ${animale.fotoAnimali[0].id}}"
+                                 class="animal-img"
+                                 alt="Foto animale">
+
+                            <img th:if="${#lists.isEmpty(animale.fotoAnimali)}"
+                                 src="/images/default-pet.png"
+                                 class="animal-img"
+                                 alt="Foto non disponibile">
+                        </div>
+
+                        <!-- Info -->
+                        <div class="col-md-8">
+                            <p><b>Specie:</b> <span th:text="${animale.specie}">Cane</span></p>
+                            <p><b>Razza:</b> <span th:text="${animale.razza}">Labrador</span></p>
+                            <p><b>Età:</b> <span th:text="${animale.eta}">3</span> anni</p>
+                            <p><b>Sesso:</b> <span th:text="${animale.sesso}">Maschio</span></p>
+                            <p><b>Peso:</b> <span th:text="${animale.peso}">20</span> kg</p>
+                            <p><b>Colore:</b> <span th:text="${animale.colore}">Nero</span></p>
+                            <p><b>Note:</b> <span th:text="${animale.note}">Molto vivace</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documenti e Prenotazioni -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="premium-card">
+                            <div class="premium-header">📂 Documenti</div>
+                            <div class="p-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item">📜 Pedigree ufficiale</li>
+                                    <li class="list-group-item">💉 Vaccinazioni 2023</li>
+                                    <li class="list-group-item">🧾 Microchip #123456</li>
+                                </ul>
+                                <a href="/aggiungiDocumento" class="btn btn-premium mt-3">➕ Aggiungi Documento</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="premium-card">
+                            <div class="premium-header">📅 Prenotazioni</div>
+                            <div class="p-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item">Visita Veterinaria - 15/10/2025</li>
+                                    <li class="list-group-item">Toelettatura - 01/11/2025</li>
+                                </ul>
+                                <a href="/aggiungiDocumento" class="btn btn-premium mt-3">➕ Aggiungi Prenotazione</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fine ciclo animale -->
+
+        </div>
+
+        <!-- Frecce -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#animaliCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-warning rounded-circle"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#animaliCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-warning rounded-circle"></span>
+        </button>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="custom-footer">
+    <th:block th:include="fragments/footbar"></th:block>
+</footer>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+</html>

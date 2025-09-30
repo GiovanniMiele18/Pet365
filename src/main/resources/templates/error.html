@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head>
+    <th:block th:include="fragments/head"></th:block>
+    <title>Si è verificato un errore</title>
+</head>
+
+<body>
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="text-center row">
+        <div class=" col-md-6">
+            <img style="width: 350px; height: 270px;" src="https://bit.ly/3vDJZ8a" alt=""
+                 class="img-fluid">
+        </div>
+
+        <div class=" col-md-6 mt-5">
+            <p class="fs-3"><span class="text-danger">Opps!</span> Abbiamo riscontrato un errore.</p>
+
+            <p class="lead"> Errore riscontrato: <span th:text="${status}"></span>
+            </p>
+            <p class="lead"> Problema riscontrato: <span th:text="${message}"></span>
+            </p>
+
+
+            <a th:if="${amministratore != null}" href="/homeAmministratore" class="btn btn-primary">Vai alla Home</a>
+            <a th:if="${cliente != null}" href="/" class="btn btn-primary">Vai alla Home</a>
+
+        </div>
+
+    </div>
+</div>
+<th:block th:include="fragments/scripts"></th:block>
+</body>
+
+</html>

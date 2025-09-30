@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <th:block th:include="fragments/head"></th:block>
+    <title>Just Traditions - Profilo Artigiano</title>
+
+</head>
+<body>
+<th:block th:include="fragments/navbar"></th:block>
+<section class="container mt-4">
+    <div class="card">
+        <center><img style="width: 564px; height: 163px;" src="https://i.imgur.com/KCRFkmU.png"
+                     class="card-img-top"></center>
+        <div class="card-body text-center mt-3">
+            <h5 class="card-title fw-bold"
+                th:text="'Salve sono l\'artigiano ' + ${artigiano.nome } + ' ' + ${artigiano.cognome} + ', per qualsiasi informazione puoi inviarmi una mail!'"></h5>
+        </div>
+        <div class="card-footer text-center">
+            <a th:href="@{'mailto:'+${artigiano.email}}">
+              <span class="badge bg-primary shadow fs-6"><i
+                      class="bi bi-envelope-fill px-1"></i>Clicca qui per inviarmi una mail</span>
+            </a>
+        </div>
+    </div>
+</section>
+<!-- Section 2 -->
+<section class="container mt-4">
+    <div class="bg-light p-5 rounded-3">
+        <div class="container-fluid">
+            <center><h1 class="display-5 fw-bold">I Miei Annunci</h1></center>
+            <div class="d-flex flex-wrap justify-content-center mt-3">
+                <!--   Annunci   -->
+                <div th:each="annuncio :${annunci}" class="card m-3" style="width: 15rem;">
+
+                    <img th:src="@{/img(id=${annuncio.getFoto().get(0).id})}"
+                         class="card-img-top" style="width: 240px; height: 225px;">
+                    <div class="card-body  d-flex flex-column align-items-center ">
+                        <h5 th:text="${annuncio.nomeAttivita}" class="card-title"></h5>
+                        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}"
+                           class="btn btn-outline-success">Vai alla scheda</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="paging-wrapper d-flex flex-wrap justify-content-center mt-3">
+    <form th:method="get" th:action="@{/visualizzazioneProfiloArtigiano}">
+
+        <input type="hidden" th:name="pagina" th:value="${pagina -1}">
+        <input type="hidden" th:name="id" th:value="${artigiano.id}">
+
+
+        <button th:if="${pagina > 0}" type="submit" value="Precedente" class="btn btn-success">Precedente</button>
+        <button th:unless="${pagina > 0}" type="submit" value="Precedente" class="btn btn-success" disabled>Precedente
+        </button>
+
+    </form>
+
+    <strong class="paging-wrapper d-flex flex-wrap justify-content-center mt-3"
+            th:text="'Pagina:'+${pagina+1}"></strong>
+
+    <form th:method="get" th:action="@{/visualizzazioneProfiloArtigiano}">
+
+        <input type="hidden" th:name="pagina" th:value="${pagina +1}">
+        <input type="hidden" th:name="id" th:value="${artigiano.id}">
+
+        <button th:if="${pagineTotali -1 > pagina}" type="submit" value="Precedente" class="btn btn-success">
+            Successivo
+        </button>
+        <button th:unless="${pagineTotali -1 > pagina}" type="submit" value="Precedente" class="btn btn-success"
+                disabled>Successivo
+        </button>
+    </form>
+
+
+</div>
+
+</div>
+</body>
+<th:block th:include="fragments/footbar"></th:block>
+<th:block th:include="fragments/scripts"></th:block>
+<script src="/js/navbar.js"></script>
+</html>

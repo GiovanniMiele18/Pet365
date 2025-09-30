@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExistsEmailValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.autenticazioneControl.form</a> &gt; <span class="el_source">ExistsEmailValidator.java</span></div><h1>ExistsEmailValidator.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.autenticazioneControl.form;
+
+import it.unisa.justTraditions.applicationLogic.autenticazioneControl.util.SessionCliente;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.dao.ClienteDao;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Cliente;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+
+/**
+ * Implementa la logica per convalidare l'email
+ * se essa è presente all'interno del database.
+ */
+<span class="nc" id="L15">public class ExistsEmailValidator</span>
+    implements ConstraintValidator&lt;ExistsEmailConstraint, String&gt; {
+
+  @Autowired
+  private ClienteDao clienteDao;
+
+  @Autowired
+  private SessionCliente sessionCliente;
+
+  /**
+   * Inizializza il validatore in preparazione per le
+   * isValid(String email, ConstraintValidatorContext).
+   *
+   * @param constraintAnnotation istanza di annotazione per una data dichiarazione di vincolo
+   */
+  @Override
+  public void initialize(ExistsEmailConstraint constraintAnnotation) {
+<span class="nc" id="L32">    ConstraintValidator.super.initialize(constraintAnnotation);</span>
+<span class="nc" id="L33">  }</span>
+
+  /**
+   * Implementa la logica di convalida.
+   *
+   * @param email                      oggetto da convalidare.
+   * @param constraintValidatorContext contesto in cui viene valutato il vincolo.
+   * @return true se l'email esiste , false se non esiste nel database.
+   */
+  @Override
+  public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
+<span class="nc" id="L44">    Optional&lt;Cliente&gt; optionalCliente = sessionCliente.getCliente();</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">    if (optionalCliente.isEmpty()) {</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">      return !clienteDao.existsByEmail(email);</span>
+    } else {
+<span class="nc" id="L48">      Cliente cliente = optionalCliente.get();</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">      if (cliente.getEmail().equals(email)) {</span>
+<span class="nc" id="L50">        return true;</span>
+      } else {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        return !clienteDao.existsByEmail(email);</span>
+      }
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

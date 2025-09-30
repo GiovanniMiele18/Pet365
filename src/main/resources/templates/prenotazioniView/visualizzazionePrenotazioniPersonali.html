@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head>
+    <th:block th:include="fragments/head"></th:block>
+    <title>Just Traditions - Le Mie Prenotazioni</title>
+</head>
+
+<body>
+<th:block th:include="fragments/navbar"></th:block>
+<br><br> <br><br>
+<div class="container">
+    <div class="row">
+        <div align="left">
+
+
+        </div>
+        <div class="panel-body">
+            <table class="table align-middle mb-0 bg-white">
+                <thead class="bg-light">
+                <tr>
+                    <th>Nome attività</th>
+                    <th>Data della visita</th>
+                    <th>Prezzo Della Visita</th>
+                    <th>Numero Delle Persone Prenotate</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="prenotazione :${prenotazioni}">
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img
+                                    th:src="@{/img(id=${prenotazione.getVisita().getAnnuncio().getFoto().get(0).id})}"
+                                    class="rounded-circle"
+                                    alt=""
+                                    style="width: 45px; height: 45px"
+                            />
+                            <div class="ms-3">
+                                <p class="fw-bold mb-1"
+                                   th:text="${prenotazione.getVisita().getAnnuncio().getNomeAttivita()}"></p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="fw-bold mb-1" th:text="${prenotazione.getDataVisita()}"></span>
+                    </td>
+                    <td class="fw-bold mb-1" th:text="${prenotazione.getPrezzoVisita()}">€</td>
+                    <td class="fw-bold mb-1" th:text="${prenotazione.getNumPersonePrenotate()}">persone</td>
+                    <td>
+                        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${prenotazione.getVisita().getAnnuncio().getId()})}"
+                           class="btn btn-outline-success">Vai alla scheda</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+<th:block th:include="fragments/footbar"></th:block>
+
+<th:block th:include="fragments/scripts"></th:block>
+<script src="/js/navbar.js"></script>
+</body>
+
+</html>

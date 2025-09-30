@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisualizzazionePrenotazioniAnnuncioController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.prenotazioniControl</a> &gt; <span class="el_source">VisualizzazionePrenotazioniAnnuncioController.java</span></div><h1>VisualizzazionePrenotazioniAnnuncioController.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.prenotazioniControl;
+
+import it.unisa.justTraditions.applicationLogic.autenticazioneControl.util.SessionCliente;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.dao.AnnuncioDao;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Annuncio;
+import it.unisa.justTraditions.storage.prenotazioniStorage.dao.PrenotazioneDao;
+import it.unisa.justTraditions.storage.prenotazioniStorage.entity.Prenotazione;
+import java.time.LocalDate;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ * Implementa il controller per la visualizzazione delle prenotazioni di un annuncio.
+ */
+@Controller
+@RequestMapping(&quot;/visualizzazionePrenotazioniAnnuncio&quot;)
+<span class="fc" id="L28">public class VisualizzazionePrenotazioniAnnuncioController {</span>
+
+  private static final String visualizzazionePrenotazioniAnnuncioView =
+      &quot;prenotazioniView/visualizzazionePrenotazioniAnnuncio&quot;;
+
+  @Autowired
+  private SessionCliente sessionCliente;
+
+  @Autowired
+  private PrenotazioneDao prenotazioneDao;
+
+  @Autowired
+  private AnnuncioDao annuncioDao;
+
+  /**
+   * Implementa la funzionalità di smistare
+   * l artigliano sulla view di prenotazioniView/visualizzazionePrenotazioniAnnuncio.
+   *
+   * @param idAnnuncio Utilizzato per passare alla view l id dell annuncio.
+   * @return Restituisce la view da reindirizzare.
+   */
+  @GetMapping
+  public ModelAndView get(@RequestParam Long idAnnuncio) {
+<span class="nc" id="L51">    return new ModelAndView(visualizzazionePrenotazioniAnnuncioView)</span>
+<span class="nc" id="L52">        .addObject(&quot;idAnnuncio&quot;, idAnnuncio);</span>
+  }
+
+  /**
+   * Implementa la funzionalità di visualizzazione
+   * delle prenotazioni dell annuncio in una precisa data.
+   *
+   * @param idAnnuncio Utilizzato per la ricerca delle prenotazioni.
+   * @param dataVisita Utilizzato per la ricerca delle prenotazioni.
+   * @param pagina     Utilizzato per la paginazione della lista delle prenotazioni.
+   * @param model      Utilizzato per passare degli attributi alla view.
+   * @return Restituisce la view da reindirizzare.
+   * @throws IllegalArgumentException se i dati non sono previsti dal sistema.
+   */
+  @PostMapping
+  public String post(@RequestParam Long idAnnuncio,
+                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+                     LocalDate dataVisita,
+                     @RequestParam(defaultValue = &quot;0&quot;, required = false) Integer pagina,
+                     Model model) {
+<span class="fc" id="L72">    Annuncio annuncio = annuncioDao.findById(idAnnuncio).orElseThrow(IllegalArgumentException::new);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">    if (!annuncio.getArtigiano().equals(sessionCliente.getCliente().get())) {</span>
+<span class="fc" id="L74">      throw new IllegalArgumentException();</span>
+    }
+
+<span class="fc" id="L77">    Page&lt;Prenotazione&gt; prenotazionePage = prenotazioneDao.findByVisitaAnnuncioAndDataVisita(</span>
+        annuncio,
+        dataVisita,
+<span class="fc" id="L80">        PageRequest.of(</span>
+<span class="fc" id="L81">            pagina,</span>
+            20,
+<span class="fc" id="L83">            Sort.by(Sort.Direction.DESC, &quot;dataVisita&quot;)</span>
+        )
+    );
+
+    List&lt;Prenotazione&gt; prenotazioni;
+
+<span class="fc" id="L89">    int totalPages = prenotazionePage.getTotalPages();</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">    if (totalPages == 0) {</span>
+<span class="fc" id="L91">      prenotazioni = List.of();</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">    } else if (totalPages &lt;= pagina) {</span>
+<span class="fc" id="L93">      throw new IllegalArgumentException();</span>
+    } else {
+<span class="fc" id="L95">      prenotazioni = prenotazionePage.getContent();</span>
+    }
+
+<span class="fc" id="L98">    model.addAttribute(&quot;prenotazioni&quot;, prenotazioni);</span>
+<span class="fc" id="L99">    model.addAttribute(&quot;pagina&quot;, pagina);</span>
+<span class="fc" id="L100">    model.addAttribute(&quot;pagineTotali&quot;, totalPages);</span>
+<span class="fc" id="L101">    model.addAttribute(&quot;idAnnuncio&quot;, idAnnuncio);</span>
+<span class="fc" id="L102">    model.addAttribute(&quot;dataVisita&quot;, dataVisita);</span>
+
+<span class="fc" id="L104">    return visualizzazionePrenotazioniAnnuncioView;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

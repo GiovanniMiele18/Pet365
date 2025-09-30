@@ -1,0 +1,251 @@
+{
+  "id": "67e9f092-77d8-4f4f-a5bc-33e0f8e2d8c5",
+  "version": "2.0",
+  "name": "Gestione E-commerce",
+  "url": "http://localhost:8080/ricercaAnnunci?nomeAttivita=Cantine+Santoro&provincia=Bassoni",
+  "tests": [{
+    "id": "f163cf93-ca38-412c-9ca1-3863c2350376",
+    "name": "TC_3.1_1",
+    "commands": [{
+      "id": "453c3801-a28e-4ebf-85bd-b215b38bb4aa",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3eb08965-bb27-4e1e-a7ed-7b0e2b140691",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6ca53204-b60f-4e72-8747-91fce0a45a92",
+      "comment": "",
+      "command": "click",
+      "target": "css=.justify-content-start",
+      "targets": [
+        ["css=.justify-content-start", "css:finder"],
+        ["xpath=//div[@id='offcanvasNavbar']/div[2]/ul", "xpath:idRelative"],
+        ["xpath=//ul", "xpath:position"],
+        ["xpath=//ul[contains(.,' ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2cba4d3d-b013-4358-9c0e-0e45e89e66f1",
+      "comment": "",
+      "command": "click",
+      "target": "name=nomeAttivita",
+      "targets": [
+        ["name=nomeAttivita", "name"],
+        ["css=.me-2", "css:finder"],
+        ["xpath=//input[@name='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//form[@id='formRicerca']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a7f3269-9e33-49c6-b583-447a026f07ad",
+      "comment": "",
+      "command": "type",
+      "target": "name=nomeAttivita",
+      "targets": [
+        ["name=nomeAttivita", "name"],
+        ["css=.me-2", "css:finder"],
+        ["xpath=//input[@name='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//form[@id='formRicerca']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Casa di Antonio Ciampa Napoli cantina nella vigna  "
+    }, {
+      "id": "d281732f-68b4-40d5-87e0-d2ac956ec7e1",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=nomeAttivita",
+      "targets": [
+        ["name=nomeAttivita", "name"],
+        ["css=.me-2", "css:finder"],
+        ["xpath=//input[@name='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//form[@id='formRicerca']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "0b37b725-034a-4ea2-9826-76dee3c06daf",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.lead:nth-child(3) > span",
+      "targets": [
+        ["css=.lead:nth-child(3) > span", "css:finder"],
+        ["xpath=//p[3]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'La ricerca degli annunci non va a buon fine poiché il nome inserito dall’utente è troppo lungo.')]", "xpath:innerText"]
+      ],
+      "value": "La ricerca degli annunci non va a buon fine poiché il nome inserito dall’utente è troppo lungo."
+    }]
+  }, {
+    "id": "be495c40-8762-4942-a940-984553df5f16",
+    "name": "TC_3.1_3",
+    "commands": [{
+      "id": "b9465a75-0ac0-4a67-991c-aa2f26703efa",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e579a70d-d950-4783-b49a-64d4e99e3d98",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "29eed53c-967f-4186-a4a9-13ca42b70207",
+      "comment": "",
+      "command": "click",
+      "target": "name=nomeAttivita",
+      "targets": [
+        ["name=nomeAttivita", "name"],
+        ["css=.me-2", "css:finder"],
+        ["xpath=//input[@name='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//form[@id='formRicerca']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "39d85090-f9cb-4a96-97e3-7bd616cabf08",
+      "comment": "",
+      "command": "type",
+      "target": "name=nomeAttivita",
+      "targets": [
+        ["name=nomeAttivita", "name"],
+        ["css=.me-2", "css:finder"],
+        ["xpath=//input[@name='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//form[@id='formRicerca']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Cantine Santoro "
+    }, {
+      "id": "f8ed282c-fc51-44a9-b0d7-6162405eb10b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-success",
+      "targets": [
+        ["css=.btn-success", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='offcanvasNavbar']/div[2]/ul/li[2]/div/button", "xpath:idRelative"],
+        ["xpath=//li[2]/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9b0608e5-5ff8-40ca-a9d2-b56a9e0afaa0",
+      "comment": "",
+      "command": "click",
+      "target": "id=cercaProvincia",
+      "targets": [
+        ["id=cercaProvincia", "id"],
+        ["css=#cercaProvincia", "css:finder"],
+        ["xpath=//input[@id='cercaProvincia']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdownProvince']/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6096fa0f-0fac-48ad-9c70-18275d79729b",
+      "comment": "",
+      "command": "type",
+      "target": "id=cercaProvincia",
+      "targets": [
+        ["id=cercaProvincia", "id"],
+        ["css=#cercaProvincia", "css:finder"],
+        ["xpath=//input[@id='cercaProvincia']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdownProvince']/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "ave"
+    }, {
+      "id": "e1f57703-e982-48d2-a63b-7fd57539a65a",
+      "comment": "",
+      "command": "click",
+      "target": "id=provincia8",
+      "targets": [
+        ["id=provincia8", "id"],
+        ["css=#provincia8", "css:finder"],
+        ["xpath=//input[@id='provincia8']", "xpath:attributes"],
+        ["xpath=//div[@id='dropdownProvince']/div[9]/input", "xpath:idRelative"],
+        ["xpath=//div[9]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2a94af9e-0cf5-4513-834d-cda6995c5f07",
+      "comment": "",
+      "command": "click",
+      "target": "name=nomeAttivita",
+      "targets": [
+        ["name=nomeAttivita", "name"],
+        ["css=.me-2", "css:finder"],
+        ["xpath=//input[@name='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//form[@id='formRicerca']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ba332c6a-472d-48ae-8700-02b5a0481973",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=nomeAttivita",
+      "targets": [
+        ["name=nomeAttivita", "name"],
+        ["css=.me-2", "css:finder"],
+        ["xpath=//input[@name='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//form[@id='formRicerca']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "eca5fba9-c7f5-4f7e-aa8e-7a5adec4a8fc",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Lista Annunci')]", "xpath:innerText"]
+      ],
+      "value": "Lista Annunci"
+    }]
+  }, {
+    "id": "81d25645-4901-4130-8916-61048aa05ed8",
+    "name": "TC_3.1_2",
+    "commands": [{
+      "id": "3077d9df-27ab-4645-8416-5374210f260e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ricercaAnnunci?nomeAttivita=Cantine+Santoro&provincia=Bassoni",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1f338bd4-b8e2-4008-af3a-7e2092263174",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.lead:nth-child(3) > span",
+      "targets": [
+        ["css=.lead:nth-child(3) > span", "css:finder"],
+        ["xpath=//p[3]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'La provincia non esiste')]", "xpath:innerText"]
+      ],
+      "value": "Provincia non esistente"
+    }]
+  }],
+  "suites": [{
+    "id": "b2b844e5-d04c-4df6-937a-ab02905ab0fb",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["f163cf93-ca38-412c-9ca1-3863c2350376"]
+  }],
+  "urls": ["http://localhost:8080/", "http://localhost:8080/ricercaAnnunci?nomeAttivita=Cantine+Santoro&provincia=Bassoni"],
+  "plugins": []
+}

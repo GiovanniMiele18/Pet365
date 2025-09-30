@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisitaForm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form</a> &gt; <span class="el_source">VisitaForm.java</span></div><h1>VisitaForm.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form;
+
+import jakarta.validation.constraints.NotNull;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import org.springframework.format.annotation.DateTimeFormat;
+
+/**
+ * Classe che rappresenta il form di una Visita del Annuncio.
+ */
+@OrarioIsValidConstraint
+public class VisitaForm {
+
+  private Long idVisita;
+
+  @NotNull(message = &quot;giorno vuoto&quot;)
+  private DayOfWeek giorno;
+
+  @NotNull(message = &quot;orario di inizio vuoto&quot;)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+  private LocalTime orarioInizio;
+
+  @NotNull(message = &quot;orario di fine vuoto&quot;)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+  private LocalTime orarioFine;
+
+<span class="fc" id="L27">  public VisitaForm() {</span>
+<span class="fc" id="L28">  }</span>
+
+  /**
+   * Costruttore per l ogggetto visitaForm.
+   *
+   * @param idVisita     Id della visita.
+   * @param giorno       Giorno della settimana della visita.
+   * @param orarioInizio Orario d'inizio della visita.
+   * @param orarioFine   Orario di fine della visita.
+   */
+<span class="nc" id="L38">  public VisitaForm(Long idVisita, DayOfWeek giorno, LocalTime orarioInizio, LocalTime orarioFine) {</span>
+<span class="nc" id="L39">    this.idVisita = idVisita;</span>
+<span class="nc" id="L40">    this.giorno = giorno;</span>
+<span class="nc" id="L41">    this.orarioInizio = orarioInizio;</span>
+<span class="nc" id="L42">    this.orarioFine = orarioFine;</span>
+<span class="nc" id="L43">  }</span>
+
+  public Long getIdVisita() {
+<span class="nc" id="L46">    return idVisita;</span>
+  }
+
+  public void setIdVisita(Long idVisita) {
+<span class="nc" id="L50">    this.idVisita = idVisita;</span>
+<span class="nc" id="L51">  }</span>
+
+  public LocalTime getOrarioInizio() {
+<span class="fc" id="L54">    return orarioInizio;</span>
+  }
+
+  public void setOrarioInizio(LocalTime orarioInizio) {
+<span class="fc" id="L58">    this.orarioInizio = orarioInizio;</span>
+<span class="fc" id="L59">  }</span>
+
+  public LocalTime getOrarioFine() {
+<span class="fc" id="L62">    return orarioFine;</span>
+  }
+
+  public void setOrarioFine(LocalTime orarioFine) {
+<span class="fc" id="L66">    this.orarioFine = orarioFine;</span>
+<span class="fc" id="L67">  }</span>
+
+  public DayOfWeek getGiorno() {
+<span class="fc" id="L70">    return giorno;</span>
+  }
+
+  public void setGiorno(DayOfWeek giorno) {
+<span class="fc" id="L74">    this.giorno = giorno;</span>
+<span class="fc" id="L75">  }</span>
+
+  @Override
+  public String toString() {
+<span class="fc" id="L79">    final StringBuilder sb = new StringBuilder(&quot;VisitaForm{&quot;);</span>
+<span class="fc" id="L80">    sb.append(&quot;idVisita=&quot;).append(idVisita);</span>
+<span class="fc" id="L81">    sb.append(&quot;, giorno=&quot;).append(giorno);</span>
+<span class="fc" id="L82">    sb.append(&quot;, orarioInizio=&quot;).append(orarioInizio);</span>
+<span class="fc" id="L83">    sb.append(&quot;, orarioFine=&quot;).append(orarioFine);</span>
+<span class="fc" id="L84">    sb.append('}');</span>
+<span class="fc" id="L85">    return sb.toString();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

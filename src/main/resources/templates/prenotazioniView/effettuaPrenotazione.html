@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <th:block th:include="fragments/head"></th:block>
+    <title>Just Traditions - Riepilogo Ordine</title>
+</head>
+<body>
+
+<th:block th:include="fragments/navbar"></th:block>
+
+
+<div class="container mt-5 px-5">
+
+    <div class="mb-4 d-flex justify-content-center">
+
+        <h2>Riepilogo dell'ordine</h2>
+
+
+    </div>
+
+    <div class="row d-flex justify-content-center">
+
+
+        <div class="col-md-4">
+
+            <div class="card card-blue p-3 bg-dark text-white mb-3">
+                <form action="/effettuaPrenotazione" th:object="${prenotazioneForm}" method="post">
+                    <input type="hidden" th:field="*{dataVisita}">
+                    <input type="hidden" th:field="*{idVisita}">
+                    <input type="hidden" th:field="*{numeroPersone}">
+
+                    <span th:text="'Data selezionata : ' + ${prenotazioneForm.dataVisita} "> </span>
+                    <br><br>
+                    <span th:text="'Orario selezionato: ' + ${orarioinizio} + '-' + ${orariofine} "></span>
+                    <br><br>
+                    <span th:text="'Numero di persone selezionato: ' + ${prenotazioneForm.numeroPersone}"></span>
+                    <br><br>
+                    <span>-------------------------------</span>
+
+
+                    <div class="mt-4 mb-4">
+
+                        <button type="submit" class="btn btn-outline-success  px-3" th:text="'Pay ' + ${prezzo}">
+                        </button>
+
+                        <button class="btn btn-outline-success px-3">
+                            <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${idAnnuncio})}">Torna indietro</a>
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<th:block th:include="fragments/footbar"></th:block>
+<th:block th:include="fragments/scripts"></th:block>
+<script src="/js/navbar.js"></script>
+
+</body>
+</html>

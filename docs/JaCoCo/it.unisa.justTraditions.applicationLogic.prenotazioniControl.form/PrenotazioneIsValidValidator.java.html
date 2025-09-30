@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PrenotazioneIsValidValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.prenotazioniControl.form</a> &gt; <span class="el_source">PrenotazioneIsValidValidator.java</span></div><h1>PrenotazioneIsValidValidator.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.prenotazioniControl.form;
+
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.dao.VisitaDao;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Visita;
+import it.unisa.justTraditions.storage.prenotazioniStorage.dao.PrenotazioneDao;
+import it.unisa.justTraditions.storage.prenotazioniStorage.entity.Prenotazione;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import java.time.LocalDate;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+
+/**
+ * Implementa la logica per convalidare di un oggetto Prenotazioneform.
+ * Controlla l'esistenza e la validità della visita.
+ * Controlla se la data della prenotazione si trova dopo la data corrente e
+ * corrisponda al giorno della settimana della visita.
+ * Controlla che il numero di persone non sia maggiore dei posti disponibili.
+ */
+<span class="fc" id="L20">public class PrenotazioneIsValidValidator</span>
+    implements ConstraintValidator&lt;PrenotazioneIsValidConstraint, PrenotazioneForm&gt; {
+
+  @Autowired
+  private PrenotazioneDao prenotazioneDao;
+
+  @Autowired
+  private VisitaDao visitaDao;
+
+  @Override
+  public void initialize(PrenotazioneIsValidConstraint constraintAnnotation) {
+<span class="fc" id="L31">    ConstraintValidator.super.initialize(constraintAnnotation);</span>
+<span class="fc" id="L32">  }</span>
+
+  @Override
+  public boolean isValid(PrenotazioneForm prenotazioneForm,
+                         ConstraintValidatorContext constraintValidatorContext) {
+<span class="fc" id="L37">    Optional&lt;Visita&gt; optionalVisita = visitaDao.findById(prenotazioneForm.getIdVisita());</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">    if (optionalVisita.isEmpty()) {</span>
+<span class="fc" id="L39">      return false;</span>
+    }
+<span class="fc" id="L41">    Visita visita = optionalVisita.get();</span>
+
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">    if (!visita.getValidita()) {</span>
+<span class="nc" id="L44">      return false;</span>
+    }
+
+<span class="fc bfc" id="L47" title="All 2 branches covered.">    if (prenotazioneForm.getDataVisita() == null</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        || !prenotazioneForm.getDataVisita().isAfter(LocalDate.now())) {</span>
+<span class="fc" id="L49">      return false;</span>
+    }
+
+<span class="fc bfc" id="L52" title="All 2 branches covered.">    if (!prenotazioneForm.getDataVisita().getDayOfWeek().equals(visita.getGiorno())) {</span>
+<span class="fc" id="L53">      return false;</span>
+    }
+
+<span class="fc" id="L56">    int numeroPersonePrenotate =</span>
+<span class="fc" id="L57">        prenotazioneDao.findByVisitaAndDataVisita(visita, prenotazioneForm.getDataVisita()).stream()</span>
+<span class="fc" id="L58">            .mapToInt(Prenotazione::getNumPersonePrenotate)</span>
+<span class="fc" id="L59">            .sum();</span>
+
+<span class="fc" id="L61">    return prenotazioneForm.getNumeroPersone()</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        &lt;= (visita.getAnnuncio().getNumMaxPersonePerVisita() - numeroPersonePrenotate);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

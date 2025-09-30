@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PrenotazioneForm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.prenotazioniControl.form</a> &gt; <span class="el_source">PrenotazioneForm.java</span></div><h1>PrenotazioneForm.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.prenotazioniControl.form;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
+
+/**
+ * Classe che rappresenta il form per la prenotazione di un Cliente a un annuncio.
+ */
+@PrenotazioneIsValidConstraint
+public class PrenotazioneForm {
+
+  @NotNull
+  private Long idVisita;
+
+  @NotNull
+  @Min(1)
+  private Integer numeroPersone;
+
+  @NotNull
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  private LocalDate dataVisita;
+
+<span class="fc" id="L25">  public PrenotazioneForm() {</span>
+<span class="fc" id="L26">  }</span>
+
+  /**
+   * Costruttore per Prenotazioneform.
+   *
+   * @param idVisita      Id corrispondente alla visita selezionata dal cliente.
+   * @param numeroPersone Numero di persone prenotate alla visita
+   * @param dataVisita    Dato della visita.
+   */
+<span class="nc" id="L35">  public PrenotazioneForm(Long idVisita, Integer numeroPersone, LocalDate dataVisita) {</span>
+<span class="nc" id="L36">    this.idVisita = idVisita;</span>
+<span class="nc" id="L37">    this.numeroPersone = numeroPersone;</span>
+<span class="nc" id="L38">    this.dataVisita = dataVisita;</span>
+<span class="nc" id="L39">  }</span>
+
+  public Long getIdVisita() {
+<span class="fc" id="L42">    return idVisita;</span>
+  }
+
+  public void setIdVisita(Long idVisita) {
+<span class="fc" id="L46">    this.idVisita = idVisita;</span>
+<span class="fc" id="L47">  }</span>
+
+  public Integer getNumeroPersone() {
+<span class="fc" id="L50">    return numeroPersone;</span>
+  }
+
+  public void setNumeroPersone(Integer numeroPersone) {
+<span class="fc" id="L54">    this.numeroPersone = numeroPersone;</span>
+<span class="fc" id="L55">  }</span>
+
+  public LocalDate getDataVisita() {
+<span class="fc" id="L58">    return dataVisita;</span>
+  }
+
+  public void setDataVisita(LocalDate dataVisita) {
+<span class="fc" id="L62">    this.dataVisita = dataVisita;</span>
+<span class="fc" id="L63">  }</span>
+
+  @Override
+  public String toString() {
+<span class="fc" id="L67">    final StringBuilder sb = new StringBuilder(&quot;PrenotazioneForm{&quot;);</span>
+<span class="fc" id="L68">    sb.append(&quot;idVisita=&quot;).append(idVisita);</span>
+<span class="fc" id="L69">    sb.append(&quot;, numeroPersone=&quot;).append(numeroPersone);</span>
+<span class="fc" id="L70">    sb.append(&quot;, dataVisita=&quot;).append(dataVisita);</span>
+<span class="fc" id="L71">    sb.append('}');</span>
+<span class="fc" id="L72">    return sb.toString();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

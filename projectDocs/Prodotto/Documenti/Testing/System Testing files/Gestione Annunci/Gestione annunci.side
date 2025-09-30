@@ -1,0 +1,2412 @@
+{
+  "id": "c19591dd-2141-4edc-9555-14174d43790c",
+  "version": "2.0",
+  "name": "Gestione annunci",
+  "url": "http://localhost:8080/sottomissioneAnnuncio",
+  "tests": [{
+    "id": "abffac2d-a448-45a3-beb5-1b64a8145ab2",
+    "name": "TC_1.1_3",
+    "commands": [{
+      "id": "eb992a1e-bfcb-4d8c-bd7c-ed72c22b72b0",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/modificaStatoAnnuncio?idAnnuncio=8",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "70c2e404-e2b1-47d4-9d3a-8e3ae496f8cb",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "04f77b64-1861-4e8f-ad3d-3b2c1142cddf",
+      "comment": "",
+      "command": "click",
+      "target": "id=nuovoStato",
+      "targets": [
+        ["id=nuovoStato", "id"],
+        ["name=nuovoStato", "name"],
+        ["css=#nuovoStato", "css:finder"],
+        ["xpath=//select[@id='nuovoStato']", "xpath:attributes"],
+        ["xpath=//form[@id='formModificaStato']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "edbb3148-e089-413e-9853-8b34ac19d036",
+      "comment": "",
+      "command": "select",
+      "target": "id=nuovoStato",
+      "targets": [],
+      "value": "label=RIFIUTATO"
+    }, {
+      "id": "d6470048-0e09-4580-8c0d-77ceb87347b5",
+      "comment": "",
+      "command": "click",
+      "target": "id=motivoDelRifiuto",
+      "targets": [
+        ["id=motivoDelRifiuto", "id"],
+        ["name=motivoDelRifiuto", "name"],
+        ["css=#motivoDelRifiuto", "css:finder"],
+        ["xpath=//textarea[@id='motivoDelRifiuto']", "xpath:attributes"],
+        ["xpath=//div[@id='divMotivo']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "77cc3b8a-3f5d-4e50-880e-49d8ff03ce65",
+      "comment": "",
+      "command": "type",
+      "target": "id=motivoDelRifiuto",
+      "targets": [
+        ["id=motivoDelRifiuto", "id"],
+        ["name=motivoDelRifiuto", "name"],
+        ["css=#motivoDelRifiuto", "css:finder"],
+        ["xpath=//textarea[@id='motivoDelRifiuto']", "xpath:attributes"],
+        ["xpath=//div[@id='divMotivo']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "hcidbcsdcnsbkmcxmbxcuibebfkmdsifuirbmdbdofoierhfurbcm vdfkfhrbjvbirjifghreiohgkjnkjnvjdfnasònaaoegferjafpeir94t547685yghdknfvfkjn0392’23058485345t74tghfvievnerhgihsosnfdiohfregfdfsodoehrbvvxcn,msdpofjerhgurvdfls ojferfgeuldfiurhrigishsjldhf8efnvjkfndvvoòghneog"
+    }, {
+      "id": "68fa2430-8a23-4b02-95f1-ae630a292243",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//section[@id='features']/div/div/div/ul/button", "xpath:idRelative"],
+        ["xpath=//ul/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "60af4230-e1dd-4581-86c6-c139b0234598",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.d-inline",
+      "targets": [
+        ["css=.d-inline", "css:finder"],
+        ["xpath=//div[@id='divMotivo']/div", "xpath:idRelative"],
+        ["xpath=//form/div/div", "xpath:position"]
+      ],
+      "value": "Motivo del rifiuto deve essere compreso tra 1 e 255"
+    }]
+  }, {
+    "id": "b768d375-afa8-4609-b2d3-7cc82da7dedb",
+    "name": "TC_1.1_4",
+    "commands": [{
+      "id": "8214c9ff-4403-49c8-b414-5b1d2fde7fe8",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/modificaStatoAnnuncio?idAnnuncio=1",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f1f85bb3-1cf1-44d8-b055-fd7537a3beba",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f436d1e3-fed6-454a-86d8-d16cf5c11570",
+      "comment": "",
+      "command": "click",
+      "target": "id=nuovoStato",
+      "targets": [
+        ["id=nuovoStato", "id"],
+        ["name=nuovoStato", "name"],
+        ["css=#nuovoStato", "css:finder"],
+        ["xpath=//select[@id='nuovoStato']", "xpath:attributes"],
+        ["xpath=//form[@id='formModificaStato']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "350674e1-dc32-4951-971b-94e93e9e6301",
+      "comment": "",
+      "command": "select",
+      "target": "id=nuovoStato",
+      "targets": [],
+      "value": "label=RIFIUTATO"
+    }, {
+      "id": "f52b4e78-0602-467d-9c6c-89e7998a342d",
+      "comment": "",
+      "command": "click",
+      "target": "id=motivoDelRifiuto",
+      "targets": [
+        ["id=motivoDelRifiuto", "id"],
+        ["name=motivoDelRifiuto", "name"],
+        ["css=#motivoDelRifiuto", "css:finder"],
+        ["xpath=//textarea[@id='motivoDelRifiuto']", "xpath:attributes"],
+        ["xpath=//div[@id='divMotivo']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "29ccb88e-2fb3-4793-8147-084c3caddee0",
+      "comment": "",
+      "command": "type",
+      "target": "id=motivoDelRifiuto",
+      "targets": [
+        ["id=motivoDelRifiuto", "id"],
+        ["name=motivoDelRifiuto", "name"],
+        ["css=#motivoDelRifiuto", "css:finder"],
+        ["xpath=//textarea[@id='motivoDelRifiuto']", "xpath:attributes"],
+        ["xpath=//div[@id='divMotivo']/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "L’annuncio è stato rifiutato perché non conforme agli standard della piattaforma"
+    }, {
+      "id": "8f2ab68c-7411-4533-8c9f-85d19d8c35ba",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//section[@id='features']/div/div/div/ul/button", "xpath:idRelative"],
+        ["xpath=//ul/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "81f7d347-fe17-4fdd-bbde-99aba93e9702",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.fs-3",
+      "targets": [
+        ["css=.fs-3", "css:finder"],
+        ["xpath=//p", "xpath:position"]
+      ],
+      "value": "L'operazione effettuata sull'annuncio è andata a buon fine"
+    }]
+  }, {
+    "id": "a4bcdd04-437d-463c-b7bd-b14d146f8dae",
+    "name": "TC_1.2_1",
+    "commands": [{
+      "id": "0dc14fe3-a5c1-4c07-88f2-6f6c67b56291",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/sottomissioneAnnuncio",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6f633384-7d5b-4fb1-a54b-75129552b8e4",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4a7dff87-a381-4e57-a748-ca93c93a593b",
+      "comment": "",
+      "command": "click",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3805f479-a56d-4e86-ad3a-ad1a06987239",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(3) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(3) > .form-row", "css:finder"],
+        ["xpath=//form/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bc703604-108a-432e-9434-24837499317e",
+      "comment": "",
+      "command": "type",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia in mezzo alle colline di Salerno e un'attività che si occupa da trent'anni della produzione di vini, da 5 anni è diventata anche una attività di degustazione di vini nostrani ."
+    }, {
+      "id": "af26f85c-a782-4b14-a497-03a0039bdec1",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "14b505a9-4125-4240-967e-55ea84c232d7",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia in mezzo alle colline di Salerno"
+    }, {
+      "id": "715ecb18-a11b-44a5-8ddd-5a884f85cca9",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0ae1b2b4-9b5e-4953-922f-0ce4d2453ad0",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "30.50"
+    }, {
+      "id": "71c19a11-05a0-4ea9-b136-1b2091a5d4f1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add_form_field0",
+      "targets": [
+        ["css=.add_form_field0", "css:finder"],
+        ["xpath=//div[2]/div/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5817895f-5702-4500-983e-3c727ac9ba13",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(3) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(3) > .form-row", "css:finder"],
+        ["xpath=//form/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "11054318-8303-47a8-9715-0c32dc9f3ab7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(3) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(3) > .form-row", "css:finder"],
+        ["xpath=//form/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d72678d-6028-430d-bf41-610daa5b8519",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "css=.form-group:nth-child(3) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(3) > .form-row", "css:finder"],
+        ["xpath=//form/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dc18fddb-5fc6-4b7d-9833-b2e68578b200",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "de0a4b7a-a35b-4966-ad9b-a62ec09baf78",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "10:00"
+    }, {
+      "id": "9da4985f-b28a-4013-b2d9-efa6b4180307",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0ad9b8c8-a7a2-4ee1-9715-fa8517239c96",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "13:00"
+    }, {
+      "id": "eeb7be78-ba18-4019-bad6-c499c8a839b1",
+      "comment": "",
+      "command": "click",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0cc8cabc-6fa3-4a7f-a115-53c2760faa14",
+      "comment": "",
+      "command": "type",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Via Carmine Fiocchi 28"
+    }, {
+      "id": "f7d4081b-5c89-499b-8e45-820556f96ea6",
+      "comment": "",
+      "command": "click",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "832b67c5-da75-4b7b-a9ee-6720b4ae259c",
+      "comment": "",
+      "command": "type",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "9"
+    }, {
+      "id": "b2f980a1-8b25-470b-ac79-400344d42e8d",
+      "comment": "",
+      "command": "click",
+      "target": "id=provinciaAttivita",
+      "targets": [
+        ["id=provinciaAttivita", "id"],
+        ["name=provinciaAttivita", "name"],
+        ["css=#provinciaAttivita", "css:finder"],
+        ["xpath=//select[@id='provinciaAttivita']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "91769f14-688e-4152-bf2a-3d6062e5319f",
+      "comment": "",
+      "command": "select",
+      "target": "id=provinciaAttivita",
+      "targets": [],
+      "value": "label=Salerno"
+    }, {
+      "id": "b66e5d81-9a34-4a44-850e-6e50a383f1e3",
+      "comment": "",
+      "command": "click",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5b1ad9e7-05f7-43dd-84c0-25bc5fff8f2c",
+      "comment": "",
+      "command": "type",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "Degustazione di vini artigianali con aperitivo"
+    }, {
+      "id": "eb95193c-31a8-44d4-8886-cb5261863268",
+      "comment": "",
+      "command": "type",
+      "target": "id=formFileSm",
+      "targets": [
+        ["id=formFileSm", "id"],
+        ["name=foto", "name"],
+        ["css=#formFileSm", "css:finder"],
+        ["xpath=//input[@id='formFileSm']", "xpath:attributes"],
+        ["xpath=//div[5]/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C:\\Users\\losor\\Downloads\\fattoriadidattica.jpg"
+    }, {
+      "id": "69d12068-2fc3-49d4-bb18-dd800537ce5d",
+      "comment": "",
+      "command": "click",
+      "target": "id=bottonSubmit",
+      "targets": [
+        ["id=bottonSubmit", "id"],
+        ["css=#bottonSubmit", "css:finder"],
+        ["xpath=//input[@id='bottonSubmit']", "xpath:attributes"],
+        ["xpath=//div[2]/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0b4075f6-fd9c-430e-8f27-9079652689b3",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.d-inline",
+      "targets": [
+        ["css=.d-inline", "css:finder"],
+        ["xpath=//div/div/div/div/div", "xpath:position"]
+      ],
+      "value": "Nome attività deve avere una lunghezza compresa fra 2 e 40"
+    }]
+  }, {
+    "id": "151c68b3-1a72-4bcc-affa-da2d327cf943",
+    "name": "TC_1.2_2",
+    "commands": [{
+      "id": "c0c20841-fb88-4bff-93d1-59959adeaede",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/sottomissioneAnnuncio",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3ce3eb9d-f22c-42fd-a3ca-9d6513f18335",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "109aa084-42e9-4fd3-819f-d98dc07a0c9e",
+      "comment": "",
+      "command": "click",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e871a48a-21be-465c-8072-0aec75f13eab",
+      "comment": "",
+      "command": "type",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "la Casa     del      vicino        Tobia       in       mezzo    alle     colline         di      Salerno          e            un'attività        che          si      occupa          da trent'anni della produzione      di           vini, da 5 anni                è diventata         anche             una                attività             di degustazione           di              vini                 nostrani .\\nNoi                  pensiamo           di essere una            delle poche                attività              che               può             offrire             un                vasto             catalogo           di               vidi                di                ogni genere           e         annata . Avendo             anche             un           \\n Nel nostro orto             possiamo            offrire            anche          degli            ottimi            antipasti          a         base          di        verdure            a             chilometro 0,ma non solo in rare occasioni organizziamo pranzi e cene a base di carne o pesce .\\n"
+    }, {
+      "id": "8e0f1263-0a4d-4730-ad75-c0e8d45a0daa",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "54faf1f2-139b-4768-b3fc-16d1eb4a2645",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia "
+    }, {
+      "id": "8becd006-63c4-4072-965e-a71652b3edbe",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9cea6fa0-09d9-4239-ac1b-3c5990de4522",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "30.50"
+    }, {
+      "id": "4cf027d8-d976-406b-af0f-c39645d0d820",
+      "comment": "",
+      "command": "click",
+      "target": "id=provinciaAttivita",
+      "targets": [
+        ["id=provinciaAttivita", "id"],
+        ["name=provinciaAttivita", "name"],
+        ["css=#provinciaAttivita", "css:finder"],
+        ["xpath=//select[@id='provinciaAttivita']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "946aeca9-8978-4cfa-b7e6-8f05efc72b7d",
+      "comment": "",
+      "command": "select",
+      "target": "id=provinciaAttivita",
+      "targets": [],
+      "value": "label=Salerno"
+    }, {
+      "id": "f8f03108-3c4c-473d-8258-1f2629d452fb",
+      "comment": "",
+      "command": "click",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "84677594-d8e9-4dc3-a636-2b25dc1841e0",
+      "comment": "",
+      "command": "type",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "9"
+    }, {
+      "id": "3871d0bf-d05f-4f74-a15b-6da16374609a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add_form_field0 > .fa",
+      "targets": [
+        ["css=.add_form_field0 > .fa", "css:finder"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "020eec06-1c3e-489d-a67c-edc8818a15f3",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "41cb5990-649d-4478-9db7-d79435e3cfb5",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "10:00"
+    }, {
+      "id": "f71662e6-a91e-4d96-9b80-1c67fad6c370",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(3) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(3) > .form-row", "css:finder"],
+        ["xpath=//form/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d8c18cca-4317-4ec9-95ba-704d8af5e7ac",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cc358aa7-756f-4c5a-9ef4-1ae139e0aae1",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "13:00"
+    }, {
+      "id": "012dfbe8-d6e3-43ab-a8d5-ae7de693c805",
+      "comment": "",
+      "command": "click",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8e1dcad2-e826-4050-b18d-48315e7b5307",
+      "comment": "",
+      "command": "type",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Via Carmine Fiocchi 28"
+    }, {
+      "id": "3bec5ede-fc01-4f2e-892d-0f19bead0c89",
+      "comment": "",
+      "command": "click",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cbefae98-5706-4718-91ec-cfb835e0b3c0",
+      "comment": "",
+      "command": "type",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "Degustazione di vini artigianali con aperitivo"
+    }, {
+      "id": "3ff3775b-1253-4cd0-8e28-58e422793791",
+      "comment": "",
+      "command": "type",
+      "target": "id=formFileSm",
+      "targets": [
+        ["id=formFileSm", "id"],
+        ["name=foto", "name"],
+        ["css=#formFileSm", "css:finder"],
+        ["xpath=//input[@id='formFileSm']", "xpath:attributes"],
+        ["xpath=//div[5]/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C:\\Users\\losor\\Downloads\\fattoriadidattica.jpg"
+    }, {
+      "id": "51b2e305-ccd7-48b3-982b-893268b01e26",
+      "comment": "",
+      "command": "click",
+      "target": "id=bottonSubmit",
+      "targets": [
+        ["id=bottonSubmit", "id"],
+        ["css=#bottonSubmit", "css:finder"],
+        ["xpath=//input[@id='bottonSubmit']", "xpath:attributes"],
+        ["xpath=//div[2]/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7551bd58-e2b2-4b2b-986f-63edd119f191",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.d-inline",
+      "targets": [
+        ["css=.d-inline", "css:finder"],
+        ["xpath=//div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": "Descrizione deve avere una lunghezza compresa fra 2 e 1024"
+    }]
+  }, {
+    "id": "63bd48ff-26c9-4fce-a8c6-90ab7d9cc894",
+    "name": "TC_1.2_3",
+    "commands": [{
+      "id": "2dc552b8-7516-412b-a8db-60fd56d9b29b",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/sottomissioneAnnuncio",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "093d490e-2910-42ee-97c6-42c71fcf94fe",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "15fe699f-ba6b-4322-9639-24b9bc13167b",
+      "comment": "",
+      "command": "click",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b2d0f777-840f-4f30-8cb0-b3a85ae28aa4",
+      "comment": "",
+      "command": "type",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia in mezzo alle colline di Salerno e un'attività che si occupa da trent'anni della produzione di vini, da 5 anni è diventata anche una attività di degustazione di vini nostrani ."
+    }, {
+      "id": "20c24b30-c4f6-43f5-b5f7-f0bae8b15201",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f7418771-3abe-41c0-a79f-984078c18068",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "30.50"
+    }, {
+      "id": "3aeca932-f9ac-40be-b82b-07c21adaa7a5",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "62e49b74-c1fd-4798-9a32-c349af93bcb3",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia "
+    }, {
+      "id": "ce4ca529-8b2e-41d3-87be-1877b7c45991",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add_form_field0",
+      "targets": [
+        ["css=.add_form_field0", "css:finder"],
+        ["xpath=//div[2]/div/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2729b37c-6a2e-47a8-a7c6-eedc3b0996ca",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "54abdf88-4ffe-401b-821c-36299b540323",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "10:00"
+    }, {
+      "id": "334d191f-a845-442f-b775-bf8f8bb8604a",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bde5e18f-90a0-473f-8a3b-180de4169d67",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "13:00"
+    }, {
+      "id": "ba87a849-4467-44a4-912c-25a186562f0a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(5) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(5) > .form-row", "css:finder"],
+        ["xpath=//div[3]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d2b71ee5-e257-48ff-9c5f-977491254cd0",
+      "comment": "",
+      "command": "click",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e449a23b-416e-43ba-bb25-26a9dff18ffb",
+      "comment": "",
+      "command": "type",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Via Carmine della casa sull'albero di fronte al giardino romano dell'imperatore Ottaviano di buona avventura Fiocchi Davena Del Fiume 28"
+    }, {
+      "id": "d6ff0bfb-ac3e-4754-96fb-34f2cee9cb0a",
+      "comment": "",
+      "command": "click",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fb09db34-5e00-468e-9c1a-105b067c14f4",
+      "comment": "",
+      "command": "type",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "9"
+    }, {
+      "id": "c8d9f797-b781-4e84-b3fc-e6ca60748bb8",
+      "comment": "",
+      "command": "click",
+      "target": "id=provinciaAttivita",
+      "targets": [
+        ["id=provinciaAttivita", "id"],
+        ["name=provinciaAttivita", "name"],
+        ["css=#provinciaAttivita", "css:finder"],
+        ["xpath=//select[@id='provinciaAttivita']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "72c2413b-7e28-4bf8-8181-5b27bfb8a192",
+      "comment": "",
+      "command": "select",
+      "target": "id=provinciaAttivita",
+      "targets": [],
+      "value": "label=Salerno"
+    }, {
+      "id": "02aa2082-070a-4e80-99eb-6c0541a29cb2",
+      "comment": "",
+      "command": "click",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "86aed230-4825-424c-9ca4-6301cb6b123d",
+      "comment": "",
+      "command": "type",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "Degustazione di vini artigianali con aperitivo"
+    }, {
+      "id": "7e7c5fe1-5736-49ac-8cbc-0ca5c6e4fbeb",
+      "comment": "",
+      "command": "type",
+      "target": "id=formFileSm",
+      "targets": [
+        ["id=formFileSm", "id"],
+        ["name=foto", "name"],
+        ["css=#formFileSm", "css:finder"],
+        ["xpath=//input[@id='formFileSm']", "xpath:attributes"],
+        ["xpath=//div[5]/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C:\\Users\\losor\\Downloads\\fattoriadidattica.jpg"
+    }, {
+      "id": "2dbf4566-72c0-4aba-9683-79503bad1236",
+      "comment": "",
+      "command": "click",
+      "target": "id=bottonSubmit",
+      "targets": [
+        ["id=bottonSubmit", "id"],
+        ["css=#bottonSubmit", "css:finder"],
+        ["xpath=//input[@id='bottonSubmit']", "xpath:attributes"],
+        ["xpath=//div[2]/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c39dc6ff-e983-40e1-8d89-aa79a4f751d9",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.d-inline",
+      "targets": [
+        ["css=.d-inline", "css:finder"],
+        ["xpath=//div[3]/div/div/div/div", "xpath:position"]
+      ],
+      "value": "Indirizzo deve avere una lunghezza compresa fra 2 e 128"
+    }]
+  }, {
+    "id": "d8a5e4e1-3ad8-4f8d-9b8d-f323be116cd0",
+    "name": "TC_1.2_5",
+    "commands": [{
+      "id": "d6563ee4-c647-45c5-8ec8-995c4dcf08c8",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/sottomissioneAnnuncio",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "96083f65-b1b6-4eb6-bfdc-552653c7cbe8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d663f0b4-49eb-4ddc-862b-55c80aa73b9f",
+      "comment": "",
+      "command": "click",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1d6a6c7-0e35-4cd9-8543-851362e3896c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(3) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(3) > .form-row", "css:finder"],
+        ["xpath=//form/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5514f937-803d-4a4a-81a9-ef603b9dc04c",
+      "comment": "",
+      "command": "type",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia in mezzo alle colline di Salerno e un'attività che si occupa da trent'anni della produzione di vini, da 5 anni è diventata anche una attività di degustazione di vini nostrani."
+    }, {
+      "id": "020b351a-6d3a-46d0-93e7-8a1a5ea7b510",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "470cd0f9-e19c-4732-b491-5c93aef46028",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia"
+    }, {
+      "id": "d120a7a4-14ce-4582-a429-5994c4cd6e47",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c03225f0-fc81-4578-8455-6a19ef1e2300",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "30.50"
+    }, {
+      "id": "1808768f-ccad-4e80-80cc-1c046ae04553",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add_form_field0 > .fa",
+      "targets": [
+        ["css=.add_form_field0 > .fa", "css:finder"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f4bb1d1f-b337-4c0c-8cf8-712c77618f2e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(3) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(3) > .form-row", "css:finder"],
+        ["xpath=//form/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2514b9f3-a67a-4da4-a9e7-e2be5882ecef",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1446fa5e-84c1-4e53-b068-7a294940a2e2",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "10:00"
+    }, {
+      "id": "50199521-3af5-48f5-a2ac-97dc9fa47560",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6491c763-05ef-4c53-99e2-a30c5bcd6c0d",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "13:00"
+    }, {
+      "id": "f0901cbe-c0dc-417d-a672-23692c3c2f99",
+      "comment": "",
+      "command": "click",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "36cf0b0e-6afc-434e-8d6f-c42d197c27d7",
+      "comment": "",
+      "command": "type",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Via Carmine Fiocchi 28"
+    }, {
+      "id": "713ccc3e-ded9-427f-b27e-45950c9b02d4",
+      "comment": "",
+      "command": "click",
+      "target": "id=provinciaAttivita",
+      "targets": [
+        ["id=provinciaAttivita", "id"],
+        ["name=provinciaAttivita", "name"],
+        ["css=#provinciaAttivita", "css:finder"],
+        ["xpath=//select[@id='provinciaAttivita']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "19fd0ec6-13c8-41a0-a5e7-80ce4a322e86",
+      "comment": "",
+      "command": "select",
+      "target": "id=provinciaAttivita",
+      "targets": [],
+      "value": "label=Salerno"
+    }, {
+      "id": "684865be-4d92-4930-90a8-cd981b7887fe",
+      "comment": "",
+      "command": "click",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aafd47ed-2904-47b9-9577-52f202ebd40b",
+      "comment": "",
+      "command": "type",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "9"
+    }, {
+      "id": "7edafdb2-9994-4b81-b862-bf945e38bdba",
+      "comment": "",
+      "command": "click",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0bc8a927-84fd-4a8e-b842-6cb74f8f472c",
+      "comment": "",
+      "command": "type",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": " Degustazione di vini artigianali con aperitivo             offerta dalla nostra attività che si occupa da              trent'anni della produzione di vini, da 5 anni è diventata                anche una              attività di degustazione di vini nostrani."
+    }, {
+      "id": "b4476249-82ee-4351-9efd-03360511dade",
+      "comment": "",
+      "command": "type",
+      "target": "id=formFileSm",
+      "targets": [
+        ["id=formFileSm", "id"],
+        ["name=foto", "name"],
+        ["css=#formFileSm", "css:finder"],
+        ["xpath=//input[@id='formFileSm']", "xpath:attributes"],
+        ["xpath=//div[5]/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C:\\Users\\losor\\Downloads\\fattoriadidattica.jpg"
+    }, {
+      "id": "fbf65573-b9a4-42a2-86d8-beb17c051a77",
+      "comment": "",
+      "command": "click",
+      "target": "id=bottonSubmit",
+      "targets": [
+        ["id=bottonSubmit", "id"],
+        ["css=#bottonSubmit", "css:finder"],
+        ["xpath=//input[@id='bottonSubmit']", "xpath:attributes"],
+        ["xpath=//div[2]/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1421c818-bfba-4f12-a398-9e8873b5ae06",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.d-inline",
+      "targets": [
+        ["css=.d-inline", "css:finder"],
+        ["xpath=//div[4]/div/div[2]/div/div", "xpath:position"]
+      ],
+      "value": "Servizi offerti deve avere una lunghezza compresa fra 2 e 255"
+    }]
+  }, {
+    "id": "bd6ab7f8-ce8c-4a3b-9bac-3894a9325a6c",
+    "name": "TC_1.2_11",
+    "commands": [{
+      "id": "658d48a2-e8c5-4b73-a0c7-afbd8e5242d5",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/sottomissioneAnnuncio",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e7e7e0e8-e9c0-4d42-968f-4fbe9cc6f123",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d5ba1880-89d9-4034-b2c4-1e5bf0e56b30",
+      "comment": "",
+      "command": "click",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7bec3943-ae7a-4085-a6c1-7d42a35552ec",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(3) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(3) > .form-row", "css:finder"],
+        ["xpath=//form/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2788fa7c-5c57-4b9d-b261-d2cf1531665b",
+      "comment": "",
+      "command": "type",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia in mezzo alle colline di Salerno e un'attività che si occupa da trent'anni della produzione di vini, da 5 anni è diventata anche una attività di degustazione di vini nostrani."
+    }, {
+      "id": "3ec6d78e-354a-4880-9b9a-9ba55a49b5d6",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2d9ec8c5-982a-49c8-8f59-25010c18778e",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia"
+    }, {
+      "id": "674d0c9d-914b-4d52-9338-23292712eb44",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3c1dad68-760c-4c5f-97d0-13bd26d9e289",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "30.50"
+    }, {
+      "id": "9d49883f-fbd0-40f8-8576-dc17a59fb3c9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add_form_field0",
+      "targets": [
+        ["css=.add_form_field0", "css:finder"],
+        ["xpath=//div[2]/div/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "93a38f70-db15-4b8d-b816-0270cb020c4b",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7ff968d1-df38-4792-a312-71c083171ccb",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "10:00"
+    }, {
+      "id": "1879c439-8689-4b14-aaa4-31efebd609c9",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "adfc2015-70cb-4f97-8315-87b057931a99",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "13:00"
+    }, {
+      "id": "81e5b2b8-350d-4c24-b172-f0a76112ec80",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(7) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(7) > .form-row", "css:finder"],
+        ["xpath=//div[4]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "54ffeffc-bf34-4910-bf26-98c61dba4e9d",
+      "comment": "",
+      "command": "click",
+      "target": "id=provinciaAttivita",
+      "targets": [
+        ["id=provinciaAttivita", "id"],
+        ["name=provinciaAttivita", "name"],
+        ["css=#provinciaAttivita", "css:finder"],
+        ["xpath=//select[@id='provinciaAttivita']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5e5ab1aa-f636-4531-8b97-a7ffcc32e491",
+      "comment": "",
+      "command": "select",
+      "target": "id=provinciaAttivita",
+      "targets": [],
+      "value": "label=Salerno"
+    }, {
+      "id": "1cda40b4-f6d1-410b-bca6-a5f7b58c83f6",
+      "comment": "",
+      "command": "click",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7bf83634-4a0b-4e58-9870-587afdda1e3f",
+      "comment": "",
+      "command": "type",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "9"
+    }, {
+      "id": "6eba0d2a-fdd2-4b32-991c-a03256bde4cd",
+      "comment": "",
+      "command": "click",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b490d701-916f-40ef-b624-96b124ca0ca4",
+      "comment": "",
+      "command": "type",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "Degustazione di vini artigianali con aperitivo"
+    }, {
+      "id": "d40af78f-225a-4bbf-9e9f-daccc34bd003",
+      "comment": "",
+      "command": "click",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "75bb6598-a256-4588-a456-7441c2c74995",
+      "comment": "",
+      "command": "type",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Via Carmine Fiocchi 28"
+    }, {
+      "id": "cf875807-bcf5-4027-96f4-01f35b12aa4b",
+      "comment": "",
+      "command": "type",
+      "target": "id=formFileSm",
+      "targets": [
+        ["id=formFileSm", "id"],
+        ["name=foto", "name"],
+        ["css=#formFileSm", "css:finder"],
+        ["xpath=//input[@id='formFileSm']", "xpath:attributes"],
+        ["xpath=//div[5]/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C:\\Users\\losor\\Downloads\\people-2370236.jpg"
+    }, {
+      "id": "777fb337-e03d-4dd0-aa13-9b0f0edc5f54",
+      "comment": "",
+      "command": "click",
+      "target": "id=bottonSubmit",
+      "targets": [
+        ["id=bottonSubmit", "id"],
+        ["css=#bottonSubmit", "css:finder"],
+        ["xpath=//input[@id='bottonSubmit']", "xpath:attributes"],
+        ["xpath=//div[2]/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5a63d6bf-a701-468d-8da7-837786d56610",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.lead:nth-child(3)",
+      "targets": [
+        ["css=.lead:nth-child(3)", "css:finder"],
+        ["xpath=//p[3]", "xpath:position"],
+        ["xpath=//p[contains(.,'Problema riscontrato: Maximum upload size exceeded')]", "xpath:innerText"]
+      ],
+      "value": "Problema riscontrato: Maximum upload size exceeded"
+    }]
+  }, {
+    "id": "a6ca5dbf-c7ea-42c8-a0b3-7816c7dd73d9",
+    "name": "TC_1.2_12",
+    "commands": [{
+      "id": "ee572f62-f587-41dc-a15f-db15f6af593a",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/sottomissioneAnnuncio",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c55de2b1-3cc8-4802-b296-52acd1ba27b2",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0ad19274-f809-44c2-9e7a-aa14631fa10c",
+      "comment": "",
+      "command": "click",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "78140aa4-ad07-4ded-aab5-1c0b8bf9e053",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(3) > .form-row",
+      "targets": [
+        ["css=.form-group:nth-child(3) > .form-row", "css:finder"],
+        ["xpath=//form/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "82f80583-2908-4ca4-beee-a62777de4939",
+      "comment": "",
+      "command": "type",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia in mezzo alle colline di Salerno e un'attività che si occupa da trent'anni della produzione di vini, da 5 anni è diventata anche una attività di degustazione di vini nostrani."
+    }, {
+      "id": "faac7bea-21bb-4269-ac1f-70477e665197",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ec02fac3-a428-4e1d-90de-c7ebf4532340",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia"
+    }, {
+      "id": "4245b590-d2b3-4906-a925-c6cbdf54e16c",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f4a15817-e5a5-4b5f-a248-c6883dd0f313",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "30.50"
+    }, {
+      "id": "cd196f9b-2088-4312-9f19-bca7a6438c47",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add_form_field0 > .fa",
+      "targets": [
+        ["css=.add_form_field0 > .fa", "css:finder"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a4c3ecde-ba60-44a0-a115-afc488a14f29",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.add_form_field0 > .fa",
+      "targets": [
+        ["css=.add_form_field0 > .fa", "css:finder"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dd37d50c-03a8-4a52-828b-646cccae5149",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.add_form_field0 > .fa",
+      "targets": [
+        ["css=.add_form_field0 > .fa", "css:finder"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e86766d6-2817-4656-8bdd-34af3ac22a93",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e4944eb6-0508-4f75-8f7d-2de15be3da0d",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "10:00"
+    }, {
+      "id": "2b184ce2-25b5-4787-8c92-3238c4e68b81",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6543e9e9-47c1-4513-80f5-e29089b0a244",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "13:00"
+    }, {
+      "id": "ebb3c7da-5007-4a60-a90e-79ccccd3cf28",
+      "comment": "",
+      "command": "click",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "04f692d1-993a-4e5f-abce-3249c0dc84b2",
+      "comment": "",
+      "command": "type",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Via Carmine Fiocchi 28"
+    }, {
+      "id": "6ba3f91a-989c-4b4c-b6c5-aca7b0dac78d",
+      "comment": "",
+      "command": "click",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5116f3ff-48cd-483d-9eed-d8dff59a4f1f",
+      "comment": "",
+      "command": "type",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "9"
+    }, {
+      "id": "43a4ade7-f167-4778-a6d4-7b76782df16a",
+      "comment": "",
+      "command": "click",
+      "target": "id=provinciaAttivita",
+      "targets": [
+        ["id=provinciaAttivita", "id"],
+        ["name=provinciaAttivita", "name"],
+        ["css=#provinciaAttivita", "css:finder"],
+        ["xpath=//select[@id='provinciaAttivita']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3aa78100-a78a-4c76-a13d-c33733bbe16e",
+      "comment": "",
+      "command": "select",
+      "target": "id=provinciaAttivita",
+      "targets": [],
+      "value": "label=Salerno"
+    }, {
+      "id": "afa4c369-b508-4fc3-99b4-ca22625e14df",
+      "comment": "",
+      "command": "click",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bcdbc347-60c6-4af1-bd37-8a6243654526",
+      "comment": "",
+      "command": "type",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "Degustazione di vini artigianali con aperitivo"
+    }, {
+      "id": "83207077-7221-4787-a9e7-a9c00d05434c",
+      "comment": "",
+      "command": "type",
+      "target": "id=formFileSm",
+      "targets": [
+        ["id=formFileSm", "id"],
+        ["name=foto", "name"],
+        ["css=#formFileSm", "css:finder"],
+        ["xpath=//input[@id='formFileSm']", "xpath:attributes"],
+        ["xpath=//div[5]/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C:\\Users\\losor\\Downloads\\fattoriadidattica.jpg"
+    }, {
+      "id": "73b7b95a-704b-4018-a541-e5572d129c02",
+      "comment": "",
+      "command": "click",
+      "target": "id=bottonSubmit",
+      "targets": [
+        ["id=bottonSubmit", "id"],
+        ["css=#bottonSubmit", "css:finder"],
+        ["xpath=//input[@id='bottonSubmit']", "xpath:attributes"],
+        ["xpath=//div[2]/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0e7148be-b31e-4a0d-b0bb-6897d7cc0392",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.fs-3",
+      "targets": [
+        ["css=.fs-3", "css:finder"],
+        ["xpath=//p", "xpath:position"]
+      ],
+      "value": "L'operazione effettuata sull'annuncio è andata a buon fine"
+    }]
+  }, {
+    "id": "783bdab9-e31a-4aab-b256-ae03d7fa04df",
+    "name": "TC_1.1_2",
+    "commands": [{
+      "id": "8df0a0b4-3c9f-461d-a1eb-1f18dc6a2f2b",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/modificaStatoAnnuncio?idAnnuncio=8",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bf84e0c8-0baa-4782-8047-89a812009aca",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8d405a02-f136-42b1-af41-ce2d8d4fad57",
+      "comment": "",
+      "command": "click",
+      "target": "id=nuovoStato",
+      "targets": [
+        ["id=nuovoStato", "id"],
+        ["name=nuovoStato", "name"],
+        ["css=#nuovoStato", "css:finder"],
+        ["xpath=//select[@id='nuovoStato']", "xpath:attributes"],
+        ["xpath=//form[@id='formModificaStato']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2331dbda-d4aa-4db3-866e-7c6a7351fe2a",
+      "comment": "",
+      "command": "select",
+      "target": "id=nuovoStato",
+      "targets": [],
+      "value": "label=RIFIUTATO"
+    }, {
+      "id": "9b84dad6-8fba-4f6b-9a0c-aa4acd765b20",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//section[@id='features']/div/div/div/ul/button", "xpath:idRelative"],
+        ["xpath=//ul/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "38d47c38-2d1c-424f-8b7a-87bff5db4a1a",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.d-inline",
+      "targets": [
+        ["css=.d-inline", "css:finder"],
+        ["xpath=//div[@id='divMotivo']/div", "xpath:idRelative"],
+        ["xpath=//form/div/div", "xpath:position"]
+      ],
+      "value": "Motivo del rifiuto vuoto"
+    }]
+  }, {
+    "id": "b8910694-b782-4881-8bcb-112e512c8570",
+    "name": "TC_1.2_10",
+    "commands": [{
+      "id": "977e5d42-b6dd-46ec-a740-9803406f797a",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/sottomissioneAnnuncio",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "110abf43-0b62-4c7c-8f16-b43fd0e3bd03",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2570d1a5-514c-49fc-9cda-7f3d609dc2c2",
+      "comment": "",
+      "command": "click",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ce19e3ac-431d-482f-abe8-92c06cd62942",
+      "comment": "",
+      "command": "type",
+      "target": "id=descAttivita",
+      "targets": [
+        ["id=descAttivita", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descAttivita", "css:finder"],
+        ["xpath=//textarea[@id='descAttivita']", "xpath:attributes"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia in mezzo alle colline di Salerno e un'attività che si occupa da trent'anni della produzione di vini, da 5 anni è diventata anche una attività di degustazione di vini nostrani."
+    }, {
+      "id": "599999b2-eb30-4f48-bd8b-908d4afed2ea",
+      "comment": "",
+      "command": "click",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7ba496e5-2d3b-43f2-89a5-a6ac60b52934",
+      "comment": "",
+      "command": "type",
+      "target": "id=nomeAttivita",
+      "targets": [
+        ["id=nomeAttivita", "id"],
+        ["css=#nomeAttivita", "css:finder"],
+        ["xpath=//input[@id='nomeAttivita']", "xpath:attributes"],
+        ["xpath=//div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "la Casa del vicino Tobia "
+    }, {
+      "id": "693779ea-2265-4cfd-80d9-4e17758211f9",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "67249b37-7a12-45d5-ae75-4efac80196e6",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzoAttivita",
+      "targets": [
+        ["id=prezzoAttivita", "id"],
+        ["name=prezzoVisita", "name"],
+        ["css=#prezzoAttivita", "css:finder"],
+        ["xpath=//input[@id='prezzoAttivita']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "30.50"
+    }, {
+      "id": "57c01f23-0b57-4b84-8d49-7551f421b0b2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add_form_field0 > .fa",
+      "targets": [
+        ["css=.add_form_field0 > .fa", "css:finder"],
+        ["xpath=//i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d8adaf67-0f57-48ea-b729-2219d9989f41",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "90f750f9-b1b2-4487-895b-e5bce58b5165",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioInizio",
+      "targets": [
+        ["id=visite0.orarioInizio", "id"],
+        ["name=visite[0].orarioInizio", "name"],
+        ["css=#visite0\\.orarioInizio", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioInizio']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "10:00"
+    }, {
+      "id": "fec113cd-34cc-43e0-92b6-3bbba26986b8",
+      "comment": "",
+      "command": "click",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2aed8cba-5ef3-4a31-9528-48996c824a93",
+      "comment": "",
+      "command": "type",
+      "target": "id=visite0.orarioFine",
+      "targets": [
+        ["id=visite0.orarioFine", "id"],
+        ["name=visite[0].orarioFine", "name"],
+        ["css=#visite0\\.orarioFine", "css:finder"],
+        ["xpath=//input[@id='visite0.orarioFine']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "13:00"
+    }, {
+      "id": "004e3db7-8bcb-48ee-beeb-4cac8c3d86e8",
+      "comment": "",
+      "command": "click",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ba6a811e-a379-4346-b638-01ff7f5f496b",
+      "comment": "",
+      "command": "type",
+      "target": "id=indirizzo",
+      "targets": [
+        ["id=indirizzo", "id"],
+        ["name=indirizzoAttivita", "name"],
+        ["css=#indirizzo", "css:finder"],
+        ["xpath=//input[@id='indirizzo']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "Via Carmine Fiocchi 28"
+    }, {
+      "id": "bf7323e3-74f4-4cf4-8565-963b6aca9068",
+      "comment": "",
+      "command": "click",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2bc2b7fa-0c3d-4799-88ea-b4a62c8ae01b",
+      "comment": "",
+      "command": "type",
+      "target": "id=nMax",
+      "targets": [
+        ["id=nMax", "id"],
+        ["name=numMaxPersonePerVisita", "name"],
+        ["css=#nMax", "css:finder"],
+        ["xpath=//input[@id='nMax']", "xpath:attributes"],
+        ["xpath=//div[3]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "-20"
+    }, {
+      "id": "b015cc02-b6fc-4b2b-b2f4-1bbd114146fb",
+      "comment": "",
+      "command": "click",
+      "target": "id=provinciaAttivita",
+      "targets": [
+        ["id=provinciaAttivita", "id"],
+        ["name=provinciaAttivita", "name"],
+        ["css=#provinciaAttivita", "css:finder"],
+        ["xpath=//select[@id='provinciaAttivita']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d81ceec9-016f-4283-b6be-b73bf8a62a9c",
+      "comment": "",
+      "command": "select",
+      "target": "id=provinciaAttivita",
+      "targets": [],
+      "value": "label=Salerno"
+    }, {
+      "id": "06c79b6c-8717-45f8-bf37-aa5bb6b6cc81",
+      "comment": "",
+      "command": "click",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4050d2ac-feed-472b-b1c4-9a3707226a6f",
+      "comment": "",
+      "command": "type",
+      "target": "id=serviziAttivita",
+      "targets": [
+        ["id=serviziAttivita", "id"],
+        ["name=serviziOfferti", "name"],
+        ["css=#serviziAttivita", "css:finder"],
+        ["xpath=//input[@id='serviziAttivita']", "xpath:attributes"],
+        ["xpath=//div[4]/div/div[2]/div/input", "xpath:position"]
+      ],
+      "value": "Degustazione di vini artigianali con aperitivo"
+    }, {
+      "id": "cababc33-0a30-4aff-8984-73ed43540238",
+      "comment": "",
+      "command": "type",
+      "target": "id=formFileSm",
+      "targets": [
+        ["id=formFileSm", "id"],
+        ["name=foto", "name"],
+        ["css=#formFileSm", "css:finder"],
+        ["xpath=//input[@id='formFileSm']", "xpath:attributes"],
+        ["xpath=//div[5]/div/div/div/div/div/input", "xpath:position"]
+      ],
+      "value": "C:\\Users\\losor\\Downloads\\fattoriadidattica.jpg"
+    }, {
+      "id": "c68ec54d-b16e-4059-bac2-39e7c29a500f",
+      "comment": "",
+      "command": "click",
+      "target": "id=bottonSubmit",
+      "targets": [
+        ["id=bottonSubmit", "id"],
+        ["css=#bottonSubmit", "css:finder"],
+        ["xpath=//input[@id='bottonSubmit']", "xpath:attributes"],
+        ["xpath=//div[2]/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "db51d46f-4ee3-49db-94fe-2b5273541fef",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.d-inline",
+      "targets": [
+        ["css=.d-inline", "css:finder"],
+        ["xpath=//div[3]/div/div[2]/div/div", "xpath:position"]
+      ],
+      "value": "Almeno una persona"
+    }]
+  }],
+  "suites": [{
+    "id": "5bf9f4c8-46bc-41ff-9a65-54619edb17a6",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/", "http://localhost:8080/visualizzazioneListaAnnunci", "http://localhost:8080/sottomissioneAnnuncio"],
+  "plugins": []
+}

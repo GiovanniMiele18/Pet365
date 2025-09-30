@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnnuncioForm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form</a> &gt; <span class="el_source">AnnuncioForm.java</span></div><h1>AnnuncioForm.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import java.math.BigDecimal;
+import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+
+/**
+ * Classe che rappresenta il form per la Sottomissione di un Annuncio.
+ */
+public class AnnuncioForm {
+
+  private Long idAnnuncio;
+
+  @NotBlank(message = &quot;Nome attività vuoto&quot;)
+  @Size(min = 2, max = 40, message = &quot;Nome attività deve avere una lunghezza compresa fra 2 e 40&quot;)
+  private String nomeAttivita;
+
+  @NotBlank(message = &quot;Provincia attività vuota&quot;)
+  @ProvinciaIsValidConstraint
+  private String provinciaAttivita;
+
+  @NotBlank(message = &quot;Indirizzo vuoto&quot;)
+  @Size(min = 2, max = 128, message = &quot;Indirizzo deve avere una lunghezza compresa fra 2 e 128&quot;)
+  private String indirizzoAttivita;
+
+  @NotBlank(message = &quot;Descrizione vuota&quot;)
+  @Size(min = 2, max = 1024, message = &quot;Descrizione deve avere una lunghezza compresa fra 2 e 1024&quot;)
+  private String descrizione;
+
+  @NotBlank(message = &quot;Servizi offerti vuoto&quot;)
+  @Size(min = 2, max = 255,
+      message = &quot;Servizi offerti deve avere una lunghezza compresa fra 2 e 255&quot;)
+  private String serviziOfferti;
+
+  @NotNull(message = &quot;Numero massimo di persone per visita vuoto&quot;)
+  @Min(value = 1, message = &quot;Almeno una persona&quot;)
+  private Integer numMaxPersonePerVisita;
+
+  @NotNull(message = &quot;Prezzo visita vuoto&quot;)
+  @DecimalMin(value = &quot;0.0&quot;, inclusive = false, message = &quot;Prezzo minore o uguale a 0&quot;)
+  @Digits(integer = 3, fraction = 2,
+      message = &quot;Prezzo può avere massimo 3 cifre intere e due decimali&quot;)
+  private BigDecimal prezzoVisita;
+
+  @NotNull(message = &quot;Nessuna foto inserita&quot;)
+  @Size(min = 1, max = 3, message = &quot;Almeno una, massimo 3 foto&quot;)
+  @FotoListIsValidConstraint
+  private List&lt;MultipartFile&gt; foto;
+
+  @NotNull(message = &quot;Nessuna visita inserita&quot;)
+  @Size(min = 1, message = &quot;Almeno una visita&quot;)
+  private List&lt;@Valid VisitaForm&gt; visite;
+
+<span class="fc" id="L61">  public AnnuncioForm() {</span>
+<span class="fc" id="L62">  }</span>
+
+  /**
+   * Costruttore di un annuncio.
+   *
+   * @param nomeAttivita           Nome dell'attività
+   * @param provinciaAttivita      Provincia dell' Attività.
+   * @param indirizzoAttivita      Indirizzo dell' Attività.
+   * @param descrizione            Descrizione della attività.
+   * @param serviziOfferti         Breve descrizione dei servizi offerti dalla attività.
+   * @param numMaxPersonePerVisita Numero massimo di persone che possono partecipare all' attività.
+   * @param prezzoVisita           Prezzo della visita.
+   * @param visite                 Lista delle visite del Annuncio.
+   */
+  public AnnuncioForm(Long idAnnuncio, String nomeAttivita, String provinciaAttivita,
+                      String indirizzoAttivita, String descrizione, String serviziOfferti,
+                      Integer numMaxPersonePerVisita, BigDecimal prezzoVisita,
+<span class="nc" id="L79">                      List&lt;@Valid VisitaForm&gt; visite) {</span>
+<span class="nc" id="L80">    this.idAnnuncio = idAnnuncio;</span>
+<span class="nc" id="L81">    this.nomeAttivita = nomeAttivita;</span>
+<span class="nc" id="L82">    this.provinciaAttivita = provinciaAttivita;</span>
+<span class="nc" id="L83">    this.indirizzoAttivita = indirizzoAttivita;</span>
+<span class="nc" id="L84">    this.descrizione = descrizione;</span>
+<span class="nc" id="L85">    this.serviziOfferti = serviziOfferti;</span>
+<span class="nc" id="L86">    this.numMaxPersonePerVisita = numMaxPersonePerVisita;</span>
+<span class="nc" id="L87">    this.prezzoVisita = prezzoVisita;</span>
+<span class="nc" id="L88">    this.visite = visite;</span>
+<span class="nc" id="L89">  }</span>
+
+  public Long getIdAnnuncio() {
+<span class="nc" id="L92">    return idAnnuncio;</span>
+  }
+
+  public void setIdAnnuncio(Long idAnnuncio) {
+<span class="nc" id="L96">    this.idAnnuncio = idAnnuncio;</span>
+<span class="nc" id="L97">  }</span>
+
+  public String getNomeAttivita() {
+<span class="fc" id="L100">    return nomeAttivita;</span>
+  }
+
+  public void setNomeAttivita(String nomeAttivita) {
+<span class="fc" id="L104">    this.nomeAttivita = nomeAttivita;</span>
+<span class="fc" id="L105">  }</span>
+
+  public String getProvinciaAttivita() {
+<span class="fc" id="L108">    return provinciaAttivita;</span>
+  }
+
+  public void setProvinciaAttivita(String provinciaAttivita) {
+<span class="fc" id="L112">    this.provinciaAttivita = provinciaAttivita;</span>
+<span class="fc" id="L113">  }</span>
+
+  public String getIndirizzoAttivita() {
+<span class="fc" id="L116">    return indirizzoAttivita;</span>
+  }
+
+  public void setIndirizzoAttivita(String indirizzoAttivita) {
+<span class="fc" id="L120">    this.indirizzoAttivita = indirizzoAttivita;</span>
+<span class="fc" id="L121">  }</span>
+
+  public String getDescrizione() {
+<span class="fc" id="L124">    return descrizione;</span>
+  }
+
+  public void setDescrizione(String descrizione) {
+<span class="fc" id="L128">    this.descrizione = descrizione;</span>
+<span class="fc" id="L129">  }</span>
+
+  public String getServiziOfferti() {
+<span class="fc" id="L132">    return serviziOfferti;</span>
+  }
+
+  public void setServiziOfferti(String serviziOfferti) {
+<span class="fc" id="L136">    this.serviziOfferti = serviziOfferti;</span>
+<span class="fc" id="L137">  }</span>
+
+  public Integer getNumMaxPersonePerVisita() {
+<span class="fc" id="L140">    return numMaxPersonePerVisita;</span>
+  }
+
+  public void setNumMaxPersonePerVisita(Integer numMaxPersonePerVisita) {
+<span class="fc" id="L144">    this.numMaxPersonePerVisita = numMaxPersonePerVisita;</span>
+<span class="fc" id="L145">  }</span>
+
+  public BigDecimal getPrezzoVisita() {
+<span class="fc" id="L148">    return prezzoVisita;</span>
+  }
+
+  public void setPrezzoVisita(BigDecimal prezzoVisita) {
+<span class="fc" id="L152">    this.prezzoVisita = prezzoVisita;</span>
+<span class="fc" id="L153">  }</span>
+
+  public List&lt;MultipartFile&gt; getFoto() {
+<span class="fc" id="L156">    return foto;</span>
+  }
+
+  public void setFoto(List&lt;MultipartFile&gt; foto) {
+<span class="fc" id="L160">    this.foto = foto;</span>
+<span class="fc" id="L161">  }</span>
+
+  public List&lt;VisitaForm&gt; getVisite() {
+<span class="fc" id="L164">    return visite;</span>
+  }
+
+  public void setVisite(List&lt;VisitaForm&gt; visite) {
+<span class="fc" id="L168">    this.visite = visite;</span>
+<span class="fc" id="L169">  }</span>
+
+  @Override
+  public String toString() {
+<span class="fc" id="L173">    final StringBuilder sb = new StringBuilder(&quot;AnnuncioForm{&quot;);</span>
+<span class="fc" id="L174">    sb.append(&quot;idAnnuncio=&quot;).append(idAnnuncio);</span>
+<span class="fc" id="L175">    sb.append(&quot;, nomeAttivita='&quot;).append(nomeAttivita).append('\'');</span>
+<span class="fc" id="L176">    sb.append(&quot;, provinciaAttivita='&quot;).append(provinciaAttivita).append('\'');</span>
+<span class="fc" id="L177">    sb.append(&quot;, indirizzoAttivita='&quot;).append(indirizzoAttivita).append('\'');</span>
+<span class="fc" id="L178">    sb.append(&quot;, descrizione='&quot;).append(descrizione).append('\'');</span>
+<span class="fc" id="L179">    sb.append(&quot;, serviziOfferti='&quot;).append(serviziOfferti).append('\'');</span>
+<span class="fc" id="L180">    sb.append(&quot;, numMaxPersonePerVisita=&quot;).append(numMaxPersonePerVisita);</span>
+<span class="fc" id="L181">    sb.append(&quot;, prezzoVisita=&quot;).append(prezzoVisita);</span>
+<span class="fc" id="L182">    sb.append(&quot;, foto=&quot;).append(foto);</span>
+<span class="fc" id="L183">    sb.append(&quot;, visite=&quot;).append(visite);</span>
+<span class="fc" id="L184">    sb.append('}');</span>
+<span class="fc" id="L185">    return sb.toString();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

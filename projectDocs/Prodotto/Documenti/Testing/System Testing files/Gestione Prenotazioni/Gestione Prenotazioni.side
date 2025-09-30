@@ -1,0 +1,474 @@
+{
+  "id": "4594e380-d09a-461d-9089-0059ce1d8cdc",
+  "version": "2.0",
+  "name": "Gestione Prenotazioni",
+  "url": "http://localhost:8080/visualizzazioneDettagliAnnuncio?id=9",
+  "tests": [{
+    "id": "6056faac-db1c-488b-80f5-08a3d5eb48bb",
+    "name": "TC_2.2_2",
+    "commands": [{
+      "id": "5fe7e4e7-0c29-4646-85c1-7cf9f875c8ec",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/visualizzazioneDettagliAnnuncio?id=9",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cb1eb5dc-2735-4618-bff7-5e92f68354e7",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "46fec638-1869-454e-92db-c5431f72ee52",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0ffea323-d1b4-4439-9ac2-3f3a68bc6818",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "0002-05-12"
+    }, {
+      "id": "dd0c833a-174b-457f-9591-c8822e037339",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "0020-05-12"
+    }, {
+      "id": "02f432b7-623d-41a8-be84-ed9bd7eb3cbf",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "0202-05-12"
+    }, {
+      "id": "b2df511a-0c58-4f20-9622-953a7f5cc2a2",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "2022-05-12"
+    }, {
+      "id": "9828ed91-b7fe-4bab-b016-418857b04f52",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.nav-item:nth-child(2) h4",
+      "targets": [
+        ["css=.nav-item:nth-child(2) h4", "css:finder"],
+        ["xpath=//form[@id='formprenotazione']/div/div/div/ul/li[2]/a/h4", "xpath:idRelative"],
+        ["xpath=//li[2]/a/h4", "xpath:position"],
+        ["xpath=//h4[contains(.,' Fascia oraria')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ff35b6f-96d3-471e-9828-58d3929d3f15",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Fascia oraria",
+      "targets": [
+        ["linkText=Fascia oraria", "linkText"],
+        ["css=.nav-item > .active", "css:finder"],
+        ["xpath=//form[@id='formprenotazione']/div/div/div/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#tab-2')]", "xpath:href"],
+        ["xpath=//form/div/div/div/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,' Fascia oraria')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b242d2ab-260a-4799-a32f-bc945c5c7703",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.active > h4",
+      "targets": [
+        ["css=.active > h4", "css:finder"],
+        ["xpath=//form[@id='formprenotazione']/div/div/div/ul/li[2]/a/h4", "xpath:idRelative"],
+        ["xpath=//li[2]/a/h4", "xpath:position"],
+        ["xpath=//h4[contains(.,' Fascia oraria')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "74d872f9-ef1a-49a2-9376-4ccf7ce5d83e",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=listavisite",
+      "targets": [
+        ["id=listavisite", "id"],
+        ["name=idVisita", "name"],
+        ["css=#listavisite", "css:finder"],
+        ["xpath=//select[@id='listavisite']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-2']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"],
+        ["xpath=//select[contains(.,'Data nel passato')]", "xpath:innerText"]
+      ],
+      "value": "Data nel passato"
+    }]
+  }, {
+    "id": "7755eb63-5e57-4bd6-86a2-0055d87c7dd5",
+    "name": "TC_2.2_3",
+    "commands": [{
+      "id": "97439675-04f2-402a-899c-15a2dd561d85",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/visualizzazioneDettagliAnnuncio?id=9",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0069a843-1aba-4252-b99b-9bd2c27681d2",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "edbdf876-d212-4d40-977b-2df20eb1dc61",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "032066cb-ca66-4ee6-b3e0-27e564160991",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "2023-03-07"
+    }, {
+      "id": "8b8e03d9-ab20-46b5-8cae-a9cb8be7ca6d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Fascia oraria",
+      "targets": [
+        ["linkText=Fascia oraria", "linkText"],
+        ["css=.nav-item > .active", "css:finder"],
+        ["xpath=//form[@id='formprenotazione']/div/div/div/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#tab-2')]", "xpath:href"],
+        ["xpath=//form/div/div/div/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,' Fascia oraria')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9971278d-ffdb-4d98-9bfd-28460d036d29",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=listavisite",
+      "targets": [
+        ["id=listavisite", "id"],
+        ["name=idVisita", "name"],
+        ["css=#listavisite", "css:finder"],
+        ["xpath=//select[@id='listavisite']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-2']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"],
+        ["xpath=//select[contains(.,'Nessuna visita')]", "xpath:innerText"]
+      ],
+      "value": "Nessuna visita"
+    }]
+  }, {
+    "id": "77c78e44-a721-49ac-a637-4bb52ea5619b",
+    "name": "TC_2.2_7",
+    "commands": [{
+      "id": "f588b42c-a246-4188-b36b-f9bdceaff155",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/visualizzazioneDettagliAnnuncio?id=9",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cf078236-8fd5-4446-a711-7d082c9f48cc",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b8c16543-664a-4e48-a83b-1baee429a706",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "eac8c6a4-91fa-497e-8c88-ccbe8ed07805",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "0002-03-10"
+    }, {
+      "id": "e8871dd5-3d9c-4314-bf3d-432a327d54c0",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "0020-03-10"
+    }, {
+      "id": "fcc36c9b-243b-4d08-9ef1-f903c8a23f6e",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "0202-03-10"
+    }, {
+      "id": "659b5fcd-4d7c-41c6-956e-fa0a12a3712d",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataVisita",
+      "targets": [
+        ["id=dataVisita", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dataVisita", "css:finder"],
+        ["xpath=//input[@id='dataVisita']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-1']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "2023-03-10"
+    }, {
+      "id": "39631afe-625d-49ef-a370-2ea877eb1a53",
+      "comment": "",
+      "command": "click",
+      "target": "css=.order-1",
+      "targets": [
+        ["css=.order-1", "css:finder"],
+        ["xpath=//form[@id='formprenotazione']/div/div/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div/div/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a89586b8-d041-4f18-966c-c9dbdb485df4",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Fascia oraria",
+      "targets": [
+        ["linkText=Fascia oraria", "linkText"],
+        ["css=.nav-item > .active", "css:finder"],
+        ["xpath=//form[@id='formprenotazione']/div/div/div/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#tab-2')]", "xpath:href"],
+        ["xpath=//form/div/div/div/ul/li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,' Fascia oraria')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3822aafc-adc0-424f-b773-cc899f59cc58",
+      "comment": "",
+      "command": "click",
+      "target": "id=listavisite",
+      "targets": [
+        ["id=listavisite", "id"],
+        ["name=idVisita", "name"],
+        ["css=#listavisite", "css:finder"],
+        ["xpath=//select[@id='listavisite']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-2']/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ffe3aa6b-e3e9-40dd-b5ea-47332485b865",
+      "comment": "",
+      "command": "select",
+      "target": "id=listavisite",
+      "targets": [],
+      "value": "label=10:00:00-18:00:00"
+    }, {
+      "id": "0a5d8b4f-fe64-44e2-955a-10cca8a5921b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Numero persone",
+      "targets": [
+        ["css=.nav-item > .active", "css:finder"],
+        ["xpath=//form[@id='formprenotazione']/div/div/div/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#tab-3')]", "xpath:href"],
+        ["xpath=//form/div/div/div/ul/li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "311dc856-6233-4165-be9c-3bc56a0469f8",
+      "comment": "",
+      "command": "type",
+      "target": "id=numpersone",
+      "targets": [
+        ["id=numpersone", "id"],
+        ["name=numeroPersone", "name"],
+        ["css=#numpersone", "css:finder"],
+        ["xpath=//input[@id='numpersone']", "xpath:attributes"],
+        ["xpath=//div[@id='tab-3']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[3]/input", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "16c97e37-5770-4685-a9bc-cfa3a951650c",
+      "comment": "",
+      "command": "click",
+      "target": "id=prenota",
+      "targets": [
+        ["id=prenota", "id"],
+        ["css=#prenota", "css:finder"],
+        ["xpath=//button[@id='prenota']", "xpath:attributes"],
+        ["xpath=//form[@id='formprenotazione']/div/div/div/ul/button", "xpath:idRelative"],
+        ["xpath=//ul/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b65f437e-fb99-4a53-84a1-4d3c46cea6c0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.px-3:nth-child(1)",
+      "targets": [
+        ["css=.px-3:nth-child(1)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "98b02a9d-d703-4ed4-b505-614f1c5de052",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.lead",
+      "targets": [
+        ["css=.lead", "css:finder"],
+        ["xpath=//p[2]", "xpath:position"],
+        ["xpath=//p[contains(.,'Il pagamento è andato a buon fine')]", "xpath:innerText"]
+      ],
+      "value": "Il pagamento è andato a buon fine"
+    }]
+  }, {
+    "id": "59e1d908-207e-43c9-8054-645c3170dfcb",
+    "name": "TC_2.1_2",
+    "commands": [{
+      "id": "51410111-1d76-4e41-84c5-ff64c5d6225c",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/visualizzazionePrenotazioniAnnuncio?idAnnuncio=2",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9346724a-a96c-4c17-a25a-bbd89bc89896",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "61f51c44-490e-4ce7-9ee8-e653c4325149",
+      "comment": "",
+      "command": "click",
+      "target": "id=dateStandard",
+      "targets": [
+        ["id=dateStandard", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dateStandard", "css:finder"],
+        ["xpath=//input[@id='dateStandard']", "xpath:attributes"],
+        ["xpath=//form[@id='formdata']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d7d78124-c5b4-4612-ad8f-2091b48f3c4c",
+      "comment": "",
+      "command": "type",
+      "target": "id=dateStandard",
+      "targets": [
+        ["id=dateStandard", "id"],
+        ["name=dataVisita", "name"],
+        ["css=#dateStandard", "css:finder"],
+        ["xpath=//input[@id='dateStandard']", "xpath:attributes"],
+        ["xpath=//form[@id='formdata']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "2023-02-13"
+    }]
+  }],
+  "suites": [{
+    "id": "5d57647c-51ea-4e10-bd72-791fcf4d4868",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["6056faac-db1c-488b-80f5-08a3d5eb48bb"]
+  }],
+  "urls": ["http://localhost:8080/visualizzazioneDettagliAnnuncio?id=9", "http://localhost:8080/visualizzazionePrenotazioniAnnuncio?idAnnuncio=2"],
+  "plugins": []
+}

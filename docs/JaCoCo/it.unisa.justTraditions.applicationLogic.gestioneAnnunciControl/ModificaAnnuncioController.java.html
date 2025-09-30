@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ModificaAnnuncioController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl</a> &gt; <span class="el_source">ModificaAnnuncioController.java</span></div><h1>ModificaAnnuncioController.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl;
+
+import it.unisa.justTraditions.applicationLogic.autenticazioneControl.util.SessionCliente;
+import it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form.AnnuncioForm;
+import it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form.VisitaForm;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.dao.AnnuncioDao;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Annuncio;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Foto;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Visita;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.dao.AmministratoreDao;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Amministratore;
+import jakarta.validation.Valid;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+/**
+ * Implementa il controller per la modifica di un annuncio.
+ */
+@Controller
+@RequestMapping(&quot;/modificaAnnuncio&quot;)
+<span class="fc" id="L33">public class ModificaAnnuncioController {</span>
+
+  private static final String modificaAnnuncioView =
+      &quot;gestioneAnnunciView/modificaAnnuncio&quot;;
+  private static final String modificaAnnuncioSuccessView =
+      &quot;gestioneAnnunciView/modificaAnnuncioSuccess&quot;;
+
+  @Autowired
+  private AnnuncioDao annuncioDao;
+
+  @Autowired
+  private AmministratoreDao amministratoreDao;
+
+  @Autowired
+  private SessionCliente sessionCliente;
+
+  /**
+   * Implementa la funzionalità di smistare l'Artigiano
+   * sulla view di gestioneAnnunciView/modificaAnnuncio.
+   * gestioneAnnunciView/modificaAnnuncio se i parametri sono giusti.
+   * IllegalArgumentException se l'id non corrisponde a un annuncio
+   * se l'annuncio non e dell'artigiano loggato o lo stato dell'annuncio e Proposto o In_Revisione.
+   *
+   * @param id    Utilizzato per la ricerca dell Annuncio nel database.
+   * @param model Utilizzato per passare degli attributi alla view.
+   * @return Restituisce la view da reindirizzare.
+   * @throws IllegalArgumentException se i dati non sono previsti dal sistema.
+   */
+  @GetMapping
+  public String get(@RequestParam Long id, Model model) {
+<span class="nc" id="L63">    Optional&lt;Annuncio&gt; optionalAnnuncio = annuncioDao.findById(id);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">    if (optionalAnnuncio.isEmpty()) {</span>
+<span class="nc" id="L65">      throw new IllegalArgumentException();</span>
+    }
+
+<span class="nc" id="L68">    Annuncio annuncio = optionalAnnuncio.get();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">    if (!annuncio.getArtigiano().equals(sessionCliente.getCliente().get())) {</span>
+<span class="nc" id="L70">      throw new IllegalArgumentException();</span>
+    }
+
+<span class="nc bnc" id="L73" title="All 2 branches missed.">    if (annuncio.getStato() == Annuncio.Stato.PROPOSTO</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        || annuncio.getStato() == Annuncio.Stato.IN_REVISIONE) {</span>
+<span class="nc" id="L75">      throw new IllegalArgumentException();</span>
+    }
+
+<span class="nc" id="L78">    AnnuncioForm annuncioForm = new AnnuncioForm();</span>
+<span class="nc" id="L79">    annuncioForm.setIdAnnuncio(annuncio.getId());</span>
+<span class="nc" id="L80">    annuncioForm.setNomeAttivita(annuncio.getNomeAttivita());</span>
+<span class="nc" id="L81">    annuncioForm.setProvinciaAttivita(annuncio.getProvinciaAttivita());</span>
+<span class="nc" id="L82">    annuncioForm.setIndirizzoAttivita(annuncio.getIndirizzoAttivita());</span>
+<span class="nc" id="L83">    annuncioForm.setDescrizione(annuncio.getDescrizione());</span>
+<span class="nc" id="L84">    annuncioForm.setServiziOfferti(annuncio.getServiziOfferti());</span>
+<span class="nc" id="L85">    annuncioForm.setNumMaxPersonePerVisita(annuncio.getNumMaxPersonePerVisita());</span>
+<span class="nc" id="L86">    annuncioForm.setPrezzoVisita(annuncio.getPrezzoVisita());</span>
+
+
+<span class="nc" id="L89">    List&lt;Long&gt; idFoto = annuncio.getFoto().stream()</span>
+<span class="nc" id="L90">        .map(Foto::getId)</span>
+<span class="nc" id="L91">        .toList();</span>
+<span class="nc" id="L92">    model.addAttribute(&quot;idFoto&quot;, idFoto);</span>
+
+<span class="nc" id="L94">    List&lt;VisitaForm&gt; visiteForm = annuncio.getVisite().stream()</span>
+<span class="nc" id="L95">        .filter(Visita::getValidita)</span>
+<span class="nc" id="L96">        .map(v -&gt; new VisitaForm(v.getId(), v.getGiorno(), v.getOrarioInizio(), v.getOrarioFine()))</span>
+<span class="nc" id="L97">        .toList();</span>
+<span class="nc" id="L98">    annuncioForm.setVisite(visiteForm);</span>
+
+<span class="nc" id="L100">    model.addAttribute(&quot;annuncioForm&quot;, annuncioForm);</span>
+
+<span class="nc" id="L102">    return modificaAnnuncioView;</span>
+  }
+
+  /**
+   * Implementa la funzionalità di Modifica di un annuncio.
+   *
+   * @param annuncioForm  Utilizzato per mappare il Form della view.
+   * @param bindingResult Utilizzato per mappare gli errori dei dati di loginForm.
+   * @param idFoto        Utilizzato per segnare le foto dell annuncio che non sono state eliminate
+   *                      nella modifica.
+   * @param model         Utilizzato per passare degli attributi alla view.
+   * @return Restituisce la view da reindirizzare.
+   * @throws IllegalArgumentException se i dati non sono previsti dal sistema.
+   */
+  @PostMapping
+  public String post(@ModelAttribute @Valid AnnuncioForm annuncioForm, BindingResult bindingResult,
+                     @RequestParam(required = false) List&lt;Long&gt; idFoto, Model model) {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">    if (bindingResult.hasFieldErrors(&quot;foto&quot;)) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">      if (bindingResult.getErrorCount() &gt; 1) {</span>
+<span class="nc" id="L121">        return modificaAnnuncioView;</span>
+      }
+    } else {
+<span class="nc bnc" id="L124" title="All 2 branches missed.">      if (bindingResult.getErrorCount() &gt; 0) {</span>
+<span class="nc" id="L125">        return modificaAnnuncioView;</span>
+      }
+    }
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">    if (idFoto == null</span>
+<span class="nc bnc" id="L130" title="All 4 branches missed.">        &amp;&amp; (annuncioForm.getFoto() == null || annuncioForm.getFoto().get(0).isEmpty())) {</span>
+<span class="nc" id="L131">      model.addAttribute(&quot;nessunaFoto&quot;, true);</span>
+<span class="nc" id="L132">      return modificaAnnuncioView;</span>
+    }
+
+<span class="nc bnc" id="L135" title="All 2 branches missed.">    if (annuncioForm.getIdAnnuncio() == null) {</span>
+<span class="nc" id="L136">      throw new IllegalArgumentException();</span>
+    }
+
+<span class="nc" id="L139">    Optional&lt;Annuncio&gt; optionalAnnuncio = annuncioDao.findById(annuncioForm.getIdAnnuncio());</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">    if (optionalAnnuncio.isEmpty()) {</span>
+<span class="nc" id="L141">      throw new IllegalArgumentException();</span>
+    }
+
+<span class="nc" id="L144">    Annuncio annuncio = optionalAnnuncio.get();</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">    if (!annuncio.getArtigiano().equals(sessionCliente.getCliente().get())) {</span>
+<span class="nc" id="L146">      throw new IllegalArgumentException();</span>
+    }
+
+<span class="nc bnc" id="L149" title="All 2 branches missed.">    if (annuncio.getStato() == Annuncio.Stato.PROPOSTO</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">        || annuncio.getStato() == Annuncio.Stato.IN_REVISIONE) {</span>
+<span class="nc" id="L151">      throw new IllegalArgumentException();</span>
+    }
+
+<span class="nc" id="L154">    boolean modificaInformazioniAttivita = false;</span>
+
+<span class="nc bnc" id="L156" title="All 2 branches missed.">    if (!annuncio.getNomeAttivita().equals(annuncioForm.getNomeAttivita())) {</span>
+<span class="nc" id="L157">      annuncio.setNomeAttivita(annuncioForm.getNomeAttivita());</span>
+<span class="nc" id="L158">      modificaInformazioniAttivita = true;</span>
+    }
+
+<span class="nc bnc" id="L161" title="All 2 branches missed.">    if (!annuncio.getProvinciaAttivita().equals(annuncioForm.getProvinciaAttivita())) {</span>
+<span class="nc" id="L162">      annuncio.setProvinciaAttivita(annuncioForm.getProvinciaAttivita());</span>
+<span class="nc" id="L163">      modificaInformazioniAttivita = true;</span>
+    }
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">    if (!annuncio.getIndirizzoAttivita().equals(annuncioForm.getIndirizzoAttivita())) {</span>
+<span class="nc" id="L167">      annuncio.setIndirizzoAttivita(annuncioForm.getIndirizzoAttivita());</span>
+<span class="nc" id="L168">      modificaInformazioniAttivita = true;</span>
+    }
+
+<span class="nc bnc" id="L171" title="All 2 branches missed.">    if (!annuncio.getDescrizione().equals(annuncioForm.getDescrizione())) {</span>
+<span class="nc" id="L172">      annuncio.setDescrizione(annuncioForm.getDescrizione());</span>
+<span class="nc" id="L173">      modificaInformazioniAttivita = true;</span>
+    }
+
+<span class="nc bnc" id="L176" title="All 2 branches missed.">    if (!annuncio.getServiziOfferti().equals(annuncioForm.getServiziOfferti())) {</span>
+<span class="nc" id="L177">      annuncio.setServiziOfferti(annuncioForm.getServiziOfferti());</span>
+<span class="nc" id="L178">      modificaInformazioniAttivita = true;</span>
+    }
+
+<span class="nc" id="L181">    List&lt;Foto&gt; foto = annuncio.getFoto();</span>
+<span class="nc" id="L182">    List&lt;Foto&gt; fotoRimosse = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">    for (Foto f : foto) {</span>
+<span class="nc bnc" id="L184" title="All 4 branches missed.">      if (idFoto == null || !idFoto.contains(f.getId())) {</span>
+<span class="nc" id="L185">        fotoRimosse.add(f);</span>
+      }
+<span class="nc" id="L187">    }</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">    for (Foto f : fotoRimosse) {</span>
+<span class="nc" id="L189">      annuncio.removeFoto(f);</span>
+<span class="nc" id="L190">    }</span>
+
+<span class="nc" id="L192">    List&lt;MultipartFile&gt; annuncioFormFoto = annuncioForm.getFoto();</span>
+<span class="nc bnc" id="L193" title="All 4 branches missed.">    if (annuncioFormFoto != null &amp;&amp; !annuncioFormFoto.get(0).isEmpty()) {</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">      for (MultipartFile file : annuncioFormFoto) {</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">        if (foto.size() &gt;= 3) {</span>
+<span class="nc" id="L196">          break;</span>
+        }
+
+        try {
+<span class="nc" id="L200">          annuncio.addFoto(new Foto(file.getBytes()));</span>
+<span class="nc" id="L201">          modificaInformazioniAttivita = true;</span>
+<span class="nc" id="L202">        } catch (IOException e) {</span>
+<span class="nc" id="L203">          model.addAttribute(&quot;erroreFile&quot;, true);</span>
+<span class="nc" id="L204">          return modificaAnnuncioView;</span>
+<span class="nc" id="L205">        }</span>
+<span class="nc" id="L206">      }</span>
+    }
+
+<span class="nc" id="L209">    Amministratore amministratore = annuncio.getAmministratore();</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">    if (modificaInformazioniAttivita) {</span>
+<span class="nc" id="L211">      annuncio.setStato(Annuncio.Stato.PROPOSTO);</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">      if (amministratore != null) {</span>
+<span class="nc" id="L213">        amministratore.removeAnnuncioApprovato(annuncio);</span>
+      }
+<span class="nc" id="L215">      annuncio.setMotivoDelRifiuto(null);</span>
+    }
+
+<span class="nc" id="L218">    annuncio.setPrezzoVisita(annuncioForm.getPrezzoVisita());</span>
+<span class="nc" id="L219">    annuncio.setNumMaxPersonePerVisita(annuncioForm.getNumMaxPersonePerVisita());</span>
+
+<span class="nc" id="L221">    List&lt;Visita&gt; visite = annuncio.getVisite();</span>
+<span class="nc" id="L222">    List&lt;VisitaForm&gt; visiteForm = annuncioForm.getVisite();</span>
+
+<span class="nc" id="L224">    visite.forEach(visita -&gt; visita.setValidita(false));</span>
+
+<span class="nc bnc" id="L226" title="All 2 branches missed.">    for (VisitaForm visitaForm : visiteForm) {</span>
+<span class="nc" id="L227">      Optional&lt;Visita&gt; optionalVisita = visite.stream()</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">          .filter(visita -&gt; visita.getGiorno().equals(visitaForm.getGiorno())</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">              &amp;&amp; visita.getOrarioInizio().equals(visitaForm.getOrarioInizio())</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">              &amp;&amp; visita.getOrarioFine().equals(visitaForm.getOrarioFine()))</span>
+<span class="nc" id="L231">          .findFirst();</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">      if (optionalVisita.isPresent()) {</span>
+<span class="nc" id="L233">        optionalVisita.get().setValidita(true);</span>
+      } else {
+<span class="nc" id="L235">        Visita visita = new Visita(</span>
+<span class="nc" id="L236">            visitaForm.getGiorno(),</span>
+<span class="nc" id="L237">            visitaForm.getOrarioInizio(),</span>
+<span class="nc" id="L238">            visitaForm.getOrarioFine(),</span>
+<span class="nc" id="L239">            true</span>
+        );
+<span class="nc" id="L241">        annuncio.addVisita(visita);</span>
+      }
+<span class="nc" id="L243">    }</span>
+
+<span class="nc bnc" id="L245" title="All 4 branches missed.">    if (modificaInformazioniAttivita &amp;&amp; amministratore != null) {</span>
+<span class="nc" id="L246">      amministratoreDao.save(amministratore);</span>
+    }
+<span class="nc" id="L248">    annuncioDao.save(annuncio);</span>
+
+<span class="nc" id="L250">    return modificaAnnuncioSuccessView;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

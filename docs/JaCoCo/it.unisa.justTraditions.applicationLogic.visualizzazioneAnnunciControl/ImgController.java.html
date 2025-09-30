@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ImgController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.visualizzazioneAnnunciControl</a> &gt; <span class="el_source">ImgController.java</span></div><h1>ImgController.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.visualizzazioneAnnunciControl;
+
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.dao.FotoDao;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Foto;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+/**
+ * Implementa il controller per la visualizzazione delle foto.
+ */
+@Controller
+@RequestMapping(&quot;/img&quot;)
+<span class="fc" id="L19">public class ImgController {</span>
+
+  @Autowired
+  private FotoDao fotoDao;
+
+  /**
+   * Implementa la visualizzazione delle immagini.
+   *
+   * @param id       Utilizzato per la ricerca del immagine nel database.
+   * @param response Utilizzato per l invio dell immagine.
+   * @throws IOException      se si è verificato un errore relativo all'I/O durante l'elaborazione.
+   * @throws ServletException se si verifica un'eccezione che interferisce con il
+   *                          normale funzionamento del filtro.
+   */
+  @GetMapping
+  public void get(@RequestParam Long id, HttpServletResponse response)
+      throws ServletException, IOException {
+<span class="nc" id="L36">    Foto foto = fotoDao.findById(id).orElseThrow(IllegalArgumentException::new);</span>
+
+<span class="nc" id="L38">    response.setContentType(&quot;image/jpeg&quot;);</span>
+<span class="nc" id="L39">    response.getOutputStream().write(foto.getDati());</span>
+<span class="nc" id="L40">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

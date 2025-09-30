@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cliente.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.storage.gestioneProfiliStorage.entity</a> &gt; <span class="el_source">Cliente.java</span></div><h1>Cliente.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.storage.gestioneProfiliStorage.entity;
+
+import it.unisa.justTraditions.storage.prenotazioniStorage.entity.Prenotazione;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Questa classe rappresenta un Cliente.
+ * Un puo prenotarsi a uno o piu visite.
+ */
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = &quot;tipo&quot;, length = 9)
+public class Cliente
+    extends Utente {
+  @Column(nullable = false, unique = true, columnDefinition = &quot;CHAR(16)&quot;)
+  private String codiceFiscale;
+<span class="pc" id="L26">  @OneToMany(mappedBy = &quot;cliente&quot;, cascade = CascadeType.ALL)</span>
+  private List&lt;Prenotazione&gt; prenotazioni = new ArrayList&lt;&gt;();
+
+<span class="fc" id="L29">  public Cliente() {</span>
+<span class="fc" id="L30">  }</span>
+
+  public Cliente(String email, String password, String nome, String cognome, String codiceFiscale) {
+<span class="nc" id="L33">    super(email, password, nome, cognome);</span>
+<span class="nc" id="L34">    this.codiceFiscale = codiceFiscale;</span>
+<span class="nc" id="L35">  }</span>
+
+  public String getCodiceFiscale() {
+<span class="fc" id="L38">    return codiceFiscale;</span>
+  }
+
+  public void setCodiceFiscale(String codiceFiscale) {
+<span class="nc" id="L42">    this.codiceFiscale = codiceFiscale;</span>
+<span class="nc" id="L43">  }</span>
+
+  public List&lt;Prenotazione&gt; getPrenotazioni() {
+<span class="nc" id="L46">    return Collections.unmodifiableList(prenotazioni);</span>
+  }
+
+  public void addPrenotazione(Prenotazione prenotazione) {
+<span class="fc" id="L50">    prenotazioni.add(prenotazione);</span>
+<span class="fc" id="L51">    prenotazione.setCliente(this);</span>
+<span class="fc" id="L52">  }</span>
+
+  @Override
+  public String toString() {
+<span class="fc" id="L56">    final StringBuilder sb = new StringBuilder(&quot;Cliente{&quot;);</span>
+<span class="fc" id="L57">    sb.append(&quot;codiceFiscale='&quot;).append(codiceFiscale).append('\'');</span>
+<span class="fc" id="L58">    sb.append('}').append(&quot; is a &quot;).append(super.toString());</span>
+<span class="fc" id="L59">    return sb.toString();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

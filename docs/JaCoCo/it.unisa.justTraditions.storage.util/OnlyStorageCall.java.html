@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OnlyStorageCall.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.storage.util</a> &gt; <span class="el_source">OnlyStorageCall.java</span></div><h1>OnlyStorageCall.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.storage.util;
+
+import java.util.List;
+
+/**
+ * Questa classe implementa la funzionalità di validare la chiamata a una funzione.
+ */
+<span class="nc" id="L8">public abstract class OnlyStorageCall {</span>
+<span class="fc" id="L9">  private static final StackWalker stackWalker = StackWalker.getInstance();</span>
+
+  /**
+   * Implementa la funzionalità di convalida della chiamata.
+   * IllegalCallerException se il metodo viene chiamato al di fuori del package Storage.
+   */
+  public static void validateCall() {
+<span class="fc" id="L16">    List&lt;StackWalker.StackFrame&gt; stackFrames = stackWalker.walk(s -&gt;</span>
+<span class="fc" id="L17">        s.skip(1)</span>
+<span class="fc" id="L18">            .limit(2)</span>
+<span class="fc" id="L19">            .toList()</span>
+    );
+
+<span class="fc" id="L22">    String callerClassName = stackFrames.get(1).getClassName();</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">    if (!callerClassName.startsWith(&quot;it.unisa.justTraditions.storage&quot;)) {</span>
+<span class="nc" id="L24">      String methodName = stackFrames.get(0).getMethodName();</span>
+<span class="nc" id="L25">      throw new IllegalCallerException(methodName + &quot; called from &quot; + callerClassName);</span>
+    }
+<span class="fc" id="L27">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

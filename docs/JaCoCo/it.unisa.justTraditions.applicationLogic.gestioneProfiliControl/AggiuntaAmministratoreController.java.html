@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AggiuntaAmministratoreController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.gestioneProfiliControl</a> &gt; <span class="el_source">AggiuntaAmministratoreController.java</span></div><h1>AggiuntaAmministratoreController.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.gestioneProfiliControl;
+
+import it.unisa.justTraditions.applicationLogic.autenticazioneControl.util.PasswordEncryptor;
+import it.unisa.justTraditions.applicationLogic.gestioneProfiliControl.form.AggiuntaAmministratoreForm;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.dao.AmministratoreDao;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Amministratore;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+/**
+ * Implementa il controller per l'aggiunta di un amministratore.
+ */
+@Controller
+@RequestMapping(&quot;/aggiuntaAmministratore&quot;)
+<span class="fc" id="L22">public class AggiuntaAmministratoreController {</span>
+
+  private static final String aggiuntaAmministratoreView =
+      &quot;gestioneProfiliView/aggiuntaAmministratore&quot;;
+  private static final String visualizzazioneAmministratoriController =
+      &quot;/visualizzazioneAmministratori&quot;;
+
+  @Autowired
+  private PasswordEncryptor passwordEncryptor;
+
+  @Autowired
+  private AmministratoreDao amministratoreDao;
+
+
+  /**
+   * Implementa la funzionalità di smistare l'Amministratore
+   * sulla view di gestioneAnnunciView/modificaAnnuncio.
+   *
+   * @param aggiuntaAmministratoreForm Utilizzato per mappare il Form della view.
+   * @return Restituisce la view da reindirizzare.
+   */
+  @GetMapping
+  public String get(@ModelAttribute AggiuntaAmministratoreForm aggiuntaAmministratoreForm) {
+<span class="nc" id="L45">    return aggiuntaAmministratoreView;</span>
+  }
+
+  /**
+   * Implementa la funzionalità di aggiunta di un l'Amministratore.
+   *
+   * @param aggiuntaAmministratoreForm Utilizzato per mappare il Form della view.
+   * @param bindingResult              Utilizzato per mappare gli errori dei dati di
+   *                                   aggiuntaAmministratoreForm.
+   * @return Restituisce la view da reindirizzare.
+   */
+  @PostMapping
+  public String post(@ModelAttribute @Valid AggiuntaAmministratoreForm aggiuntaAmministratoreForm,
+                     BindingResult bindingResult) {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">    if (bindingResult.hasErrors()) {</span>
+<span class="nc" id="L60">      return aggiuntaAmministratoreView;</span>
+    }
+
+<span class="nc" id="L63">    Amministratore amministratore = new Amministratore(</span>
+<span class="nc" id="L64">        aggiuntaAmministratoreForm.getEmail(),</span>
+<span class="nc" id="L65">        passwordEncryptor.encryptPassword(aggiuntaAmministratoreForm.getPassword()),</span>
+<span class="nc" id="L66">        aggiuntaAmministratoreForm.getNome(),</span>
+<span class="nc" id="L67">        aggiuntaAmministratoreForm.getCognome()</span>
+    );
+<span class="nc" id="L69">    amministratoreDao.save(amministratore);</span>
+
+<span class="nc" id="L71">    return &quot;redirect:&quot; + visualizzazioneAmministratoriController;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

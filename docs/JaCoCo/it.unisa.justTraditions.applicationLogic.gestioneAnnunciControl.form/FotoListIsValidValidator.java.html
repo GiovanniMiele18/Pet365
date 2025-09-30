@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FotoListIsValidValidator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form</a> &gt; <span class="el_source">FotoListIsValidValidator.java</span></div><h1>FotoListIsValidValidator.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+
+/**
+ * Implementa la logica per convalidare la lista di foto.
+ * Controlla che le foto non siano vuote o superino i 15 MB.
+ */
+<span class="fc" id="L12">public class FotoListIsValidValidator</span>
+    implements ConstraintValidator&lt;FotoListIsValidConstraint, List&lt;MultipartFile&gt;&gt; {
+
+  @Override
+  public boolean isValid(List&lt;MultipartFile&gt; foto,
+                         ConstraintValidatorContext constraintValidatorContext) {
+<span class="fc bfc" id="L18" title="All 2 branches covered.">    for (MultipartFile file : foto) {</span>
+<span class="pc bpc" id="L19" title="1 of 4 branches missed.">      if (file.isEmpty() || file.getSize() &gt; 1024 * 1024 * 15) {</span>
+<span class="fc" id="L20">        return false;</span>
+      }
+<span class="fc" id="L22">    }</span>
+<span class="fc" id="L23">    return true;</span>
+  }
+
+  @Override
+  public void initialize(FotoListIsValidConstraint constraintAnnotation) {
+<span class="fc" id="L28">    ConstraintValidator.super.initialize(constraintAnnotation);</span>
+<span class="fc" id="L29">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

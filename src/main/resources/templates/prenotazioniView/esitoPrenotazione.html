@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+
+<head>
+    <th:block th:include="fragments/head"></th:block>
+    <title>Just Traditions - Esito Prenotazione</title>
+</head>
+
+<body>
+<th:block th:include="fragments/navbar"></th:block>
+
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="text-center row">
+        <div class=" col-md-6">
+            <img style="width: 350px; height: 270px;" src="https://bit.ly/3w76ceZ" alt=""
+                 class="img-fluid">
+        </div>
+
+        <div class=" col-md-6 mt-5">
+            <p class="fs-3"><span class="text-danger">Il sistema bancario</span> ha fornito la seguente risposta:</p>
+
+            <p class="lead"> Il pagamento è andato a buon fine
+            </p>
+            <a href="/" class="btn btn-primary">Vai alla Home</a>
+        </div>
+
+    </div>
+</div>
+
+<th:block th:include="fragments/footbar"></th:block>
+
+<th:block th:include="fragments/scripts"></th:block>
+<script src="/js/navbar.js"></script>
+</body>
+
+</html>

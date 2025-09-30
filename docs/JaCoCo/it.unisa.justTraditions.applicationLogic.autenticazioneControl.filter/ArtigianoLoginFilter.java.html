@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArtigianoLoginFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">it.unisa.justTraditions in JustTraditions Coverage Results</a> &gt; <a href="index.source.html" class="el_package">it.unisa.justTraditions.applicationLogic.autenticazioneControl.filter</a> &gt; <span class="el_source">ArtigianoLoginFilter.java</span></div><h1>ArtigianoLoginFilter.java</h1><pre class="source lang-java linenums">package it.unisa.justTraditions.applicationLogic.autenticazioneControl.filter;
+
+import it.unisa.justTraditions.applicationLogic.autenticazioneControl.util.SessionCliente;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Artigiano;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/**
+ * Implementa il filtro per le pagine riservate all Artigiano.
+ */
+@Component
+<span class="fc" id="L19">public class ArtigianoLoginFilter</span>
+    implements Filter {
+
+  @Autowired
+  private SessionCliente sessionCliente;
+
+  /**
+   * Fa sì che venga richiamato il filtro successivo nella catena o,
+   * se il filtro chiamante è l'ultimo filtro nella catena,
+   * che venga richiamata la risorsa alla fine della catena o,
+   * se l utente loggato non e un artigiano viene reindirizzato alla control login.
+   *
+   * @param servletRequest  la richiesta da passaggio lungo la catena.
+   * @param servletResponse la risposta da passare lungo la catena.
+   * @param filterChain     Utilizzato per richiamare il filtro successivo.
+   * @throws IOException      se si è verificato un errore relativo all'I/O durante l'elaborazione.
+   * @throws ServletException se si verifica un'eccezione che interferisce con il
+   *                          normale funzionamento del filtro.
+   */
+  @Override
+  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+                       FilterChain filterChain) throws IOException, ServletException {
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">    if (sessionCliente.getCliente().isPresent()</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        &amp;&amp; sessionCliente.getCliente().get().getClass() == Artigiano.class) {</span>
+<span class="fc" id="L43">      filterChain.doFilter(servletRequest, servletResponse);</span>
+    } else {
+<span class="nc" id="L45">      ((HttpServletResponse) servletResponse).sendRedirect(&quot;/login&quot;);</span>
+    }
+<span class="fc" id="L47">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

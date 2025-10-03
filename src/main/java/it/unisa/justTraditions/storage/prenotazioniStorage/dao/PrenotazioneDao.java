@@ -2,6 +2,7 @@ package it.unisa.justTraditions.storage.prenotazioniStorage.dao;
 
 import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Annuncio;
 import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Visita;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Animale;
 import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Cliente;
 import it.unisa.justTraditions.storage.prenotazioniStorage.entity.Prenotazione;
 import java.time.LocalDate;
@@ -26,6 +27,9 @@ public interface PrenotazioneDao
    */
   Page<Prenotazione> findByVisitaAnnuncioAndDataVisita(Annuncio annuncio, LocalDate dataVisita,
                                                        Pageable pageable);
+
+  Page<Prenotazione> findByAnimale(Animale animale, Pageable pageable);
+  List<Prenotazione> findByAnimaleAndDataVisita(Animale animale, LocalDate dataVisita);
 
   /**
    * Implementa la funzionalità di ricerca delle prenotazioni di una visita in una determinata data.

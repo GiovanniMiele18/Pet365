@@ -4,30 +4,29 @@
     <th:block th:insert="~{fragments/head}"></th:block>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <!-- Bootstrap & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <title>I miei Animali - Pet365</title>
 
     <style>
-        /* Sfondo pagina */
         body {
             background: linear-gradient(135deg, #0a6847, #064d36, #0a6847);
             color: #fff;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             min-height: 100vh;
         }
 
-        /* Card oro-verde */
+        /* Card premium */
         .premium-card {
             border: 2px solid #c9a84e;
             border-radius: 12px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
             background: #fffaf0;
             color: #0a6847;
             margin-bottom: 20px;
         }
-
         .premium-header {
             background: linear-gradient(90deg, #0a6847, #c9a84e);
             color: white;
@@ -36,12 +35,13 @@
             font-weight: bold;
         }
 
-        /* Immagine animale */
+        /* Immagini animali */
         .animal-img {
             border-radius: 12px;
             border: 3px solid #c9a84e;
             max-height: 200px;
             object-fit: cover;
+            width: 100%;
         }
 
         /* Bottoni */
@@ -49,13 +49,14 @@
             background-color: #0a6847;
             color: white;
             border: none;
+            transition: all 0.3s ease;
         }
         .btn-premium:hover {
             background-color: #c9a84e;
             color: #fff;
         }
 
-        /* Osso Point */
+        /* Box punti osso */
         .osso-box {
             border: 2px dashed #c9a84e;
             border-radius: 12px;
@@ -66,31 +67,46 @@
             background: #0a6847;
         }
 
-        /* Carosello fade */
-        .carousel-item {
-            opacity: 0;
-            transition: opacity 0.7s ease-in-out;
+        /* Carosello */
+        #animaliCarousel {
+            position: relative;
+            min-height: 750px;
         }
-        .carousel-item.active {
-            opacity: 1;
+        .carousel-item {
+            transition: none !important;
         }
 
-        /* Carosello istantaneo */
-        .carousel-item {
-            transition: none !important; /* cambio slide immediato */
-        }
-
-        /* Frecce */
+        /* Frecce STICKY: restano centrate nello schermo */
         .carousel-control-prev,
         .carousel-control-next {
-            width: 5%;
+            position: fixed;             /* fissate alla finestra */
+            top: 50%;                    /* sempre metà schermo */
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a6847, #c9a84e);
+            opacity: 0.9;
+            z-index: 1050;               /* sopra tutto */
+        }
+        .carousel-control-prev {
+            left: 20px;
+        }
+        .carousel-control-next {
+            right: 20px;
+        }
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            opacity: 1;
         }
         .carousel-control-prev-icon,
         .carousel-control-next-icon {
             filter: invert(1) sepia(100%) hue-rotate(20deg) saturate(300%);
+            width: 30px;
+            height: 30px;
         }
 
-        /* Nome Cliente */
+        /* Nome cliente */
         .client-name {
             text-align: center;
             font-size: 1.8rem;
@@ -100,6 +116,25 @@
             text-shadow: 1px 1px 2px #0a6847;
         }
 
+        /* Responsività */
+        @media (max-width: 768px) {
+            .premium-card {
+                margin: 10px 0;
+            }
+            .animal-img {
+                max-height: 150px;
+            }
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 45px;
+                height: 45px;
+            }
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -109,7 +144,7 @@
 
 <div class="container mt-4">
 
-    <!-- Nome cliente -->
+    <!-- Nome Cliente -->
     <div class="client-name">
         👤 <span th:text="${cliente.nome} + ' ' + ${cliente.cognome}">Mario Rossi</span>
     </div>
@@ -119,107 +154,143 @@
         🦴 <span>120</span> Osso Point
     </div>
 
-    <!-- Carosello Animali -->
-    <div id="animaliCarousel" class="carousel slide" data-bs-interval="false">
-        <div class="carousel-inner">
+    <!-- Se non ci sono animali -->
+    <div th:if="${#lists.isEmpty(cliente.animali)}" class="text-center mb-4">
+        <a href="/aggiungiAnimale" class="btn btn-premium btn-lg">➕ Aggiungi Animale</a>
+    </div>
 
-            <!-- Ciclo animali -->
-            <div th:each="animale, iterStat : ${cliente.animali}"
-                 th:classappend="${iterStat.index == 0} ? ' active' : ''"
-                 class="carousel-item">
+    <!-- Se ci sono animali -->
+    <div th:if="${!#lists.isEmpty(cliente.animali)}">
+        <div id="animaliCarousel" class="carousel slide" data-bs-interval="false">
+            <div class="carousel-inner">
+                <div th:each="animale, iterStat : ${cliente.animali}"
+                     th:classappend="${iterStat.index == 0} ? ' active' : ''"
+                     class="carousel-item">
+                    <div class="premium-card">
 
-                <!-- Card animale -->
-                <div class="premium-card">
-                    <div class="premium-header d-flex justify-content-between align-items-center">
-                        <h4 th:text="${animale.nome}">Nome Animale</h4>
-                        <a href="/aggiungiAnimale" class="btn btn-premium">➕ Aggiungi Animale</a>
-                    </div>
-
-                    <div class="row p-4">
-                        <!-- Foto -->
-                        <div class="col-md-4 text-center">
-                            <img th:if="${!#lists.isEmpty(animale.fotoAnimali)}"
-                                 th:src="@{'/immagineanimale?id=' + ${animale.fotoAnimali[0].id}}"
-                                 class="animal-img"
-                                 alt="Foto animale">
-
-                            <img th:if="${#lists.isEmpty(animale.fotoAnimali)}"
-                                 src="/images/default-pet.png"
-                                 class="animal-img"
-                                 alt="Foto non disponibile">
+                        <!-- Header -->
+                        <div class="premium-header d-flex justify-content-between align-items-center">
+                            <h4 th:text="${animale.nome}">Nome Animale</h4>
+                            <a th:href="@{/aggiungiAnimale}" class="btn btn-premium">➕ Aggiungi Animale</a>
                         </div>
 
-                        <!-- Info -->
-                        <div class="col-md-8">
-                            <p><b>Specie:</b> <span th:text="${animale.specie}">Cane</span></p>
-                            <p><b>Razza:</b> <span th:text="${animale.razza}">Labrador</span></p>
-                            <p><b>Età:</b> <span th:text="${animale.eta}">3</span> anni</p>
-                            <p><b>Sesso:</b> <span th:text="${animale.sesso}">Maschio</span></p>
-                            <p><b>Peso:</b> <span th:text="${animale.peso}">20</span> kg</p>
-                            <p><b>Colore:</b> <span th:text="${animale.colore}">Nero</span></p>
-                            <p><b>Note:</b> <span th:text="${animale.note}">Molto vivace</span></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Documenti e Prenotazioni -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="premium-card">
-                            <div class="premium-header">📂 Documenti</div>
-                            <div class="p-3">
-                                <ul class="list-group">
-                                    <!-- Ciclo documenti dell'animale -->
-                                    <li class="list-group-item" th:each="doc : ${animale.documenti}">
-                                        📄 <span th:text="${doc.nome}">Nome Documento</span>
-                                        <a th:href="@{'/documenti/download/' + ${doc.id}}"
-                                           class="btn btn-sm btn-outline-success ms-2">Scarica</a>
-                                    </li>
-                                    <!-- Mostra messaggio se non ci sono documenti -->
-                                    <li th:if="${#lists.isEmpty(animale.documenti)}" class="list-group-item">
-                                        Nessun documento disponibile
-                                    </li>
-                                </ul>
-
-                                <!-- Bottone aggiungi documento con id animale -->
-                                <a th:href="@{'/documenti/aggiungi/' + ${animale.id}}"
-                                   class="btn btn-premium mt-3">
-                                    ➕ Aggiungi Documento
-                                </a>
+                        <!-- Dettagli Animale -->
+                        <div class="row p-4">
+                            <div class="col-md-4 text-center">
+                                <img th:if="${!#lists.isEmpty(animale.fotoAnimali)}"
+                                     th:src="@{'/immagineanimale?id=' + ${animale.fotoAnimali[0].id}}"
+                                     class="animal-img" alt="Foto animale">
+                                <img th:if="${#lists.isEmpty(animale.fotoAnimali)}"
+                                     src="/images/default-pet.png"
+                                     class="animal-img" alt="Foto non disponibile">
+                            </div>
+                            <div class="col-md-8">
+                                <p><b>Specie:</b> <span th:text="${animale.specie}">Cane</span></p>
+                                <p><b>Razza:</b> <span th:text="${animale.razza}">Labrador</span></p>
+                                <p><b>Età:</b> <span th:text="${animale.eta}">3</span> anni</p>
+                                <p><b>Sesso:</b> <span th:text="${animale.sesso}">Maschio</span></p>
+                                <p><b>Peso:</b> <span th:text="${animale.peso}">20</span> kg</p>
+                                <p><b>Colore:</b> <span th:text="${animale.colore}">Nero</span></p>
+                                <p><b>Note:</b> <span th:text="${animale.note}">Molto vivace</span></p>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-
-                <div class="col-md-6">
-                        <div class="premium-card">
-                            <div class="premium-header">📅 Prenotazioni</div>
-                            <div class="p-3">
-                                <ul class="list-group">
-                                    <li class="list-group-item">Visita Veterinaria - 15/10/2025</li>
-                                    <li class="list-group-item">Toelettatura - 01/11/2025</li>
-                                </ul>
-                                <a href="/aggiungiDocumento" class="btn btn-premium mt-3">➕ Aggiungi Prenotazione</a>
+                        <!-- Documenti e Prenotazioni -->
+                        <div class="row mt-3 align-items-stretch">
+                            <!-- Documenti -->
+                            <div class="col-md-6 d-flex">
+                                <div class="premium-card d-flex flex-column h-100 w-100">
+                                    <div class="premium-header">📂 Documenti</div>
+                                    <div class="p-3 flex-grow-1">
+                                        <ul class="list-group">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center"
+                                                th:each="doc : ${animale.documenti}">
+                                                <div>
+                                                    📄
+                                                    <span th:text="${doc.nome}">Nome Documento</span>
+                                                    <span th:if="${doc.estensione != null}" th:text="${doc.estensione}">.pdf</span>
+                                                </div>
+                                                <div>
+                                                    <a th:href="@{'/documenti/download/' + ${doc.id}}"
+                                                       class="btn btn-sm btn-outline-success me-2">
+                                                        <i class="fa-solid fa-download"></i>
+                                                    </a>
+                                                    <form th:action="@{'/documenti/elimina/' + ${doc.id}}" method="post" style="display:inline;">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                                onclick="return confirm('Sei sicuro di voler eliminare questo documento?');">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </li>
+                                            <li th:if="${#lists.isEmpty(animale.documenti)}" class="list-group-item">
+                                                Nessun documento disponibile
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="p-3 mt-auto">
+                                        <a th:href="@{'/documenti/aggiungi/' + ${animale.id}}" class="btn btn-premium w-100">
+                                            ➕ Aggiungi Documento
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+
+                            <!-- Prenotazioni -->
+                            <div class="col-md-6 d-flex">
+                                <div class="premium-card d-flex flex-column h-100 w-100">
+                                    <div class="premium-header">📅 Prenotazioni</div>
+                                    <div class="p-3 flex-grow-1">
+                                        <ul class="list-group">
+                                            <li class="list-group-item" th:each="pren : ${animale.prenotazioni}">
+                                                📌
+                                                <p><b>Attività:</b> <span th:text="${pren.visita.annuncio.nomeAttivita}">Veterinaria</span></p>
+                                                <p><b>Servizio:</b> <span th:text="${pren.visita.annuncio.serviziOfferti}">Petsitting</span></p>
+                                                <p><b>Data:</b>
+                                                    <span th:text="${#temporals.format(pren.dataVisita, 'dd/MM/yyyy')}">15/10/2025</span>
+                                                </p>
+                                                <p><b>Orario:</b>
+                                                    <span th:text="${#temporals.format(pren.visita.orarioInizio, 'HH:mm')} + ' - ' + ${#temporals.format(pren.visita.orarioFine, 'HH:mm')}">10:00 - 11:00</span>
+                                                </p>
+                                                <div>
+                                                    <form th:action="@{'/prenotazioni/elimina/' + ${pren.id}}" method="post" style="display:inline;">
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                                onclick="return confirm('Sei sicuro di voler eliminare questa prenotazione?');">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </li>
+                                            <li th:if="${#lists.isEmpty(animale.prenotazioni)}" class="list-group-item">
+                                                Nessuna prenotazione disponibile
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="p-3 mt-auto">
+                                        <a th:href="@{'/ricercaAnnunci'}" class="btn btn-premium w-100">
+                                            ➕ Aggiungi Prenotazione
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- fine row -->
+
                     </div>
                 </div>
             </div>
-            <!-- Fine ciclo animale -->
 
+            <!-- Frecce carosello -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#animaliCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#animaliCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
         </div>
-
-        <!-- Frecce -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#animaliCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-warning rounded-circle"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#animaliCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-warning rounded-circle"></span>
-        </button>
     </div>
 </div>
 
+<!-- Footer -->
 <th:block th:insert="~{fragments/footbar}"></th:block>
 <th:block th:insert="~{fragments/scripts}"></th:block>
 

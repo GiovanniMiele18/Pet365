@@ -1,133 +1,82 @@
 package it.unisa.justTraditions.storage.prenotazioniStorage.entity;
 
 import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Visita;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Animale;
 import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Cliente;
-import it.unisa.justTraditions.storage.util.OnlyStorageCall;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import java.math.BigDecimal;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
-/**
- * Questa classe rappresenta una Prenotazione.
- * Una prenotazione è effettuata da un cliente.
- * Una prenotazione è associata a una visita.
- */
 @Entity
 public class Prenotazione {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Column(nullable = false, precision = 5, scale = 2)
-  private BigDecimal prezzoVisita;
+
   @Column(nullable = false)
   private LocalDate dataVisita;
-  @Column(nullable = false)
-  private Integer numPersonePrenotate;
+
+  // 🔗 Cliente che ha effettuato la prenotazione
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "cliente", nullable = false)
+  @JoinColumn(name = "cliente_id", nullable = false)
   private Cliente cliente;
+
+  // 🔗 Animale associato alla prenotazione
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "visita")
+  @JoinColumn(name = "animale_id", nullable = false)
+  private Animale animale;
+
+  // 🔗 Visita collegata
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "visita_id", nullable = false)
   private Visita visita;
 
-  public Prenotazione() {
-  }
+  public Prenotazione() {}
 
   /**
-   * Costruttore per una Prenotazione.
-   *
-   * @param prezzoVisita        Prezzo della visita al momento della prenotazione.
-   * @param dataVisita          Data della prenotazione.
-   * @param numPersonePrenotate Numero di persone prenotate.
+   * Costruttore per la prenotazione legata a un animale.
    */
-  public Prenotazione(BigDecimal prezzoVisita, LocalDate dataVisita, Integer numPersonePrenotate) {
-    this.prezzoVisita = prezzoVisita;
-    this.dataVisita = dataVisita;
-    this.numPersonePrenotate = numPersonePrenotate;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public BigDecimal getPrezzoVisita() {
-    return prezzoVisita;
-  }
-
-  public void setPrezzoVisita(BigDecimal prezzoVisita) {
-    this.prezzoVisita = prezzoVisita;
-  }
-
-  public LocalDate getDataVisita() {
-    return dataVisita;
-  }
-
-  public void setDataVisita(LocalDate dataVisita) {
-    this.dataVisita = dataVisita;
-  }
-
-  public Integer getNumPersonePrenotate() {
-    return numPersonePrenotate;
-  }
-
-  public void setNumPersonePrenotate(Integer numPersonePrenotate) {
-    this.numPersonePrenotate = numPersonePrenotate;
-  }
-
-  public Cliente getCliente() {
-    return cliente;
-  }
-
-  public void setCliente(Cliente cliente) {
-    OnlyStorageCall.validateCall();
-    this.cliente = cliente;
-  }
-
-  public Visita getVisita() {
-    return visita;
-  }
-
-  public void setVisita(Visita visita) {
-    OnlyStorageCall.validateCall();
+  public Prenotazione(Visita visita, Animale animale, LocalDate dataVisita) {
     this.visita = visita;
+    this.animale = animale;
+    this.dataVisita = dataVisita;
   }
 
+  // --- GETTER & SETTER ---
+  public Long getId() { return id; }
+
+  public LocalDate getDataVisita() { return dataVisita; }
+  public void setDataVisita(LocalDate dataVisita) { this.dataVisita = dataVisita; }
+
+  public Cliente getCliente() { return cliente; }
+  public void setCliente(Cliente cliente) { this.cliente = cliente; }
+
+  public Animale getAnimale() { return animale; }
+  public void setAnimale(Animale animale) { this.animale = animale; }
+
+  public Visita getVisita() { return visita; }
+  public void setVisita(Visita visita) { this.visita = visita; }
+
+  // --- equals, hashCode, toString ---
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
     Prenotazione that = (Prenotazione) o;
-
-    return id.equals(that.id);
+    return id != null && id.equals(that.id);
   }
 
   @Override
-  public int hashCode() {
-    return id.hashCode();
-  }
+  public int hashCode() { return id != null ? id.hashCode() : 0; }
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("Prenotazione{");
-    sb.append("id=").append(id);
-    sb.append(", prezzoVisita=").append(prezzoVisita);
-    sb.append(", dataVisita=").append(dataVisita);
-    sb.append(", numPersonePrenotate=").append(numPersonePrenotate);
-    sb.append(", cliente=").append(cliente);
-    sb.append(", visita=").append(visita);
-    sb.append('}');
-    return sb.toString();
+    return "Prenotazione{" +
+            "id=" + id +
+            ", dataVisita=" + dataVisita +
+            ", cliente=" + (cliente != null ? cliente.getId() : null) +
+            ", animale=" + (animale != null ? animale.getId() : null) +
+            ", visita=" + (visita != null ? visita.getId() : null) +
+            '}';
   }
 }

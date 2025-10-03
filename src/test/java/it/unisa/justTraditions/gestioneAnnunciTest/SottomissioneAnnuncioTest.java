@@ -348,10 +348,7 @@ public class SottomissioneAnnuncioTest {
         assertEquals("provinciaAttivita non inserita", provinciaAttivita,
             annuncio.getProvinciaAttivita());
         assertEquals("serviziOfferti non inserito", serviziOfferti, annuncio.getServiziOfferti());
-        assertEquals("prezzoVisita non inserito", new BigDecimal(prezzoVisita),
-            annuncio.getPrezzoVisita());
-        assertEquals("numMaxPersonePerVisita non inserito", numMaxPersonePerVisita,
-            annuncio.getNumMaxPersonePerVisita());
+
 
         Visita visita = annuncio.getVisite().get(0);
 

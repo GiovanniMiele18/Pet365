@@ -45,7 +45,7 @@ public class PrenotazioneIsValidValidator
     }
 
     if (prenotazioneForm.getDataVisita() == null
-        || !prenotazioneForm.getDataVisita().isAfter(LocalDate.now())) {
+            || !prenotazioneForm.getDataVisita().isAfter(LocalDate.now())) {
       return false;
     }
 
@@ -53,12 +53,9 @@ public class PrenotazioneIsValidValidator
       return false;
     }
 
-    int numeroPersonePrenotate =
-        prenotazioneDao.findByVisitaAndDataVisita(visita, prenotazioneForm.getDataVisita()).stream()
-            .mapToInt(Prenotazione::getNumPersonePrenotate)
-            .sum();
-
-    return prenotazioneForm.getNumeroPersone()
-        <= (visita.getAnnuncio().getNumMaxPersonePerVisita() - numeroPersonePrenotate);
+    // Rimosso il controllo sul numero massimo di persone
+    return true;
   }
+
 }
+

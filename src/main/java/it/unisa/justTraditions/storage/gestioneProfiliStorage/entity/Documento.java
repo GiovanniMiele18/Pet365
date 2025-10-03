@@ -10,13 +10,16 @@ public class Documento {
     private Long id;
 
     @Column(nullable = false, length = 100)
-    private String nome;
+    private String nome; // Nome logico scelto dall’utente
 
     @Column(length = 255)
     private String descrizione;
 
-    @Column(length = 50)
-    private String tipo; // es. "application/pdf", "image/png"
+    @Column(length = 150)
+    private String tipo; // MIME type es. "application/pdf"
+
+    @Column(length = 10)
+    private String estensione; // es. ".pdf", ".jpg"
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animale_id", nullable = false)
@@ -25,7 +28,7 @@ public class Documento {
     @OneToOne(mappedBy = "documento", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private DatiDocumento datiDocumento;
 
-    // Getters & setters
+    // --- Getters & Setters ---
     public Long getId() { return id; }
 
     public String getNome() { return nome; }
@@ -37,12 +40,17 @@ public class Documento {
     public String getTipo() { return tipo; }
     public void setTipo(String tipo) { this.tipo = tipo; }
 
+    public String getEstensione() { return estensione; }
+    public void setEstensione(String estensione) { this.estensione = estensione; }
+
     public Animale getAnimale() { return animale; }
     public void setAnimale(Animale animale) { this.animale = animale; }
 
     public DatiDocumento getDatiDocumento() { return datiDocumento; }
     public void setDatiDocumento(DatiDocumento datiDocumento) {
         this.datiDocumento = datiDocumento;
-        datiDocumento.setDocumento(this); // sincronizza il legame
+        if (datiDocumento != null) {
+            datiDocumento.setDocumento(this); // sincronizza la relazione bidirezionale
+        }
     }
 }

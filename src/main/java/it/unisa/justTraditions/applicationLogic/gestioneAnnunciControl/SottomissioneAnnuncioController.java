@@ -20,17 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * Implementa il controller per la sottomissione Di un Annuncio.
- */
 @Controller
 @RequestMapping("/sottomissioneAnnuncio")
 public class SottomissioneAnnuncioController {
 
-  private static final String sottomissioneAnnuncioView =
-      "gestioneAnnunciView/sottomissioneAnnuncio";
-  private static final String modificaAnnuncioSuccessView =
-      "gestioneAnnunciView/modificaAnnuncioSuccess";
+  private static final String sottomissioneAnnuncioView = "gestioneAnnunciView/sottomissioneAnnuncio";
+  private static final String modificaAnnuncioSuccessView = "gestioneAnnunciView/modificaAnnuncioSuccess";
 
   @Autowired
   private SessionCliente sessionCliente;
@@ -38,42 +33,26 @@ public class SottomissioneAnnuncioController {
   @Autowired
   private ArtigianoDao artigianoDao;
 
-  /**
-   * Implementa la funzionalità di smistare l'Artigiano sulla view di
-   * gestioneAnnunciView/sottomissioneAnnuncio.
-   *
-   * @param annuncioForm Utilizzato per mappare il Form della view.
-   * @return Restituisce la view da reindirizzare.
-   */
   @GetMapping
   public String get(@ModelAttribute AnnuncioForm annuncioForm) {
     return sottomissioneAnnuncioView;
   }
 
-  /**
-   * Implementa la funzionalità di Sottomissione di un annuncio.
-   *
-   * @param annuncioForm  Utilizzato per mappare il Form della view.
-   * @param bindingResult Utilizzato per mappare gli errori dei dati di annuncioForm.
-   * @param model         Utilizzato per passare degli attributi alla view.
-   * @return Restituisce la view da reindirizzare.
-   */
   @PostMapping
   public String post(@ModelAttribute @Valid AnnuncioForm annuncioForm,
                      BindingResult bindingResult, Model model) {
+
     if (bindingResult.hasErrors()) {
       return sottomissioneAnnuncioView;
     }
 
     Annuncio annuncio = new Annuncio(
-        annuncioForm.getNomeAttivita(),
-        annuncioForm.getProvinciaAttivita(),
-        annuncioForm.getIndirizzoAttivita(),
-        annuncioForm.getDescrizione(),
-        annuncioForm.getServiziOfferti(),
-        annuncioForm.getNumMaxPersonePerVisita(),
-        annuncioForm.getPrezzoVisita(),
-        Annuncio.Stato.PROPOSTO
+            annuncioForm.getNomeAttivita(),
+            annuncioForm.getProvinciaAttivita(),
+            annuncioForm.getIndirizzoAttivita(),
+            annuncioForm.getDescrizione(),
+            Annuncio.ServizioOfferto.valueOf(annuncioForm.getServiziOfferti().name()),
+            Annuncio.Stato.PROPOSTO
     );
 
     for (MultipartFile file : annuncioForm.getFoto()) {
@@ -87,10 +66,10 @@ public class SottomissioneAnnuncioController {
 
     for (VisitaForm visitaForm : annuncioForm.getVisite()) {
       annuncio.addVisita(new Visita(
-          visitaForm.getGiorno(),
-          visitaForm.getOrarioInizio(),
-          visitaForm.getOrarioFine(),
-          true
+              visitaForm.getGiorno(),
+              visitaForm.getOrarioInizio(),
+              visitaForm.getOrarioFine(),
+              true
       ));
     }
 
@@ -101,4 +80,3 @@ public class SottomissioneAnnuncioController {
     return modificaAnnuncioSuccessView;
   }
 }
-

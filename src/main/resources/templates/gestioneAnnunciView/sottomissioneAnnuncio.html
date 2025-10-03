@@ -1,279 +1,183 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
-
-<head>
-    <th:block th:include="fragments/head"></th:block>
+<th:block th:include="fragments/head"></th:block>
     <title>Just Traditions - Sottometti Annuncio</title>
 </head>
-
 <body>
 <th:block th:include="fragments/navbar"></th:block>
 
-<div class="row">
+<div class="row justify-content-center">
     <div class="card card-register mx-auto mt-5 col-md-8">
         <div class="card-header text-center">Pubblicazione Annuncio</div>
-        <div class="card-body card-header" align="center">
+        <div class="card-body" align="center">
+            <form th:action="@{/sottomissioneAnnuncio}" th:object="${annuncioForm}" th:method="post" enctype="multipart/form-data">
 
-            <form th:action="@{/sottomissioneAnnuncio}" enctype="multipart/form-data" th:method="post"
-                  th:object="${annuncioForm}">
-                <div class="form-group">
-
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <label for="nomeAttivita">Nome Attività:</label>
-                                <input type="text" th:field="*{nomeAttivita}" id="nomeAttivita" class="form-control"
-                                       placeholder="Nome dell'attività"
-                                       autofocus="autofocus" required>
-                                <div class=" d-inline invalid-feedback " th:if="${#fields.hasErrors('nomeAttivita')}"
-                                     th:errors="*{nomeAttivita}"></div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <label for="prezzoAttivita">Prezzo della visita:</label>
-                                <input type="number" th:field="*{prezzoVisita}" id="prezzoAttivita" step="0.01"
-                                       class="form-control"
-                                       placeholder="Inserisci il prezzo per la visita" required="required">
-                                <div class=" d-inline invalid-feedback " th:if="${#fields.hasErrors('prezzoVisita')}"
-                                     th:errors="*{prezzoVisita}"></div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Nome attività -->
+                <div class="form-group mb-3">
+                    <label for="nomeAttivita">Nome Attività:</label>
+                    <input type="text" th:field="*{nomeAttivita}" id="nomeAttivita" class="form-control" placeholder="Nome dell'attività" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('nomeAttivita')}" th:errors="*{nomeAttivita}"></div>
                 </div>
-                <br>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <label for="descAttivita">Inserisci descrizione:</label>
-                                <textarea id="descAttivita" th:field="*{descrizione}" class="form-control"
-                                          placeholder="Descrizione attività"
-                                          required="required" autofocus="autofocus" rows="6"></textarea>
-                                <div class=" d-inline invalid-feedback " th:if="${#fields.hasErrors('descrizione')}"
-                                     th:errors="*{descrizione}"></div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <label id="fasciaoraria">Inserisci giorni e fasce orarie:</label>
-                                <br>
 
-                                <div class="container0">
-                                    <label id="lunedi">Lunedì</label>
-                                    <button class="add_form_field0"><i class="fa fa-plus-square"></i></button>
-                                    <br>
-                                    <th:block th:each="visita, iStat : ${annuncioForm.visite}">
-                                        <div th:if="${visita.giorno != null && visita.giorno == visita.giorno.MONDAY}">
-                                            <input class="inputGiorno" type="hidden" value="MONDAY">
-                                            <input type="time" th:value="${visita.orarioInizio}">
-                                            <input type="time" th:value="${visita.orarioFine}">
-                                            <a href="#" class="delete"> x</a>
-                                            <div class=" d-inline invalid-feedback "
-                                                 th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}"
-                                                 th:errors="*{visite[__${iStat.index}__]}"></div>
-                                        </div>
-                                    </th:block>
-                                </div>
-                                <div class="container1">
-                                    <label id="martedi">Martedì</label>
-                                    <button class="add_form_field1"><i class="fa fa-plus-square"></i></button>
-                                    <br>
-                                    <th:block th:each="visita, iStat : ${annuncioForm.visite}">
-                                        <div th:if="${visita.giorno != null && visita.giorno == visita.giorno.TUESDAY}">
-                                            <input class="inputGiorno" type="hidden" value="TUESDAY">
-                                            <input type="time" th:value="${visita.orarioInizio}">
-                                            <input type="time" th:value="${visita.orarioFine}">
-                                            <a href="#" class="delete"> x</a>
-                                            <div class=" d-inline invalid-feedback "
-                                                 th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}"
-                                                 th:errors="*{visite[__${iStat.index}__]}"></div>
-                                        </div>
-                                    </th:block>
-                                </div>
-                                <div class="container2">
-                                    <label id="mercoledi">Mercoledì</label>
-                                    <button class="add_form_field2"><i class="fa fa-plus-square"></i></button>
-                                    <br>
-                                    <th:block th:each="visita, iStat : ${annuncioForm.visite}">
-                                        <div th:if="${visita.giorno != null && visita.giorno == visita.giorno.WEDNESDAY}">
-                                            <input class="inputGiorno" type="hidden" value="WEDNESDAY">
-                                            <input type="time" th:value="${visita.orarioInizio}">
-                                            <input type="time" th:value="${visita.orarioFine}">
-                                            <a href="#" class="delete"> x</a>
-                                            <div class=" d-inline invalid-feedback "
-                                                 th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}"
-                                                 th:errors="*{visite[__${iStat.index}__]}"></div>
-                                        </div>
-                                    </th:block>
-                                </div>
-                                <div class="container3">
-                                    <label id="giovedi">Giovedì</label>
-                                    <button class="add_form_field3"><i class="fa fa-plus-square"></i></button>
-                                    <br>
-                                    <th:block th:each="visita, iStat : ${annuncioForm.visite}">
-                                        <div th:if="${visita.giorno != null && visita.giorno == visita.giorno.THURSDAY}">
-                                            <input class="inputGiorno" type="hidden" value="THURSDAY">
-                                            <input type="time" th:value="${visita.orarioInizio}">
-                                            <input type="time" th:value="${visita.orarioFine}">
-                                            <a href="#" class="delete"> x</a>
-                                            <div class=" d-inline invalid-feedback "
-                                                 th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}"
-                                                 th:errors="*{visite[__${iStat.index}__]}"></div>
-                                        </div>
-                                    </th:block>
-                                </div>
-                                <div class="container4">
-                                    <label id="venerdi">Venerdì</label>
-                                    <button class="add_form_field4"><i class="fa fa-plus-square"></i></button>
-                                    <br>
-                                    <th:block th:each="visita, iStat : ${annuncioForm.visite}">
-                                        <div th:if="${visita.giorno != null && visita.giorno == visita.giorno.FRIDAY}">
-                                            <input class="inputGiorno" type="hidden" value="FRIDAY">
-                                            <input type="time" th:value="${visita.orarioInizio}">
-                                            <input type="time" th:value="${visita.orarioFine}">
-                                            <a href="#" class="delete"> x</a>
-                                            <div class=" d-inline invalid-feedback "
-                                                 th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}"
-                                                 th:errors="*{visite[__${iStat.index}__]}"></div>
-                                        </div>
-                                    </th:block>
-                                </div>
-                                <div class="container5">
-                                    <label id="sabato">Sabato</label>
-                                    <button class="add_form_field5"><i class="fa fa-plus-square"></i></button>
-                                    <br>
-                                    <th:block th:each="visita, iStat : ${annuncioForm.visite}">
-                                        <div th:if="${visita.giorno != null && visita.giorno == visita.giorno.SATURDAY}">
-                                            <input class="inputGiorno" type="hidden" value="SATURDAY">
-                                            <input type="time" th:value="${visita.orarioInizio}">
-                                            <input type="time" th:value="${visita.orarioFine}">
-                                            <a href="#" class="delete"> x</a>
-                                            <div class=" d-inline invalid-feedback "
-                                                 th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}"
-                                                 th:errors="*{visite[__${iStat.index}__]}"></div>
-                                        </div>
-                                    </th:block>
-                                </div>
-                                <div class="container6">
-                                    <label id="domenica">Domenica</label>
-                                    <button class="add_form_field6"><i class="fa fa-plus-square"></i></button>
-                                    <br>
-                                    <th:block th:each="visita, iStat : ${annuncioForm.visite}">
-                                        <div th:if="${visita.giorno != null && visita.giorno == visita.giorno.SUNDAY}">
-                                            <input class="inputGiorno" type="hidden" value="SUNDAY">
-                                            <input type="time" th:value="${visita.orarioInizio}">
-                                            <input type="time" th:value="${visita.orarioFine}">
-                                            <a href="#" class="delete"> x</a>
-                                            <div class=" d-inline invalid-feedback "
-                                                 th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}"
-                                                 th:errors="*{visite[__${iStat.index}__]}"></div>
-                                        </div>
-                                    </th:block>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                <!-- Descrizione -->
+                <div class="form-group mb-3">
+                    <label for="descAttivita">Descrizione:</label>
+                    <textarea id="descAttivita" th:field="*{descrizione}" class="form-control" placeholder="Descrizione attività" rows="6" required></textarea>
+                    <div class="text-danger" th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}"></div>
                 </div>
-                <br>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <label for="indirizzo">Inserisci l'indirizzo:</label>
-                                <input type="text" th:field="*{indirizzoAttivita}" id="indirizzo" class="form-control"
-                                       placeholder="Inserisci l'indirizzo"
-                                       required="required" autofocus="autofocus">
-                                <div class=" d-inline invalid-feedback "
-                                     th:if="${#fields.hasErrors('indirizzoAttivita')}"
-                                     th:errors="*{indirizzoAttivita}"></div>
+
+                <!-- Giorni e fasce orarie -->
+                <div class="form-group mb-3">
+                    <label>Inserisci giorni e fasce orarie:</label>
+
+                    <!-- Lunedì -->
+                    <div class="container0">
+                        <label>Lunedì</label>
+                        <button class="add_form_field0"><i class="fa fa-plus-square"></i></button><br>
+                        <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+                            <div th:if="${visita.giorno == T(java.time.DayOfWeek).MONDAY}">
+                                <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="MONDAY"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}"/>
+                                <a href="#" class="delete">x</a>
+                                <div class="text-danger" th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" th:errors="*{visite[__${iStat.index}__]}"></div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <label for="nMax">Numero massimo di persone:</label>
-                                <input type="number" th:field="*{numMaxPersonePerVisita}" value="1" id="nMax"
-                                       class="form-control"
-                                       placeholder="Inserisci il numero max" required="required">
-                                <div class=" d-inline invalid-feedback "
-                                     th:if="${#fields.hasErrors('numMaxPersonePerVisita')}"
-                                     th:errors="*{numMaxPersonePerVisita}"></div>
-                            </div>
-                        </div>
+                        </th:block>
                     </div>
-                </div>
-                <br>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <label>Inserisci provincia</label>
-                                <div>
-                                    <select th:field="*{provinciaAttivita}">
-                                        <option th:value="null">Inserisci provincia:</option>
-                                        <option th:each="provincia, iStat : ${@province.province}"
-                                                th:for="|provincia${iStat.count}|" th:text="${provincia}"
-                                                th:value="${provincia}"></option>
-                                    </select>
-                                    <div class=" d-inline invalid-feedback "
-                                         th:if="${#fields.hasErrors('provinciaAttivita')}"
-                                         th:errors="*{provinciaAttivita}"></div>
-                                </div>
+
+                    <!-- Martedì -->
+                    <div class="container1">
+                        <label>Martedì</label>
+                        <button class="add_form_field1"><i class="fa fa-plus-square"></i></button><br>
+                        <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+                            <div th:if="${visita.giorno == T(java.time.DayOfWeek).TUESDAY}">
+                                <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="TUESDAY"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}"/>
+                                <a href="#" class="delete">x</a>
+                                <div class="text-danger" th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" th:errors="*{visite[__${iStat.index}__]}"></div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="col-md-6">
-                            <div class="form-label-group">
-                                <label for="serviziAttivita">Servizi offerti:</label>
-                                <input type="text" th:field="*{serviziOfferti}" id="serviziAttivita"
-                                       class="form-control"
-                                       placeholder="Servizi offerti"
-                                       required="required">
-                                <div class=" d-inline invalid-feedback " th:if="${#fields.hasErrors('serviziOfferti')}"
-                                     th:errors="*{serviziOfferti}"></div>
-                            </div>
-                        </div>
+                        </th:block>
                     </div>
-                </div>
-                <br>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-label-group">
 
-
-                                <div class="container7">
-                                    <div class="mb-3">
-                                        <label for="formFileSm" class="form-label">Inserisci foto</label>
-                                        <input class="form-control form-control-sm" type="file" multiple
-                                               th:field="*{foto}" id="formFileSm">
-                                        <div class=" d-inline invalid-feedback " th:if="${#fields.hasErrors('foto')}"
-                                             th:errors="*{foto}"></div>
-                                    </div>
-
-
-                                </div>
+                    <!-- Mercoledì -->
+                    <div class="container2">
+                        <label>Mercoledì</label>
+                        <button class="add_form_field2"><i class="fa fa-plus-square"></i></button><br>
+                        <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+                            <div th:if="${visita.giorno == T(java.time.DayOfWeek).WEDNESDAY}">
+                                <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="WEDNESDAY"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}"/>
+                                <a href="#" class="delete">x</a>
+                                <div class="text-danger" th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" th:errors="*{visite[__${iStat.index}__]}"></div>
                             </div>
-                        </div>
+                        </th:block>
+                    </div>
+
+                    <!-- Giovedì -->
+                    <div class="container3">
+                        <label>Giovedì</label>
+                        <button class="add_form_field3"><i class="fa fa-plus-square"></i></button><br>
+                        <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+                            <div th:if="${visita.giorno == T(java.time.DayOfWeek).THURSDAY}">
+                                <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="THURSDAY"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}"/>
+                                <a href="#" class="delete">x</a>
+                                <div class="text-danger" th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" th:errors="*{visite[__${iStat.index}__]}"></div>
+                            </div>
+                        </th:block>
+                    </div>
+
+                    <!-- Venerdì -->
+                    <div class="container4">
+                        <label>Venerdì</label>
+                        <button class="add_form_field4"><i class="fa fa-plus-square"></i></button><br>
+                        <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+                            <div th:if="${visita.giorno == T(java.time.DayOfWeek).FRIDAY}">
+                                <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="FRIDAY"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}"/>
+                                <a href="#" class="delete">x</a>
+                                <div class="text-danger" th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" th:errors="*{visite[__${iStat.index}__]}"></div>
+                            </div>
+                        </th:block>
+                    </div>
+
+                    <!-- Sabato -->
+                    <div class="container5">
+                        <label>Sabato</label>
+                        <button class="add_form_field5"><i class="fa fa-plus-square"></i></button><br>
+                        <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+                            <div th:if="${visita.giorno == T(java.time.DayOfWeek).SATURDAY}">
+                                <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="SATURDAY"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}"/>
+                                <a href="#" class="delete">x</a>
+                                <div class="text-danger" th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" th:errors="*{visite[__${iStat.index}__]}"></div>
+                            </div>
+                        </th:block>
+                    </div>
+
+                    <!-- Domenica -->
+                    <div class="container6">
+                        <label>Domenica</label>
+                        <button class="add_form_field6"><i class="fa fa-plus-square"></i></button><br>
+                        <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+                            <div th:if="${visita.giorno == T(java.time.DayOfWeek).SUNDAY}">
+                                <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="SUNDAY"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}"/>
+                                <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}"/>
+                                <a href="#" class="delete">x</a>
+                                <div class="text-danger" th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" th:errors="*{visite[__${iStat.index}__]}"></div>
+                            </div>
+                        </th:block>
                     </div>
                 </div>
 
+                <!-- Indirizzo -->
+                <div class="form-group mb-3">
+                    <label for="indirizzo">Inserisci l'indirizzo:</label>
+                    <input type="text" th:field="*{indirizzoAttivita}" id="indirizzo" class="form-control" placeholder="Inserisci l'indirizzo" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('indirizzoAttivita')}" th:errors="*{indirizzoAttivita}"></div>
+                </div>
+
+                <!-- Provincia -->
+                <div class="form-group mb-3">
+                    <label>Inserisci provincia</label>
+                    <select th:field="*{provinciaAttivita}" class="form-control">
+                        <option value="">Seleziona provincia</option>
+                        <option th:each="provincia : ${@province.province}" th:value="${provincia}" th:text="${provincia}"></option>
+                    </select>
+                    <div class="text-danger" th:if="${#fields.hasErrors('provinciaAttivita')}" th:errors="*{provinciaAttivita}"></div>
+                </div>
+
+                <!-- Servizi offerti -->
+                <div class="form-group mb-3">
+                    <label for="serviziAttivita">Servizi offerti:</label>
+                    <input type="text" th:field="*{serviziOfferti}" id="serviziAttivita" class="form-control" placeholder="Servizi offerti" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('serviziOfferti')}" th:errors="*{serviziOfferti}"></div>
+                </div>
+
+                <!-- Foto -->
+                <div class="form-group mb-3">
+                    <label for="formFileSm">Inserisci foto</label>
+                    <input class="form-control form-control-sm" type="file" multiple th:field="*{foto}" id="formFileSm" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}"></div>
+                </div>
+
+                <!-- Submit -->
                 <input id="bottonSubmit" class="btn btn-primary btn-block" type="submit" value="Sottometti annuncio">
+
             </form>
-
-            <br><br>
-
         </div>
     </div>
 </div>
+
 <th:block th:include="fragments/footbar"></th:block>
 <th:block th:include="fragments/scripts"></th:block>
 <script src="/js/navbar.js"></script>
 <script src="/js/sottomettiannuncio.js"></script>
 </body>
 </html>
-

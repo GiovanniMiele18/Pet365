@@ -2,62 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
     <th:block th:include="fragments/head"></th:block>
-    <title>Just Traditions - Riepilogo Ordine</title>
+    <title>Pet365 - Riepilogo Prenotazione</title>
 </head>
 <body>
 
-<th:block th:include="fragments/navbar"></th:block>
-
+<th:block th:replace="fragments/navbar"></th:block>
 
 <div class="container mt-5 px-5">
-
-    <div class="mb-4 d-flex justify-content-center">
-
-        <h2>Riepilogo dell'ordine</h2>
-
-
+    <div class="mb-4 text-center">
+        <h2>Riepilogo della prenotazione</h2>
     </div>
 
-    <div class="row d-flex justify-content-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4 bg-dark text-white">
 
+                <form th:action="@{/effettuaPrenotazione}" th:object="${prenotazioneForm}" method="post">
+                    <!-- Campi nascosti -->
+                    <input type="hidden" th:field="*{dataVisita}" />
+                    <input type="hidden" th:field="*{idVisita}" />
+                    <input type="hidden" th:field="*{idAnimale}" />
 
-        <div class="col-md-4">
+                    <!-- Dettagli prenotazione -->
+                    <div class="mb-3">
+                        <p><strong>Data selezionata:</strong>
+                            <span th:text="*{dataVisita}">15/10/2025</span>
+                        </p>
+                        <p><strong>Orario selezionato:</strong>
+                            <span th:text="${orarioinizio} + ' - ' + ${orariofine}">09:00 - 10:00</span>
+                        </p>
+                    </div>
 
-            <div class="card card-blue p-3 bg-dark text-white mb-3">
-                <form action="/effettuaPrenotazione" th:object="${prenotazioneForm}" method="post">
-                    <input type="hidden" th:field="*{dataVisita}">
-                    <input type="hidden" th:field="*{idVisita}">
-                    <input type="hidden" th:field="*{numeroPersone}">
+                    <hr style="border-top: 1px solid white;" />
 
-                    <span th:text="'Data selezionata : ' + ${prenotazioneForm.dataVisita} "> </span>
-                    <br><br>
-                    <span th:text="'Orario selezionato: ' + ${orarioinizio} + '-' + ${orariofine} "></span>
-                    <br><br>
-                    <span th:text="'Numero di persone selezionato: ' + ${prenotazioneForm.numeroPersone}"></span>
-                    <br><br>
-                    <span>-------------------------------</span>
+                    <!-- Dettagli animale -->
+                    <div class="mb-3">
+                        <p><strong>Animale selezionato:</strong>
+                            <span th:text="${animale.nome} + ' (' + ${animale.specie} + ')'">Fido (Cane)</span>
+                        </p>
+                    </div>
 
-
-                    <div class="mt-4 mb-4">
-
-                        <button type="submit" class="btn btn-outline-success  px-3" th:text="'Pay ' + ${prezzo}">
-                        </button>
-
-                        <button class="btn btn-outline-success px-3">
-                            <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${idAnnuncio})}">Torna indietro</a>
-                        </button>
+                    <!-- Azioni -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="submit" class="btn btn-outline-success">Conferma Prenotazione</button>
+                        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${idAnnuncio})}"
+                           class="btn btn-outline-secondary">Torna indietro</a>
                     </div>
                 </form>
 
             </div>
         </div>
     </div>
-
 </div>
 
-
-<th:block th:include="fragments/footbar"></th:block>
-<th:block th:include="fragments/scripts"></th:block>
+<th:block th:replace="fragments/footbar"></th:block>
+<th:block th:replace="fragments/scripts"></th:block>
 <script src="/js/navbar.js"></script>
 
 </body>

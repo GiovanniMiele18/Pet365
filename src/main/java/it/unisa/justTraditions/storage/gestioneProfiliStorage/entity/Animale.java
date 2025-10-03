@@ -1,5 +1,6 @@
 package it.unisa.justTraditions.storage.gestioneProfiliStorage.entity;
 
+import it.unisa.justTraditions.storage.prenotazioniStorage.entity.Prenotazione;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,19 @@ public class Animale {
 
     @OneToMany(mappedBy = "animale", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Documento> documenti = new ArrayList<>();
+
+    @OneToMany(mappedBy = "animale", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Prenotazione> prenotazioni = new ArrayList<>();
+
+    public List<Prenotazione> getPrenotazioni() {
+        return prenotazioni;
+    }
+
+    public void addPrenotazione(Prenotazione prenotazione) {
+        prenotazioni.add(prenotazione);
+        prenotazione.setAnimale(this);
+    }
+
 
 
     // ✅ Costruttore vuoto richiesto da Hibernate

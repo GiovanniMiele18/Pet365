@@ -123,7 +123,7 @@
     <div th:if="${cliente.getClass().getSimpleName() == 'Cliente'}">
 
         <div class="alert alert-success text-center fw-bold">
-            🦴 <span th:text="${#numbers.formatDecimal(cliente.ossoPoint.valore,1,2)}"></span> Osso Point
+            🦴 <span th:text="${cliente.ossoPoint != null ? #numbers.formatDecimal(cliente.ossoPoint.valore,1,2) : '0.00'}"></span>Osso Point
         </div>
 
         <div th:if="${#lists.isEmpty(cliente.animali)}" class="text-center mb-4">

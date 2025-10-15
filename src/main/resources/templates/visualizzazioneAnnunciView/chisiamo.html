@@ -4,37 +4,25 @@
   <th:block th:insert="~{fragments/head}"></th:block>
   <title>Pet365 - Chi siamo</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
-    /* Font globale */
+    /* --- STRUTTURA BASE --- */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(180deg, #012e1f 0%, #013220 100%);
       color: #FFD700;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    /* Colori personalizzati */
-    .text-gold { color: #FFD700 !important; }
-    .text-white { color: #fff !important; }
-
-    /* Pulsante */
-    .btn-gold {
-      background-color: #FFD700;
-      color: #013220;
-      font-weight: 600;
-      border-radius: 10px;
-      padding: 12px 25px;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-    }
-    .btn-gold:hover {
-      background-color: #e6c200;
-      color: #fff;
-      transform: translateY(-2px);
+    main {
+      flex: 1;
     }
 
-    /* Hero */
+    /* --- HERO --- */
     .hero-card {
       background: linear-gradient(135deg, #01402b, #01603f);
       border-radius: 2rem;
@@ -42,6 +30,7 @@
       text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.6);
       border: 2px solid #FFD700;
+      margin-top: 40px;
     }
 
     .hero-card h1 {
@@ -57,7 +46,7 @@
       color: #fff;
     }
 
-    /* Sezioni */
+    /* --- SEZIONI --- */
     section h2 {
       color: #FFD700;
       font-weight: 700;
@@ -71,11 +60,6 @@
       font-size: 1.05rem;
     }
 
-    ul li {
-      margin-bottom: 12px;
-    }
-
-    /* Card sezioni */
     .section-card {
       background: linear-gradient(145deg, #01402b, #01603f);
       border-radius: 2rem;
@@ -83,50 +67,28 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.4);
       color: #fff;
       border-top: 3px solid #FFD700;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .section-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-    }
-
-    .section-card img {
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    }
-
-    /* Features */
+    /* --- FEATURES --- */
     .feature-box {
       background: #013220;
       border-radius: 2rem 0 2rem 0;
       padding: 35px 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.5);
       margin-bottom: 25px;
-      transition: transform 0.3s, box-shadow 0.3s;
       border-left: 4px solid #FFD700;
     }
 
-    .feature-box:nth-child(2) {
-      border-radius: 0 2rem 0 2rem;
-      border-left: none;
-      border-right: 4px solid #FFD700;
-    }
-
-    .feature-box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.7);
-    }
-
-    /* Call to action */
+    /* --- CTA --- */
     .cta-section {
       text-align: center;
-      padding: 60px 20px;
+      padding: 50px 20px 30px;
       background: linear-gradient(135deg, #01402b, #01603f);
       border-radius: 2rem;
       box-shadow: 0 8px 25px rgba(0,0,0,0.5);
       border: 2px solid #FFD700;
-      margin-top: 50px;
+      margin-top: 40px;
+      margin-bottom: 0; /* elimina spazio prima del footer */
     }
 
     .cta-section h2 {
@@ -134,9 +96,46 @@
       margin-bottom: 15px;
     }
 
-    .cta-section p {
-      font-size: 1.1rem;
-      margin-bottom: 30px;
+    .btn-gold {
+      background-color: #FFD700;
+      color: #013220;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 12px 25px;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+    .btn-gold:hover {
+      background-color: #e6c200;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* --- FOOTER COERENTE --- */
+    footer.custom-footer {
+      background: linear-gradient(180deg, #013220 0%, #012e1f 100%) !important;
+      color: #FFD700 !important;
+      margin-top: 0 !important;
+      padding-top: 30px !important;
+      padding-bottom: 10px !important;
+      border-top: 2px solid #FFD700;
+    }
+
+    footer.custom-footer a {
+      color: #FFD700 !important;
+      transition: color 0.3s;
+    }
+    footer.custom-footer a:hover {
+      color: #ffffff !important;
+    }
+
+    footer.custom-footer .call-to-action {
+      color: #FFD700;
+      text-align: center;
+      font-weight: 500;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 0.95rem;
     }
 
     @media (max-width: 768px) {
@@ -146,89 +145,68 @@
     }
   </style>
 </head>
+
 <body>
 <th:block th:insert="~{fragments/navbar}"></th:block>
 
-<!-- Hero Section -->
-<section class="container mt-4">
-  <div class="hero-card">
-    <h1>Chi siamo?</h1>
-    <p>Il benessere del tuo animale, ogni giorno dell’anno</p>
-  </div>
-</section>
+<main>
+  <!-- HERO -->
+  <section class="container mt-4">
+    <div class="hero-card">
+      <h1>Chi siamo?</h1>
+      <p>Il benessere del tuo animale, ogni giorno dell’anno</p>
+    </div>
+  </section>
 
-<!-- Mission -->
-<section class="container my-5">
-  <div class="section-card text-center">
-    <h2>La nostra missione</h2>
+  <!-- MISSION -->
+  <section class="container my-5">
+    <div class="section-card text-center">
+      <h2>La nostra missione</h2>
+      <p>
+        In <strong class="text-gold">Pet365</strong> vediamo i tuoi animali non solo come compagni,
+        ma come veri e propri <strong>figli del cuore</strong>. <br>
+        Siamo al tuo fianco <span class="text-gold">365 giorni all’anno, 24 ore su 24</span>,
+        garantendo cura, amore e supporto in ogni momento.
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="container my-5">
+    <div class="row text-center">
+      <div class="col-md-4">
+        <div class="feature-box">
+          <h5 class="fw-bold text-gold">❤️ Amore come in famiglia</h5>
+          <p>Ci prendiamo cura degli animali come fossero figli, con affetto e dedizione.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-box">
+          <h5 class="fw-bold text-gold">🌿 Servizi su misura</h5>
+          <p>Ogni animale è unico, e così deve essere il supporto che riceve.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-box">
+          <h5 class="fw-bold text-gold">📞 Supporto continuo</h5>
+          <p>Siamo sempre disponibili via mail e telefono, 24/7, per qualsiasi esigenza.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container cta-section">
+    <h2>Sempre al tuo fianco</h2>
     <p>
-      In <strong class="text-gold">Pet365</strong> vediamo i tuoi animali non solo come compagni, ma come veri e propri
-      <strong>figli del cuore</strong>. <br>
-      Siamo al tuo fianco <span class="text-gold">365 giorni all’anno, 24 ore su 24</span>,
-      garantendo cura, amore e supporto in ogni momento.
+      Con Pet365 hai la certezza di non essere mai solo: perché il tuo animale merita solo il meglio,
+      ogni giorno, in ogni momento.
     </p>
-  </div>
-</section>
+    <a th:href="@{/contatti}" class="btn btn-gold">Contattaci ora</a>
+  </section>
+</main>
 
-<!-- Services -->
-<section class="container my-5">
-  <div class="row align-items-center">
-    <div class="col-md-6">
-      <img src="https://images.unsplash.com/photo-1568640347023-a616a30bc3bd"
-           class="img-fluid"
-           alt="Animali felici">
-    </div>
-    <div class="col-md-6">
-      <div class="section-card">
-        <h2>Cosa offriamo</h2>
-        <p>
-          Con Pet365 puoi registrare il tuo animale e avere sempre a disposizione servizi pensati per lui:
-        </p>
-        <ul>
-          <li><strong class="text-gold">Toelettatura professionale</strong> – pulizia e benessere sempre al top.</li>
-          <li><strong class="text-gold">Assistenza veterinaria</strong> – dai controlli alle emergenze, sempre al tuo fianco.</li>
-          <li><strong class="text-gold">Pet sitting affidabile</strong> – persone di fiducia che si prendono cura di lui come faresti tu.</li>
-          <li><strong class="text-gold">Cibo e accessori</strong> – consegnati comodamente a casa, con qualità garantita.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Features -->
-<section class="container my-5">
-  <div class="row text-center">
-    <div class="col-md-4">
-      <div class="feature-box">
-        <h5 class="fw-bold text-gold">❤️ Amore come in famiglia</h5>
-        <p>Ci prendiamo cura degli animali come fossero figli, con affetto e dedizione.</p>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="feature-box">
-        <h5 class="fw-bold text-gold">🌿 Servizi su misura</h5>
-        <p>Ogni animale è unico, e così deve essere il supporto che riceve.</p>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="feature-box">
-        <h5 class="fw-bold text-gold">📞 Supporto continuo</h5>
-        <p>Siamo sempre disponibili via mail e telefono, 24/7, per qualsiasi esigenza.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Call to action -->
-<section class="cta-section">
-  <h2>Sempre al tuo fianco</h2>
-  <p>
-    Con Pet365 hai la certezza di non essere mai solo: perché il tuo animale merita solo il meglio,
-    ogni giorno, in ogni momento.
-  </p>
-  <a th:href="@{/contatti}" class="btn btn-gold">Contattaci ora</a>
-</section>
-
+<!-- FOOTER -->
 <th:block th:insert="~{fragments/footbar}"></th:block>
 <th:block th:insert="~{fragments/scripts}"></th:block>
 

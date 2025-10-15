@@ -28,7 +28,7 @@ public class AmministratoreLoginFilterConfiguration {
     registrationBean.setFilter(amministratoreLoginFilter);
     registrationBean.addUrlPatterns("/modificaStatoAnnuncio", "/rimozioneAmministratore",
         "/visualizzazioneAmministratori", "/visualizzazioneListaAnnunci", "/homeAmministratore",
-        "/aggiuntaAmministratore");
+        "/aggiuntaAmministratore","/aggiuntaProdotto","/modificaProdotto","/visualizzazioneProdotti","/admin/*");
 
     return registrationBean;
   }

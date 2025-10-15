@@ -5,6 +5,7 @@ import it.unisa.justTraditions.applicationLogic.autenticazioneControl.util.Passw
 import it.unisa.justTraditions.applicationLogic.autenticazioneControl.util.SessionCliente;
 import it.unisa.justTraditions.storage.gestioneProfiliStorage.dao.ClienteDao;
 import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Cliente;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ public class LoginController {
    */
   @PostMapping
   public String post(@ModelAttribute @Valid LoginForm loginForm,
-                     BindingResult bindingResult, Model model) {
+                     BindingResult bindingResult, Model model, HttpSession session) {
     model.addAttribute("nameLogin", "/login");
     if (bindingResult.hasErrors()) {
       return loginView;
@@ -78,6 +79,12 @@ public class LoginController {
       model.addAttribute("passwordErrata", true);
 
       return loginView;
+    }
+
+    String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
+    if (redirectAfterLogin != null) {
+      session.removeAttribute("redirectAfterLogin");
+      return "redirect:" + redirectAfterLogin;
     }
 
     return "redirect:" + homeController;

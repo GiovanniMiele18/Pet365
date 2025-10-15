@@ -38,21 +38,17 @@ public class DocumentoController {
     @Autowired
     private SessionCliente sessionCliente;
 
-    /**
-     * Recupera il cliente autenticato o lancia eccezione
-     */
     private Cliente getClienteAutenticato() {
         return sessionCliente.getCliente()
                 .orElseThrow(() -> new RuntimeException("Utente non autenticato"));
     }
 
-    /**
-     * GET -> Mostra form per aggiungere documento
-     */
+    // ==========================
+    //      AGGIUNTA DOCUMENTO
+    // ==========================
     @GetMapping("/aggiungi/{animaleId}")
     public String showForm(@PathVariable Long animaleId, Model model) {
         Cliente cliente = getClienteAutenticato();
-
         Animale animale = animaleService.findById(animaleId)
                 .orElseThrow(() -> new RuntimeException("Animale non trovato"));
 
@@ -66,14 +62,10 @@ public class DocumentoController {
         return "gestioneProfiliView/aggiungiDocumento";
     }
 
-    /**
-     * POST -> Salvataggio documento
-     */
     @PostMapping("/aggiungi/{animaleId}")
     public String salvaDocumento(@PathVariable Long animaleId,
                                  @Valid @ModelAttribute("documentoForm") AggiuntaDocumentoForm documentoForm,
-                                 BindingResult result,
-                                 Model model) {
+                                 BindingResult result, Model model) {
         Cliente cliente = getClienteAutenticato();
 
         Animale animale = animaleService.findById(animaleId)
@@ -95,23 +87,20 @@ public class DocumentoController {
                 return "error";
             }
 
-            // --- Estrai estensione dal file originale ---
             String fileOriginale = file.getOriginalFilename();
             String estensione = "";
             if (fileOriginale != null && fileOriginale.contains(".")) {
-                estensione = fileOriginale.substring(fileOriginale.lastIndexOf(".")); // ".pdf", ".jpg" ecc.
+                estensione = fileOriginale.substring(fileOriginale.lastIndexOf("."));
             }
 
-            // --- Salva documento (metadati) ---
             Documento documento = new Documento();
-            documento.setNome(documentoForm.getNome());       // nome logico
+            documento.setNome(documentoForm.getNome());
             documento.setDescrizione(documentoForm.getDescrizione());
-            documento.setTipo(file.getContentType());         // MIME type
-            documento.setEstensione(estensione);              // estensione file
+            documento.setTipo(file.getContentType());
+            documento.setEstensione(estensione);
             documento.setAnimale(animale);
             documentoDao.save(documento);
 
-            // --- Salva contenuto binario ---
             DatiDocumento datiDocumento = new DatiDocumento(file.getBytes(), documento);
             documento.setDatiDocumento(datiDocumento);
             datiDocumentoDao.save(datiDocumento);
@@ -124,9 +113,9 @@ public class DocumentoController {
         return "redirect:/visualizzazioneProfiloPersonale";
     }
 
-    /**
-     * GET -> Download documento
-     */
+    // ==========================
+    //      DOWNLOAD DOCUMENTO
+    // ==========================
     @GetMapping("/download/{documentoId}")
     public ResponseEntity<byte[]> downloadDocumento(@PathVariable Long documentoId) {
         Documento documento = documentoDao.findById(documentoId)
@@ -137,7 +126,6 @@ public class DocumentoController {
             throw new RuntimeException("Dati documento mancanti");
         }
 
-        // --- Nome file completo = nome logico + estensione ---
         String nomeFile = documento.getNome();
         if (documento.getEstensione() != null && !documento.getEstensione().isBlank()) {
             nomeFile += documento.getEstensione();
@@ -151,6 +139,9 @@ public class DocumentoController {
                 .body(datiDocumento.getDati());
     }
 
+    // ==========================
+    //      ELIMINA DOCUMENTO
+    // ==========================
     @PostMapping("/elimina/{documentoId}")
     public String eliminaDocumento(@PathVariable Long documentoId, Model model) {
         Cliente cliente = getClienteAutenticato();
@@ -158,15 +149,12 @@ public class DocumentoController {
         Documento documento = documentoDao.findById(documentoId)
                 .orElseThrow(() -> new RuntimeException("Documento non trovato"));
 
-        // Controllo che il documento appartenga ad un animale del cliente loggato
         if (!documento.getAnimale().getCliente().getId().equals(cliente.getId())) {
             model.addAttribute("message", "Non puoi eliminare un documento che non ti appartiene!");
             return "error";
         }
 
         documentoDao.delete(documento);
-
         return "redirect:/visualizzazioneProfiloPersonale";
     }
-
 }

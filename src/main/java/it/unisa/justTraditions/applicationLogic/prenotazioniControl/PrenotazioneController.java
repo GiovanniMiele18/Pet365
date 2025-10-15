@@ -19,29 +19,20 @@ public class PrenotazioneController {
     @Autowired
     private SessionCliente sessionCliente;
 
-    /**
-     * POST → Elimina una prenotazione esistente
-     */
     @PostMapping("/elimina/{prenotazioneId}")
     public String eliminaPrenotazione(@PathVariable Long prenotazioneId, Model model) {
-        // Recupera il cliente loggato
         Cliente cliente = sessionCliente.getCliente()
                 .orElseThrow(() -> new RuntimeException("Cliente non loggato"));
 
-        // Recupera la prenotazione
         Prenotazione prenotazione = prenotazioneDao.findById(prenotazioneId)
                 .orElseThrow(() -> new RuntimeException("Prenotazione non trovata"));
 
-        // Controlla che la prenotazione appartenga al cliente
         if (!prenotazione.getCliente().getId().equals(cliente.getId())) {
             model.addAttribute("message", "Non puoi eliminare una prenotazione che non ti appartiene!");
             return "error";
         }
 
-        // Elimina la prenotazione
         prenotazioneDao.delete(prenotazione);
-
-        // Torna al profilo personale
         return "redirect:/visualizzazioneProfiloPersonale";
     }
 }

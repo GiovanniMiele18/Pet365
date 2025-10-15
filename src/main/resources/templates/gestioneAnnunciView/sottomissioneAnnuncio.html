@@ -155,10 +155,14 @@
 
                 <!-- Servizi offerti -->
                 <div class="form-group mb-3">
-                    <label for="serviziAttivita">Servizi offerti:</label>
-                    <input type="text" th:field="*{serviziOfferti}" id="serviziAttivita" class="form-control" placeholder="Servizi offerti" required>
+                    <label>Servizi offerti</label>
+                    <select th:field="*{serviziOfferti}" class="form-control">
+                        <option value="">Seleziona servizio</option>
+                        <option th:each="servizio : ${@servizi.servizi}" th:value="${servizio}" th:text="${servizio}"></option>
+                    </select>
                     <div class="text-danger" th:if="${#fields.hasErrors('serviziOfferti')}" th:errors="*{serviziOfferti}"></div>
                 </div>
+
 
                 <!-- Foto -->
                 <div class="form-group mb-3">

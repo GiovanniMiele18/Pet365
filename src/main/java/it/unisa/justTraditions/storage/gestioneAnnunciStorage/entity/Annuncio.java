@@ -8,12 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Questa classe rappresenta un annuncio.
- * L'annuncio è pubblicato da un artigiano.
- * Contiene una o più visite e fino a tre foto.
- * Viene approvato o rifiutato da un amministratore.
- */
 @Entity
 public class Annuncio {
 
@@ -69,27 +63,20 @@ public class Annuncio {
     this.stato = stato;
   }
 
-  // --- Getter e Setter ---
+  // Getter e Setter
   public Long getId() { return id; }
-
   public String getNomeAttivita() { return nomeAttivita; }
   public void setNomeAttivita(String nomeAttivita) { this.nomeAttivita = nomeAttivita; }
-
   public String getProvinciaAttivita() { return provinciaAttivita; }
   public void setProvinciaAttivita(String provinciaAttivita) { this.provinciaAttivita = provinciaAttivita; }
-
   public String getIndirizzoAttivita() { return indirizzoAttivita; }
   public void setIndirizzoAttivita(String indirizzoAttivita) { this.indirizzoAttivita = indirizzoAttivita; }
-
   public String getDescrizione() { return descrizione; }
   public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
-
   public ServizioOfferto getServiziOfferti() { return serviziOfferti; }
   public void setServiziOfferti(ServizioOfferto serviziOfferti) { this.serviziOfferti = serviziOfferti; }
-
   public Stato getStato() { return stato; }
   public void setStato(Stato stato) { this.stato = stato; }
-
   public String getMotivoDelRifiuto() { return motivoDelRifiuto; }
   public void setMotivoDelRifiuto(String motivoDelRifiuto) { this.motivoDelRifiuto = motivoDelRifiuto; }
 
@@ -121,14 +108,11 @@ public class Annuncio {
     foto.setAnnuncio(null);
   }
 
-  // --- Equals, hashCode, toString ---
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-
     Annuncio annuncio = (Annuncio) o;
-
     return id.equals(annuncio.id);
   }
 
@@ -141,22 +125,14 @@ public class Annuncio {
             "id=" + id +
             ", nomeAttivita='" + nomeAttivita + '\'' +
             ", provinciaAttivita='" + provinciaAttivita + '\'' +
-            ", indirizzoAttivita='" + indirizzoAttivita + '\'' +
             ", descrizione='" + descrizione + '\'' +
             ", serviziOfferti=" + serviziOfferti +
             ", stato=" + stato +
-            ", motivoDelRifiuto='" + motivoDelRifiuto + '\'' +
-            ", amministratore=" + amministratore +
-            ", artigiano=" + artigiano +
             '}';
   }
 
-  // --- Enum ---
   public enum Stato {
-    PROPOSTO,
-    IN_REVISIONE,
-    RIFIUTATO,
-    APPROVATO
+    PROPOSTO, IN_REVISIONE, RIFIUTATO, APPROVATO
   }
 
   public enum ServizioOfferto {
@@ -164,7 +140,7 @@ public class Annuncio {
     VETERINARI_H24,
     SHOP,
     DOCCE_TOELETTATURA,
-    ADDDESTRAMENTO,
+    ADDESTRAMENTO,
     PENSIONI,
     COMMEMORAZIONI_E_SERVIZI_FUNEBRI,
     SERVIZI_DI_ACCOPPIAMENTO,

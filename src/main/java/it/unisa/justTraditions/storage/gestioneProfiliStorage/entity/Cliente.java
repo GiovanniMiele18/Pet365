@@ -1,13 +1,9 @@
 package it.unisa.justTraditions.storage.gestioneProfiliStorage.entity;
 
 import it.unisa.justTraditions.storage.prenotazioniStorage.entity.Prenotazione;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.OneToMany;
+import it.unisa.justTraditions.storage.shopStorage.entity.OssoPoint;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +15,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo", length = 9)
+@DiscriminatorValue("Cliente")
 public class Cliente
     extends Utente {
   @Column(nullable = false, unique = true, columnDefinition = "CHAR(16)")
@@ -27,6 +24,9 @@ public class Cliente
   private List<Prenotazione> prenotazioni = new ArrayList<>();
   @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Animale> animali = new ArrayList<>();
+
+  @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private OssoPoint ossoPoint;
 
   // getter e setter
   public List<Animale> getAnimali() {
@@ -50,7 +50,8 @@ public class Cliente
     super(email, password, nome, cognome);
     this.codiceFiscale = codiceFiscale;
   }
-
+  public OssoPoint getOssoPoint() { return ossoPoint; }
+  public void setOssoPoint(OssoPoint ossoPoint) { this.ossoPoint = ossoPoint; }
   public String getCodiceFiscale() {
     return codiceFiscale;
   }

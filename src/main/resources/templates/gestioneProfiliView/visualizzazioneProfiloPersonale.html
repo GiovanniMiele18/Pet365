@@ -4,11 +4,12 @@
     <th:block th:insert="~{fragments/head}"></th:block>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- Bootstrap & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <title>I miei Animali - Pet365</title>
+    <title>Profilo Personale - Pet365</title>
 
     <style>
         body {
@@ -18,33 +19,15 @@
             min-height: 100vh;
         }
 
-        /* Card premium */
-        .premium-card {
-            border: 2px solid #c9a84e;
-            border-radius: 12px;
-            box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
-            background: #fffaf0;
-            color: #0a6847;
-            margin-bottom: 20px;
-        }
-        .premium-header {
-            background: linear-gradient(90deg, #0a6847, #c9a84e);
-            color: white;
-            padding: 15px;
-            border-radius: 12px 12px 0 0;
+        .client-name {
+            text-align: center;
+            font-size: 1.8rem;
             font-weight: bold;
+            color: #c9a84e;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px #0a6847;
         }
 
-        /* Immagini animali */
-        .animal-img {
-            border-radius: 12px;
-            border: 3px solid #c9a84e;
-            max-height: 200px;
-            object-fit: cover;
-            width: 100%;
-        }
-
-        /* Bottoni */
         .btn-premium {
             background-color: #0a6847;
             color: white;
@@ -56,84 +39,71 @@
             color: #fff;
         }
 
-        /* Box punti osso */
-        .osso-box {
-            border: 2px dashed #c9a84e;
+        .btn-delete {
+            background-color: #b32d2e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .btn-delete:hover {
+            background-color: #ff5c5c;
+        }
+
+        .card {
             border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-            color: #c9a84e;
-            background: #0a6847;
-        }
-
-        /* Carosello */
-        #animaliCarousel {
-            position: relative;
-            min-height: 750px;
-        }
-        .carousel-item {
-            transition: none !important;
-        }
-
-        /* Frecce STICKY: restano centrate nello schermo */
-        .carousel-control-prev,
-        .carousel-control-next {
-            position: fixed;             /* fissate alla finestra */
-            top: 50%;                    /* sempre metà schermo */
-            transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #0a6847, #c9a84e);
-            opacity: 0.9;
-            z-index: 1050;               /* sopra tutto */
-        }
-        .carousel-control-prev {
-            left: 20px;
-        }
-        .carousel-control-next {
-            right: 20px;
-        }
-        .carousel-control-prev:hover,
-        .carousel-control-next:hover {
-            opacity: 1;
-        }
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            filter: invert(1) sepia(100%) hue-rotate(20deg) saturate(300%);
-            width: 30px;
-            height: 30px;
-        }
-
-        /* Nome cliente */
-        .client-name {
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #c9a84e;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             margin-bottom: 20px;
-            text-shadow: 1px 1px 2px #0a6847;
+            background: #fffaf0;
+            color: #0a6847;
+        }
+        .card-header {
+            background: linear-gradient(90deg, #0a6847, #c9a84e);
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 12px 12px 0 0;
         }
 
-        /* Responsività */
-        @media (max-width: 768px) {
-            .premium-card {
-                margin: 10px 0;
-            }
-            .animal-img {
-                max-height: 150px;
-            }
-            .carousel-control-prev,
-            .carousel-control-next {
-                width: 45px;
-                height: 45px;
-            }
-            .carousel-control-prev-icon,
-            .carousel-control-next-icon {
-                width: 20px;
-                height: 20px;
-            }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #c9a84e;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            opacity: 0.95;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .carousel-btn:hover {
+            background-color: #0a6847;
+        }
+        .carousel-btn.prev { left: 10px; }
+        .carousel-btn.next { right: 10px; }
+
+        /* Animazione rimozione */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
         }
     </style>
 </head>
@@ -149,151 +119,219 @@
         👤 <span th:text="${cliente.nome} + ' ' + ${cliente.cognome}">Mario Rossi</span>
     </div>
 
-    <!-- Osso Point -->
-    <div class="osso-box mb-4">
-        🦴 <span>120</span> Osso Point
-    </div>
+    <!-- ====================== CLIENTE ====================== -->
+    <div th:if="${cliente.getClass().getSimpleName() == 'Cliente'}">
 
-    <!-- Se non ci sono animali -->
-    <div th:if="${#lists.isEmpty(cliente.animali)}" class="text-center mb-4">
-        <a href="/aggiungiAnimale" class="btn btn-premium btn-lg">➕ Aggiungi Animale</a>
-    </div>
+        <div class="alert alert-success text-center fw-bold">
+            🦴 <span th:text="${#numbers.formatDecimal(cliente.ossoPoint.valore,1,2)}"></span> Osso Point
+        </div>
 
-    <!-- Se ci sono animali -->
-    <div th:if="${!#lists.isEmpty(cliente.animali)}">
-        <div id="animaliCarousel" class="carousel slide" data-bs-interval="false">
-            <div class="carousel-inner">
-                <div th:each="animale, iterStat : ${cliente.animali}"
-                     th:classappend="${iterStat.index == 0} ? ' active' : ''"
-                     class="carousel-item">
-                    <div class="premium-card">
+        <div th:if="${#lists.isEmpty(cliente.animali)}" class="text-center mb-4">
+            <a href="/aggiungiAnimale" class="btn btn-premium btn-lg">➕ Aggiungi Animale</a>
+        </div>
 
-                        <!-- Header -->
-                        <div class="premium-header d-flex justify-content-between align-items-center">
-                            <h4 th:text="${animale.nome}">Nome Animale</h4>
-                            <a th:href="@{/aggiungiAnimale}" class="btn btn-premium">➕ Aggiungi Animale</a>
-                        </div>
+        <div th:if="${!#lists.isEmpty(cliente.animali)}">
+            <div id="animaliCarousel" class="carousel slide" data-bs-interval="false" data-bs-touch="false" data-bs-keyboard="false">
 
-                        <!-- Dettagli Animale -->
-                        <div class="row p-4">
-                            <div class="col-md-4 text-center">
-                                <img th:if="${!#lists.isEmpty(animale.fotoAnimali)}"
-                                     th:src="@{'/immagineanimale?id=' + ${animale.fotoAnimali[0].id}}"
-                                     class="animal-img" alt="Foto animale">
-                                <img th:if="${#lists.isEmpty(animale.fotoAnimali)}"
-                                     src="/images/default-pet.png"
-                                     class="animal-img" alt="Foto non disponibile">
+                <div class="carousel-inner">
+                    <div th:each="animale, iterStat : ${cliente.animali}"
+                         th:classappend="${iterStat.index == 0} ? ' active' : ''"
+                         class="carousel-item">
+
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 th:text="${animale.nome}">Nome Animale</h4>
+                                <a th:href="@{/aggiungiAnimale}" class="btn btn-premium">➕ Aggiungi Animale</a>
                             </div>
-                            <div class="col-md-8">
-                                <p><b>Specie:</b> <span th:text="${animale.specie}">Cane</span></p>
-                                <p><b>Razza:</b> <span th:text="${animale.razza}">Labrador</span></p>
-                                <p><b>Età:</b> <span th:text="${animale.eta}">3</span> anni</p>
-                                <p><b>Sesso:</b> <span th:text="${animale.sesso}">Maschio</span></p>
-                                <p><b>Peso:</b> <span th:text="${animale.peso}">20</span> kg</p>
-                                <p><b>Colore:</b> <span th:text="${animale.colore}">Nero</span></p>
-                                <p><b>Note:</b> <span th:text="${animale.note}">Molto vivace</span></p>
-                            </div>
-                        </div>
 
-                        <!-- Documenti e Prenotazioni -->
-                        <div class="row mt-3 align-items-stretch">
-                            <!-- Documenti -->
-                            <div class="col-md-6 d-flex">
-                                <div class="premium-card d-flex flex-column h-100 w-100">
-                                    <div class="premium-header">📂 Documenti</div>
-                                    <div class="p-3 flex-grow-1">
-                                        <ul class="list-group">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center"
-                                                th:each="doc : ${animale.documenti}">
-                                                <div>
-                                                    📄
-                                                    <span th:text="${doc.nome}">Nome Documento</span>
-                                                    <span th:if="${doc.estensione != null}" th:text="${doc.estensione}">.pdf</span>
-                                                </div>
-                                                <div>
-                                                    <a th:href="@{'/documenti/download/' + ${doc.id}}"
-                                                       class="btn btn-sm btn-outline-success me-2">
-                                                        <i class="fa-solid fa-download"></i>
-                                                    </a>
-                                                    <form th:action="@{'/documenti/elimina/' + ${doc.id}}" method="post" style="display:inline;">
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                                onclick="return confirm('Sei sicuro di voler eliminare questo documento?');">
-                                                            <i class="fa-solid fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </li>
-                                            <li th:if="${#lists.isEmpty(animale.documenti)}" class="list-group-item">
-                                                Nessun documento disponibile
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="p-3 mt-auto">
-                                        <a th:href="@{'/documenti/aggiungi/' + ${animale.id}}" class="btn btn-premium w-100">
-                                            ➕ Aggiungi Documento
-                                        </a>
-                                    </div>
+                            <div class="row p-4">
+                                <div class="col-md-4 text-center">
+                                    <img th:if="${!#lists.isEmpty(animale.fotoAnimali)}"
+                                         th:src="@{'/immagineanimale?id=' + ${animale.fotoAnimali[0].id}}"
+                                         class="img-fluid rounded" alt="Foto animale">
+                                    <img th:if="${#lists.isEmpty(animale.fotoAnimali)}"
+                                         src="/images/default-pet.png"
+                                         class="img-fluid rounded" alt="Foto non disponibile">
+                                </div>
+                                <div class="col-md-8">
+                                    <p><b>Specie:</b> <span th:text="${animale.specie}">Cane</span></p>
+                                    <p><b>Razza:</b> <span th:text="${animale.razza}">Labrador</span></p>
+                                    <p><b>Età:</b> <span th:text="${animale.eta}">3</span> anni</p>
+                                    <p><b>Sesso:</b> <span th:text="${animale.sesso}">Maschio</span></p>
+                                    <p><b>Peso:</b> <span th:text="${animale.peso}">20</span> kg</p>
+                                    <p><b>Colore:</b> <span th:text="${animale.colore}">Nero</span></p>
+                                    <p><b>Note:</b> <span th:text="${animale.note}">Molto vivace</span></p>
                                 </div>
                             </div>
 
-                            <!-- Prenotazioni -->
-                            <div class="col-md-6 d-flex">
-                                <div class="premium-card d-flex flex-column h-100 w-100">
-                                    <div class="premium-header">📅 Prenotazioni</div>
-                                    <div class="p-3 flex-grow-1">
-                                        <ul class="list-group">
-                                            <li class="list-group-item" th:each="pren : ${animale.prenotazioni}">
-                                                📌
-                                                <p><b>Attività:</b> <span th:text="${pren.visita.annuncio.nomeAttivita}">Veterinaria</span></p>
-                                                <p><b>Servizio:</b> <span th:text="${pren.visita.annuncio.serviziOfferti}">Petsitting</span></p>
-                                                <p><b>Data:</b>
-                                                    <span th:text="${#temporals.format(pren.dataVisita, 'dd/MM/yyyy')}">15/10/2025</span>
-                                                </p>
-                                                <p><b>Orario:</b>
-                                                    <span th:text="${#temporals.format(pren.visita.orarioInizio, 'HH:mm')} + ' - ' + ${#temporals.format(pren.visita.orarioFine, 'HH:mm')}">10:00 - 11:00</span>
-                                                </p>
-                                                <div>
-                                                    <form th:action="@{'/prenotazioni/elimina/' + ${pren.id}}" method="post" style="display:inline;">
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                                onclick="return confirm('Sei sicuro di voler eliminare questa prenotazione?');">
+                            <div class="row p-4">
+                                <!-- Documenti -->
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">📂 Documenti</div>
+                                        <div class="card-body">
+                                            <ul class="list-group">
+                                                <li th:each="doc : ${animale.documenti}"
+                                                    class="list-group-item d-flex justify-content-between align-items-center"
+                                                    th:attr="data-doc-id=${doc.id}">
+                                                    <span>📄 <span th:text="${doc.nome}">Documento</span></span>
+                                                    <div class="btn-group">
+                                                        <a th:href="@{'/documenti/download/' + ${doc.id}}" class="btn btn-sm btn-outline-success">
+                                                            <i class="fa-solid fa-download"></i>
+                                                        </a>
+                                                        <button type="button"
+                                                                class="btn-delete btn-sm delete-doc"
+                                                                th:attr="data-id=${doc.id}">
                                                             <i class="fa-solid fa-trash"></i>
                                                         </button>
-                                                    </form>
-                                                </div>
-                                            </li>
-                                            <li th:if="${#lists.isEmpty(animale.prenotazioni)}" class="list-group-item">
-                                                Nessuna prenotazione disponibile
-                                            </li>
-                                        </ul>
+                                                    </div>
+                                                </li>
+                                                <li th:if="${#lists.isEmpty(animale.documenti)}" class="list-group-item text-center">
+                                                    Nessun documento disponibile
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <a th:href="@{'/documenti/aggiungi/' + ${animale.id}}" class="btn btn-premium">
+                                                ➕ Aggiungi Documento
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="p-3 mt-auto">
-                                        <a th:href="@{'/ricercaAnnunci'}" class="btn btn-premium w-100">
-                                            ➕ Aggiungi Prenotazione
-                                        </a>
+                                </div>
+
+                                <!-- Prenotazioni -->
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">📅 Prenotazioni</div>
+                                        <div class="card-body">
+                                            <ul class="list-group">
+                                                <li th:each="pren : ${animale.prenotazioni}"
+                                                    class="list-group-item d-flex justify-content-between align-items-center"
+                                                    th:attr="data-pren-id=${pren.id}">
+                                                    <span>
+                                                        📌 <span th:text="${pren.visita.annuncio.nomeAttivita}">Visita</span> -
+                                                        <span th:text="${#temporals.format(pren.dataVisita, 'dd/MM/yyyy')}">15/10/2025</span>
+                                                    </span>
+                                                    <button type="button"
+                                                            class="btn-delete btn-sm delete-pren"
+                                                            th:attr="data-id=${pren.id}">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </li>
+                                                <li th:if="${#lists.isEmpty(animale.prenotazioni)}" class="list-group-item text-center">
+                                                    Nessuna prenotazione disponibile
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <a th:href="@{/ricercaAnnunci}" class="btn btn-premium">
+                                                ➕ Aggiungi Prenotazione
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div> <!-- fine row -->
-
+                        </div> <!-- fine card -->
                     </div>
                 </div>
-            </div>
 
-            <!-- Frecce carosello -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#animaliCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#animaliCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
+                <button id="btnPrev" class="carousel-btn prev" type="button" aria-label="Slide precedente">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button id="btnNext" class="carousel-btn next" type="button" aria-label="Slide successiva">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
         </div>
     </div>
+
+    <!-- ====================== ARTIGIANO ====================== -->
+    <div th:if="${cliente.getClass().getSimpleName() == 'Artigiano'}">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/sottomissioneAnnuncio" class="btn btn-premium w-100 mb-3">📢 Crea Annuncio</a>
+                <a href="/visualizzazioneListaAnnunciSottomessi" class="btn btn-premium w-100 mb-3">📂 I miei Annunci</a>
+            </div>
+            <div class="col-md-6">
+                <a href="/visualizzazionePrenotazioniAnnuncio" class="btn btn-premium w-100 mb-3">📅 Prenotazioni ricevute</a>
+                <a href="/modificaProfilo" class="btn btn-premium w-100 mb-3">✏️ Modifica Profilo</a>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+<!-- Toast container -->
+<div class="toast-container"></div>
 
 <!-- Footer -->
 <th:block th:insert="~{fragments/footbar}"></th:block>
 <th:block th:insert="~{fragments/scripts}"></th:block>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // Funzione helper per mostrare messaggi toast
+        function showToast(message, type = 'success') {
+            const container = document.querySelector('.toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast align-items-center text-bg-${type} border-0 show mb-2`;
+            toast.role = 'alert';
+            toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        `;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        // Gestione eliminazione documento AJAX
+        document.querySelectorAll('.delete-doc').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!confirm("Eliminare questo documento?")) return;
+                const id = this.dataset.id;
+                const item = this.closest('li');
+                fetch(`/documenti/elimina/${id}`, { method: 'POST' })
+                    .then(res => {
+                        if (res.ok) {
+                            item.classList.add('fade-out');
+                            setTimeout(() => item.remove(), 500);
+                            showToast('Documento eliminato ✅');
+                        } else showToast('Errore durante eliminazione ❌', 'danger');
+                    })
+                    .catch(() => showToast('Errore di connessione ❌', 'danger'));
+            });
+        });
+
+        // Gestione eliminazione prenotazione AJAX
+        document.querySelectorAll('.delete-pren').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!confirm("Eliminare questa prenotazione?")) return;
+                const id = this.dataset.id;
+                const item = this.closest('li');
+                fetch(`/prenotazioni/elimina/${id}`, { method: 'POST' })
+                    .then(res => {
+                        if (res.ok) {
+                            item.classList.add('fade-out');
+                            setTimeout(() => item.remove(), 500);
+                            showToast('Prenotazione eliminata ✅');
+                        } else showToast('Errore durante eliminazione ❌', 'danger');
+                    })
+                    .catch(() => showToast('Errore di connessione ❌', 'danger'));
+            });
+        });
+
+        // Carousel navigation
+        const el = document.getElementById('animaliCarousel');
+        const carousel = new bootstrap.Carousel(el, { interval: false, touch: false, keyboard: false, wrap: true });
+        document.getElementById('btnPrev').addEventListener('click', e => { e.preventDefault(); carousel.prev(); });
+        document.getElementById('btnNext').addEventListener('click', e => { e.preventDefault(); carousel.next(); });
+    });
+</script>
+
 </body>
 </html>

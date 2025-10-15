@@ -65,26 +65,6 @@ public class EffettuaPrenotazioneController {
     return EFFETTUA_PRENOTAZIONE_VIEW;
   }
 
-  //Elimino la prenotazione dato l'id
-  @PostMapping("/elimina/{prenotazioneId}")
-  public String eliminaPrenotazione(@PathVariable Long prenotazioneId, Model model) {
-    Cliente cliente = sessionCliente.getCliente()
-            .orElseThrow(() -> new RuntimeException("Cliente non loggato"));
-
-    Prenotazione prenotazione = prenotazioneDao.findById(prenotazioneId)
-            .orElseThrow(() -> new RuntimeException("Prenotazione non trovata"));
-
-    // Verifica che la prenotazione appartenga al cliente loggato
-    if (!prenotazione.getCliente().getId().equals(cliente.getId())) {
-      model.addAttribute("message", "Non puoi eliminare una prenotazione che non ti appartiene!");
-      return "error";
-    }
-
-    prenotazioneDao.delete(prenotazione);
-
-    return "redirect:/visualizzazioneProfiloPersonale";
-  }
-
   /**
    * Effettua la prenotazione (submit POST).
    */

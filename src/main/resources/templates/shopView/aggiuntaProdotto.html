@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <th:block th:include="fragments/head"></th:block>
+    <title>Pet365 - Aggiungi Prodotto</title>
+    <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="wrapper">
+    <th:block th:insert="~{fragments/navbarAdmin}"></th:block>
+
+    <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-toggle js-sidebar-toggle">
+                <i class="hamburger align-self-center"></i>
+            </a>
+
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+                    <a><strong>BENVENUTO</strong>
+                        <span th:text="${amministratore.nome} + ' ' + ${amministratore.cognome}"></span>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+
+        <br><br>
+        <center><h1>Aggiungi un nuovo prodotto</h1></center>
+        <br><br>
+
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center">
+                <div class="col-6 align-self-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/admin/prodotti/salva}" th:object="${form}" method="post" enctype="multipart/form-data">
+
+                                <h5 class="card-title">Nome prodotto</h5>
+                                <div class="form-group mb-3">
+                                    <input type="text" th:field="*{nome}" class="form-control" placeholder="Nome del prodotto" required>
+                                    <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                                </div>
+
+                                <h5 class="card-title">Categoria</h5>
+                                <div class="form-group mb-3">
+                                    <input type="text" th:field="*{categoria}" class="form-control" placeholder="Categoria (es. Cibo, Accessori...)" required>
+                                    <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
+                                </div>
+
+                                <h5 class="card-title">Descrizione</h5>
+                                <div class="form-group mb-3">
+                                    <textarea th:field="*{descrizione}" class="form-control" rows="3" placeholder="Descrizione del prodotto" required></textarea>
+                                    <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">Prezzo (€)</h5>
+                                        <div class="form-group mb-3">
+                                            <input type="number" step="0.01" th:field="*{prezzo}" class="form-control" placeholder="0.00" required>
+                                            <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <h5 class="card-title">Quantità</h5>
+                                        <div class="form-group mb-3">
+                                            <input type="number" th:field="*{quantitaDisponibile}" class="form-control" placeholder="Disponibilità" required>
+                                            <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('quantitaDisponibile')}" th:errors="*{quantitaDisponibile}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h5 class="card-title">Foto prodotto</h5>
+                                <div class="form-group mb-3">
+                                    <input type="file" id="foto" class="form-control" accept="image/*" name="foto">
+                                </div>
+
+                                <button type="submit" class="col-md-12 btn btn-success">Aggiungi Prodotto</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br><br>
+    </div>
+</div>
+
+<script src="https://unpkg.com/@adminkit/core@latest/dist/js/app.js"></script>
+</body>
+</html>

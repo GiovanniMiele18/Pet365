@@ -4,6 +4,7 @@ import it.unisa.justTraditions.applicationLogic.util.Province;
 import it.unisa.justTraditions.storage.gestioneAnnunciStorage.dao.AnnuncioDao;
 import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Annuncio;
 import java.util.List;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -16,14 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**
- * Implementa il controller per la ricerca di un annuncio.
- */
 @Controller
 @RequestMapping("/ricercaAnnunci")
 public class RicercaAnnunciController {
 
   private static final String ricercaAnnunciView = "visualizzazioneAnnunciView/ricercaAnnunci";
+  private static final String ricercaAnnunciFragment = "visualizzazioneAnnunciView/ricercaAnnunci :: risultati";
 
   @Autowired
   private AnnuncioDao annuncioDao;
@@ -31,25 +30,16 @@ public class RicercaAnnunciController {
   @Autowired
   private Province province;
 
-  /**
-   * Implementa la funzionalità della ricerca di un annuncio con o senza filtro province.
-   *
-   * @param nomeAttivita Utilizzato per la ricerca degli annunci.
-   * @param provincia    Utilizzato per il filtro per provincie per gli annunci.
-   * @param pagina       Utilizzata per la paginazione della lista di annunci.
-   * @param model        Utilizzato per passare degli attributi alla view.
-   * @return Restituisce la view da reindirizzare.
-   * @throws IllegalArgumentException se i dati non sono previsti dal sistema.
-   */
   @GetMapping
   public String get(@RequestParam(defaultValue = "", required = false) String nomeAttivita,
                     @RequestParam(defaultValue = "", required = false) String provincia,
+                    @RequestParam(defaultValue = "", required = false) String serviziOfferti,
                     @RequestParam(defaultValue = "0", required = false) Integer pagina,
-                    Model model) {
+                    Model model,
+                    HttpServletRequest request) {
+
     if (!nomeAttivita.isBlank() && nomeAttivita.length() > 40) {
-      throw new IllegalArgumentException(
-          "La ricerca degli annunci non va a buon fine poiché"
-              + " il nome inserito dall’utente è troppo lungo.");
+      throw new IllegalArgumentException("Nome attività troppo lungo");
     }
     if (!provincia.isBlank() && !province.getProvince().contains(provincia)) {
       throw new IllegalArgumentException("Provincia non esistente");
@@ -60,20 +50,27 @@ public class RicercaAnnunciController {
     annuncio.setProvinciaAttivita(provincia);
     annuncio.setStato(Annuncio.Stato.APPROVATO);
 
+    if (!serviziOfferti.isBlank()) {
+      try {
+        annuncio.setServiziOfferti(Annuncio.ServizioOfferto.valueOf(serviziOfferti));
+      } catch (IllegalArgumentException e) {
+        throw new IllegalArgumentException("Servizio non valido");
+      }
+    }
+
     Example<Annuncio> annuncioExample = Example.of(
-        annuncio,
-        ExampleMatcher.matching()
-            .withIgnoreCase()
-            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+            annuncio,
+            ExampleMatcher.matching()
+                    .withIgnoreCase()
+                    .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
     );
 
     Page<Annuncio> annuncioPage = annuncioDao.findAll(
-        annuncioExample,
-        PageRequest.of(pagina, 20, Sort.by(Sort.Direction.ASC, "nomeAttivita"))
+            annuncioExample,
+            PageRequest.of(pagina, 20, Sort.by(Sort.Direction.ASC, "nomeAttivita"))
     );
 
     List<Annuncio> annunci;
-
     int totalPages = annuncioPage.getTotalPages();
     if (totalPages == 0) {
       annunci = List.of();
@@ -87,8 +84,16 @@ public class RicercaAnnunciController {
     model.addAttribute("pagina", pagina);
     model.addAttribute("nomeAttivita", nomeAttivita);
     model.addAttribute("provincia", provincia);
+    model.addAttribute("serviziOfferti", serviziOfferti);
     model.addAttribute("pagineTotali", totalPages);
+    model.addAttribute("listaServizi", Annuncio.ServizioOfferto.values());
 
+    // Se è una chiamata AJAX → restituisco solo il fragment
+    if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+      return ricercaAnnunciFragment;
+    }
+
+    // Altrimenti → pagina intera
     return ricercaAnnunciView;
   }
 }

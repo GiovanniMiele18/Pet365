@@ -1,205 +1,271 @@
-<!-- Google Fonts: Montserrat -->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Font Awesome per icone -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
 <!-- Navbar -->
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark custom-navbar">
-    <div class="container-fluid">
-        <!-- Logo e telefono -->
-        <div class="d-flex align-items-center">
-            <img src="https://i.imgur.com/mYm8eGJ.png" style="width:125px;height:125px;" alt="logo" class="logo">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark pet365-navbar">
+    <div class="container-fluid px-4">
 
-            <div class="d-flex align-items-center ms-3 phone-info" onclick="window.location.href='tel:+393287090014'">
-                <i class="fas fa-phone me-2"></i>
-                <span class="phone-text">+39 081 8293363 24 su 24 ore per 365 giorni</span>
-            </div>
-        </div>
+        <!-- Logo Brand -->
+        <a href="/" class="navbar-brand d-flex align-items-center">
+            <img src="https://i.imgur.com/mYm8eGJ.png" alt="Pet365 Logo" class="logo me-2">
+            <span class="brand-text shimmer">Pet<span class="accent">365</span></span>
+        </a>
 
-        <!-- Hamburger -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
+        <!-- Bottone hamburger -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars text-gold fs-3"></i>
         </button>
 
-        <!-- Offcanvas menu -->
-        <div class="offcanvas offcanvas-end custom-offcanvas" tabindex="-1" id="offcanvasNavbar"
-             aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Just Traditions</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
-            </div>
+        <!-- Menu -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-center gap-3">
 
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mb-2 mb-lg-0">
-
-                <!-- Home -->
-                <li class="nav-item my-auto" style="width: 6rem;">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-
-                <!-- Annunci -->
-                <li class="nav-item my-auto" style="width: 6rem;">
-                    <a class="nav-link" href="/ricercaAnnunci">Annunci</a>
-                </li>
-
-                <!-- Chi siamo -->
-                <li class="nav-item my-auto" style="width: 8rem;">
-                    <a class="nav-link" href="/chisiamo">Chi siamo?</a>
-                </li>
-
-                <!-- Dropdown impostazioni se cliente loggato -->
-                <li th:if="${cliente != null}" class="nav-item dropdown my-auto" style="width: 6rem;">
-                    <a class="nav-link dropdown-toggle btn btn-outline-gold" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        <em class="fa fa-gear"></em>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <i class="fa-solid fa-house me-2 nav-icon"></i>Home
                     </a>
-                    <ul class="dropdown-menu custom-dropdown">
-                        <li><a class="dropdown-item" href="/visualizzazioneProfiloPersonale">Area Personale</a></li>
-                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                    </ul>
                 </li>
 
-                <!-- Login se cliente non loggato -->
-                <li th:if="${cliente == null}" class="nav-item my-auto" style="width: 6rem;">
-                    <a href="/login" class="btn btn-outline-gold">Login</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ricercaAnnunci">
+                        <i class="fa-solid fa-calendar-check me-2 nav-icon pulse"></i>Prenota Servizi
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop">
+                        <i class="fa-solid fa-paw me-2 nav-icon"></i>Shop
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/carrello">
+                        <i class="fa-solid fa-cart-shopping me-2 nav-icon"></i>Carrello
+                    </a>
+                </li>
+
+                <!-- Login -->
+                <li th:if="${cliente == null}" class="nav-item">
+                    <a href="/login" class="btn btn-gold ms-2">
+                        <i class="fa-regular fa-user me-1"></i>Login
+                    </a>
+                </li>
+
+                <!-- Profilo Dropdown -->
+                <li th:if="${cliente != null}" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle btn btn-outline-gold ms-2" href="#" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
+                        <li><a class="dropdown-item" href="/visualizzazioneProfiloPersonale"><i class="fa-solid fa-user me-2"></i>Profilo</a></li>
+                        <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
+                    </ul>
                 </li>
 
             </ul>
         </div>
     </div>
+
+    <!-- Linea dorata sotto navbar -->
+    <div class="gold-line"></div>
 </nav>
 
-<!-- Stile personalizzato -->
+<!-- STILE GOLDEN FLOAT -->
 <style>
-    /* Font globale per navbar */
-    .custom-navbar {
-        background-color: #013220 !important;
-        color: #FFD700;
+    :root {
+        --verde: #012e1f;
+        --verde-chiaro: #01613d;
+        --oro: #FFD700;
+        --oro-chiaro: #ffef88;
+        --bianco: #fff;
+    }
+
+    /* --- Navbar principale --- */
+    .pet365-navbar {
+        background: linear-gradient(135deg, rgba(1,46,31,0.95), rgba(1,91,56,0.85));
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,215,0,0.25);
         font-family: 'Montserrat', sans-serif;
-    }
-
-    /* Logo */
-    .logo {
-        cursor: default;
-    }
-
-    /* Telefono vicino al logo */
-    .phone-info {
-        color: #FFD700;
-        font-weight: 500;
-        font-size: 0.95rem;
-        white-space: nowrap;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
-    .phone-info:hover {
-        color: #ffffff;
-    }
-
-    .phone-info .fa-phone {
-        color: #FFD700;
-        font-size: 1rem;
-    }
-
-    .phone-info .phone-text {
-        color: #FFD700;
-    }
-
-    /* Testo link navbar */
-    .custom-navbar .nav-link {
-        color: #FFD700 !important;
-        font-weight: 500;
-        transition: color 0.3s ease;
-    }
-
-    .custom-navbar .nav-link:hover {
-        color: #ffffff !important;
-    }
-
-    /* Offcanvas */
-    .custom-offcanvas {
-        background-color: #013220 !important;
-        color: #FFD700;
-    }
-
-    /* Bottoni dorati */
-    .btn-gold {
-        background-color: #FFD700;
-        color: #013220;
-        border: none;
-    }
-
-    .btn-gold:hover {
-        background-color: #e6c200;
-        color: #fff;
-    }
-
-    /* Bordo oro */
-    .btn-outline-gold {
-        border: 1px solid #FFD700;
-        color: #FFD700;
-    }
-
-    .btn-outline-gold:hover {
-        background-color: #FFD700;
-        color: #013220;
-    }
-
-    /* Dropdown premium */
-    .custom-dropdown {
-        background-color: #013220;
-        border-radius: 12px;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-        padding: 0.5rem 0;
-        min-width: 200px;
+        padding: 1rem 1.5rem;
         position: relative;
+        z-index: 1000;
+
+        /* Effetto fluttuante */
+        box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.5),
+                0 0 18px rgba(255, 215, 0, 0.25),
+                inset 0 -1px 0 rgba(255, 215, 0, 0.2);
+        border-radius: 0 0 20px 20px;
     }
 
-    .custom-dropdown::before {
+    /* --- Logo e Brand --- */
+    .logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        transition: transform 0.4s ease;
+        filter: drop-shadow(0 0 8px rgba(255,215,0,0.2));
+    }
+    .logo:hover {
+        transform: rotate(-5deg) scale(1.07);
+        filter: drop-shadow(0 0 12px rgba(255,215,0,0.4));
+    }
+
+    .brand-text {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: var(--oro);
+    }
+    .brand-text .accent { color: var(--bianco); }
+
+    /* --- Effetto shimmer logo --- */
+    .shimmer {
+        background: linear-gradient(120deg, var(--oro) 0%, #fff 25%, var(--oro) 50%, var(--oro-chiaro) 75%, var(--oro) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 250% auto;
+        animation: shimmerMove 6s linear infinite;
+    }
+    @keyframes shimmerMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* --- Link navbar --- */
+    .navbar-nav .nav-link {
+        color: var(--oro);
+        font-weight: 500;
+        letter-spacing: 0.4px;
+        position: relative;
+        padding: 0.3rem 0.6rem;
+        transition: all 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: var(--oro-chiaro);
+        text-shadow: 0 0 10px rgba(255,215,0,0.6);
+    }
+
+    .navbar-nav .nav-link::after {
         content: "";
         position: absolute;
-        top: -10px;
-        right: 20px;
-        border-width: 0 10px 10px 10px;
-        border-style: solid;
-        border-color: transparent transparent #013220 transparent;
+        bottom: -3px;
+        left: 0;
+        width: 0%;
+        height: 2px;
+        background: var(--oro);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+    .navbar-nav .nav-link:hover::after { width: 100%; }
+
+    /* --- Icone dei link --- */
+    .nav-icon {
+        color: var(--oro);
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+    }
+    .navbar-nav .nav-link:hover .nav-icon {
+        color: var(--oro-chiaro);
+        transform: translateY(-2px) scale(1.1);
+        text-shadow: 0 0 6px rgba(255,215,0,0.8);
     }
 
+    /* --- Effetto Pulse per Prenota Servizi --- */
+    .pulse {
+        animation: pulseGlow 3s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+        0%, 100% {
+            text-shadow: 0 0 6px rgba(255,215,0,0.3), 0 0 8px rgba(255,215,0,0.5);
+            transform: scale(1);
+        }
+        50% {
+            text-shadow: 0 0 10px rgba(255,215,0,0.8), 0 0 25px rgba(255,215,0,0.7);
+            transform: scale(1.15);
+        }
+    }
+
+    /* --- Bottoni --- */
+    .btn-gold {
+        background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+        color: var(--verde);
+        font-weight: 600;
+        border: none;
+        border-radius: 50px;
+        padding: 8px 22px;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 8px rgba(255,215,0,0.3);
+    }
+    .btn-gold:hover {
+        background: linear-gradient(135deg, #fff, var(--oro));
+        color: var(--verde);
+        box-shadow: 0 0 20px rgba(255,215,0,0.6);
+    }
+
+    .btn-outline-gold {
+        border: 1px solid var(--oro);
+        color: var(--oro);
+        border-radius: 50px;
+        padding: 8px 20px;
+        transition: all 0.3s ease;
+    }
+    .btn-outline-gold:hover {
+        background-color: var(--oro);
+        color: var(--verde);
+        box-shadow: 0 0 15px rgba(255,215,0,0.5);
+    }
+
+    /* --- Dropdown --- */
+    .custom-dropdown {
+        background-color: var(--verde);
+        border: 1px solid rgba(255,215,0,0.3);
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    }
     .custom-dropdown .dropdown-item {
-        color: #FFD700 !important;
-        background-color: transparent !important;
-        padding: 0.5rem 1rem;
-        transition: background-color 0.3s, color 0.3s, transform 0.2s;
-        border-radius: 8px;
+        color: var(--oro);
+        padding: 0.6rem 1.2rem;
+        transition: all 0.3s;
+    }
+    .custom-dropdown .dropdown-item:hover {
+        background-color: var(--oro);
+        color: var(--verde);
+        font-weight: 600;
     }
 
-    .custom-dropdown .dropdown-item:hover,
-    .custom-dropdown .dropdown-item:focus {
-        background-color: #FFD700 !important;
-        color: #013220 !important;
-        transform: translateX(5px);
+    /* --- Linea dorata animata --- */
+    .gold-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        width: 100%;
+        background: linear-gradient(90deg, transparent, var(--oro-chiaro), var(--oro), transparent);
+        background-size: 200% auto;
+        animation: goldFlow 4s linear infinite;
+        box-shadow: 0 0 10px rgba(255,215,0,0.6);
+    }
+    @keyframes goldFlow {
+        0% { background-position: 200% center; }
+        100% { background-position: -200% center; }
     }
 
-    .custom-dropdown .dropdown-divider {
-        border-top: 1px solid #025930;
-        margin: 0.3rem 0;
-    }
-
-    /* Mobile */
+    /* --- Responsive --- */
     @media (max-width: 991px) {
-        .phone-info {
-            font-size: 0.85rem;
-            white-space: normal;
-            margin-top: 5px;
+        .pet365-navbar {
+            padding: 0.8rem 1rem;
+            border-radius: 0 0 15px 15px;
         }
-        .phone-info .fa-phone {
-            font-size: 0.9rem;
-        }
+        .logo { width: 52px; height: 52px; }
+        .brand-text { font-size: 1.6rem; }
+        .navbar-nav .nav-link { font-size: 1rem; }
     }
 </style>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

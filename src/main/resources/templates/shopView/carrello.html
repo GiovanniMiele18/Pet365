@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <th:block th:insert="~{fragments/head}"></th:block>
+    <title>Pet365 - Il tuo Carrello</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* 🌿 Base Theme */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f6f7f9;
+        }
+
+        h2 {
+            font-weight: 700;
+        }
+
+        /* 🛍️ Cart Table */
+        .cart-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+        }
+
+        .cart-table th {
+            background-color: #e9f7ec;
+            color: #00693e;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .cart-table td {
+            vertical-align: middle;
+        }
+
+        .qty-input {
+            width: 70px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            border-radius: 10px;
+        }
+
+        /* 🧾 Summary Card */
+        .summary-card {
+            border: none;
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all .3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .summary-card .card-body {
+            padding: 1.8rem;
+        }
+
+        #checkout-btn {
+            background: linear-gradient(135deg, #00a859, #0cb065);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            transition: all .2s ease;
+        }
+
+        #checkout-btn:hover {
+            transform: scale(1.03);
+            background: linear-gradient(135deg, #029e53, #05a05a);
+        }
+
+        /* ✨ Toasts */
+        .toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 4000;
+        }
+
+        .toast-custom {
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            color: white;
+            font-weight: 500;
+            border-radius: 12px;
+            padding: .9rem 1.3rem;
+            margin-bottom: .5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideIn .4s ease, fadeOut .5s ease 3.5s forwards;
+        }
+
+        .toast-success {
+            background: linear-gradient(135deg, #00a859, #0cb065);
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #dc3545, #b52d39);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateX(120%); }
+        }
+
+        /* 📱 Responsive */
+        @media (max-width: 768px) {
+            .cart-container, .summary-card { border-radius: 12px; padding: 1rem; }
+            .cart-table th, .cart-table td { font-size: 14px; }
+            #checkout-btn { font-size: 15px; }
+        }
+    </style>
+</head>
+
+<body>
+<th:block th:insert="~{fragments/navbar}"></th:block>
+
+<div class="toast-container"></div>
+
+<main class="container py-5">
+    <h2 class="text-center text-success mb-5">🛒 Il tuo carrello</h2>
+
+    <div th:if="${#lists.isEmpty(prodotti)}" class="text-center py-5">
+        <h4 class="text-muted mb-3">Il carrello è vuoto 😿</h4>
+        <a href="/shop" class="btn btn-success px-4"><i class="fa fa-store me-2"></i>Vai allo shop</a>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(prodotti)}" class="row g-4 justify-content-between">
+        <!-- 🧮 Lista prodotti -->
+        <div class="col-lg-8">
+            <div class="cart-container">
+                <table class="table cart-table text-center align-middle">
+                    <thead>
+                    <tr>
+                        <th>Prodotto</th>
+                        <th>Quantità</th>
+                        <th>Prezzo</th>
+                        <th>Totale</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="cart-body">
+                    <tr th:each="p : ${prodotti}" th:attr="data-id=${p.id}">
+                        <td>
+                            <strong th:text="${p.nome}"></strong>
+                            <p class="text-muted small mb-0" th:text="${p.categoria}"></p>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control qty-input" min="1"
+                                   th:attr="max=${p.quantitaDisponibile}"
+                                   th:value="${carrello[p.id]}">
+                        </td>
+                        <td th:text="${#numbers.formatDecimal(p.prezzo,1,2)} + ' €'"></td>
+                        <td class="subtotal" th:text="${#numbers.formatDecimal(p.prezzo.multiply(new java.math.BigDecimal(carrello[p.id].toString())),1,2)} + ' €'"></td>
+                        <td>
+                            <button class="btn btn-outline-danger btn-sm remove-btn"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 💳 Riepilogo -->
+        <div class="col-lg-4">
+            <div class="card summary-card">
+                <div class="card-body">
+                    <h5 class="fw-bold text-success text-center mb-4">Riepilogo Ordine</h5>
+
+                    <p class="d-flex justify-content-between mb-2">
+                        <span>Totale prodotti</span>
+                        <strong id="total-products" th:text="${#numbers.formatDecimal(totaleProdotti,1,2)} + ' €'"></strong>
+                    </p>
+                    <p class="d-flex justify-content-between mb-2">
+                        <span>Spedizione</span>
+                        <strong id="shipping" th:text="${#numbers.formatDecimal(spedizione,1,2)} + ' €'"></strong>
+                    </p>
+                    <hr>
+                    <p class="d-flex justify-content-between fs-5">
+                        <span>Totale da pagare</span>
+                        <strong id="total" th:text="${#numbers.formatDecimal(totale,1,2)} + ' €'"></strong>
+                    </p>
+                    <div class="text-center mt-4">
+                        <form th:action="@{/carrello/checkout}" method="post">
+                            <button type="submit" class="btn btn-success w-100">Procedi all’acquisto</button>
+                        </form>
+                        <a href="/shop" class="btn btn-outline-primary w-100 mt-2">Continua lo shopping</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<th:block th:insert="~{fragments/footbar}"></th:block>
+<th:block th:insert="~{fragments/scripts}"></th:block>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    /* ================================
+       🌟 Toasts eleganti
+    ================================== */
+    function showToast(msg, type='success') {
+        const toastContainer = document.querySelector('.toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast-custom ${type === 'error' ? 'toast-error' : 'toast-success'}`;
+        toast.innerHTML = `<i class="fa ${type === 'error' ? 'fa-triangle-exclamation' : 'fa-circle-check'}"></i><span>${msg}</span>`;
+        toastContainer.appendChild(toast);
+        setTimeout(() => toast.remove(), 4000);
+    }
+
+    /* ================================
+       🔄 Calcolo dinamico totali
+    ================================== */
+    function updateTotals() {
+        let total = 0;
+        document.querySelectorAll('#cart-body tr').forEach(row => {
+            const price = parseFloat(row.querySelector('td:nth-child(3)').innerText.replace('€', '').trim());
+            const qty = parseInt(row.querySelector('.qty-input').value);
+            const subtotal = price * qty;
+            row.querySelector('.subtotal').innerText = subtotal.toFixed(2) + ' €';
+            total += subtotal;
+        });
+        const shipping = total >= 50 ? 0 : 3.99;
+        document.getElementById('total-products').innerText = total.toFixed(2) + ' €';
+        document.getElementById('shipping').innerText = shipping.toFixed(2) + ' €';
+        document.getElementById('total').innerText = (total + shipping).toFixed(2) + ' €';
+    }
+
+    /* ================================
+       📦 Gestione quantità
+    ================================== */
+    document.querySelectorAll('.qty-input').forEach(inp => {
+        inp.addEventListener('change', () => {
+            const max = parseInt(inp.getAttribute('max'));
+            if (parseInt(inp.value) > max) {
+                inp.value = max;
+                showToast(`Solo ${max} pezzi disponibili ❌`, 'error');
+            }
+            if (parseInt(inp.value) < 1) inp.value = 1;
+            updateTotals();
+        });
+    });
+
+    /* ================================
+       🗑️ Rimozione prodotto
+    ================================== */
+    document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const row = btn.closest('tr');
+            const id = row.dataset.id;
+            try {
+                const res = await fetch(`/carrello/rimuovi/${id}`, {method:'POST'});
+                if (res.ok) {
+                    row.remove();
+                    updateTotals();
+                    showToast('Prodotto rimosso 🗑️');
+                } else {
+                    showToast('Errore durante la rimozione ❌', 'error');
+                }
+            } catch {
+                showToast('Errore di connessione ❌', 'error');
+            }
+        });
+    });
+
+    /* ================================
+       💳 Checkout
+    ================================== */
+    document.getElementById('checkout-btn')?.addEventListener('click', async () => {
+        try {
+            const res = await fetch('/carrello/checkout', {method:'POST'});
+            if (res.redirected) {
+                window.location.href = res.url;
+                return;
+            }
+            if (res.ok) {
+                showToast('Ordine completato ✅');
+                setTimeout(() => window.location.href = '/shop', 2000);
+            } else {
+                showToast('Errore durante il checkout ❌', 'error');
+            }
+        } catch {
+            showToast('Errore di rete ❌', 'error');
+        }
+    });
+</script>
+</body>
+</html>

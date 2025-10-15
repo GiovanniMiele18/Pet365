@@ -3,9 +3,14 @@
 <head>
     <th:block th:insert="~{fragments/head}"></th:block>
     <title>Pet365 - Registrazione</title>
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
     <style>
-        /* Sfondo pagina */
         body {
             background: linear-gradient(135deg, #013220 0%, #021f13 100%);
             color: #FFD700;
@@ -18,7 +23,6 @@
             text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
         }
 
-        /* Card */
         .card {
             background-color: #01402b;
             border: 2px solid #FFD700;
@@ -26,6 +30,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.6);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.8);
@@ -37,13 +42,13 @@
             margin-bottom: 10px;
         }
 
-        /* Input */
         .form-control {
             border: 1px solid #FFD700;
             background-color: #022a1c;
             color: #FFD700;
             transition: all 0.3s ease;
         }
+
         .form-control:focus {
             border-color: #FFD700;
             box-shadow: 0 0 8px #FFD700;
@@ -51,13 +56,13 @@
             color: #FFD700;
         }
 
-        /* Errori */
         .invalid-feedback {
             display: block;
             color: #FF6666 !important;
             font-weight: bold;
             margin-top: 5px;
         }
+
         .form-control.is-invalid {
             border-color: #FF6666 !important;
             background-color: #022a1c !important;
@@ -65,7 +70,6 @@
             box-shadow: 0 0 5px #FF6666;
         }
 
-        /* Bottone */
         .btn-primary {
             background-color: #FFD700;
             color: #013220;
@@ -74,22 +78,22 @@
             border-radius: 10px;
             transition: all 0.3s ease;
         }
+
         .btn-primary:hover {
             background-color: #e6c200;
             color: #fff;
             transform: translateY(-2px);
         }
 
-        /* Link */
         a {
             color: #FFD700;
             text-decoration: underline;
         }
+
         a:hover {
             color: #ffffff;
         }
 
-        /* Mobile */
         @media (max-width: 768px) {
             .col-5 {
                 width: 90% !important;
@@ -97,6 +101,7 @@
         }
     </style>
 </head>
+
 <body>
 
 <th:block th:insert="~{fragments/navbar}"></th:block>
@@ -108,10 +113,12 @@
 <div class="container-fluid">
     <div class="row d-flex justify-content-center">
         <div class="col-5 align-self-center">
+
             <!-- Card registrazione -->
             <div class="card">
                 <div class="card-body p-4">
                     <form th:action="@{/registrazione}" th:object="${registrazioneForm}" method="post">
+
                         <h5 class="card-title">Nome</h5>
                         <div class="form-group mb-3">
                             <input type="text" th:field="*{nome}" class="form-control" placeholder="Nome" required>
@@ -139,9 +146,19 @@
                         </div>
 
                         <h5 class="card-title">Password</h5>
+                        <div class="input-group mb-3">
+                            <input type="password" th:field="*{password}" id="password" class="form-control" placeholder="Password" required>
+                            <button class="btn btn-outline-warning" type="button" id="togglePassword">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
+                        <!-- Campo lavoratore -->
+                        <h5 class="card-title">Lavori nel mondo animale?</h5>
                         <div class="form-group mb-3">
-                            <input type="password" th:field="*{password}" class="form-control" placeholder="Password" required>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                            <input type="checkbox" th:field="*{lavoratore}" id="lavoratoreCheck">
+                            <label for="lavoratoreCheck">Sì, sono un lavoratore del settore</label>
                         </div>
 
                         <button type="submit" class="col-md-12 btn btn-primary mb-2">Registrati</button>
@@ -155,15 +172,32 @@
                     <small>Sei già registrato? Clicca <a th:href="@{/login}">qui</a>.</small>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 
 <br><br>
+
 <th:block th:insert="~{fragments/footbar}"></th:block>
 <th:block th:insert="~{fragments/scripts}"></th:block>
 
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Script per mostrare/nascondere password -->
+<script>
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+    const icon = togglePassword.querySelector('i');
+
+    togglePassword.addEventListener('click', () => {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        icon.classList.toggle('bi-eye');
+        icon.classList.toggle('bi-eye-slash');
+    });
+</script>
 
 </body>
 </html>

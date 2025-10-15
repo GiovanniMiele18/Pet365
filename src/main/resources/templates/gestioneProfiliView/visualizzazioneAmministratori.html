@@ -11,44 +11,8 @@
 
 <body>
 <div class="wrapper">
-    <nav id="sidebar" class="sidebar js-sidebar">
-        <div class="sidebar-content js-simplebar">
-            <a class="sidebar-brand" href="/homeAmministratore">
-                <span class="align-middle">Admin Just Traditions</span>
-            </a>
 
-            <ul class="sidebar-nav">
-                <li class="sidebar-header">
-                    Pages
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="/homeAmministratore">
-                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="/logoutAmministratore">
-                        <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Log out</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item active">
-                    <a class="sidebar-link" href="/visualizzazioneAmministratori">
-                        <i class="align-middle" data-feather="users"></i> <span class="align-middle">Gestione Amministratori</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="/visualizzazioneListaAnnunci">
-                        <i class="align-middle" data-feather="inbox"></i> <span class="align-middle">Annunci</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-
-    </nav>
+    <th:block th:insert="~{fragments/navbarAdmin}"></th:block>
 
     <div class="main">
         <nav class="navbar navbar-expand navbar-light navbar-bg">

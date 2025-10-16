@@ -2,9 +2,6 @@ package it.unisa.justTraditions.storage.shopStorage.entity;
 
 import jakarta.persistence.*;
 
-/**
- * Rappresenta la foto di un prodotto caricata dallo shop manager o dall'amministratore.
- */
 @Entity
 public class FotoProdotto {
 

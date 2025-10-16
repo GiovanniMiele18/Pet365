@@ -13,7 +13,7 @@ public class Servizi {
             "PETSITTER",
             "VETERINARI_H24",
             "SHOP",
-            "DOCCE_TOELETTATURA",
+            "DOCCE_E_TOELETTATURA",
             "ADDESTRAMENTO",
             "PENSIONI",
             "COMMEMORAZIONI_E_SERVIZI_FUNEBRI",

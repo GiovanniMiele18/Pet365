@@ -148,9 +148,9 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
-  min-height: 320px;         /* Altezza uniforme */
+  min-height: 320px;
 }
 
 .services .card:hover {
@@ -167,19 +167,18 @@
 
 .services .card h5 {
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .services .card p {
-  flex-grow: 1;              /* Spinge il pulsante in basso */
   font-size: 0.9rem;
   color: #555;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
-/* Pulsante centrato in basso */
+/* Pulsante vicino al testo */
 .services .card a {
-  margin-top: auto;
+  margin-top: 0;
 }
 
 /* --- MOBILE SCROLL ORIZZONTALE --- */
@@ -202,7 +201,7 @@
     border: 1px solid #ddd;
     box-shadow: none;
     padding: 0.6rem;
-    min-height: 220px;       /* Altezza proporzionata su mobile */
+    min-height: 220px;
   }
 
   .services .card img {
@@ -222,7 +221,6 @@
   .services .card a {
     font-size: 0.65rem;
     padding: 0.25rem 0.5rem;
-    margin-top: auto;
   }
 
   .services .services-grid::-webkit-scrollbar {
@@ -265,21 +263,21 @@
             <h2 class="section-title mb-4">I nostri servizi principali</h2>
             <div class="services-grid">
                 <!-- Tutti i 15 servizi -->
-                <div class="card"><img src="https://i.postimg.cc/SQvhW1MC/petsitter.png"><h5>Petsitter</h5><p>Trova il petsitter ideale vicino a te.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.postimg.cc/1RrLB9Yk/telemedicina.png"><h5>Veterinari h24</h5><p>Prenota visite e consulenze.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.postimg.cc/rm95BtS2/shop.png"><h5>Shop</h5><p>Acquista prodotti per animali.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.imgur.com/BFKYOER.png"><h5>Toelettatura</h5><p>Servizi di lavaggio e cura.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.imgur.com/DjhAKhT.png"><h5>Addestramento</h5><p>Corsi di educazione animale.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.imgur.com/301DK6F.png"><h5>Pensioni</h5><p>Strutture sicure per i tuoi animali.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.imgur.com/aO56kf4.png"><h5>Commemorazioni</h5><p>Servizi funebri e ricordi.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.imgur.com/K9FhX5o.png"><h5>Accoppiamento</h5><p>Gestione riproduttiva.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.imgur.com/n9CHvOL.png"><h5>Adotta un Cucciolo</h5><p>Trova un nuovo amico.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.imgur.com/gRQu7Kz.png"><h5>Sfilate & Eventi</h5><p>Eventi esclusivi per animali.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.imgur.com/WOFShJ6.png"><h5>Trasporto Sicuro</h5><p>Spostamenti sicuri e confortevoli.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.postimg.cc/R0kt6LTB/assic.png"><h5>Assicurazione</h5><p>Polizze per animali.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.postimg.cc/s27X8d5k/fotografia.png"><h5>Fotografia</h5><p>Scatti professionali.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.postimg.cc/ydxGxBn5/terapia.png"><h5>Terapie & Benessere</h5><p>Trattamenti rilassanti.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-                <div class="card"><img src="https://i.postimg.cc/8kM5wrhZ/nutrizione.png"><h5>Nutrizione</h5><p>Piani alimentari su misura.</p><a href="#" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.postimg.cc/SQvhW1MC/petsitter.png"><h5>Petsitter</h5><p>Trova il petsitter ideale vicino a te.</p><a href="http://localhost:8080/ricercaAnnunci?serviziOfferti=PETSITTER" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.postimg.cc/1RrLB9Yk/telemedicina.png"><h5>Veterinari h24</h5><p>Prenota visite e consulenze.</p><a href="http://localhost:8080/ricercaAnnunci?serviziOfferti=VETERINARI_H24" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.postimg.cc/rm95BtS2/shop.png"><h5>Shop</h5><p>Acquista prodotti per animali.</p><a href="/ricercaAnnunci?serviziOfferti=SHOP" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.imgur.com/BFKYOER.png"><h5>Toelettatura</h5><p>Servizi di lavaggio e cura.</p><a href="/ricercaAnnunci?serviziOfferti=DOCCE_TOELETTATURA" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.imgur.com/DjhAKhT.png"><h5>Addestramento</h5><p>Corsi di educazione animale.</p><a href="/ricercaAnnunci?serviziOfferti=ADDESTRAMENTO" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.imgur.com/301DK6F.png"><h5>Pensioni</h5><p>Strutture sicure per i tuoi animali.</p><a href="/ricercaAnnunci?serviziOfferti=PENSIONI" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.imgur.com/aO56kf4.png"><h5>Commemorazioni</h5><p>Servizi funebri e ricordi.</p><a href="/ricercaAnnunci?serviziOfferti=COMMEMORAZIONI_E_SERVIZI_FUNEBRI" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.imgur.com/K9FhX5o.png"><h5>Accoppiamento</h5><p>Gestione riproduttiva.</p><a href="/ricercaAnnunci?serviziOfferti=SERVIZI_DI_ACCOPPIAMENTO" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.imgur.com/n9CHvOL.png"><h5>Adotta un Cucciolo</h5><p>Trova un nuovo amico.</p><a href="/ricercaAnnunci?serviziOfferti=COMPRA_O_ADOTTA_UN_CUCCIOLO" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.imgur.com/gRQu7Kz.png"><h5>Sfilate & Eventi</h5><p>Eventi esclusivi per animali.</p><a href="/ricercaAnnunci?serviziOfferti=SFILATE_E_EVENTI" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.imgur.com/WOFShJ6.png"><h5>Trasporto Sicuro</h5><p>Spostamenti sicuri e confortevoli.</p><a href="/ricercaAnnunci?serviziOfferti=TRASPORTO_SICURO_PER_ANIMALI" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.postimg.cc/R0kt6LTB/assic.png"><h5>Assicurazione</h5><p>Polizze per animali.</p><a href="/ricercaAnnunci?serviziOfferti=ASSICURAZIONE_ANIMALI" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.postimg.cc/s27X8d5k/fotografia.png"><h5>Fotografia</h5><p>Scatti professionali.</p><a href="/ricercaAnnunci?serviziOfferti=PET_PHOTOGRAPHY" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.postimg.cc/ydxGxBn5/terapia.png"><h5>Terapie & Benessere</h5><p>Trattamenti rilassanti.</p><a href="/ricercaAnnunci?serviziOfferti=TERAPIE_E_BENESSERE" class="btn btn-outline-primary btn-sm">Scopri</a></div>
+                <div class="card"><img src="https://i.postimg.cc/8kM5wrhZ/nutrizione.png"><h5>Nutrizione</h5><p>Piani alimentari su misura.</p><a href="/ricercaAnnunci?serviziOfferti=NUTRIZIONE_PERSONALIZZATA" class="btn btn-outline-primary btn-sm">Scopri</a></div>
             </div>
         </div>
     </section>

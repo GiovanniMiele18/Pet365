@@ -1,16 +1,17 @@
 package it.unisa.justTraditions.applicationLogic.shopControl;
 
-
-import it.unisa.justTraditions.storage.shopStorage.dao.ProdottoDao;
 import it.unisa.justTraditions.applicationLogic.shopControl.form.AggiuntaProdottoForm;
-
+import it.unisa.justTraditions.storage.shopStorage.dao.ProdottoDao;
+import it.unisa.justTraditions.storage.shopStorage.entity.FotoProdotto;
 import it.unisa.justTraditions.storage.shopStorage.entity.Prodotto;
 import jakarta.validation.Valid;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/admin/prodotti")
@@ -36,7 +37,9 @@ public class AdminProdottoController {
     // 💾 SALVA NUOVO PRODOTTO
     @PostMapping("/salva")
     public String salvaProdotto(@Valid @ModelAttribute("form") AggiuntaProdottoForm form,
-                                BindingResult result, Model model) {
+                                BindingResult result,
+                                Model model) {
+
         if (result.hasErrors()) {
             return "shopView/aggiuntaProdotto";
         }
@@ -49,6 +52,20 @@ public class AdminProdottoController {
                 form.getCategoria()
         );
 
+        // 🖼️ GESTIONE FOTO (come per gli Annunci)
+        if (form.getFoto() != null) {
+            for (MultipartFile file : form.getFoto()) {
+                try {
+                    if (!file.isEmpty()) {
+                        prodotto.addFoto(new FotoProdotto(file.getBytes()));
+                    }
+                } catch (IOException e) {
+                    model.addAttribute("erroreFile", true);
+                    return "shopView/aggiuntaProdotto";
+                }
+            }
+        }
+
         prodottoDao.save(prodotto);
         return "redirect:/admin/prodotti";
     }
@@ -58,6 +75,7 @@ public class AdminProdottoController {
     public String mostraFormModifica(@PathVariable Long id, Model model) {
         Prodotto prodotto = prodottoDao.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Prodotto non trovato"));
+
         AggiuntaProdottoForm form = new AggiuntaProdottoForm(
                 prodotto.getId(),
                 prodotto.getNome(),
@@ -66,14 +84,18 @@ public class AdminProdottoController {
                 prodotto.getQuantitaDisponibile(),
                 prodotto.getCategoria()
         );
+
         model.addAttribute("form", form);
+        model.addAttribute("prodotto", prodotto);
         return "shopView/modificaProdotto";
     }
 
     // 💾 AGGIORNA PRODOTTO
     @PostMapping("/aggiorna")
     public String aggiornaProdotto(@Valid @ModelAttribute("form") AggiuntaProdottoForm form,
-                                   BindingResult result, Model model) {
+                                   BindingResult result,
+                                   Model model) {
+
         if (result.hasErrors()) {
             return "shopView/modificaProdotto";
         }
@@ -87,6 +109,20 @@ public class AdminProdottoController {
         prodotto.setQuantitaDisponibile(form.getQuantitaDisponibile());
         prodotto.setCategoria(form.getCategoria());
 
+        // 🖼️ Se vengono aggiunte nuove foto
+        if (form.getFoto() != null) {
+            for (MultipartFile file : form.getFoto()) {
+                try {
+                    if (!file.isEmpty()) {
+                        prodotto.addFoto(new FotoProdotto(file.getBytes()));
+                    }
+                } catch (IOException e) {
+                    model.addAttribute("erroreFile", true);
+                    return "shopView/modificaProdotto";
+                }
+            }
+        }
+
         prodottoDao.save(prodotto);
         return "redirect:/admin/prodotti";
     }
@@ -96,5 +132,14 @@ public class AdminProdottoController {
     public String rimuoviProdotto(@PathVariable Long id) {
         prodottoDao.deleteById(id);
         return "redirect:/admin/prodotti";
+    }
+
+    // 🖼️ VISUALIZZA FOTO DI UN PRODOTTO (endpoint utile per l'HTML)
+    @GetMapping("/foto/{id}")
+    @ResponseBody
+    public byte[] visualizzaFoto(@PathVariable Long id) {
+        FotoProdotto foto = prodottoDao.findFotoById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Foto non trovata"));
+        return foto.getDati();
     }
 }

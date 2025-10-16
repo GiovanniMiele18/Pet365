@@ -79,6 +79,27 @@
                                     </div>
                                 </div>
 
+                                <!-- Foto esistenti -->
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Foto attuali</label>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        <div th:each="foto : ${prodotto.fotoProdotti}" class="text-center">
+                                            <img th:src="@{'/immagini/prodotti/' + ${foto.id}}"
+                                                 alt="Foto prodotto"
+                                                 style="width: 120px; height: 120px; object-fit: cover; border-radius: 10px; border: 1px solid #ccc;">
+                                            <br>
+                                            <a th:href="@{'/admin/prodotti/' + ${prodotto.id} + '/foto/rimuovi/' + ${foto.id}}"
+                                               class="btn btn-sm btn-outline-danger mt-2"
+                                               onclick="return confirm('Vuoi davvero eliminare questa foto?')">
+                                                🗑️ Elimina
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div th:if="${#lists.isEmpty(prodotto.fotoProdotti)}" class="text-muted mt-2">
+                                        Nessuna foto presente per questo prodotto.
+                                    </div>
+                                </div>
+
                                 <!-- Aggiungi nuove foto -->
                                 <div class="mb-3">
                                     <label class="form-label fw-bold">Aggiungi nuove foto</label>
@@ -95,7 +116,6 @@
                                         <i class="align-middle me-2" data-feather="check-circle"></i> Aggiorna Prodotto
                                     </button>
                                 </div>
-
                             </form>
                             <!-- Fine form -->
                         </div>

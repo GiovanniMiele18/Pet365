@@ -124,6 +124,7 @@
     }
 
    /* --- SERVIZI --- */
+/* --- SERVIZI --- */
 .services {
   padding: 60px 0;
 }
@@ -137,20 +138,18 @@
   justify-items: center;
 }
 
-/* Card uniforme */
+/* Card uniforme e bilanciata */
 .services .card {
   background: #fff;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 1.2rem 1rem 1rem;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   transition: transform 0.3s, box-shadow 0.3s;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  justify-content: flex-start;
-  width: 100%;
-  min-height: 320px;
+  height: 330px;              /* altezza uniforme */
 }
 
 .services .card:hover {
@@ -167,7 +166,7 @@
 
 .services .card h5 {
   font-weight: 600;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
 .services .card p {
@@ -176,9 +175,10 @@
   margin-bottom: 0.8rem;
 }
 
-/* Pulsante vicino al testo */
+/* Pulsante perfettamente allineato in fondo */
 .services .card a {
-  margin-top: 0;
+  margin-top: auto;
+  margin-bottom: 0;           /* nessuno spazio extra sotto */
 }
 
 /* --- MOBILE SCROLL ORIZZONTALE --- */
@@ -201,7 +201,7 @@
     border: 1px solid #ddd;
     box-shadow: none;
     padding: 0.6rem;
-    min-height: 220px;
+    height: 230px; /* altezza uniforme mobile */
   }
 
   .services .card img {
@@ -221,12 +221,15 @@
   .services .card a {
     font-size: 0.65rem;
     padding: 0.25rem 0.5rem;
+    margin-top: auto;
+    margin-bottom: 0;
   }
 
   .services .services-grid::-webkit-scrollbar {
     display: none;
   }
 }
+
 
 
     /* --- ANNUNCI --- */

@@ -1,16 +1,13 @@
 package it.unisa.justTraditions.applicationLogic.shopControl.form;
 
 import jakarta.validation.constraints.*;
+import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
+import java.util.List;
 
-/**
- * Form di validazione per l'aggiunta o modifica di un prodotto nello shop.
- */
 public class AggiuntaProdottoForm {
-    
-    private Long id;
 
-     private List<MultipartFile> foto;
+    private Long id;
 
     @NotBlank(message = "Il nome del prodotto non può essere vuoto.")
     @Size(max = 100, message = "Il nome del prodotto è troppo lungo (max 100 caratteri).")
@@ -22,7 +19,6 @@ public class AggiuntaProdottoForm {
 
     @NotNull(message = "Il prezzo è obbligatorio.")
     @DecimalMin(value = "0.01", message = "Il prezzo deve essere maggiore di 0.")
-    @Digits(integer = 8, fraction = 2, message = "Formato prezzo non valido (es: 12.99).")
     private BigDecimal prezzo;
 
     @NotNull(message = "La quantità è obbligatoria.")
@@ -30,9 +26,10 @@ public class AggiuntaProdottoForm {
     private Integer quantitaDisponibile;
 
     @NotBlank(message = "La categoria non può essere vuota.")
-    @Pattern(regexp = "^[A-Za-zÀ-ÿ\\s]+$", message = "La categoria può contenere solo lettere e spazi.")
-    @Size(max = 50, message = "Categoria troppo lunga (max 50 caratteri).")
     private String categoria;
+
+    // 📸 Foto multiple
+    private List<MultipartFile> foto;
 
     public AggiuntaProdottoForm() {}
 
@@ -46,10 +43,6 @@ public class AggiuntaProdottoForm {
     }
 
     // Getters e Setters
-      
-
-    public List<MultipartFile> getFoto() { return foto; }
-    public void setFoto(List<MultipartFile> foto) { this.foto = foto; }
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getNome() { return nome; }
@@ -62,4 +55,6 @@ public class AggiuntaProdottoForm {
     public void setQuantitaDisponibile(Integer quantitaDisponibile) { this.quantitaDisponibile = quantitaDisponibile; }
     public String getCategoria() { return categoria; }
     public void setCategoria(String categoria) { this.categoria = categoria; }
+    public List<MultipartFile> getFoto() { return foto; }
+    public void setFoto(List<MultipartFile> foto) { this.foto = foto; }
 }

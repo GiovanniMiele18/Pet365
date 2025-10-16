@@ -79,20 +79,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Foto attuali -->
-                                <div class="mb-3">
-    <label class="form-label fw-bold">Foto attuali</label>
-    <div class="d-flex flex-wrap gap-2 justify-content-start mt-2">
-        <div th:each="foto : ${prodotto.foto}" class="border rounded p-2" style="width:120px; text-align:center;">
-            <img th:src="'data:image/jpeg;base64,' + ${T(java.util.Base64).getEncoder().encodeToString(foto.dati)}"
-                 alt="Foto prodotto" class="img-fluid rounded" style="max-height:100px; object-fit:cover;">
-        </div>
-    </div>
-    <div th:if="${#lists.isEmpty(prodotto.foto)}" class="text-muted mt-2">
-        Nessuna immagine disponibile per questo prodotto.
-    </div>
-</div>
-
                                 <!-- Aggiungi nuove foto -->
                                 <div class="mb-3">
                                     <label class="form-label fw-bold">Aggiungi nuove foto</label>

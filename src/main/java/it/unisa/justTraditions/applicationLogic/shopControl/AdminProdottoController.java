@@ -52,7 +52,7 @@ public class AdminProdottoController {
                 form.getCategoria()
         );
 
-        // 🖼️ GESTIONE FOTO (come per gli Annunci)
+        // 🖼️ GESTIONE FOTO (come negli Annunci)
         if (form.getFoto() != null) {
             for (MultipartFile file : form.getFoto()) {
                 try {
@@ -109,7 +109,7 @@ public class AdminProdottoController {
         prodotto.setQuantitaDisponibile(form.getQuantitaDisponibile());
         prodotto.setCategoria(form.getCategoria());
 
-        // 🖼️ Se vengono aggiunte nuove foto
+        // Se vengono aggiunte nuove foto
         if (form.getFoto() != null) {
             for (MultipartFile file : form.getFoto()) {
                 try {
@@ -133,5 +133,4 @@ public class AdminProdottoController {
         prodottoDao.deleteById(id);
         return "redirect:/admin/prodotti";
     }
-
 }

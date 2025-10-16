@@ -1,17 +1,19 @@
 package it.unisa.justTraditions.applicationLogic.shopControl;
 
 import it.unisa.justTraditions.applicationLogic.shopControl.form.AggiuntaProdottoForm;
+import it.unisa.justTraditions.storage.shopStorage.dao.FotoProdottoDao;
 import it.unisa.justTraditions.storage.shopStorage.dao.ProdottoDao;
 import it.unisa.justTraditions.storage.shopStorage.entity.FotoProdotto;
 import it.unisa.justTraditions.storage.shopStorage.entity.Prodotto;
 import jakarta.validation.Valid;
-import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/admin/prodotti")
@@ -20,29 +22,28 @@ public class AdminProdottoController {
     @Autowired
     private ProdottoDao prodottoDao;
 
-    // 📄 LISTA PRODOTTI
+    @Autowired
+    private FotoProdottoDao fotoProdottoDao;
+
+    // 📋 Lista prodotti
     @GetMapping
     public String visualizzaProdotti(Model model) {
         model.addAttribute("prodotti", prodottoDao.findAll());
         return "shopView/visualizzazioneProdotti";
     }
 
-    // ➕ FORM AGGIUNTA
+    // ➕ Nuovo prodotto
     @GetMapping("/nuovo")
     public String mostraFormAggiunta(Model model) {
         model.addAttribute("form", new AggiuntaProdottoForm());
         return "shopView/aggiuntaProdotto";
     }
 
-    // 💾 SALVA NUOVO PRODOTTO
     @PostMapping("/salva")
     public String salvaProdotto(@Valid @ModelAttribute("form") AggiuntaProdottoForm form,
-                                BindingResult result,
-                                Model model) {
+                                BindingResult result, Model model) {
 
-        if (result.hasErrors()) {
-            return "shopView/aggiuntaProdotto";
-        }
+        if (result.hasErrors()) return "shopView/aggiuntaProdotto";
 
         Prodotto prodotto = new Prodotto(
                 form.getNome(),
@@ -52,7 +53,6 @@ public class AdminProdottoController {
                 form.getCategoria()
         );
 
-        // 🖼️ Gestione foto salvate come byte[]
         if (form.getFoto() != null) {
             for (MultipartFile file : form.getFoto()) {
                 try {
@@ -70,7 +70,7 @@ public class AdminProdottoController {
         return "redirect:/admin/prodotti";
     }
 
-    // ✏️ FORM MODIFICA
+    // ✏️ Form modifica
     @GetMapping("/modifica/{id}")
     public String mostraFormModifica(@PathVariable Long id, Model model) {
         Prodotto prodotto = prodottoDao.findById(id)
@@ -90,15 +90,12 @@ public class AdminProdottoController {
         return "shopView/modificaProdotto";
     }
 
-    // 💾 AGGIORNA PRODOTTO
+    // 💾 Aggiorna prodotto
     @PostMapping("/aggiorna")
     public String aggiornaProdotto(@Valid @ModelAttribute("form") AggiuntaProdottoForm form,
-                                   BindingResult result,
-                                   Model model) {
+                                   BindingResult result, Model model) {
 
-        if (result.hasErrors()) {
-            return "shopView/modificaProdotto";
-        }
+        if (result.hasErrors()) return "shopView/modificaProdotto";
 
         Prodotto prodotto = prodottoDao.findById(form.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Prodotto non trovato"));
@@ -109,8 +106,9 @@ public class AdminProdottoController {
         prodotto.setQuantitaDisponibile(form.getQuantitaDisponibile());
         prodotto.setCategoria(form.getCategoria());
 
-        // Aggiunta nuove foto
-        if (form.getFoto() != null) {
+        // 🧹 Se l'utente carica nuove foto, sostituiamo le vecchie
+        if (form.getFoto() != null && form.getFoto().stream().anyMatch(f -> !f.isEmpty())) {
+            prodotto.getFotoProdotti().clear();
             for (MultipartFile file : form.getFoto()) {
                 try {
                     if (!file.isEmpty()) {
@@ -127,22 +125,23 @@ public class AdminProdottoController {
         return "redirect:/admin/prodotti";
     }
 
-    // ❌ RIMUOVI PRODOTTO
+    // ❌ Rimuovi singola foto
+    @GetMapping("/{idProdotto}/foto/rimuovi/{idFoto}")
+    public String rimuoviFoto(@PathVariable Long idProdotto, @PathVariable Long idFoto) {
+        Prodotto prodotto = prodottoDao.findById(idProdotto)
+                .orElseThrow(() -> new IllegalArgumentException("Prodotto non trovato"));
+
+        prodotto.getFotoProdotti().removeIf(f -> f.getId().equals(idFoto));
+        prodottoDao.save(prodotto);
+        fotoProdottoDao.deleteById(idFoto);
+
+        return "redirect:/admin/prodotti/modifica/" + idProdotto;
+    }
+
+    // ❌ Rimuovi prodotto
     @GetMapping("/rimuovi/{id}")
     public String rimuoviProdotto(@PathVariable Long id) {
         prodottoDao.deleteById(id);
         return "redirect:/admin/prodotti";
     }
-
-    @GetMapping("/{idProdotto}/foto/rimuovi/{idFoto}")
-public String rimuoviFoto(@PathVariable Long idProdotto, @PathVariable Long idFoto) {
-    Prodotto prodotto = prodottoDao.findById(idProdotto)
-            .orElseThrow(() -> new IllegalArgumentException("Prodotto non trovato"));
-
-    // Rimuovi la foto dalla lista del prodotto
-    prodotto.getFotoProdotti().removeIf(f -> f.getId().equals(idFoto));
-
-    prodottoDao.save(prodotto);
-    return "redirect:/admin/prodotti/modifica/" + idProdotto;
-}
 }

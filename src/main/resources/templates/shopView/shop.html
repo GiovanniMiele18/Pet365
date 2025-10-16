@@ -4,6 +4,7 @@
     <th:block th:insert="~{fragments/head}"></th:block>
     <title>Pet365 - Shop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         body {
             background: #f6f7f9;
@@ -23,6 +24,14 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
+        /* --- FOTO CAROUSEL --- */
+        .carousel-item img {
+            border-radius: 10px;
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+
         /* --- BOTTONI --- */
         .btn-add {
             background: #00a859;
@@ -33,86 +42,33 @@
         .btn-add:hover { background: #00924e; }
 
         .btn-out {
-            background: #f8d7da !important;   /* sfondo rosato */
-            color: #a94442 !important;        /* testo rosso scuro */
+            background: #f8d7da !important;
+            color: #a94442 !important;
             font-weight: 700;
             border: none;
             border-radius: 25px;
             text-transform: uppercase;
             cursor: not-allowed;
         }
-        .btn-out:hover {
-            background: #f5c6cb !important;
-        }
 
         /* --- MINI-CART --- */
-        #mini-cart {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 360px;
-            height: 100vh;
-            background: #fff;
-            box-shadow: -3px 0 10px rgba(0,0,0,.2);
-            transition: right .4s ease;
-            z-index: 3000;
-            overflow-y: auto;
-        }
+        #mini-cart { position: fixed; top: 0; right: -400px; width: 360px; height: 100vh; background: #fff;
+            box-shadow: -3px 0 10px rgba(0,0,0,.2); transition: right .4s ease; z-index: 3000; overflow-y: auto; }
         #mini-cart.open { right: 0; }
 
-        #mini-cart-header {
-            background: #00a859;
-            color: white;
-            padding: 1rem;
-            font-weight: 700;
-        }
+        #mini-cart-header { background: #00a859; color: white; padding: 1rem; font-weight: 700; }
+        #close-cart { background: transparent; border: none; color: #fff; font-size: 1.3rem; }
 
-        #close-cart {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 1.3rem;
-            line-height: 1;
-        }
-        #close-cart:hover { opacity: 0.8; }
-
-        .mini-cart-item {
-            border-bottom: 1px solid #eee;
-            padding: .75rem 1rem;
-            display: flex;
-            justify-content: space-between;
-        }
+        .mini-cart-item { border-bottom: 1px solid #eee; padding: .75rem 1rem; display: flex; justify-content: space-between; }
 
         /* --- TOAST --- */
-        .toast-custom {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 4000;
-            display: flex;
-            gap: .5rem;
-            align-items: center;
-            border-radius: 12px;
-            padding: .9rem 1.2rem;
-            color: white;
-            font-weight: 500;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            animation: slideIn .4s ease, fadeOut .5s ease 3.5s forwards;
-        }
-        .toast-success {
-            background: linear-gradient(135deg,#00a859,#0cb065);
-        }
-        .toast-error {
-            background: linear-gradient(135deg,#dc3545,#b52d39);
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(150%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes fadeOut {
-            to { opacity: 0; transform: translateX(150%); }
-        }
+        .toast-custom { position: fixed; top: 1rem; right: 1rem; z-index: 4000; display: flex; gap: .5rem; align-items: center;
+            border-radius: 12px; padding: .9rem 1.2rem; color: white; font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); animation: slideIn .4s ease, fadeOut .5s ease 3.5s forwards; }
+        .toast-success { background: linear-gradient(135deg,#00a859,#0cb065); }
+        .toast-error { background: linear-gradient(135deg,#dc3545,#b52d39); }
+        @keyframes slideIn { from { transform: translateX(150%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { to { opacity: 0; transform: translateX(150%); } }
     </style>
 </head>
 
@@ -123,9 +79,7 @@
 <div id="mini-cart">
     <div id="mini-cart-header" class="d-flex justify-content-between align-items-center">
         <span>Il tuo carrello 🛒</span>
-        <button id="close-cart" title="Chiudi carrello">
-            <i class="fa fa-times"></i>
-        </button>
+        <button id="close-cart" title="Chiudi carrello"><i class="fa fa-times"></i></button>
     </div>
     <div id="mini-cart-body" class="p-3 text-center text-muted">Nessun prodotto nel carrello</div>
     <div class="p-3 border-top">
@@ -136,15 +90,37 @@
 <!-- --- MAIN --- -->
 <main class="container py-5">
     <h2 class="text-center text-success fw-bold mb-4">🐾 Prodotti Pet365 🐾</h2>
+
     <div class="row g-4 justify-content-center">
         <div class="col-md-4 col-sm-6" th:each="p : ${prodotti}">
             <div class="product-card p-3 text-center">
-                <img th:src="${!#lists.isEmpty(p.foto)} ? @{/imgProdotto(id=${p.foto[0].id})} : 'https://img.icons8.com/color/200/dog-bone.png'"
-                     class="img-fluid mb-3" alt="prodotto">
+
+                <!-- Carousel foto -->
+                <div th:if="${!#lists.isEmpty(p.foto)}" th:id="'carouselProdotto' + ${p.id}" class="carousel slide mb-3" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div th:each="foto, iterStat : ${p.foto}" class="carousel-item" th:classappend="${iterStat.index == 0} ? ' active'">
+                            <img th:src="@{/imgProdotto(id=${foto.id})}" class="d-block w-100" alt="foto prodotto">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" th:attr="data-bs-target='#carouselProdotto' + ${p.id}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" th:attr="data-bs-target='#carouselProdotto' + ${p.id}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Immagine placeholder -->
+                <div th:unless="${!#lists.isEmpty(p.foto)}">
+                    <img src="https://img.icons8.com/color/200/dog-bone.png" class="img-fluid mb-3" alt="placeholder">
+                </div>
+
+                <!-- Info prodotto -->
                 <h5 th:text="${p.nome}"></h5>
                 <p class="text-muted small" th:text="${p.categoria}"></p>
                 <p class="fw-bold text-success" th:text="${#numbers.formatDecimal(p.prezzo,1,2)} + ' €'"></p>
 
+                <!-- Aggiunta al carrello -->
                 <div th:if="${p.quantitaDisponibile > 0}">
                     <div class="d-flex justify-content-center align-items-center mb-2">
                         <input type="number" class="form-control text-center qty-input" min="1"
@@ -166,6 +142,7 @@
 <th:block th:insert="~{fragments/scripts}"></th:block>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
     // --- Toast ---
     function showToast(msg, type='success') {
@@ -181,7 +158,6 @@
     document.getElementById('close-cart').addEventListener('click', () => miniCart.classList.remove('open'));
     function openCart() { miniCart.classList.add('open'); }
 
-    // --- Refresh cart ---
     async function refreshCart() {
         const res = await fetch('/carrello');
         const html = await res.text();
@@ -205,7 +181,6 @@
         });
     }
 
-    // --- Add to cart ---
     document.querySelectorAll('.add-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
             const id = btn.dataset.id;

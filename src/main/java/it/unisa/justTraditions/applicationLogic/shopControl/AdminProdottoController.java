@@ -7,6 +7,7 @@ import it.unisa.justTraditions.storage.shopStorage.entity.FotoProdotto;
 import it.unisa.justTraditions.storage.shopStorage.entity.Prodotto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,6 +54,7 @@ public class AdminProdottoController {
                 form.getCategoria()
         );
 
+        // 📸 Salvataggio foto iniziali
         if (form.getFoto() != null) {
             for (MultipartFile file : form.getFoto()) {
                 try {
@@ -90,7 +92,7 @@ public class AdminProdottoController {
         return "shopView/modificaProdotto";
     }
 
-    // 💾 Aggiorna prodotto
+    // 💾 Aggiorna prodotto (AGGIUNGE le nuove foto)
     @PostMapping("/aggiorna")
     public String aggiornaProdotto(@Valid @ModelAttribute("form") AggiuntaProdottoForm form,
                                    BindingResult result, Model model) {
@@ -106,13 +108,13 @@ public class AdminProdottoController {
         prodotto.setQuantitaDisponibile(form.getQuantitaDisponibile());
         prodotto.setCategoria(form.getCategoria());
 
-        // 🧹 Se l'utente carica nuove foto, sostituiamo le vecchie
-        if (form.getFoto() != null && form.getFoto().stream().anyMatch(f -> !f.isEmpty())) {
-            prodotto.getFoto().clear();
+        // 📸 Aggiunge nuove foto, senza cancellare le esistenti
+        if (form.getFoto() != null) {
             for (MultipartFile file : form.getFoto()) {
                 try {
                     if (!file.isEmpty()) {
-                        prodotto.addFoto(new FotoProdotto(file.getBytes()));
+                        FotoProdotto nuovaFoto = new FotoProdotto(file.getBytes());
+                        prodotto.addFoto(nuovaFoto);
                     }
                 } catch (IOException e) {
                     model.addAttribute("erroreFile", true);
@@ -126,23 +128,22 @@ public class AdminProdottoController {
         return "redirect:/admin/prodotti";
     }
 
-    // ❌ Rimuovi singola foto
-@DeleteMapping("/{idProdotto}/foto/rimuovi/{idFoto}")
-@ResponseBody
-public ResponseEntity<Void> rimuoviFoto(@PathVariable Long idProdotto, @PathVariable Long idFoto) {
-    Prodotto prodotto = prodottoDao.findById(idProdotto)
-            .orElseThrow(() -> new IllegalArgumentException("Prodotto non trovato"));
+    // ❌ Rimuovi singola foto (AJAX DELETE)
+    @DeleteMapping("/{idProdotto}/foto/rimuovi/{idFoto}")
+    @ResponseBody
+    public ResponseEntity<Void> rimuoviFoto(@PathVariable Long idProdotto, @PathVariable Long idFoto) {
+        Prodotto prodotto = prodottoDao.findById(idProdotto)
+                .orElseThrow(() -> new IllegalArgumentException("Prodotto non trovato"));
 
-    boolean removed = prodotto.getFoto().removeIf(f -> f.getId().equals(idFoto));
-    if (removed) {
-        prodottoDao.save(prodotto);
-        return ResponseEntity.ok().build();
-    } else {
+        boolean removed = prodotto.getFoto().removeIf(f -> f.getId().equals(idFoto));
+        if (removed) {
+            prodottoDao.save(prodotto);
+            return ResponseEntity.ok().build();
+        }
         return ResponseEntity.notFound().build();
     }
-}
 
-    // ❌ Rimuovi prodotto
+    // ❌ Rimuovi intero prodotto
     @GetMapping("/rimuovi/{id}")
     public String rimuoviProdotto(@PathVariable Long id) {
         prodottoDao.deleteById(id);

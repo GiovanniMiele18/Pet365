@@ -10,11 +10,8 @@
 
     <style>
         .img-thumb, .preview-img {
-            width: 120px;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 1px solid #ddd;
+            width: 120px; height: 120px; object-fit: cover;
+            border-radius: 12px; border: 1px solid #ddd;
             transition: transform .2s;
         }
         .img-thumb:hover { transform: scale(1.05); }
@@ -57,8 +54,7 @@
                             <h2 class="text-center mb-4 text-success fw-bold">✏️ Modifica Prodotto</h2>
 
                             <form th:action="@{/admin/prodotti/aggiorna}"
-                                  th:object="${form}"
-                                  method="post"
+                                  th:object="${form}" method="post"
                                   enctype="multipart/form-data">
 
                                 <input type="hidden" th:field="*{id}"/>
@@ -81,13 +77,12 @@
                                     <textarea th:field="*{descrizione}" class="form-control" rows="4" required></textarea>
                                 </div>
 
+                                <!-- Prezzo & Quantità -->
                                 <div class="row">
-                                    <!-- Prezzo -->
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label fw-bold">Prezzo (€)</label>
                                         <input type="number" step="0.01" th:field="*{prezzo}" class="form-control" required>
                                     </div>
-                                    <!-- Quantità -->
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label fw-bold">Quantità disponibile</label>
                                         <input type="number" min="0" th:field="*{quantitaDisponibile}" class="form-control" required>
@@ -118,9 +113,11 @@
                                 <div class="mb-3">
                                     <label class="form-label fw-bold">Aggiungi nuove foto</label>
                                     <input type="file" th:field="*{foto}" class="form-control" accept="image/*" multiple id="foto-input">
-                                    <div class="form-text">Se selezioni nuove immagini, le vecchie verranno sostituite al salvataggio.</div>
+                                    <div class="form-text">Le nuove foto verranno aggiunte a quelle esistenti.</div>
                                     <div id="preview-container" class="d-flex flex-wrap gap-3 mt-3"></div>
-                                    <div th:if="${erroreFile}" class="text-danger mt-2">Errore durante il caricamento delle immagini.</div>
+                                    <div th:if="${erroreFile}" class="text-danger mt-2">
+                                        Errore durante il caricamento delle immagini.
+                                    </div>
                                 </div>
 
                                 <!-- Pulsante -->
@@ -148,12 +145,11 @@
 <script>feather.replace();</script>
 
 <script>
-    // Preview immagini caricate
+    // ✅ Preview immagini nuove
     document.getElementById('foto-input').addEventListener('change', function (event) {
         const container = document.getElementById('preview-container');
         container.innerHTML = '';
-        const files = event.target.files;
-        Array.from(files).forEach(file => {
+        Array.from(event.target.files).forEach(file => {
             const reader = new FileReader();
             reader.onload = e => {
                 const img = document.createElement('img');
@@ -165,36 +161,36 @@
         });
     });
 
-    // Toast dinamico
+    // ✅ Funzione toast dinamico
     function mostraToast(messaggio, tipo = 'success') {
-        const toastContainer = document.getElementById('toast-container');
-        const wrapper = document.createElement('div');
-        wrapper.innerHTML = `
-            <div class="toast align-items-center text-bg-${tipo} border-0 show mb-2" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">${messaggio}</div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                </div>
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast align-items-center text-bg-${tipo} border-0 show mb-2`;
+        toast.role = 'alert';
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">${messaggio}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
             </div>`;
-        toastContainer.appendChild(wrapper);
-        setTimeout(() => wrapper.remove(), 3000);
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
     }
 
-    // Eliminazione foto AJAX
-    document.querySelectorAll('.btn-elimina-foto').forEach(button => {
-        button.addEventListener('click', async function () {
+    // ✅ Rimozione foto via AJAX (senza refresh)
+    document.querySelectorAll('.btn-elimina-foto').forEach(btn => {
+        btn.addEventListener('click', async function () {
             const idProdotto = this.dataset.idprodotto;
             const idFoto = this.dataset.idfoto;
             try {
                 const res = await fetch(`/admin/prodotti/${idProdotto}/foto/rimuovi/${idFoto}`, { method: 'DELETE' });
                 if (res.ok) {
                     document.getElementById(`foto-${idFoto}`).remove();
-                    mostraToast('Foto eliminata con successo');
+                    mostraToast('Foto eliminata con successo ✅');
                 } else {
-                    mostraToast('Errore durante la rimozione della foto', 'danger');
+                    mostraToast('Errore nella rimozione della foto ❌', 'danger');
                 }
-            } catch (err) {
-                mostraToast('Errore di connessione', 'danger');
+            } catch {
+                mostraToast('Errore di connessione ⚠️', 'danger');
             }
         });
     });

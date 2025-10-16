@@ -133,4 +133,16 @@ public class AdminProdottoController {
         prodottoDao.deleteById(id);
         return "redirect:/admin/prodotti";
     }
+
+    @GetMapping("/{idProdotto}/foto/rimuovi/{idFoto}")
+public String rimuoviFoto(@PathVariable Long idProdotto, @PathVariable Long idFoto) {
+    Prodotto prodotto = prodottoDao.findById(idProdotto)
+            .orElseThrow(() -> new IllegalArgumentException("Prodotto non trovato"));
+
+    // Rimuovi la foto dalla lista del prodotto
+    prodotto.getFotoProdotti().removeIf(f -> f.getId().equals(idFoto));
+
+    prodottoDao.save(prodotto);
+    return "redirect:/admin/prodotti/modifica/" + idProdotto;
+}
 }

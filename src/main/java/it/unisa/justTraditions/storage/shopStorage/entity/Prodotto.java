@@ -63,7 +63,9 @@ public class Prodotto {
     public String getCategoria() { return categoria; }
     public void setCategoria(String categoria) { this.categoria = categoria; }
 
-    public List<FotoProdotto> getFoto() { return Collections.unmodifiableList(foto); }
+   public List<FotoProdotto> getFoto() {
+    return foto;
+}
 
     // --- Metodi helper ---
     public void addFoto(FotoProdotto fotoProdotto) {

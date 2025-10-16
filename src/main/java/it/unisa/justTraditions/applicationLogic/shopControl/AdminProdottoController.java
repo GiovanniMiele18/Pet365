@@ -108,7 +108,7 @@ public class AdminProdottoController {
 
         // 🧹 Se l'utente carica nuove foto, sostituiamo le vecchie
         if (form.getFoto() != null && form.getFoto().stream().anyMatch(f -> !f.isEmpty())) {
-            prodotto.getFotoProdotti().clear();
+            prodotto.getFoto().clear();
             for (MultipartFile file : form.getFoto()) {
                 try {
                     if (!file.isEmpty()) {
@@ -116,6 +116,7 @@ public class AdminProdottoController {
                     }
                 } catch (IOException e) {
                     model.addAttribute("erroreFile", true);
+                    model.addAttribute("prodotto", prodotto);
                     return "shopView/modificaProdotto";
                 }
             }
@@ -131,9 +132,8 @@ public class AdminProdottoController {
         Prodotto prodotto = prodottoDao.findById(idProdotto)
                 .orElseThrow(() -> new IllegalArgumentException("Prodotto non trovato"));
 
-        prodotto.getFotoProdotti().removeIf(f -> f.getId().equals(idFoto));
+        prodotto.getFoto().removeIf(f -> f.getId().equals(idFoto));
         prodottoDao.save(prodotto);
-        fotoProdottoDao.deleteById(idFoto);
 
         return "redirect:/admin/prodotti/modifica/" + idProdotto;
     }

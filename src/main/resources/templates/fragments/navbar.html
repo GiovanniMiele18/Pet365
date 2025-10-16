@@ -4,8 +4,11 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark pet365-navbar fixed-top">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark pet365-navbar">
     <div class="container-fluid px-4">
 
         <!-- Logo Brand -->
@@ -23,7 +26,7 @@
 
         <!-- Menu -->
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav align-items-lg-center text-center text-lg-start gap-2 gap-lg-3">
+            <ul class="navbar-nav align-items-center gap-3">
 
                 <li class="nav-item">
                     <a class="nav-link" href="/">
@@ -50,32 +53,22 @@
                 </li>
 
                 <!-- Login -->
-                <li class="nav-item d-lg-none">
-                    <a href="/login" class="btn btn-gold w-100 mt-2">
+                <li th:if="${cliente == null}" class="nav-item">
+                    <a href="/login" class="btn btn-gold ms-2">
                         <i class="fa-regular fa-user me-1"></i>Login
                     </a>
                 </li>
 
                 <!-- Profilo Dropdown -->
-                <li class="nav-item dropdown d-none d-lg-block">
-                    <a class="nav-link dropdown-toggle btn btn-outline-gold ms-2" href="#" id="profileDropdown" role="button"
+                <li th:if="${cliente != null}" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle btn btn-outline-gold ms-2" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-user-gear"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end custom-dropdown" aria-labelledby="profileDropdown">
+                    <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
                         <li><a class="dropdown-item" href="/visualizzazioneProfiloPersonale"><i class="fa-solid fa-user me-2"></i>Profilo</a></li>
                         <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
                     </ul>
-                </li>
-
-                <!-- Versione mobile del dropdown -->
-                <li class="nav-item d-lg-none mt-2">
-                    <a href="/visualizzazioneProfiloPersonale" class="btn btn-outline-gold w-100 mb-2">
-                        <i class="fa-solid fa-user me-2"></i>Profilo
-                    </a>
-                    <a href="/logout" class="btn btn-outline-gold w-100">
-                        <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
-                    </a>
                 </li>
 
             </ul>
@@ -85,6 +78,9 @@
     <!-- Linea dorata sotto navbar -->
     <div class="gold-line"></div>
 </nav>
+
+<!-- Bootstrap JS (incluso Popper, necessario per dropdown e collapse) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- STILE GOLDEN FLOAT -->
 <style>
@@ -105,16 +101,13 @@
         padding: 1rem 1.5rem;
         position: relative;
         z-index: 1000;
-
-        /* Effetto fluttuante */
         box-shadow:
-                0 4px 20px rgba(0, 0, 0, 0.5),
-                0 0 18px rgba(255, 215, 0, 0.25),
-                inset 0 -1px 0 rgba(255, 215, 0, 0.2);
+            0 4px 20px rgba(0, 0, 0, 0.5),
+            0 0 18px rgba(255, 215, 0, 0.25),
+            inset 0 -1px 0 rgba(255, 215, 0, 0.2);
         border-radius: 0 0 20px 20px;
     }
 
-    /* --- Logo e Brand --- */
     .logo {
         width: 64px;
         height: 64px;
@@ -135,7 +128,6 @@
     }
     .brand-text .accent { color: var(--bianco); }
 
-    /* --- Effetto shimmer logo --- */
     .shimmer {
         background: linear-gradient(120deg, var(--oro) 0%, #fff 25%, var(--oro) 50%, var(--oro-chiaro) 75%, var(--oro) 100%);
         -webkit-background-clip: text;
@@ -149,7 +141,6 @@
         100% { background-position: 0% 50%; }
     }
 
-    /* --- Link navbar --- */
     .navbar-nav .nav-link {
         color: var(--oro);
         font-weight: 500;
@@ -158,12 +149,10 @@
         padding: 0.3rem 0.6rem;
         transition: all 0.3s ease;
     }
-
     .navbar-nav .nav-link:hover {
         color: var(--oro-chiaro);
         text-shadow: 0 0 10px rgba(255,215,0,0.6);
     }
-
     .navbar-nav .nav-link::after {
         content: "";
         position: absolute;
@@ -177,7 +166,6 @@
     }
     .navbar-nav .nav-link:hover::after { width: 100%; }
 
-    /* --- Icone dei link --- */
     .nav-icon {
         color: var(--oro);
         transition: all 0.3s ease;
@@ -189,7 +177,6 @@
         text-shadow: 0 0 6px rgba(255,215,0,0.8);
     }
 
-    /* --- Effetto Pulse --- */
     .pulse {
         animation: pulseGlow 3s ease-in-out infinite;
     }
@@ -204,7 +191,6 @@
         }
     }
 
-    /* --- Bottoni --- */
     .btn-gold {
         background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
         color: var(--verde);
@@ -234,7 +220,6 @@
         box-shadow: 0 0 15px rgba(255,215,0,0.5);
     }
 
-    /* --- Dropdown --- */
     .custom-dropdown {
         background-color: var(--verde);
         border: 1px solid rgba(255,215,0,0.3);
@@ -252,10 +237,9 @@
         font-weight: 600;
     }
 
-    /* --- Linea dorata animata --- */
     .gold-line {
-        position: fixed;
-        top: 80px;
+        position: absolute;
+        bottom: 0;
         left: 0;
         height: 3px;
         width: 100%;
@@ -263,14 +247,12 @@
         background-size: 200% auto;
         animation: goldFlow 4s linear infinite;
         box-shadow: 0 0 10px rgba(255,215,0,0.6);
-        z-index: 999;
     }
     @keyframes goldFlow {
         0% { background-position: 200% center; }
         100% { background-position: -200% center; }
     }
 
-    /* --- Responsive --- */
     @media (max-width: 991px) {
         .pet365-navbar {
             padding: 0.8rem 1rem;
@@ -279,6 +261,5 @@
         .logo { width: 52px; height: 52px; }
         .brand-text { font-size: 1.6rem; }
         .navbar-nav .nav-link { font-size: 1rem; }
-        .gold-line { top: 70px; }
     }
 </style>

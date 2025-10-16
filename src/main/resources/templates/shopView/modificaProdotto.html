@@ -6,17 +6,18 @@
     <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body>
 
+<body>
 <div class="wrapper">
+    <!-- Navbar laterale -->
     <th:block th:insert="~{fragments/navbarAdmin}"></th:block>
 
     <div class="main">
+        <!-- Navbar superiore -->
         <nav class="navbar navbar-expand navbar-light navbar-bg">
             <a class="sidebar-toggle js-sidebar-toggle">
                 <i class="hamburger align-self-center"></i>
             </a>
-
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav navbar-align">
                     <a><strong>BENVENUTO</strong>
@@ -26,67 +27,91 @@
             </div>
         </nav>
 
-        <br><br>
-        <center><h1>Modifica Prodotto</h1></center>
-        <br><br>
-
-        <div class="container-fluid">
+        <!-- Titolo pagina -->
+        <div class="container-fluid mt-4">
             <div class="row d-flex justify-content-center">
-                <div class="col-6 align-self-center">
-                    <div class="card">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <div class="card shadow-lg border-0 rounded-3">
                         <div class="card-body">
-                            <form th:action="@{/admin/prodotti/aggiorna}" th:object="${form}" method="post" enctype="multipart/form-data">
+                            <h2 class="text-center mb-4">Modifica prodotto</h2>
+
+                            <!-- Form modifica prodotto -->
+                            <form th:action="@{/admin/prodotti/aggiorna}"
+                                  th:object="${form}"
+                                  method="post"
+                                  enctype="multipart/form-data">
+
                                 <input type="hidden" th:field="*{id}"/>
 
-                                <h5 class="card-title">Nome prodotto</h5>
-                                <div class="form-group mb-3">
+                                <!-- Nome -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Nome prodotto</label>
                                     <input type="text" th:field="*{nome}" class="form-control" placeholder="Nome del prodotto" required>
                                     <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
                                 </div>
 
-                                <h5 class="card-title">Categoria</h5>
-                                <div class="form-group mb-3">
-                                    <input type="text" th:field="*{categoria}" class="form-control" placeholder="Categoria" required>
+                                <!-- Categoria -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Categoria</label>
+                                    <input type="text" th:field="*{categoria}" class="form-control" placeholder="Categoria (es. Accessori, Cibo...)" required>
                                     <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
                                 </div>
 
-                                <h5 class="card-title">Descrizione</h5>
-                                <div class="form-group mb-3">
-                                    <textarea th:field="*{descrizione}" class="form-control" rows="3" placeholder="Descrivi il prodotto" required></textarea>
+                                <!-- Descrizione -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Descrizione</label>
+                                    <textarea th:field="*{descrizione}" class="form-control" rows="4" placeholder="Descrivi il prodotto" required></textarea>
                                     <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}"></div>
                                 </div>
 
+                                <!-- Prezzo e Quantità -->
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <h5 class="card-title">Prezzo (€)</h5>
-                                        <div class="form-group mb-3">
-                                            <input type="number" step="0.01" th:field="*{prezzo}" class="form-control" required>
-                                            <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></div>
-                                        </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Prezzo (€)</label>
+                                        <input type="number" step="0.01" th:field="*{prezzo}" class="form-control" required>
+                                        <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <h5 class="card-title">Quantità</h5>
-                                        <div class="form-group mb-3">
-                                            <input type="number" th:field="*{quantitaDisponibile}" class="form-control" required>
-                                            <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('quantitaDisponibile')}" th:errors="*{quantitaDisponibile}"></div>
-                                        </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Quantità disponibile</label>
+                                        <input type="number" min="0" th:field="*{quantitaDisponibile}" class="form-control" required>
+                                        <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('quantitaDisponibile')}" th:errors="*{quantitaDisponibile}"></div>
                                     </div>
                                 </div>
 
-                                <h5 class="card-title">Immagine attuale</h5>
-                                <div class="form-group mb-3 text-center">
-                                    <img th:src="@{'/imgProdotto?id=' + ${form.id}}" alt="Immagine prodotto" style="max-width:200px; border-radius:8px; border:1px solid #ccc;">
+                                <!-- Foto attuali -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Foto attuali</label>
+                                    <div class="d-flex flex-wrap gap-2 justify-content-start mt-2">
+                                        <div th:each="foto : ${prodotto.foto}" class="border rounded p-2" style="width:120px; text-align:center;">
+                                            <img th:src="@{'/admin/prodotti/foto/' + ${foto.id}}" alt="Foto prodotto"
+                                                 class="img-fluid rounded" style="max-height:100px; object-fit:cover;">
+                                        </div>
+                                    </div>
+                                    <div th:if="${#lists.isEmpty(prodotto.foto)}" class="text-muted mt-2">
+                                        Nessuna immagine disponibile per questo prodotto.
+                                    </div>
                                 </div>
 
-                                <h5 class="card-title">Aggiorna immagine</h5>
-                                <div class="form-group mb-3">
-                                    <input type="file" id="foto" class="form-control" accept="image/*" name="foto">
+                                <!-- Aggiungi nuove foto -->
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Aggiungi nuove foto</label>
+                                    <input type="file" th:field="*{foto}" class="form-control" accept="image/*" multiple>
+                                    <div class="form-text">Puoi selezionare una o più nuove immagini da aggiungere.</div>
+                                    <div th:if="${erroreFile}" class="text-danger mt-2">
+                                        Errore durante il caricamento delle immagini. Riprova.
+                                    </div>
                                 </div>
 
-                                <button type="submit" class="col-md-12 btn btn-success">Aggiorna Prodotto</button>
+                                <!-- Pulsante Aggiorna -->
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <i class="align-middle me-2" data-feather="check-circle"></i> Aggiorna Prodotto
+                                    </button>
+                                </div>
 
                             </form>
+                            <!-- Fine form -->
                         </div>
                     </div>
                 </div>
@@ -97,6 +122,10 @@
     </div>
 </div>
 
+<!-- JS -->
 <script src="https://unpkg.com/@adminkit/core@latest/dist/js/app.js"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script>feather.replace();</script>
+
 </body>
 </html>

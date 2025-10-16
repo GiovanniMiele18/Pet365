@@ -52,7 +52,7 @@ public class AdminProdottoController {
                 form.getCategoria()
         );
 
-        // 🖼️ GESTIONE FOTO (come negli Annunci)
+        // 🖼️ Gestione foto salvate come byte[]
         if (form.getFoto() != null) {
             for (MultipartFile file : form.getFoto()) {
                 try {
@@ -109,7 +109,7 @@ public class AdminProdottoController {
         prodotto.setQuantitaDisponibile(form.getQuantitaDisponibile());
         prodotto.setCategoria(form.getCategoria());
 
-        // Se vengono aggiunte nuove foto
+        // Aggiunta nuove foto
         if (form.getFoto() != null) {
             for (MultipartFile file : form.getFoto()) {
                 try {

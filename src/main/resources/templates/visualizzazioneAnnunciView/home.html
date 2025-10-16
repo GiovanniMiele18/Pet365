@@ -123,86 +123,113 @@
       border-radius: 3px;
     }
 
-    /* --- SERVIZI --- */
-    .services {
-      padding: 60px 0;
-    }
+   /* --- SERVIZI --- */
+.services {
+  padding: 60px 0;
+}
 
-    .services .services-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1.5rem;
-      padding: 0 15px;
-      justify-items: center;
-    }
+/* Griglia generale */
+.services .services-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+  padding: 0 15px;
+  justify-items: center;
+}
 
-    .services .card {
-      background: #fff;
-      border-radius: 1rem;
-      padding: 1rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      min-height: 270px;
-    }
+/* Card uniforme */
+.services .card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 320px;         /* Altezza uniforme */
+}
 
-    .services .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-    }
+.services .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
 
-    .services .card img {
-      max-height: 90px;
-      object-fit: contain;
-      margin-bottom: 1rem;
-    }
+/* Contenuto interno */
+.services .card img {
+  max-height: 90px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
 
-    /* --- MOBILE SCROLL ORIZZONTALE --- */
-    @media (max-width: 576px) {
-      .services .services-grid {
-        display: grid;
-        grid-auto-flow: column;
-        grid-auto-columns: minmax(130px, 1fr);
-        overflow-x: auto;
-        overscroll-behavior-x: contain;
-        gap: 0.8rem;
-        padding-bottom: 10px;
-        scroll-snap-type: x mandatory;
-      }
+.services .card h5 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
 
-      .services .card {
-        min-width: 130px;
-        flex-shrink: 0;
-        scroll-snap-align: center;
-        border: 1px solid #ddd;
-        box-shadow: none;
-        padding: 0.6rem;
-      }
+.services .card p {
+  flex-grow: 1;              /* Spinge il pulsante in basso */
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
 
-      .services .card img {
-        max-height: 55px;
-        margin-bottom: 0.4rem;
-      }
+/* Pulsante centrato in basso */
+.services .card a {
+  margin-top: auto;
+}
 
-      .services .card h5 {
-        font-size: 0.8rem;
-        line-height: 1.2;
-      }
+/* --- MOBILE SCROLL ORIZZONTALE --- */
+@media (max-width: 576px) {
+  .services .services-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(130px, 1fr);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    gap: 0.8rem;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+  }
 
-      .services .card p { display: none; }
+  .services .card {
+    min-width: 130px;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    padding: 0.6rem;
+    min-height: 220px;       /* Altezza proporzionata su mobile */
+  }
 
-      .services .card a {
-        font-size: 0.65rem;
-        padding: 0.25rem 0.5rem;
-      }
+  .services .card img {
+    max-height: 55px;
+    margin-bottom: 0.4rem;
+  }
 
-      .services .services-grid::-webkit-scrollbar {
-        display: none;
-      }
-    }
+  .services .card h5 {
+    font-size: 0.8rem;
+    line-height: 1.2;
+  }
+
+  .services .card p {
+    display: none;
+  }
+
+  .services .card a {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
+    margin-top: auto;
+  }
+
+  .services .services-grid::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 
     /* --- ANNUNCI --- */
     .annuncio-card {

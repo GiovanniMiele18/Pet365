@@ -124,11 +124,12 @@ a { text-decoration: none; }
 }
 
 /* --- SERVIZI --- */
+/* --- SERVIZI --- */
 .services {
   padding: 60px 0;
 }
 
-/* Griglia */
+/* Griglia principale */
 .services .services-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -136,11 +137,11 @@ a { text-decoration: none; }
   padding: 0 15px;
 }
 
-/* Card uniformi con pulsante ancorato */
+/* Card uniforme e compatta */
 .services .card {
   background: #fff;
   border-radius: 1rem;
-  padding: 1.2rem 1rem 1rem;
+  padding: 1rem;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   transition: transform 0.3s, box-shadow 0.3s;
   display: flex;
@@ -149,36 +150,41 @@ a { text-decoration: none; }
   text-align: center;
   justify-content: flex-start;
   height: 100%;
-  min-height: 320px;
+  min-height: 280px; /* più compatta rispetto ai 320px */
 }
+
 .services .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
-/* Contenuto interno */
+/* Immagine interna */
 .services .card img {
   max-height: 90px;
   object-fit: contain;
   margin-bottom: 1rem;
 }
 
+/* Titolo */
 .services .card h5 {
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
 }
 
+/* Descrizione */
 .services .card p {
   font-size: 0.9rem;
   color: #555;
-  margin-bottom: 1rem;
-  min-height: 40px; /* garantisce allineamento tra card */
+  margin-bottom: 0.5rem;
+  min-height: 20px; /* ridotta per evitare spazi vuoti */
 }
 
-/* Pulsante allineato in basso */
+/* Bottone compatto e centrato */
 .services .card a {
-  margin-top: auto;
+  margin-top: 0.5rem; /* vicino alla descrizione */
   margin-bottom: 0;
+  font-size: 0.85rem;
 }
 
 /* --- MOBILE SCROLL ORIZZONTALE --- */
@@ -228,6 +234,7 @@ a { text-decoration: none; }
     display: none;
   }
 }
+
 
 /* --- ANNUNCI --- */
 .annuncio-card {

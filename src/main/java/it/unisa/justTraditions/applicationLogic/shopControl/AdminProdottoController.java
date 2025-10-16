@@ -134,12 +134,4 @@ public class AdminProdottoController {
         return "redirect:/admin/prodotti";
     }
 
-    // 🖼️ VISUALIZZA FOTO DI UN PRODOTTO (endpoint utile per l'HTML)
-    @GetMapping("/foto/{id}")
-    @ResponseBody
-    public byte[] visualizzaFoto(@PathVariable Long id) {
-        FotoProdotto foto = prodottoDao.findFotoById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Foto non trovata"));
-        return foto.getDati();
-    }
 }

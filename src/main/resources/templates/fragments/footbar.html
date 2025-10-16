@@ -1,17 +1,22 @@
-<footer th:fragment="footbar" class="page-footer custom-footer text-center text-md-start">
-    <div class="container py-4 px-4">
-        <div class="row gy-4 align-items-start">
+<footer th:fragment="footbar" class="page-footer center-on-small-only custom-footer">
 
-            <!-- Logo -->
-            <div class="col-md-4 text-center text-md-start">
-                <h5 class="footer-title shimmer">Pet<span class="accent">365</span></h5>
-                <img src="https://i.imgur.com/mYm8eGJ.png" alt="Pet365 Logo" class="footer-logo">
+    <!--Footer Links-->
+    <div class="container">
+        <div class="row">
+
+            <!--First column-->
+            <div class="col-md-4">
+                <h5 class="title mb-4 mt-3 font-bold">PET365</h5>
+                <img src="https://i.imgur.com/mYm8eGJ.png" style="width: 125px;">
             </div>
+            <!--/.First column-->
 
-            <!-- Servizi -->
-            <div class="col-md-2">
-                <h6 class="footer-heading">Servizi Offerti</h6>
-                <ul class="footer-links list-unstyled">
+            <hr class="clearfix w-100 d-md-none">
+
+            <!--Second column-->
+            <div class="col-md-2 mx-auto">
+                <h5 class="title mb-4 mt-3 font-bold">Servizi Offerti</h5>
+                <ul>
                     <li><a href="/ricercaAnnunci?serviziOfferti=SERVIZI_DI_ACCOPPIAMENTO">Accoppia il tuo cucciolo!</a></li>
                     <li><a href="/ricercaAnnunci?serviziOfferti=PETSITTER">PetSitter!</a></li>
                     <li><a href="/ricercaAnnunci?serviziOfferti=PENSIONI">Pensione luxury!</a></li>
@@ -19,32 +24,30 @@
                 </ul>
             </div>
 
-            <!-- Info -->
-            <div class="col-md-2">
-                <h6 class="footer-heading">Maggiori Informazioni</h6>
-                <ul class="footer-links list-unstyled">
+            <hr class="clearfix w-100 d-md-none">
+
+            <!--Third column-->
+            <div class="col-md-2 mx-auto">
+                <h5 class="title mb-4 mt-3 font-bold">Maggiori Informazioni</h5>
+                <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/ricercaAnnunci">Annunci</a></li>
                     <li><a href="/chisiamo">Chi siamo?</a></li>
                 </ul>
             </div>
 
-            <!-- Support -->
-            <div class="col-md-3">
-                <h6 class="footer-heading">Support</h6>
-                <ul class="footer-links list-unstyled">
-                    <li>
-                        <a th:if="${cliente != null}"
-                           th:href="@{'mailto:pet365support@gmail.com?subject=Domanda generale&body=Salve sono l utente, ' + ${cliente.nome} +' '+ ${cliente.cognome}+' il mio codice fiscale è il seguente: '+${cliente.codiceFiscale}+' e vi scrivo per la seguente problematica:'}">
-                           Inviaci una mail
-                        </a>
-                    </li>
-                    <li>
-                        <a th:if="${cliente == null}"
-                           th:href="@{'mailto:pet365support@gmail.com?subject=Domanda generale&body=Salve sono un utente non registrato e vi scrivo per la seguente problematica:'}">
-                           Inviaci una mail
-                        </a>
-                    </li>
+            <hr class="clearfix w-100 d-md-none">
+
+            <!--Fourth column-->
+            <div class="col-md-2 mx-auto">
+                <h5 class="title mb-4 mt-3 font-bold ">Support</h5>
+                <ul>
+                    <li><a th:if="${cliente != null}"
+                           th:href="@{'mailto:pet365support@gmail.com?subject=Domanda generale&body=Salve sono l utente, ' + ${cliente.nome} +' '+ ${cliente.cognome}+' il mio codice fiscale è il seguente: '+${cliente.codiceFiscale}+' e vi scrivo per la seguente problematica:'}">Inviaci
+                        una mail</a></li>
+                    <li><a th:if="${cliente == null}"
+                           th:href="@{'mailto:pet365support?subject=Domanda generale&body=Salve sono un utente non registrato e vi scrivo per la seguente problematica:'}">Inviaci
+                        una mail</a></li>
                     <li><a href="/loginAmministratore">Area Staff</a></li>
                 </ul>
             </div>
@@ -52,125 +55,59 @@
         </div>
     </div>
 
-    <!-- Linea dorata animata -->
-    <div class="gold-line"></div>
+    <hr>
 
-    <!-- Copyright -->
-    <div class="footer-bottom py-3 text-center">
-        <p>© <strong>2025 - Pet365 v1.0</strong> | Tutti i diritti riservati.</p>
+    <div class="call-to-action">
+        <div class="container-fluid">
+            <p>©&nbsp;<strong>Copyright 2025 - PET365 v1.0</strong><br><strong>Tutti i diritti sono riservati ai corrispettivi proprietari.</strong></p>
+        </div>
     </div>
+
 </footer>
 
-<!-- STILE FOOTER -->
 <style>
-    :root {
-        --verde: #012e1f;
-        --verde-chiaro: #01613d;
-        --oro: #FFD700;
-        --oro-chiaro: #ffef88;
-        --bianco: #fff;
-    }
-
-    /* --- Footer --- */
+    /* Sovrascrive eventuali classi bg-dark di Bootstrap */
     .custom-footer {
-        background: linear-gradient(135deg, rgba(1,46,31,0.95), rgba(1,91,56,0.85));
-        color: var(--oro);
-        font-family: 'Montserrat', sans-serif;
-        border-top: 1px solid rgba(255,215,0,0.25);
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 215, 0, 0.2);
-        position: relative;
-        border-radius: 20px 20px 0 0;
-        overflow: hidden;
+        background-color: #013220 !important; /* verde scuro */
+        color: #FFD700 !important; /* oro */
+        padding-top: 40px;
+        padding-bottom: 20px;
     }
 
-    /* --- Titoli --- */
-    .footer-title {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: 1px;
-        color: var(--oro);
-        margin-bottom: 1rem;
-    }
-    .accent {
-        color: var(--bianco);
+    /* Titoli */
+    .custom-footer .title {
+        color: #FFD700 !important;
+        font-weight: bold;
     }
 
-    /* --- Effetto shimmer come navbar --- */
-    .shimmer {
-        background: linear-gradient(120deg, var(--oro) 0%, #fff 25%, var(--oro) 50%, var(--oro-chiaro) 75%, var(--oro) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-size: 250% auto;
-        animation: shimmerMove 6s linear infinite;
-    }
-    @keyframes shimmerMove {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    /* --- Link e liste --- */
-    .footer-links li {
-        margin: 0.5rem 0;
-    }
-    .footer-links a {
-        color: var(--oro);
+    /* Link */
+    .custom-footer a {
+        color: #FFD700 !important;
         text-decoration: none;
-        transition: all 0.3s ease;
-    }
-    .footer-links a:hover {
-        color: var(--oro-chiaro);
-        text-shadow: 0 0 8px rgba(255,215,0,0.6);
+        transition: color 0.3s ease;
     }
 
-    .footer-heading {
-        font-weight: 600;
-        margin-bottom: 0.8rem;
-        color: var(--oro);
+    .custom-footer a:hover {
+        color: #ffffff !important;
     }
 
-    /* --- Logo --- */
-    .footer-logo {
-        width: 100px;
-        height: auto;
-        border-radius: 50%;
-        filter: drop-shadow(0 0 8px rgba(255,215,0,0.3));
-        transition: transform 0.4s ease, filter 0.3s ease;
-    }
-    .footer-logo:hover {
-        transform: rotate(-5deg) scale(1.07);
-        filter: drop-shadow(0 0 12px rgba(255,215,0,0.6));
+    /* HR linee */
+    .custom-footer hr {
+        border-top: 1px solid #FFD700 !important;
     }
 
-    /* --- Linea dorata animata --- */
-    .gold-line {
-        height: 3px;
-        width: 100%;
-        background: linear-gradient(90deg, transparent, var(--oro-chiaro), var(--oro), transparent);
-        background-size: 200% auto;
-        animation: goldFlow 4s linear infinite;
-        box-shadow: 0 0 10px rgba(255,215,0,0.6);
-    }
-    @keyframes goldFlow {
-        0% { background-position: 200% center; }
-        100% { background-position: -200% center; }
-    }
-
-    /* --- Copyright --- */
-    .footer-bottom {
-        background: rgba(1,46,31,0.9);
-        color: var(--oro);
+    /* Copyright */
+    .custom-footer .call-to-action {
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: #FFD700 !important;
         font-weight: 500;
-        font-size: 0.95rem;
-        letter-spacing: 0.5px;
     }
 
-    /* --- Responsive --- */
-    @media (max-width: 991px) {
-        .footer-title { font-size: 1.6rem; }
-        .footer-heading { font-size: 1rem; }
-        .footer-links a { font-size: 0.95rem; }
-        .footer-logo { width: 80px; }
-        .custom-footer { text-align: center; }
+    /* Immagine logo */
+    .custom-footer img {
+        margin-top: 10px;
+        margin-bottom: 20px;
     }
 </style>

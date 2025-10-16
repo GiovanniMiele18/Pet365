@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * Entità che rappresenta un prodotto dello shop.
- * I prodotti sono articoli per animali acquistabili da tutti gli utenti.
  */
 @Entity
 public class Prodotto {
@@ -24,20 +23,21 @@ public class Prodotto {
     private String descrizione;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal prezzo; // prezzo unitario
+    private BigDecimal prezzo;
 
     @Column(nullable = false)
-    private Integer quantitaDisponibile; // quantità attualmente in magazzino
+    private Integer quantitaDisponibile;
 
     @Column(nullable = false)
-    private String categoria; // es: "Cibo", "Accessori", "Cura", ecc.
+    private String categoria;
 
     @OneToMany(mappedBy = "prodotto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FotoProdotto> foto = new ArrayList<>();
 
     public Prodotto() {}
 
-    public Prodotto(String nome, String descrizione, BigDecimal prezzo, Integer quantitaDisponibile, String categoria) {
+    public Prodotto(String nome, String descrizione, BigDecimal prezzo,
+                    Integer quantitaDisponibile, String categoria) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
@@ -45,7 +45,7 @@ public class Prodotto {
         this.categoria = categoria;
     }
 
-    // --- Getters e Setters ---
+    // --- Getters & Setters ---
     public Long getId() { return id; }
 
     public String getNome() { return nome; }
@@ -65,20 +65,15 @@ public class Prodotto {
 
     public List<FotoProdotto> getFoto() { return Collections.unmodifiableList(foto); }
 
+    // --- Metodi helper ---
     public void addFoto(FotoProdotto fotoProdotto) {
-        foto.add(fotoProdotto);
         fotoProdotto.setProdotto(this);
+        foto.add(fotoProdotto);
     }
 
     public void removeFoto(FotoProdotto fotoProdotto) {
         foto.remove(fotoProdotto);
         fotoProdotto.setProdotto(null);
-    }
-
-    // 🔹 Metodo helper per compatibilità con il controller AJAX
-    @Transient
-    public int getQuantita() {
-        return this.quantitaDisponibile != null ? this.quantitaDisponibile : 0;
     }
 
     @Override

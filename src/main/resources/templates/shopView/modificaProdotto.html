@@ -1,137 +1,173 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
-    <th:block th:include="fragments/head"></th:block>
+    <meta charset="UTF-8">
     <title>Pet365 - Modifica Prodotto</title>
-    <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f8fa;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .img-thumb {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            transition: transform .2s;
+        }
+
+        .img-thumb:hover {
+            transform: scale(1.05);
+        }
+
+        .preview-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #aaa;
+        }
+    </style>
 </head>
 
 <body>
-<div class="wrapper">
-    <!-- Navbar laterale -->
-    <th:block th:insert="~{fragments/navbarAdmin}"></th:block>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card p-4">
+                <h2 class="text-center mb-4 text-success fw-bold">✏️ Modifica Prodotto</h2>
 
-    <div class="main">
-        <!-- Navbar superiore -->
-        <nav class="navbar navbar-expand navbar-light navbar-bg">
-            <a class="sidebar-toggle js-sidebar-toggle">
-                <i class="hamburger align-self-center"></i>
-            </a>
-            <div class="navbar-collapse collapse">
-                <ul class="navbar-nav navbar-align">
-                    <a><strong>BENVENUTO</strong>
-                        <span th:text="${amministratore.nome} + ' ' + ${amministratore.cognome}"></span>
-                    </a>
-                </ul>
-            </div>
-        </nav>
+                <form th:action="@{/admin/prodotti/aggiorna}"
+                      th:object="${form}"
+                      method="post"
+                      enctype="multipart/form-data">
 
-        <!-- Titolo pagina -->
-        <div class="container-fluid mt-4">
-            <div class="row d-flex justify-content-center">
-                <div class="col-12 col-md-8 col-lg-6">
-                    <div class="card shadow-lg border-0 rounded-3">
-                        <div class="card-body">
-                            <h2 class="text-center mb-4">Modifica prodotto</h2>
+                    <input type="hidden" th:field="*{id}"/>
 
-                            <!-- Form modifica prodotto -->
-                            <form th:action="@{/admin/prodotti/aggiorna}"
-                                  th:object="${form}"
-                                  method="post"
-                                  enctype="multipart/form-data">
+                    <!-- Nome -->
+                    <div class="mb-3">
+                        <label class="form-label">Nome prodotto</label>
+                        <input type="text" th:field="*{nome}" class="form-control" required>
+                        <div class="invalid-feedback d-inline"
+                             th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                    </div>
 
-                                <input type="hidden" th:field="*{id}"/>
+                    <!-- Categoria -->
+                    <div class="mb-3">
+                        <label class="form-label">Categoria</label>
+                        <input type="text" th:field="*{categoria}" class="form-control" required>
+                        <div class="invalid-feedback d-inline"
+                             th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
+                    </div>
 
-                                <!-- Nome -->
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Nome prodotto</label>
-                                    <input type="text" th:field="*{nome}" class="form-control" placeholder="Nome del prodotto" required>
-                                    <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
-                                </div>
+                    <!-- Descrizione -->
+                    <div class="mb-3">
+                        <label class="form-label">Descrizione</label>
+                        <textarea th:field="*{descrizione}" class="form-control" rows="4" required></textarea>
+                        <div class="invalid-feedback d-inline"
+                             th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}"></div>
+                    </div>
 
-                                <!-- Categoria -->
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Categoria</label>
-                                    <input type="text" th:field="*{categoria}" class="form-control" placeholder="Categoria (es. Accessori, Cibo...)" required>
-                                    <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
-                                </div>
-
-                                <!-- Descrizione -->
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Descrizione</label>
-                                    <textarea th:field="*{descrizione}" class="form-control" rows="4" placeholder="Descrivi il prodotto" required></textarea>
-                                    <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}"></div>
-                                </div>
-
-                                <!-- Prezzo e Quantità -->
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Prezzo (€)</label>
-                                        <input type="number" step="0.01" th:field="*{prezzo}" class="form-control" required>
-                                        <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></div>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label fw-bold">Quantità disponibile</label>
-                                        <input type="number" min="0" th:field="*{quantitaDisponibile}" class="form-control" required>
-                                        <div class="invalid-feedback d-inline" th:if="${#fields.hasErrors('quantitaDisponibile')}" th:errors="*{quantitaDisponibile}"></div>
-                                    </div>
-                                </div>
-
-                                <!-- Foto esistenti -->
-                                <div class="mb-4">
-                                    <label class="form-label fw-bold">Foto attuali</label>
-                                    <div class="d-flex flex-wrap gap-3">
-                                        <div th:each="foto : ${prodotto.fotoProdotti}" class="text-center">
-                                            <img th:src="@{'/immagini/prodotti/' + ${foto.id}}"
-                                                 alt="Foto prodotto"
-                                                 style="width: 120px; height: 120px; object-fit: cover; border-radius: 10px; border: 1px solid #ccc;">
-                                            <br>
-                                            <a th:href="@{'/admin/prodotti/' + ${prodotto.id} + '/foto/rimuovi/' + ${foto.id}}"
-                                               class="btn btn-sm btn-outline-danger mt-2"
-                                               onclick="return confirm('Vuoi davvero eliminare questa foto?')">
-                                                🗑️ Elimina
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div th:if="${#lists.isEmpty(prodotto.fotoProdotti)}" class="text-muted mt-2">
-                                        Nessuna foto presente per questo prodotto.
-                                    </div>
-                                </div>
-
-                                <!-- Aggiungi nuove foto -->
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold">Aggiungi nuove foto</label>
-                                    <input type="file" th:field="*{foto}" class="form-control" accept="image/*" multiple>
-                                    <div class="form-text">Puoi selezionare una o più nuove immagini da aggiungere.</div>
-                                    <div th:if="${erroreFile}" class="text-danger mt-2">
-                                        Errore durante il caricamento delle immagini. Riprova.
-                                    </div>
-                                </div>
-
-                                <!-- Pulsante Aggiorna -->
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-success btn-lg">
-                                        <i class="align-middle me-2" data-feather="check-circle"></i> Aggiorna Prodotto
-                                    </button>
-                                </div>
-                            </form>
-                            <!-- Fine form -->
+                    <!-- Prezzo & Quantità -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Prezzo (€)</label>
+                            <input type="number" step="0.01" th:field="*{prezzo}" class="form-control" required>
+                            <div class="invalid-feedback d-inline"
+                                 th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Quantità disponibile</label>
+                            <input type="number" min="0" th:field="*{quantitaDisponibile}" class="form-control" required>
+                            <div class="invalid-feedback d-inline"
+                                 th:if="${#fields.hasErrors('quantitaDisponibile')}" th:errors="*{quantitaDisponibile}"></div>
                         </div>
                     </div>
-                </div>
+
+                    <!-- Foto esistenti -->
+                    <div class="mb-4">
+                        <label class="form-label">Foto attuali</label>
+                        <div class="d-flex flex-wrap gap-3">
+                            <div th:each="foto : ${prodotto.fotoProdotti}" class="text-center">
+                                <img th:src="@{/imgProdotto(id=${foto.id})}" class="img-thumb" alt="Foto prodotto">
+                                <br>
+                                <a th:href="@{'/admin/prodotti/' + ${prodotto.id} + '/foto/rimuovi/' + ${foto.id}}"
+                                   class="btn btn-sm btn-outline-danger mt-2"
+                                   onclick="return confirm('Vuoi davvero eliminare questa foto?')">
+                                    🗑️ Elimina
+                                </a>
+                            </div>
+                        </div>
+                        <div th:if="${#lists.isEmpty(prodotto.fotoProdotti)}" class="text-muted mt-2">
+                            Nessuna foto presente per questo prodotto.
+                        </div>
+                    </div>
+
+                    <!-- Nuove foto -->
+                    <div class="mb-3">
+                        <label class="form-label">Aggiungi nuove foto</label>
+                        <input type="file" th:field="*{foto}" class="form-control" accept="image/*" multiple id="foto-input">
+                        <div class="form-text">Seleziona nuove immagini: sostituiranno le vecchie al salvataggio.</div>
+
+                        <div id="preview-container" class="d-flex flex-wrap gap-3 mt-3"></div>
+
+                        <div th:if="${erroreFile}" class="text-danger mt-2">
+                            Errore durante il caricamento delle immagini. Riprova.
+                        </div>
+                    </div>
+
+                    <!-- Pulsante -->
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-success btn-lg rounded-pill">
+                            💾 Aggiorna Prodotto
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-
-        <br><br>
     </div>
 </div>
 
 <!-- JS -->
-<script src="https://unpkg.com/@adminkit/core@latest/dist/js/app.js"></script>
-<script src="https://unpkg.com/feather-icons"></script>
-<script>feather.replace();</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- Preview delle nuove immagini -->
+<script>
+    document.getElementById('foto-input').addEventListener('change', function (event) {
+        const container = document.getElementById('preview-container');
+        container.innerHTML = '';
+        const files = event.target.files;
+
+        if (files.length > 0) {
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('preview-img');
+                    container.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    });
+</script>
 </body>
 </html>

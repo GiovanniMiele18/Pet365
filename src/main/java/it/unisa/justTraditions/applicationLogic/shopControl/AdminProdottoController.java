@@ -127,16 +127,20 @@ public class AdminProdottoController {
     }
 
     // ❌ Rimuovi singola foto
-    @GetMapping("/{idProdotto}/foto/rimuovi/{idFoto}")
-    public String rimuoviFoto(@PathVariable Long idProdotto, @PathVariable Long idFoto) {
-        Prodotto prodotto = prodottoDao.findById(idProdotto)
-                .orElseThrow(() -> new IllegalArgumentException("Prodotto non trovato"));
+@DeleteMapping("/{idProdotto}/foto/rimuovi/{idFoto}")
+@ResponseBody
+public ResponseEntity<Void> rimuoviFoto(@PathVariable Long idProdotto, @PathVariable Long idFoto) {
+    Prodotto prodotto = prodottoDao.findById(idProdotto)
+            .orElseThrow(() -> new IllegalArgumentException("Prodotto non trovato"));
 
-        prodotto.getFoto().removeIf(f -> f.getId().equals(idFoto));
+    boolean removed = prodotto.getFoto().removeIf(f -> f.getId().equals(idFoto));
+    if (removed) {
         prodottoDao.save(prodotto);
-
-        return "redirect:/admin/prodotti/modifica/" + idProdotto;
+        return ResponseEntity.ok().build();
+    } else {
+        return ResponseEntity.notFound().build();
     }
+}
 
     // ❌ Rimuovi prodotto
     @GetMapping("/rimuovi/{id}")

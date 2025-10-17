@@ -25,6 +25,33 @@
       color: var(--green);
     }
 
+    /* ===== BANNER ===== */
+    .banner {
+      background: linear-gradient(135deg, var(--green), var(--green-light));
+      color: var(--white);
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .banner img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1rem;
+    }
+
+    .banner h1 {
+      font-weight: 800;
+      color: var(--gold);
+      font-size: 2.2rem;
+    }
+
+    .banner p {
+      font-size: 1.1rem;
+      color: #f9f9f9;
+      margin-top: 0.5rem;
+    }
+
     /* ===== SHELL ===== */
     .booking-shell {
       max-width: 1100px;
@@ -37,34 +64,33 @@
       flex-wrap: wrap;
     }
 
-    /* ===== LEFT SIDE ===== */
+    /* ===== LEFT ===== */
     .left-col {
-      flex: 1 1 340px;
+      flex: 1 1 360px;
       background: linear-gradient(135deg, var(--green), var(--green-light));
       color: #fff;
-      padding: 2rem 1.8rem;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    .activity-card {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 1.2rem;
-      box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.15);
+    .carousel-item img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 12px;
     }
 
     .activity-title {
       font-weight: 800;
       color: var(--gold);
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+      margin: 1rem 0 0.5rem;
     }
 
     .activity-desc {
       font-size: 0.95rem;
-      line-height: 1.4;
       color: #e9f5ee;
       margin-bottom: 1rem;
     }
@@ -72,7 +98,6 @@
     .activity-meta {
       list-style: none;
       padding: 0;
-      margin: 0;
     }
 
     .activity-meta li {
@@ -91,12 +116,14 @@
 
     .animal-block {
       margin-top: 1.5rem;
+      text-align: center;
     }
 
     .animal-block label {
       font-weight: 600;
       color: var(--gold-light);
       margin-bottom: 0.5rem;
+      display: block;
     }
 
     .animal-block select {
@@ -107,7 +134,32 @@
       font-size: 1rem;
     }
 
-    /* ===== RIGHT SIDE ===== */
+    .login-msg {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 15px;
+      padding: 1.2rem;
+      color: #fff;
+    }
+
+    .login-btn {
+      margin-top: 0.8rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--green);
+      font-weight: 700;
+      border: none;
+      border-radius: 40px;
+      padding: 0.6rem 1.8rem;
+      box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+      transition: all 0.3s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(255,215,0,0.6);
+    }
+
+    /* ===== RIGHT ===== */
     .right-col {
       flex: 2 1 700px;
       padding: 2rem;
@@ -131,93 +183,24 @@
       text-align: center;
     }
 
-    /* ===== CALENDAR ===== */
-    .cal-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.8rem;
-    }
-
-    .cal-nav button {
-      border: none;
-      background: var(--white);
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
-      color: var(--green);
-    }
-
-    .cal-month {
-      font-weight: 700;
-    }
-
-    .weekday {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.4rem;
-    }
-
-    .day {
-      padding: 0.65rem 0;
-      text-align: center;
-      border-radius: 50%;
-      cursor: pointer;
-      background: #f1f4f3;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-
     .day.is-disabled {
       opacity: 0.35;
       cursor: not-allowed;
     }
 
-    .day:hover:not(.is-disabled) {
+    .slot.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #f4f4f4;
+      color: #888;
+      border-color: #ddd;
+    }
+
+    .slot:hover:not(.disabled) {
       background: var(--gold);
       color: var(--green);
     }
 
-    .day.is-selected {
-      background: var(--green);
-      color: #fff;
-    }
-
-    /* ===== SLOTS ===== */
-    .slot {
-      border: 2px solid var(--gold);
-      border-radius: 50px;
-      padding: 0.5rem;
-      text-align: center;
-      margin-bottom: 0.6rem;
-      font-weight: 600;
-      transition: 0.3s;
-      cursor: pointer;
-    }
-
-    .slot:hover {
-      background: var(--gold);
-      color: var(--green);
-    }
-
-    .slot.is-selected {
-      background: var(--green);
-      color: #fff;
-      border-color: var(--green);
-    }
-
-    /* ===== BUTTON ===== */
     .submit-wrap {
       width: 100%;
       text-align: center;
@@ -235,23 +218,18 @@
       transition: 0.3s ease;
     }
 
-    .btn-lux:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(255,215,0,0.6);
-    }
-
-    .btn-lux:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    @media (max-width: 900px) {
-      .right-col { flex-direction: column; }
-    }
+    .btn-lux:disabled { opacity: 0.5; cursor: not-allowed; }
   </style>
 </head>
 
 <body>
+
+<!-- 🔹 Banner -->
+<section class="banner">
+  <img src="/images/logo-pet365.png" alt="Pet365 logo">
+  <h1>Prenota ora il tuo servizio preferito</h1>
+  <p>Regala al tuo amico a quattro zampe la migliore esperienza ❤️</p>
+</section>
 
 <th:block th:insert="~{fragments/navbar}"></th:block>
 
@@ -261,46 +239,59 @@
   <div class="booking-shell">
     <!-- SINISTRA -->
     <aside class="left-col">
-      <div>
-        <div class="activity-card mb-3">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <img th:if="${!#lists.isEmpty(annuncio.foto)}"
-                 th:src="@{/img(id=${annuncio.foto[0].id})}" alt="foto"
-                 style="width:60px;height:60px;object-fit:cover;border-radius:12px;">
-            <img th:if="${#lists.isEmpty(annuncio.foto)}"
-                 src="/images/default-pet.png" alt="foto"
-                 style="width:60px;height:60px;object-fit:cover;border-radius:12px;">
-            <div>
-              <div class="activity-title" th:text="${annuncio.nomeAttivita}">DoctorVet</div>
-              <div style="font-size:0.9rem;" th:text="${annuncio.serviziOfferti}">Consulenza Veterinaria</div>
-            </div>
+      <!-- FOTO CAROUSEL -->
+      <div id="carouselFoto" class="carousel slide mb-3" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" th:if="${!#lists.isEmpty(annuncio.foto)}"
+               th:each="foto, stat : ${annuncio.foto}"
+               th:classappend="${stat.index == 0}? 'active'">
+            <img th:src="@{/img(id=${foto.id})}" alt="foto">
           </div>
-
-          <p class="activity-desc" th:text="${annuncio.descrizione}">
-            Prenota un consulto personalizzato per il tuo amico a quattro zampe.
-          </p>
-
-          <ul class="activity-meta">
-            <li><i class="fa-solid fa-clock"></i><span>Durata: 10 minuti</span></li>
-            <li><i class="fa-solid fa-video"></i><span>Google Meet</span></li>
-            <li><i class="fa-solid fa-location-dot"></i>
-              <span th:text="${annuncio.indirizzoAttivita + ', ' + annuncio.provinciaAttivita}">
-                Roma (RM)
-              </span>
-            </li>
-          </ul>
+          <div class="carousel-item" th:if="${#lists.isEmpty(annuncio.foto)}">
+            <img src="/images/default-pet.png" alt="foto default">
+          </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselFoto" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselFoto" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
 
-        <div class="animal-block">
+      <!-- INFO ATTIVITÀ -->
+      <div>
+        <div class="activity-title" th:text="${annuncio.nomeAttivita}">DoctorVet</div>
+        <p class="activity-desc" th:text="${annuncio.descrizione}">
+          Prenota un consulto personalizzato per il tuo amico a quattro zampe.
+        </p>
+        <ul class="activity-meta">
+          <li><i class="fa-solid fa-paw"></i><span th:text="${annuncio.serviziOfferti}">Servizi Offerti</span></li>
+          <li><i class="fa-solid fa-location-dot"></i>
+            <span th:text="${annuncio.indirizzoAttivita + ', ' + annuncio.provinciaAttivita}">Roma (RM)</span></li>
+        </ul>
+      </div>
+
+      <!-- ANIMALE / LOGIN -->
+      <div class="animal-block">
+        <th:block th:if="${cliente != null}">
           <label for="animale">🐾 Seleziona animale</label>
           <select id="animale" name="idAnimale" required>
             <option value="" disabled selected>— Scegli —</option>
-            <option th:each="animale : ${cliente != null ? cliente.animali : {}}"
+            <option th:each="animale : ${cliente.animali}"
                     th:value="${animale.id}"
                     th:text="${animale.nome}">
             </option>
           </select>
-        </div>
+        </th:block>
+
+        <th:block th:if="${cliente == null}">
+          <div class="login-msg">
+            <p>Effettua il login per selezionare il tuo pet 🐶</p>
+            <button type="button" class="login-btn"
+                    onclick="redirectToLogin()">Effettua il Login</button>
+          </div>
+        </th:block>
       </div>
     </aside>
 
@@ -341,10 +332,17 @@
 
 <th:block th:insert="~{fragments/footbar}"></th:block>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/AjaxVisite.js"></script>
 
 <script>
+  // 🔹 Login redirect
+  function redirectToLogin() {
+    const current = window.location.pathname + window.location.search;
+    window.location.href = '/login?redirect=' + encodeURIComponent(current);
+  }
+
   const calGrid = document.getElementById('calGrid');
   const monthLabel = document.getElementById('calMonthLabel');
   const dataVisitaInput = document.getElementById('dataVisita');
@@ -352,7 +350,6 @@
   const slotsList = document.getElementById('slotsList');
   const btnPrenota = document.getElementById('btnPrenota');
   const animale = document.getElementById('animale');
-
   let viewYear, viewMonth;
 
   function setViewTo(date) {
@@ -381,18 +378,15 @@
       cell.textContent = d;
       const date = new Date(viewYear, viewMonth, d); date.setHours(0, 0, 0, 0);
 
-      if (date < today) cell.classList.add('is-disabled');
+      if (date <= today) cell.classList.add('is-disabled'); // no oggi o passato
       else {
         cell.addEventListener('click', () => {
           document.querySelectorAll('.day').forEach(el => el.classList.remove('is-selected'));
           cell.classList.add('is-selected');
           const iso = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
           dataVisitaInput.value = iso;
-
-          // 🔥 Trigger AjaxVisite.js
           dataVisitaInput.dispatchEvent(new Event('change', { bubbles: true }));
           dataVisitaInput.dispatchEvent(new Event('blur', { bubbles: true }));
-
           slotsList.innerHTML = '<p class="text-muted">Caricamento orari...</p>';
           btnPrenota.disabled = true;
         });
@@ -404,7 +398,6 @@
   document.getElementById('prevMonth').onclick = () => setViewTo(new Date(viewYear, viewMonth - 1, 1));
   document.getElementById('nextMonth').onclick = () => setViewTo(new Date(viewYear, viewMonth + 1, 1));
 
-  // Observer per gli orari caricati da AjaxVisite.js
   const observer = new MutationObserver(() => setTimeout(rebuildSlots, 100));
   observer.observe(listavisite, { childList: true });
 
@@ -419,22 +412,31 @@
       const div = document.createElement('div');
       div.className = 'slot';
       div.textContent = opt.textContent;
-      div.onclick = () => {
-        document.querySelectorAll('.slot').forEach(s => s.classList.remove('is-selected'));
-        div.classList.add('is-selected');
-        listavisite.value = opt.value;
-        listavisite.dispatchEvent(new Event('change', { bubbles: true }));
-        maybeEnableSubmit();
-      };
+
+      if (opt.textContent.includes('Seleziona') || opt.textContent.includes('Data nel passato')) {
+        div.classList.add('disabled');
+      } else {
+        div.onclick = () => {
+          document.querySelectorAll('.slot').forEach(s => s.classList.remove('is-selected'));
+          div.classList.add('is-selected');
+          listavisite.value = opt.value;
+          listavisite.dispatchEvent(new Event('change', { bubbles: true }));
+          maybeEnableSubmit();
+        };
+      }
+
       slotsList.appendChild(div);
     });
   }
 
   function maybeEnableSubmit() {
+    if (!animale) return;
     btnPrenota.disabled = !(animale.value && dataVisitaInput.value && listavisite.value);
   }
 
-  animale.addEventListener('change', maybeEnableSubmit);
+  if (animale) {
+    animale.addEventListener('change', maybeEnableSubmit);
+  }
   listavisite.addEventListener('change', maybeEnableSubmit);
   dataVisitaInput.addEventListener('change', maybeEnableSubmit);
 

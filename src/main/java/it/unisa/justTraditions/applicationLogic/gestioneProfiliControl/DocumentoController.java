@@ -155,6 +155,6 @@ public class DocumentoController {
         }
 
         documentoDao.delete(documento);
-        return ResponseEntity.ok("Documento eliminato con successo ✅");
+         return "redirect:/visualizzazioneProfiloPersonale";
     }
 }

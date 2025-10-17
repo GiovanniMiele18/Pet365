@@ -19,6 +19,9 @@ public class PrenotazioneController {
     @Autowired
     private SessionCliente sessionCliente;
 
+     @Autowired
+    private VisitaDao visitaDao;
+
     @PostMapping("/elimina/{prenotazioneId}")
     public String eliminaPrenotazione(@PathVariable Long prenotazioneId, Model model) {
         Cliente cliente = sessionCliente.getCliente()
@@ -31,9 +34,16 @@ public class PrenotazioneController {
             model.addAttribute("message", "Non puoi eliminare una prenotazione che non ti appartiene!");
             return "error";
         }
-         prenotazione.getVisita().setValidita(true);
-          visitaDao.save(prenotazione.getVisita());
+
+         // ✅ Ripristina la validità della visita associata
+        if (prenotazione.getVisita() != null) {
+            prenotazione.getVisita().setValidita(true);
+            visitaDao.save(prenotazione.getVisita());
+        }
+
+        // ✅ Elimina la prenotazione
         prenotazioneDao.delete(prenotazione);
+        
         return "redirect:/visualizzazioneProfiloPersonale";
     }
 }

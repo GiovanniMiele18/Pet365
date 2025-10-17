@@ -25,61 +25,31 @@
       color: var(--green);
     }
 
-    /* ===== BANNER ===== */
-    .banner {
-      background: linear-gradient(135deg, var(--green), var(--green-light));
-      color: var(--white);
-      text-align: center;
-      padding: 3rem 1rem;
-      border-bottom: 3px solid var(--gold);
-    }
-
-    .banner img {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 1rem;
-    }
-
-    .banner h1 {
-      font-weight: 800;
-      color: var(--gold);
-      font-size: 2.2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .banner p {
-      font-size: 1.1rem;
-      color: #f9f9f9;
-    }
-
-    /* ===== SHELL ===== */
     .booking-shell {
-      max-width: 1050px;
+      max-width: 1100px;
       margin: 3rem auto;
       background: var(--white);
       border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      display: grid;
-      grid-template-columns: 370px 1fr;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-wrap: wrap;
     }
 
-    @media (max-width: 992px) {
-      .booking-shell {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ===== LEFT COLUMN ===== */
+    /* ===== LEFT SIDE ===== */
     .left-col {
+      flex: 1 1 360px;
       background: linear-gradient(135deg, var(--green), var(--green-light));
       color: #fff;
       padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .carousel-item img {
       width: 100%;
-      height: 230px;
+      height: 200px;
       object-fit: cover;
       border-radius: 12px;
     }
@@ -87,8 +57,8 @@
     .activity-title {
       font-weight: 800;
       color: var(--gold);
-      font-size: 1.4rem;
-      margin-top: 1rem;
+      font-size: 1.5rem;
+      margin: 1rem 0 0.5rem;
     }
 
     .activity-desc {
@@ -100,31 +70,30 @@
     .activity-meta {
       list-style: none;
       padding: 0;
-      margin-bottom: 1.5rem;
     }
 
     .activity-meta li {
       display: flex;
       align-items: center;
       gap: 0.6rem;
+      margin: 0.4rem 0;
       color: #f5f5f5;
       font-size: 0.93rem;
     }
 
     .activity-meta i {
       color: var(--gold);
+      width: 20px;
     }
 
     .animal-block {
       margin-top: 1.5rem;
-      text-align: center;
     }
 
     .animal-block label {
       font-weight: 600;
       color: var(--gold-light);
       margin-bottom: 0.5rem;
-      display: block;
     }
 
     .animal-block select {
@@ -135,69 +104,85 @@
       font-size: 1rem;
     }
 
-    .login-msg {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 15px;
-      padding: 1.2rem;
-      color: #fff;
-    }
-
-    .login-btn {
-      margin-top: 0.8rem;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: var(--green);
-      font-weight: 700;
-      border: none;
-      border-radius: 40px;
-      padding: 0.6rem 1.8rem;
-      box-shadow: 0 6px 20px rgba(212,175,55,0.4);
-      transition: all 0.3s ease;
-    }
-
-    .login-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(255,215,0,0.6);
-    }
-
-    /* ===== RIGHT COLUMN ===== */
+    /* ===== RIGHT SIDE ===== */
     .right-col {
+      flex: 2 1 700px;
       padding: 2rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
     }
 
     .calendar-box, .slots-box {
       background: var(--white);
       border: 1px solid #eef2ef;
       border-radius: 15px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
+      padding: 1.2rem;
+      flex: 1 1 45%;
     }
 
     .box-title {
       font-weight: 700;
       color: var(--green);
+      margin-bottom: 0.8rem;
       text-align: center;
-      margin-bottom: 1rem;
+    }
+
+    .cal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+    }
+
+    .cal-nav button {
+      border: none;
+      background: var(--white);
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
+      color: var(--green);
+    }
+
+    .cal-month {
+      font-weight: 700;
+    }
+
+    .weekday {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
     }
 
     .cal-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 0.4rem;
-      text-align: center;
     }
 
     .day {
-      padding: 0.6rem 0;
+      padding: 0.65rem 0;
+      text-align: center;
       border-radius: 50%;
       cursor: pointer;
       background: #f1f4f3;
       font-weight: 600;
+      transition: all 0.3s ease;
     }
 
     .day.is-disabled {
       opacity: 0.35;
       cursor: not-allowed;
+    }
+
+    .day:hover:not(.is-disabled) {
+      background: var(--gold);
+      color: var(--green);
     }
 
     .day.is-selected {
@@ -212,6 +197,7 @@
       text-align: center;
       margin-bottom: 0.6rem;
       font-weight: 600;
+      transition: 0.3s;
       cursor: pointer;
     }
 
@@ -223,6 +209,11 @@
       border-color: #ddd;
     }
 
+    .slot:hover:not(.disabled) {
+      background: var(--gold);
+      color: var(--green);
+    }
+
     .slot.is-selected {
       background: var(--green);
       color: #fff;
@@ -230,8 +221,9 @@
     }
 
     .submit-wrap {
+      width: 100%;
       text-align: center;
-      padding: 1rem 0 2rem;
+      padding: 1.5rem 0 2rem;
     }
 
     .btn-lux {
@@ -242,27 +234,35 @@
       border-radius: 40px;
       padding: 0.9rem 2.5rem;
       box-shadow: 0 8px 25px rgba(212,175,55,0.4);
+      transition: 0.3s ease;
     }
 
-    .btn-lux:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-lux:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(255,215,0,0.6);
+    }
+
+    .btn-lux:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 900px) {
+      .right-col { flex-direction: column; }
+    }
   </style>
 </head>
 
 <body>
 
-<section class="banner">
-  <img src="/images/logo-pet365.png" alt="Pet365 logo">
-  <h1>Prenota ora il tuo servizio preferito</h1>
-  <p>Regala al tuo amico a quattro zampe la migliore esperienza ❤️</p>
-</section>
+<th:block th:insert="~{fragments/navbar}"></th:block>
 
 <form id="formPrenotazione" method="get" action="/effettuaPrenotazione" th:object="${prenotazioneForm}">
   <input type="hidden" id="idAnnuncio" name="idAnnuncio" th:value="${annuncio.id}"/>
 
   <div class="booking-shell">
-    <!-- LEFT -->
+    <!-- SINISTRA -->
     <aside class="left-col">
-      <!-- Carousel -->
       <div id="carouselFoto" class="carousel slide mb-3" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active" th:if="${!#lists.isEmpty(annuncio.foto)}"
@@ -284,36 +284,41 @@
 
       <div>
         <div class="activity-title" th:text="${annuncio.nomeAttivita}">DoctorVet</div>
-        <p class="activity-desc" th:text="${annuncio.descrizione}">Prenota un consulto personalizzato per il tuo amico a quattro zampe.</p>
+        <p class="activity-desc" th:text="${annuncio.descrizione}">
+          Prenota un consulto personalizzato per il tuo amico a quattro zampe.
+        </p>
         <ul class="activity-meta">
           <li><i class="fa-solid fa-paw"></i><span th:text="${annuncio.serviziOfferti}">Servizi Offerti</span></li>
           <li><i class="fa-solid fa-location-dot"></i><span th:text="${annuncio.indirizzoAttivita + ', ' + annuncio.provinciaAttivita}">Roma (RM)</span></li>
         </ul>
       </div>
 
-      <!-- Animale -->
       <div class="animal-block">
-        <th:block th:if="${cliente != null}">
-          <label for="animale">🐾 Seleziona animale</label>
-          <select id="animale" name="idAnimale" required>
-            <option value="" disabled selected>— Scegli —</option>
-            <option th:each="animale : ${cliente.animali}" th:value="${animale.id}" th:text="${animale.nome}"></option>
-          </select>
-        </th:block>
-
-        <th:block th:if="${cliente == null}">
-          <div class="login-msg">
-            <p>Effettua il login per selezionare il tuo pet 🐶</p>
-            <button type="button" class="login-btn" onclick="redirectToLogin()">Effettua il Login</button>
-          </div>
-        </th:block>
+        <label for="animale">🐾 Seleziona animale</label>
+        <select id="animale" name="idAnimale" required>
+          <option value="" disabled selected>— Scegli —</option>
+          <option th:each="animale : ${cliente != null ? cliente.animali : {}}"
+                  th:value="${animale.id}"
+                  th:text="${animale.nome}">
+          </option>
+        </select>
       </div>
     </aside>
 
-    <!-- RIGHT -->
+    <!-- DESTRA -->
     <section class="right-col">
       <div class="calendar-box">
         <div class="box-title">📅 Scegli una data</div>
+        <div class="cal-head">
+          <button type="button" id="prevMonth"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="cal-month" id="calMonthLabel"></div>
+          <button type="button" id="nextMonth"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <div class="weekday">
+          <div>LUN</div><div>MAR</div><div>MER</div><div>GIO</div><div>VEN</div><div>SAB</div><div>DOM</div>
+        </div>
+
         <div id="calGrid" class="cal-grid"></div>
         <input type="date" id="dataVisita" name="dataVisita" class="d-none" required>
       </div>
@@ -333,47 +338,71 @@
   </div>
 </form>
 
+<th:block th:insert="~{fragments/footbar}"></th:block>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/AjaxVisite.js"></script>
 
 <script>
-  function redirectToLogin() {
-    const current = window.location.pathname + window.location.search;
-    window.location.href = '/login?redirect=' + encodeURIComponent(current);
-  }
-
   const calGrid = document.getElementById('calGrid');
+  const monthLabel = document.getElementById('calMonthLabel');
   const dataVisitaInput = document.getElementById('dataVisita');
   const listavisite = document.getElementById('listavisite');
   const slotsList = document.getElementById('slotsList');
   const btnPrenota = document.getElementById('btnPrenota');
   const animale = document.getElementById('animale');
+  let viewYear, viewMonth;
+
+  function setViewTo(date) {
+    viewYear = date.getFullYear();
+    viewMonth = date.getMonth();
+    renderCalendar();
+  }
+
+  function itMonthName(y, m) {
+    return new Date(y, m, 1).toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+  }
 
   function renderCalendar() {
     calGrid.innerHTML = '';
-    const today = new Date(); today.setHours(0,0,0,0);
-    const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+    monthLabel.textContent = itMonthName(viewYear, viewMonth);
+    const firstDay = new Date(viewYear, viewMonth, 1);
+    const startIndex = (firstDay.getDay() + 6) % 7;
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+
+    for (let i = 0; i < startIndex; i++) calGrid.appendChild(document.createElement('div'));
 
     for (let d = 1; d <= daysInMonth; d++) {
-      const date = new Date(today.getFullYear(), today.getMonth(), d);
-      const div = document.createElement('div');
-      div.className = 'day';
-      div.textContent = d;
-      if (date <= today) div.classList.add('is-disabled');
+      const cell = document.createElement('div');
+      cell.className = 'day';
+      cell.textContent = d;
+      const date = new Date(viewYear, viewMonth, d); date.setHours(0, 0, 0, 0);
+
+      // Disabilita il giorno corrente e quelli nel passato
+      if (date <= today) cell.classList.add('is-disabled');
       else {
-        div.addEventListener('click', () => {
-          document.querySelectorAll('.day').forEach(day => day.classList.remove('is-selected'));
-          div.classList.add('is-selected');
-          dataVisitaInput.value = date.toISOString().split('T')[0];
+        cell.addEventListener('click', () => {
+          document.querySelectorAll('.day').forEach(el => el.classList.remove('is-selected'));
+          cell.classList.add('is-selected');
+          const iso = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+          dataVisitaInput.value = iso;
+
+          // Trigger AjaxVisite.js
+          dataVisitaInput.dispatchEvent(new Event('change', { bubbles: true }));
           dataVisitaInput.dispatchEvent(new Event('blur', { bubbles: true }));
+
           slotsList.innerHTML = '<p class="text-muted">Caricamento orari...</p>';
+          btnPrenota.disabled = true;
         });
       }
-      calGrid.appendChild(div);
+      calGrid.appendChild(cell);
     }
   }
-  renderCalendar();
+
+  document.getElementById('prevMonth').onclick = () => setViewTo(new Date(viewYear, viewMonth - 1, 1));
+  document.getElementById('nextMonth').onclick = () => setViewTo(new Date(viewYear, viewMonth + 1, 1));
 
   const observer = new MutationObserver(() => setTimeout(rebuildSlots, 100));
   observer.observe(listavisite, { childList: true });
@@ -389,6 +418,7 @@
       const div = document.createElement('div');
       div.className = 'slot';
       div.textContent = opt.textContent;
+
       if (opt.textContent.includes('Seleziona') || opt.textContent.includes('Data nel passato')) {
         div.classList.add('disabled');
       } else {
@@ -397,11 +427,23 @@
           div.classList.add('is-selected');
           listavisite.value = opt.value;
           listavisite.dispatchEvent(new Event('change', { bubbles: true }));
+          maybeEnableSubmit();
         };
       }
+
       slotsList.appendChild(div);
     });
   }
+
+  function maybeEnableSubmit() {
+    btnPrenota.disabled = !(animale.value && dataVisitaInput.value && listavisite.value);
+  }
+
+  animale.addEventListener('change', maybeEnableSubmit);
+  listavisite.addEventListener('change', maybeEnableSubmit);
+  dataVisitaInput.addEventListener('change', maybeEnableSubmit);
+
+  setViewTo(new Date());
 </script>
 </body>
 </html>

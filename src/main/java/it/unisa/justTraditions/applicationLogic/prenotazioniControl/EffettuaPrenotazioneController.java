@@ -21,87 +21,91 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/effettuaPrenotazione")
 public class EffettuaPrenotazioneController {
 
-  private static final String EFFETTUA_PRENOTAZIONE_VIEW = "prenotazioniView/effettuaPrenotazione";
-  private static final String ESITO_PRENOTAZIONE_VIEW = "prenotazioniView/esitoPrenotazione";
+    private static final String EFFETTUA_PRENOTAZIONE_VIEW = "prenotazioniView/effettuaPrenotazione";
+    private static final String ESITO_PRENOTAZIONE_VIEW = "prenotazioniView/esitoPrenotazione";
 
-  @Autowired
-  private VisitaDao visitaDao;
+    @Autowired
+    private VisitaDao visitaDao;
 
-  @Autowired
-  private AnimaleDao animaleDao;
+    @Autowired
+    private AnimaleDao animaleDao;
 
-  @Autowired
-  private PrenotazioneDao prenotazioneDao;
+    @Autowired
+    private PrenotazioneDao prenotazioneDao;
 
-  @Autowired
-  private SessionCliente sessionCliente;
+    @Autowired
+    private SessionCliente sessionCliente;
 
-  /**
-   * Mostra la pagina di riepilogo prenotazione.
-   */
-  @GetMapping
-  public String getRiepilogoPrenotazione(@ModelAttribute @Valid PrenotazioneForm prenotazioneForm,
-                                         BindingResult bindingResult,
-                                         Model model) {
-    if (bindingResult.hasErrors()) {
-      throw new IllegalArgumentException("Errore nella sottomissione della prenotazione (GET)");
+    /**
+     * Mostra la pagina di riepilogo prenotazione.
+     */
+    @GetMapping
+    public String getRiepilogoPrenotazione(@ModelAttribute @Valid PrenotazioneForm prenotazioneForm,
+                                           BindingResult bindingResult,
+                                           Model model) {
+        if (bindingResult.hasErrors()) {
+            throw new IllegalArgumentException("Errore nella sottomissione della prenotazione (GET)");
+        }
+
+        Visita visita = visitaDao.findById(prenotazioneForm.getIdVisita())
+                .orElseThrow(() -> new IllegalArgumentException("Visita non trovata"));
+
+        Animale animale = animaleDao.findById(prenotazioneForm.getIdAnimale())
+                .orElseThrow(() -> new IllegalArgumentException("Animale non trovato"));
+
+        model.addAttribute("prenotazioneForm", prenotazioneForm);
+        model.addAttribute("orarioinizio", visita.getOrarioInizio());
+        model.addAttribute("orariofine", visita.getOrarioFine());
+        model.addAttribute("idAnnuncio", visita.getAnnuncio().getId());
+        model.addAttribute("animale", animale);
+
+        return EFFETTUA_PRENOTAZIONE_VIEW;
     }
 
-    // Recupera la visita
-    Visita visita = visitaDao.findById(prenotazioneForm.getIdVisita())
-            .orElseThrow(() -> new IllegalArgumentException("Visita non trovata"));
+    /**
+     * Effettua la prenotazione (submit POST).
+     */
+    @PostMapping
+    public String confermaPrenotazione(@ModelAttribute @Valid PrenotazioneForm prenotazioneForm,
+                                       BindingResult bindingResult,
+                                       Model model) {
+        if (bindingResult.hasErrors()) {
+            throw new IllegalArgumentException("Errore nella sottomissione della prenotazione (POST)");
+        }
 
-    // Recupera l'animale
-    Animale animale = animaleDao.findById(prenotazioneForm.getIdAnimale())
-            .orElseThrow(() -> new IllegalArgumentException("Animale non trovato"));
+        // Recupera la visita
+        Visita visita = visitaDao.findById(prenotazioneForm.getIdVisita())
+                .orElseThrow(() -> new IllegalArgumentException("Visita non trovata"));
 
-    // Aggiunge dati al model
-    model.addAttribute("prenotazioneForm", prenotazioneForm);
-    model.addAttribute("orarioinizio", visita.getOrarioInizio());
-    model.addAttribute("orariofine", visita.getOrarioFine());
-    model.addAttribute("idAnnuncio", visita.getAnnuncio().getId());
-    model.addAttribute("animale", animale);
+        // 🔍 Controlla se la visita è ancora valida
+        if (!visita.isValidita()) {
+            model.addAttribute("message", "La visita selezionata non è più disponibile per la prenotazione.");
+            return "error"; // 👉 mostra la pagina error.html con messaggio personalizzato
+        }
 
-    return EFFETTUA_PRENOTAZIONE_VIEW;
-  }
+        // Recupera l'animale
+        Animale animale = animaleDao.findById(prenotazioneForm.getIdAnimale())
+                .orElseThrow(() -> new IllegalArgumentException("Animale non trovato"));
 
-  /**
-   * Effettua la prenotazione (submit POST).
-   */
-  @PostMapping
-  public String confermaPrenotazione(@ModelAttribute @Valid PrenotazioneForm prenotazioneForm,
-                                     BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      throw new IllegalArgumentException("Errore nella sottomissione della prenotazione (POST)");
+        // Recupera il cliente loggato
+        Cliente cliente = sessionCliente.getCliente()
+                .orElseThrow(() -> new IllegalArgumentException("Cliente non loggato"));
+
+        // Crea la prenotazione
+        Prenotazione prenotazione = new Prenotazione(visita, animale, prenotazioneForm.getDataVisita());
+        prenotazione.setCliente(cliente);
+
+        // Relazioni bidirezionali
+        cliente.addPrenotazione(prenotazione);
+        visita.addPrenotazione(prenotazione);
+
+        // ❌ Disattiva la visita (non più disponibile)
+        visita.setValidita(false);
+
+        // Salva nel database
+        prenotazioneDao.save(prenotazione);
+        visitaDao.save(visita);
+
+        return ESITO_PRENOTAZIONE_VIEW;
     }
-
-    // Recupera la visita
-    Visita visita = visitaDao.findById(prenotazioneForm.getIdVisita())
-            .orElseThrow(() -> new IllegalArgumentException("Visita non trovata"));
-
-    // Recupera l'animale
-    Animale animale = animaleDao.findById(prenotazioneForm.getIdAnimale())
-            .orElseThrow(() -> new IllegalArgumentException("Animale non trovato"));
-
-    // Recupera il cliente loggato
-    Cliente cliente = sessionCliente.getCliente()
-            .orElseThrow(() -> new IllegalArgumentException("Cliente non loggato"));
-
-    // Crea la prenotazione
-    Prenotazione prenotazione = new Prenotazione(visita, animale, prenotazioneForm.getDataVisita());
-    prenotazione.setCliente(cliente);
-
-    // Aggiunge relazioni bidirezionali
-    cliente.addPrenotazione(prenotazione);
-    visita.addPrenotazione(prenotazione);
-
-     // Disattiva la visita una volta prenotata
-    visita.setValidita(false);
-
-    // Salva nel database
-    prenotazioneDao.save(prenotazione);
-    visitaDao.save(visita);
-
-    return ESITO_PRENOTAZIONE_VIEW;
-  }
 }

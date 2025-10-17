@@ -2,61 +2,104 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Pet365 - Prenotazione Servizio</title>
+  <title>Pet365 • Prenotazione Servizio</title>
+
+  <!-- Bootstrap e Font -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
   <style>
     :root {
-      --lux-green: #013b27;
-      --lux-gold: #d4af37;
-      --lux-bg: #f5f8f6;
+      --green: #013b27;
+      --green-light: #046b49;
+      --gold: #d4af37;
+      --gold-light: #ffe48f;
       --white: #fff;
+      --bg: #f5f8f6;
+      --muted: #6b7a75;
     }
 
     body {
-      background-color: var(--lux-bg);
-      font-family: 'Poppins', sans-serif;
-      color: var(--lux-green);
+      background: var(--bg);
+      font-family: "Poppins", sans-serif;
+      color: var(--green);
     }
 
-    /* ===== CONTAINER PRINCIPALE ===== */
-    .booking-wrapper {
+    /* ===== SHELL ===== */
+    .booking-shell {
       max-width: 1100px;
-      margin: 4rem auto;
+      margin: 3rem auto;
       background: var(--white);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
       display: flex;
       flex-wrap: wrap;
-      overflow: hidden;
     }
 
-    /* ===== SIDEBAR ANIMALE ===== */
-    .sidebar {
-      background: linear-gradient(135deg, var(--lux-green), #046b49);
-      color: var(--white);
-      flex: 1 1 280px;
-      padding: 2rem 1.5rem;
+    /* ===== LEFT SIDE ===== */
+    .left-col {
+      flex: 1 1 340px;
+      background: linear-gradient(135deg, var(--green), var(--green-light));
+      color: #fff;
+      padding: 2rem 1.8rem;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
     }
 
-    .sidebar h3 {
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      color: var(--lux-gold);
+    .activity-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 1.2rem;
+      box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.15);
     }
 
-    .sidebar label {
-      font-size: 0.95rem;
-      font-weight: 600;
+    .activity-title {
+      font-weight: 800;
+      color: var(--gold);
+      font-size: 1.4rem;
       margin-bottom: 0.5rem;
-      display: block;
     }
 
-    .sidebar select {
+    .activity-desc {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: #e9f5ee;
+      margin-bottom: 1rem;
+    }
+
+    .activity-meta {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .activity-meta li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 0.4rem 0;
+      color: #f5f5f5;
+      font-size: 0.93rem;
+    }
+
+    .activity-meta i {
+      color: var(--gold);
+      width: 20px;
+    }
+
+    .animal-block {
+      margin-top: 1.5rem;
+    }
+
+    .animal-block label {
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .animal-block select {
       border-radius: 12px;
       border: none;
       padding: 0.8rem;
@@ -64,118 +107,146 @@
       font-size: 1rem;
     }
 
-    /* ===== MAIN CONTENT ===== */
-    .booking-main {
-      flex: 3 1 700px;
-      display: flex;
-      flex-direction: row;
+    /* ===== RIGHT SIDE ===== */
+    .right-col {
+      flex: 2 1 700px;
       padding: 2rem;
+      display: flex;
       gap: 2rem;
+      flex-wrap: wrap;
     }
 
-    /* ===== CALENDARIO ===== */
-    .calendar {
-      flex: 1 1 50%;
+    .calendar-box, .slots-box {
+      background: var(--white);
+      border: 1px solid #eef2ef;
+      border-radius: 15px;
+      padding: 1.2rem;
+      flex: 1 1 45%;
+    }
+
+    .box-title {
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 0.8rem;
       text-align: center;
     }
 
-    .calendar h4 {
-      color: var(--lux-green);
-      font-weight: 700;
-      margin-bottom: 1rem;
+    /* ===== CALENDAR ===== */
+    .cal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
     }
 
-    .calendar .days {
+    .cal-nav button {
+      border: none;
+      background: var(--white);
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
+      color: var(--green);
+    }
+
+    .cal-month {
+      font-weight: 700;
+    }
+
+    .weekday {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .cal-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 0.4rem;
     }
 
-    .calendar .day {
-      padding: 0.7rem 0;
+    .day {
+      padding: 0.65rem 0;
+      text-align: center;
       border-radius: 50%;
       cursor: pointer;
-      background-color: #f1f1f1;
+      background: #f1f4f3;
+      font-weight: 600;
       transition: all 0.3s ease;
-      font-weight: 500;
     }
 
-    .calendar .day:hover {
-      background-color: var(--lux-gold);
-      color: var(--lux-green);
+    .day.is-disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
     }
 
-    .calendar .day.selected {
-      background: var(--lux-green);
-      color: var(--white);
-      font-weight: 700;
+    .day:hover:not(.is-disabled) {
+      background: var(--gold);
+      color: var(--green);
     }
 
-    /* ===== ORARI ===== */
-    .time-slots {
-      flex: 1 1 40%;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
+    .day.is-selected {
+      background: var(--green);
+      color: #fff;
     }
 
-    .time-slots h4 {
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: var(--lux-green);
-    }
-
+    /* ===== SLOTS ===== */
     .slot {
-      border: 2px solid var(--lux-gold);
+      border: 2px solid var(--gold);
       border-radius: 50px;
       padding: 0.5rem;
-      margin-bottom: 0.6rem;
       text-align: center;
-      cursor: pointer;
+      margin-bottom: 0.6rem;
       font-weight: 600;
-      background-color: var(--white);
-      transition: all 0.3s ease;
+      transition: 0.3s;
+      cursor: pointer;
     }
 
     .slot:hover {
-      background: var(--lux-gold);
-      color: var(--lux-green);
+      background: var(--gold);
+      color: var(--green);
     }
 
-    .slot.selected {
-      background: var(--lux-green);
-      color: var(--white);
-      border-color: var(--lux-green);
+    .slot.is-selected {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
     }
 
-    /* ===== SUBMIT BUTTON ===== */
-    .submit-container {
+    /* ===== BUTTON ===== */
+    .submit-wrap {
       width: 100%;
       text-align: center;
       padding: 1.5rem 0 2rem;
     }
 
-    .btn-luxury {
-      background: linear-gradient(135deg, var(--lux-gold), #ffe48f);
-      color: var(--lux-green);
+    .btn-lux {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--green);
       font-weight: 700;
       border: none;
       border-radius: 40px;
       padding: 0.9rem 2.5rem;
-      box-shadow: 0 6px 25px rgba(212,175,55,0.4);
-      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(212,175,55,0.4);
+      transition: 0.3s ease;
     }
 
-    .btn-luxury:hover {
+    .btn-lux:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(255,215,0,0.7);
+      box-shadow: 0 0 25px rgba(255,215,0,0.6);
+    }
+
+    .btn-lux:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     @media (max-width: 900px) {
-      .booking-main {
-        flex-direction: column;
-        align-items: center;
-      }
+      .right-col { flex-direction: column; }
     }
   </style>
 </head>
@@ -184,50 +255,89 @@
 
 <th:block th:insert="~{fragments/navbar}"></th:block>
 
-<section class="container">
-  <form id="formPrenotazione" method="get" action="/effettuaPrenotazione" th:object="${prenotazioneForm}">
-    <div class="booking-wrapper">
+<form id="formPrenotazione" method="get" action="/effettuaPrenotazione" th:object="${prenotazioneForm}">
+  <input type="hidden" id="idAnnuncio" name="idAnnuncio" th:value="${annuncio.id}"/>
 
-      <!-- SIDEBAR ANIMALE -->
-      <div class="sidebar">
-        <h3>🐾 Scegli il tuo animale</h3>
-        <label for="animale">Animale</label>
-        <select id="animale" name="idAnimale" required>
-          <option value="" disabled selected>Seleziona</option>
-          <option th:each="animale : ${cliente != null ? cliente.animali : {}}"
-                  th:value="${animale.id}"
-                  th:text="${animale.nome}">
-          </option>
-        </select>
-      </div>
-
-      <!-- MAIN AREA -->
-      <div class="booking-main">
-        <!-- CALENDARIO -->
-        <div class="calendar">
-          <h4>📅 Scegli una data</h4>
-          <div id="calendarGrid" class="days">
-            <!-- Giorni generati dinamicamente -->
+  <div class="booking-shell">
+    <!-- SINISTRA -->
+    <aside class="left-col">
+      <div>
+        <div class="activity-card mb-3">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img th:if="${!#lists.isEmpty(annuncio.foto)}"
+                 th:src="@{/img(id=${annuncio.foto[0].id})}" alt="foto"
+                 style="width:60px;height:60px;object-fit:cover;border-radius:12px;">
+            <img th:if="${#lists.isEmpty(annuncio.foto)}"
+                 src="/images/default-pet.png" alt="foto"
+                 style="width:60px;height:60px;object-fit:cover;border-radius:12px;">
+            <div>
+              <div class="activity-title" th:text="${annuncio.nomeAttivita}">DoctorVet</div>
+              <div style="font-size:0.9rem;" th:text="${annuncio.serviziOfferti}">Consulenza Veterinaria</div>
+            </div>
           </div>
-          <input type="hidden" id="dataVisita" name="dataVisita">
+
+          <p class="activity-desc" th:text="${annuncio.descrizione}">
+            Prenota un consulto personalizzato per il tuo amico a quattro zampe.
+          </p>
+
+          <ul class="activity-meta">
+            <li><i class="fa-solid fa-clock"></i><span>Durata: 10 minuti</span></li>
+            <li><i class="fa-solid fa-video"></i><span>Google Meet</span></li>
+            <li><i class="fa-solid fa-location-dot"></i>
+              <span th:text="${annuncio.indirizzoAttivita + ', ' + annuncio.provinciaAttivita}">
+                Roma (RM)
+              </span>
+            </li>
+          </ul>
         </div>
 
-        <!-- ORARI -->
-        <div class="time-slots">
-          <h4>🕒 Seleziona un orario</h4>
-          <div id="timeContainer">
-            <p class="text-muted">Seleziona una data per vedere gli orari disponibili</p>
-          </div>
-          <input type="hidden" id="idVisita" name="idVisita">
+        <div class="animal-block">
+          <label for="animale">🐾 Seleziona animale</label>
+          <select id="animale" name="idAnimale" required>
+            <option value="" disabled selected>— Scegli —</option>
+            <option th:each="animale : ${cliente != null ? cliente.animali : {}}"
+                    th:value="${animale.id}"
+                    th:text="${animale.nome}">
+            </option>
+          </select>
         </div>
       </div>
-    </div>
+    </aside>
 
-    <div class="submit-container">
-      <button id="prenota" type="submit" class="btn btn-luxury" disabled>Prenota ora</button>
-    </div>
-  </form>
-</section>
+    <!-- DESTRA -->
+    <section class="right-col">
+      <!-- CALENDARIO -->
+      <div class="calendar-box">
+        <div class="box-title">📅 Scegli una data</div>
+        <div class="cal-head">
+          <button type="button" id="prevMonth"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="cal-month" id="calMonthLabel"></div>
+          <button type="button" id="nextMonth"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <div class="weekday">
+          <div>LUN</div><div>MAR</div><div>MER</div><div>GIO</div><div>VEN</div><div>SAB</div><div>DOM</div>
+        </div>
+
+        <div id="calGrid" class="cal-grid"></div>
+        <input type="date" id="dataVisita" name="dataVisita" class="d-none" required>
+      </div>
+
+      <!-- ORARI -->
+      <div class="slots-box">
+        <div class="box-title">🕒 Orari disponibili</div>
+        <div id="slotsList">
+          <p class="text-muted">Seleziona una data per vedere gli orari disponibili.</p>
+        </div>
+        <select id="listavisite" name="idVisita" class="d-none" required></select>
+      </div>
+    </section>
+  </div>
+
+  <div class="submit-wrap">
+    <button id="btnPrenota" class="btn btn-lux" type="submit" disabled>Prenota Ora</button>
+  </div>
+</form>
 
 <th:block th:insert="~{fragments/footbar}"></th:block>
 
@@ -235,68 +345,101 @@
 <script src="/js/AjaxVisite.js"></script>
 
 <script>
-  // ====== GENERAZIONE CALENDARIO BASE ======
-  const today = new Date();
-  const calendarGrid = document.getElementById("calendarGrid");
+  const calGrid = document.getElementById('calGrid');
+  const monthLabel = document.getElementById('calMonthLabel');
+  const dataVisitaInput = document.getElementById('dataVisita');
+  const listavisite = document.getElementById('listavisite');
+  const slotsList = document.getElementById('slotsList');
+  const btnPrenota = document.getElementById('btnPrenota');
+  const animale = document.getElementById('animale');
 
-  function generateCalendar() {
-    const monthDays = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-    calendarGrid.innerHTML = "";
-    for (let i = 1; i <= monthDays; i++) {
-      const date = new Date(today.getFullYear(), today.getMonth(), i);
-      const div = document.createElement("div");
-      div.classList.add("day");
-      div.textContent = i;
+  let viewYear, viewMonth;
 
-      if (date < new Date()) {
-        div.style.opacity = "0.4";
-        div.style.cursor = "not-allowed";
-      } else {
-        div.addEventListener("click", () => selectDate(date, div));
+  function setViewTo(date) {
+    viewYear = date.getFullYear();
+    viewMonth = date.getMonth();
+    renderCalendar();
+  }
+
+  function itMonthName(y, m) {
+    return new Date(y, m, 1).toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+  }
+
+  function renderCalendar() {
+    calGrid.innerHTML = '';
+    monthLabel.textContent = itMonthName(viewYear, viewMonth);
+    const firstDay = new Date(viewYear, viewMonth, 1);
+    const startIndex = (firstDay.getDay() + 6) % 7;
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+
+    for (let i = 0; i < startIndex; i++) calGrid.appendChild(document.createElement('div'));
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'day';
+      cell.textContent = d;
+      const date = new Date(viewYear, viewMonth, d); date.setHours(0, 0, 0, 0);
+
+      if (date < today) cell.classList.add('is-disabled');
+      else {
+        cell.addEventListener('click', () => {
+          document.querySelectorAll('.day').forEach(el => el.classList.remove('is-selected'));
+          cell.classList.add('is-selected');
+          const iso = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+          dataVisitaInput.value = iso;
+
+          // 🔥 Trigger AjaxVisite.js
+          dataVisitaInput.dispatchEvent(new Event('change', { bubbles: true }));
+          dataVisitaInput.dispatchEvent(new Event('blur', { bubbles: true }));
+
+          slotsList.innerHTML = '<p class="text-muted">Caricamento orari...</p>';
+          btnPrenota.disabled = true;
+        });
       }
-
-      calendarGrid.appendChild(div);
+      calGrid.appendChild(cell);
     }
   }
 
-  let selectedDate = null;
+  document.getElementById('prevMonth').onclick = () => setViewTo(new Date(viewYear, viewMonth - 1, 1));
+  document.getElementById('nextMonth').onclick = () => setViewTo(new Date(viewYear, viewMonth + 1, 1));
 
-  function selectDate(date, element) {
-    document.querySelectorAll(".day").forEach(d => d.classList.remove("selected"));
-    element.classList.add("selected");
-    selectedDate = date.toISOString().split("T")[0];
-    document.getElementById("dataVisita").value = selectedDate;
-    loadOrari(selectedDate);
-  }
+  // Observer per gli orari caricati da AjaxVisite.js
+  const observer = new MutationObserver(() => setTimeout(rebuildSlots, 100));
+  observer.observe(listavisite, { childList: true });
 
-  // ====== CARICAMENTO ORARI AJAX ======
-  function loadOrari(data) {
-    $.ajax({
-      url: "/getOrariDisponibili",
-      method: "GET",
-      data: { dataVisita: data },
-      success: function(orari) {
-        const container = $("#timeContainer");
-        container.empty();
-        if (orari.length === 0) {
-          container.append("<p class='text-muted'>Nessun orario disponibile</p>");
-        } else {
-          orari.forEach(o => {
-            const slot = $("<div>").addClass("slot").text(o.orario);
-            slot.click(() => {
-              $(".slot").removeClass("selected");
-              slot.addClass("selected");
-              $("#idVisita").val(o.id);
-              $("#prenota").prop("disabled", false);
-            });
-            container.append(slot);
-          });
-        }
-      }
+  function rebuildSlots() {
+    slotsList.innerHTML = '';
+    const opts = [...listavisite.options];
+    if (!opts.length) {
+      slotsList.innerHTML = '<p class="text-muted">Nessun orario disponibile.</p>';
+      return;
+    }
+    opts.forEach(opt => {
+      const div = document.createElement('div');
+      div.className = 'slot';
+      div.textContent = opt.textContent;
+      div.onclick = () => {
+        document.querySelectorAll('.slot').forEach(s => s.classList.remove('is-selected'));
+        div.classList.add('is-selected');
+        listavisite.value = opt.value;
+        listavisite.dispatchEvent(new Event('change', { bubbles: true }));
+        maybeEnableSubmit();
+      };
+      slotsList.appendChild(div);
     });
   }
 
-  generateCalendar();
+  function maybeEnableSubmit() {
+    btnPrenota.disabled = !(animale.value && dataVisitaInput.value && listavisite.value);
+  }
+
+  animale.addEventListener('change', maybeEnableSubmit);
+  listavisite.addEventListener('change', maybeEnableSubmit);
+  dataVisitaInput.addEventListener('change', maybeEnableSubmit);
+
+  setViewTo(new Date());
 </script>
+
 </body>
 </html>

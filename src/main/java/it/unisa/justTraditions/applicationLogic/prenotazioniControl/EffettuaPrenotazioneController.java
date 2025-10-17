@@ -78,7 +78,7 @@ public class EffettuaPrenotazioneController {
                 .orElseThrow(() -> new IllegalArgumentException("Visita non trovata"));
 
         // 🔍 Controlla se la visita è ancora valida
-        if (!visita.isValidita()) {
+        if (!visita.getValidita()) {
             model.addAttribute("message", "La visita selezionata non è più disponibile per la prenotazione.");
             return "error"; // 👉 mostra la pagina error.html con messaggio personalizzato
         }

@@ -74,7 +74,8 @@
       z-index: 5;
     }
 
-    .search-bar, .service-select {
+    .search-bar,
+    .service-select {
       border: 2px solid var(--verde-chiaro);
       border-radius: 40px;
       padding: 0.7rem 1.2rem;
@@ -83,7 +84,8 @@
       transition: all 0.3s ease;
     }
 
-    .search-bar:focus, .service-select:focus {
+    .search-bar:focus,
+    .service-select:focus {
       border-color: var(--oro);
       box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
       outline: none;
@@ -239,48 +241,56 @@
     @media (max-width: 768px) {
       .search-box {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         border-radius: 25px;
         padding: 0.8rem 1rem;
-        width: 90%;
+        width: 95%;
         margin: 1rem auto 2rem;
+        gap: 0.6rem;
       }
 
       .search-bar,
       .service-select {
         width: 100%;
-        max-width: 350px;
-        font-size: 0.95rem !important;
-        padding: 0.55rem 0.9rem !important;
-        border-radius: 25px !important;
-        margin: 0.4rem auto !important;
-        height: auto !important;
+        font-size: 0.9rem !important;
+        padding: 0.5rem 0.8rem !important;
+        border-radius: 20px !important;
+        margin: 0.3rem 0 !important;
+        height: 42px !important;
       }
 
       .btn-gold {
-        width: 80%;
-        max-width: 280px;
-        padding: 0.7rem 1rem !important;
-        font-size: 0.95rem !important;
-        margin-top: 0.6rem;
-      }
-
-      select.form-select {
-        background-size: 16px 12px;
-        line-height: 1.3;
+        width: 100%;
+        padding: 0.65rem 1rem !important;
+        font-size: 0.9rem !important;
+        border-radius: 25px;
+        margin-top: 0.4rem;
       }
 
       .search-header h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
       }
 
       .search-header p {
-        font-size: 1rem;
+        font-size: 0.95rem;
       }
 
       .card-annuncio {
-        height: 400px;
+        height: auto;
         max-width: 100%;
+      }
+
+      #annunciContainer {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .search-box {
+        background: var(--bianco);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
       }
     }
   </style>
@@ -295,15 +305,19 @@
   <p>Scopri i migliori servizi per il tuo animale domestico in tutta Italia 🐾</p>
 </header>
 
-<div class="search-box">
+<div class="search-box" role="search" aria-label="Cerca annunci professionali">
+  <label for="nomeAttivita" class="visually-hidden">Nome Attività</label>
   <input type="text" id="nomeAttivita" th:value="${nomeAttivita}" placeholder="🔍 Cerca attività o nome..."
-         class="form-control search-bar">
-  <select id="serviziOfferti" class="form-select service-select">
+         class="form-control search-bar" aria-label="Cerca attività o nome">
+
+  <label for="serviziOfferti" class="visually-hidden">Servizi Offerti</label>
+  <select id="serviziOfferti" class="form-select service-select" aria-label="Seleziona servizio">
     <option value="">-- Tutti i servizi --</option>
     <option th:each="serv : ${listaServizi}" th:value="${serv}" th:text="${serv}"
             th:selected="${serv.toString() == serviziOfferti}"></option>
   </select>
-  <button class="btn btn-gold" onclick="loadAnnunci()">
+
+  <button class="btn btn-gold" onclick="loadAnnunci()" aria-label="Cerca annunci">
     <i class="fa fa-search me-2"></i> Cerca
   </button>
 </div>

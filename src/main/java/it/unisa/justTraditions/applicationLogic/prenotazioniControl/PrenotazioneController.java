@@ -25,7 +25,7 @@ public class PrenotazioneController {
     @PostMapping("/elimina/{prenotazioneId}")
     public String eliminaPrenotazione(@PathVariable Long prenotazioneId, Model model) {
         Cliente cliente = sessionCliente.getCliente()
-                .orElseThrow(() -> new RuntimeException("Cliente non loggato"));
+                .orElseThrow(() -> new RuntimeException("Cliente non loggato!"));
 
         Prenotazione prenotazione = prenotazioneDao.findById(prenotazioneId)
                 .orElseThrow(() -> new RuntimeException("Prenotazione non trovata"));

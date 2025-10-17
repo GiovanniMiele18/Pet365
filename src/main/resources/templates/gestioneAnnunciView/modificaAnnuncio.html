@@ -130,37 +130,7 @@
 
                                                 <h1>Modifica senza Riapprovazione</h1>
 
-                                                <div class="col-md-6">
-                                                    <div class="form-label-group">
-                                                        <label for="prezzoAttivita">Prezzo della visita:</label>
-                                                        <input type="number" th:field="*{prezzoVisita}"
-                                                               id="prezzoAttivita" step="0.01"
-                                                               class="form-control"
-                                                               placeholder="Inserisci il prezzo per la visita"
-                                                               required="required">
-                                                        <div class=" d-inline invalid-feedback "
-                                                             th:if="${#fields.hasErrors('prezzoVisita')}"
-                                                             th:errors="*{prezzoVisita}"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="col-md-6">
-                                            <div class="form-label-group">
-                                                <label for="nMax">Numero massimo di persone:</label>
-                                                <input type="number" min="1" th:field="*{numMaxPersonePerVisita}"
-                                                       value="1" id="nMax"
-                                                       class="form-control"
-                                                       placeholder="Inserisci il numero max" required="required">
-                                                <div class=" d-inline invalid-feedback "
-                                                     th:if="${#fields.hasErrors('numMaxPersonePerVisita')}"
-                                                     th:errors="*{numMaxPersonePerVisita}"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
+                                
                                 <div class="col-md-6">
                                     <div class="form-label-group">
                                         <label>Visite già inserite</label>

@@ -31,7 +31,8 @@ public class PrenotazioneController {
             model.addAttribute("message", "Non puoi eliminare una prenotazione che non ti appartiene!");
             return "error";
         }
-
+         prenotazione.getVisita().setValidita(true);
+          visitaDao.save(prenotazione.getVisita());
         prenotazioneDao.delete(prenotazione);
         return "redirect:/visualizzazioneProfiloPersonale";
     }

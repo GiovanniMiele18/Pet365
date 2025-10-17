@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
-  <th:block th:insert="~{fragments/head}"></th:block>
+  <meta charset="UTF-8">
   <title>Pet365 - Ricerca Annunci</title>
-  
-  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
   <style>
     :root {
@@ -13,7 +12,6 @@
       --lux-gold: #d4af37;
       --lux-gold-light: #ffefb7;
       --lux-white: #ffffff;
-      --lux-bg: #f6f6f6;
       --glass: rgba(255, 255, 255, 0.6);
     }
 
@@ -24,15 +22,15 @@
       overflow-x: hidden;
     }
 
-    /* ====== HERO ====== */
+    /* ===== HERO ===== */
     .hero {
       background: linear-gradient(135deg, var(--lux-green), #005f3e);
       color: var(--lux-gold);
       text-align: center;
       padding: 5rem 1rem 4rem;
+      border-bottom: 3px solid var(--lux-gold);
       position: relative;
       overflow: hidden;
-      border-bottom: 3px solid var(--lux-gold);
     }
 
     .hero::after {
@@ -45,7 +43,6 @@
       background: radial-gradient(circle, rgba(255,215,0,0.3), transparent 70%);
       animation: glow 6s infinite ease-in-out alternate;
       filter: blur(40px);
-      z-index: 0;
     }
 
     @keyframes glow {
@@ -63,38 +60,36 @@
 
     .hero p {
       color: #fff;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       position: relative;
       z-index: 1;
     }
 
-    /* ====== GLASS SEARCH BOX ====== */
+    /* ===== SEARCH ===== */
     .search-section {
-      max-width: 950px;
+      max-width: 900px;
       margin: -3rem auto 3rem;
       background: var(--glass);
       backdrop-filter: blur(14px);
-      border-radius: 30px;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+      border-radius: 25px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
       padding: 1.5rem 2rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
       gap: 1rem;
-      z-index: 5;
       position: relative;
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      z-index: 5;
     }
 
     .search-bar, .service-select {
+      flex: 1 1 250px;
       border-radius: 50px;
       border: 2px solid rgba(1, 59, 39, 0.3);
       padding: 0.8rem 1.2rem;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      flex: 1 1 250px;
       background: rgba(255,255,255,0.8);
+      transition: 0.3s;
     }
 
     .search-bar:focus, .service-select:focus {
@@ -110,10 +105,8 @@
       border: none;
       border-radius: 50px;
       padding: 0.9rem 2rem;
-      transition: all 0.3s ease;
+      transition: 0.3s;
       box-shadow: 0 4px 20px rgba(255,215,0,0.4);
-      position: relative;
-      overflow: hidden;
     }
 
     .btn-luxury:hover {
@@ -121,206 +114,208 @@
       box-shadow: 0 0 25px rgba(255,215,0,0.7);
     }
 
-    /* ====== ANNUNCI GRID ====== */
+    /* ===== GRID ===== */
     #annunciContainer {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.5rem;
       justify-items: center;
       padding: 1rem;
+      scroll-margin-top: 100px;
     }
 
+    /* ===== CARD ===== */
     .card-annuncio {
-      border: none;
-      border-radius: 20px;
       background: var(--lux-white);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      transition: all 0.4s ease;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
       overflow: hidden;
-      height: 440px;
       width: 100%;
-      max-width: 320px;
+      max-width: 300px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      position: relative;
+    }
+
+    .card-annuncio:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(212,175,55,0.3);
     }
 
     .card-annuncio img {
-      height: 210px;
       width: 100%;
+      height: 190px;
       object-fit: cover;
-      transition: transform 0.4s ease;
+      transition: transform 0.3s ease;
     }
 
     .card-annuncio:hover img {
       transform: scale(1.05);
     }
 
-    .card-annuncio:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 15px 40px rgba(212,175,55,0.3);
+    .card-body {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      padding: 1rem 1.2rem 1.4rem;
     }
 
     .card-body h5 {
       font-weight: 700;
       color: var(--lux-green);
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
     }
 
     .card-body p {
       color: #666;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
     }
 
-   /* ====== BOTTONE “VAI ALLA SCHEDA” FIX ====== */
-.btn-outline-lux {
-  display: inline-block;
-  border: 2px solid var(--lux-gold) !important;
-  color: var(--lux-green) !important;
-  background-color: var(--lux-white) !important;
-  border-radius: 50px !important;
-  padding: 0.65rem 1.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
+    .btn-outline-lux {
+      border: 2px solid var(--lux-gold);
+      color: var(--lux-green);
+      border-radius: 50px;
+      padding: 0.5rem 1.4rem;
+      font-weight: 600;
+      background-color: var(--lux-white);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
 
-.btn-outline-lux:hover,
-.btn-outline-lux:focus {
-  background: linear-gradient(135deg, var(--lux-gold), var(--lux-gold-light)) !important;
-  color: var(--lux-green) !important;
-  border-color: var(--lux-gold) !important;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-  transform: translateY(-2px);
-  text-decoration: none;
-}
+    .btn-outline-lux:hover {
+      background: linear-gradient(135deg, var(--lux-gold), var(--lux-gold-light));
+      color: var(--lux-green);
+      box-shadow: 0 0 15px rgba(255,215,0,0.5);
+    }
 
-
-    /* ====== PAGINAZIONE ====== */
+    /* ===== PAGINATION ===== */
     .pagination-btn {
       border: 2px solid var(--lux-gold);
       background: transparent;
       color: var(--lux-green);
       border-radius: 50px;
-      padding: 0.7rem 1.4rem;
+      padding: 0.6rem 1.3rem;
       font-weight: 600;
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
 
-    .pagination-btn:hover {
+    .pagination-btn:hover:not(:disabled) {
       background: var(--lux-gold);
       color: var(--lux-green);
       box-shadow: 0 0 15px rgba(255,215,0,0.5);
     }
 
-    /* ====== RESPONSIVE ====== */
+    .pagination-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
       .hero h1 { font-size: 2rem; }
       .hero p { font-size: 1rem; }
 
       .search-section {
         flex-direction: column;
-        border-radius: 25px;
         padding: 1rem;
+        border-radius: 20px;
         width: 90%;
       }
 
-      .search-bar, .service-select {
+      .search-bar, .service-select, .btn-luxury {
         width: 100%;
-        font-size: 0.95rem;
-        padding: 0.6rem 1rem;
-      }
-
-      .btn-luxury {
-        width: 100%;
-      }
-
-      .card-annuncio {
-        height: 400px;
       }
     }
   </style>
 </head>
 
 <body>
-<th:block th:insert="~{fragments/navbar}"></th:block>
+  <th:block th:insert="~{fragments/navbar}"></th:block>
 
-<section class="hero">
-  <h1>Pet365 - Prenota il tuo servizio!</h1>
-  <p>Trova il meglio per il tuo amico animale 🐾</p>
-</section>
+  <section class="hero">
+    <h1>Pet365 - Prenota il tuo servizio!</h1>
+    <p>Trova il meglio per il tuo amico animale 🐾</p>
+  </section>
 
-<!-- SEARCH -->
-<div class="search-section container">
-  <input type="text" id="nomeAttivita"
-         th:value="${nomeAttivita}"
-         placeholder="🔍 Cerca attività o nome..."
-         class="form-control search-bar">
-  <select id="serviziOfferti" class="form-select service-select">
-    <option value="">-- Tutti i servizi --</option>
-    <option th:each="serv : ${listaServizi}" th:value="${serv}" th:text="${serv}"
-            th:selected="${serv.toString() == serviziOfferti}"></option>
-  </select>
-  <button class="btn btn-luxury" onclick="loadAnnunci()">
-    <i class="fa-solid fa-magnifying-glass me-2"></i> Cerca
-  </button>
-</div>
+  <!-- SEARCH -->
+  <div class="search-section container">
+    <input type="text" id="nomeAttivita" th:value="${nomeAttivita}"
+           placeholder="🔍 Cerca attività o nome..." class="form-control search-bar">
+    <select id="serviziOfferti" class="form-select service-select">
+      <option value="">-- Tutti i servizi --</option>
+      <option th:each="serv : ${listaServizi}" th:value="${serv}" th:text="${serv}"
+              th:selected="${serv.toString() == serviziOfferti}"></option>
+    </select>
+    <button class="btn btn-luxury" onclick="loadAnnunci()">
+      <i class="fa-solid fa-magnifying-glass me-2"></i> Cerca
+    </button>
+  </div>
 
-<section id="risultati" th:fragment="risultati">
-  <div id="annunciContainer" class="container">
-    <div th:each="annuncio : ${annunci}" class="card card-annuncio">
-      <img th:if="${!#lists.isEmpty(annuncio.foto)}"
-           th:src="@{/img(id=${annuncio.foto[0].id})}" alt="foto annuncio">
-      <img th:if="${#lists.isEmpty(annuncio.foto)}"
-           src="/images/default-pet.png" alt="foto annuncio">
+  <!-- ANNUNCI -->
+  <section id="risultati" th:fragment="risultati">
+    <div id="annunciContainer" class="container">
+      <div th:each="annuncio : ${annunci}" class="card card-annuncio">
+        <img th:if="${!#lists.isEmpty(annuncio.foto)}"
+             th:src="@{/img(id=${annuncio.foto[0].id})}" alt="foto annuncio">
+        <img th:if="${#lists.isEmpty(annuncio.foto)}"
+             src="/images/default-pet.png" alt="foto annuncio">
 
-      <div class="card-body text-center">
-        <h5 th:text="${annuncio.nomeAttivita}"></h5>
-        <p th:text="${annuncio.serviziOfferti}"></p>
-        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-lux">
-          PRENOTA
-        </a>
+        <div class="card-body">
+          <div>
+            <h5 th:text="${annuncio.nomeAttivita}"></h5>
+            <p th:text="${annuncio.serviziOfferti}"></p>
+          </div>
+          <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-lux">Prenota</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
-    <button class="pagination-btn" th:disabled="${pagina <= 0}"
-            th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
-      <i class="fa-solid fa-arrow-left"></i> Precedente
-    </button>
-    <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
-    <button class="pagination-btn" th:disabled="${pagina >= pagineTotali-1}"
-            th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
-      Successivo <i class="fa-solid fa-arrow-right"></i>
-    </button>
-  </div>
-</section>
+    <!-- PAGINATION -->
+    <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
+      <button class="pagination-btn" th:disabled="${pagina <= 0}"
+              th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
+        <i class="fa-solid fa-arrow-left"></i> Precedente
+      </button>
+      <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
+      <button class="pagination-btn" th:disabled="${pagina >= pagineTotali-1}"
+              th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
+        Successivo <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </section>
 
-<th:block th:insert="~{fragments/footbar}"></th:block>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <th:block th:insert="~{fragments/footbar}"></th:block>
 
-<script>
-  function loadAnnunci(pagina = 0) {
-    const nomeAttivita = document.getElementById("nomeAttivita").value;
-    const serviziOfferti = document.getElementById("serviziOfferti").value;
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function loadAnnunci(pagina = 0) {
+      const nomeAttivita = document.getElementById("nomeAttivita").value;
+      const serviziOfferti = document.getElementById("serviziOfferti").value;
 
-    fetch(`/ricercaAnnunci?nomeAttivita=${encodeURIComponent(nomeAttivita)}&serviziOfferti=${encodeURIComponent(serviziOfferti)}&pagina=${pagina}`, {
-      headers: { "X-Requested-With": "XMLHttpRequest" }
-    })
-      .then(resp => resp.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const parsed = parser.parseFromString(html, "text/html");
-        document.getElementById("risultati").innerHTML =
-          parsed.getElementById("risultati").innerHTML;
-      });
-  }
+      fetch(`/ricercaAnnunci?nomeAttivita=${encodeURIComponent(nomeAttivita)}&serviziOfferti=${encodeURIComponent(serviziOfferti)}&pagina=${pagina}`, {
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+      })
+        .then(resp => resp.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const parsed = parser.parseFromString(html, "text/html");
+          document.getElementById("risultati").innerHTML =
+            parsed.getElementById("risultati").innerHTML;
 
-  document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci());
-  document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
-  window.onload = () => loadAnnunci();
-</script>
+          // 🔝 Torna all’inizio sezione annunci
+          document.getElementById("annunciContainer").scrollIntoView({ behavior: "smooth" });
+        });
+    }
+
+    document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci());
+    document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
+    window.onload = () => loadAnnunci();
+  </script>
 </body>
 </html>

@@ -2,57 +2,204 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 
 <head>
-    <th:block th:insert="~{fragments/head}"></th:block>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cerca Annunci - Pet365</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-    <!-- Stili personalizzati -->
     <style>
+        :root {
+            --verde: #012e1f;
+            --verde-chiaro: #01613d;
+            --oro: #FFD700;
+            --oro-chiaro: #ffef88;
+            --bianco: #fff;
+            --sfondo: #f9f9f9;
+        }
+
         body {
-            background-color: #f9f9f9;
-            font-family: 'Poppins', sans-serif;
+            background-color: var(--sfondo);
+            font-family: 'Montserrat', sans-serif;
         }
 
-        .search-bar {
-            border-radius: 50px;
-            padding: 0.75rem 1.2rem;
+        /* Titolo */
+        .search-header {
+            text-align: center;
+            padding: 3rem 1rem 1rem 1rem;
+            background: linear-gradient(135deg, rgba(1,46,31,0.95), rgba(1,91,56,0.85));
+            color: var(--oro);
+            border-bottom: 3px solid var(--oro);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .search-header h1 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(255,215,0,0.6);
+        }
+
+        .search-header p {
+            color: #fff;
             font-size: 1.1rem;
-            border: 2px solid #28a745;
-            transition: all 0.3s ease;
         }
 
-        .search-bar:focus {
-            border-color: #d4af37;
-            box-shadow: 0 0 8px #d4af37;
-            outline: none;
-        }
-
-        .service-select {
+        /* Barra di ricerca */
+        .search-box {
+            background: var(--bianco);
             border-radius: 50px;
-            padding: 0.6rem 1rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem auto;
+            max-width: 900px;
+        }
+
+        .search-bar, .service-select {
+            border-radius: 50px;
+            border: 2px solid var(--verde-chiaro);
+            padding: 0.75rem 1.2rem;
             font-size: 1.05rem;
-            border: 2px solid #28a745;
             transition: all 0.3s ease;
         }
 
-        .service-select:focus {
-            border-color: #d4af37;
-            box-shadow: 0 0 8px #d4af37;
+        .search-bar:focus, .service-select:focus {
+            border-color: var(--oro);
+            box-shadow: 0 0 12px rgba(255,215,0,0.6);
             outline: none;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+            color: var(--verde);
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            padding: 0.75rem 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255,215,0,0.3);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+        }
+
+        /* Sezione risultati */
+        #risultati {
+            padding: 3rem 1rem;
         }
 
         .card-annuncio {
-            border-radius: 15px;
+            border: none;
+            border-radius: 20px;
             overflow: hidden;
-            border: 1px solid #ddd;
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: #fff;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .card-annuncio:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(255,215,0,0.35);
+        }
+
+        .card-annuncio img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .card-body h5 {
+            color: var(--verde);
+            font-weight: 700;
+        }
+
+        .card-body p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .btn-outline-gold {
+            border: 2px solid var(--oro);
+            color: var(--verde);
+            border-radius: 50px;
+            padding: 8px 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-gold:hover {
+            background: var(--oro);
+            color: var(--verde);
+            box-shadow: 0 0 15px rgba(255,215,0,0.5);
+        }
+
+        /* Paginazione */
+        #paginationContainer {
+            margin-top: 3rem;
+        }
+
+        .pagination-btn {
+            border: 1px solid var(--oro);
+            background-color: transparent;
+            color: var(--verde);
+            border-radius: 50px;
+            padding: 0.6rem 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover {
+            background-color: var(--oro);
+            color: var(--verde);
+        }
+
+        /* Griglia responsive */
+        #annunciContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            justify-items: center;
+        }
+
+        @media (max-width: 576px) {
+            .search-box {
+                flex-direction: column;
+                border-radius: 30px;
+            }
+            .search-bar, .service-select {
+                width: 100%;
+            }
+            #annunciContainer {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        /* Shimmer Title */
+        .shimmer {
+            background: linear-gradient(120deg, var(--oro) 0%, #fff 25%, var(--oro) 50%, var(--oro-chiaro) 75%, var(--oro) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 250% auto;
+            animation: shimmerMove 6s linear infinite;
+        }
+
+        @keyframes shimmerMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
@@ -63,56 +210,39 @@
     <th:block th:insert="~{fragments/navbar}"></th:block>
 
     <!-- Titolo -->
-    <section class="py-4 text-center">
-        <h1 class="fw-bold">Ricerca Annunci</h1>
-    </section>
+    <header class="search-header">
+        <h1 class="shimmer">Cerca Annunci Professionali</h1>
+        <p>Trova i migliori servizi per il tuo animale domestico in tutta Italia</p>
+    </header>
 
-    <!-- 🔍 Filtri -->
-    <div class="container mb-4">
-        <div class="row g-3 justify-content-center">
-            <!-- Campo ricerca -->
-            <div class="col-md-4">
-                <input type="text" id="nomeAttivita" th:value="${nomeAttivita}" placeholder="🔍 Cerca attività..."
-                    class="form-control search-bar">
-            </div>
-
-            <!-- Selezione servizio -->
-            <div class="col-md-3">
-                <select id="serviziOfferti" class="form-select service-select">
-                    <option value="">-- Tutti i servizi --</option>
-                    <option th:each="serv : ${listaServizi}" th:value="${serv}" th:text="${serv}"
-                        th:selected="${serv.toString() == serviziOfferti}">
-                    </option>
-                </select>
-            </div>
-        </div>
+    <!-- Barra ricerca -->
+    <div class="search-box">
+        <input type="text" id="nomeAttivita" th:value="${nomeAttivita}" placeholder="🔍 Cerca attività o nome..."
+               class="form-control search-bar">
+        <select id="serviziOfferti" class="form-select service-select">
+            <option value="">-- Tutti i servizi --</option>
+            <option th:each="serv : ${listaServizi}" th:value="${serv}" th:text="${serv}"
+                    th:selected="${serv.toString() == serviziOfferti}"></option>
+        </select>
+        <button class="btn btn-gold" onclick="loadAnnunci()">
+            <i class="fa-solid fa-search me-1"></i> Cerca
+        </button>
     </div>
 
-    <!-- 🔄 Risultati AJAX -->
-    <div id="risultati" th:fragment="risultati">
-
-        <!-- Lista annunci -->
-        <div id="annunciContainer" class="d-flex flex-wrap justify-content-center">
-            <div th:each="annuncio : ${annunci}" class="card card-annuncio m-3" style="width: 15rem;">
-
-                <!-- Immagine -->
+    <!-- Risultati -->
+    <section id="risultati" th:fragment="risultati">
+        <div id="annunciContainer" class="container">
+            <div th:each="annuncio : ${annunci}" class="card card-annuncio">
                 <img th:if="${!#lists.isEmpty(annuncio.foto)}"
-                    th:src="@{/img(id=${annuncio.foto[0].id})}"
-                    class="card-img-top"
-                    style="height: 200px; object-fit: cover;"
-                    alt="foto annuncio">
-
+                     th:src="@{/img(id=${annuncio.foto[0].id})}"
+                     alt="foto annuncio">
                 <img th:if="${#lists.isEmpty(annuncio.foto)}"
-                    src="/images/default-pet.png"
-                    class="card-img-top"
-                    style="height: 200px; object-fit: cover;"
-                    alt="foto annuncio">
+                     src="/images/default-pet.png" alt="foto annuncio">
 
-                <!-- Corpo della card -->
                 <div class="card-body text-center">
-                    <h5 th:text="${annuncio.nomeAttivita}" class="card-title"></h5>
+                    <h5 th:text="${annuncio.nomeAttivita}"></h5>
                     <p th:text="${annuncio.serviziOfferti}"></p>
-                    <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-success">
+                    <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-gold">
                         Vai alla scheda
                     </a>
                 </div>
@@ -121,30 +251,28 @@
 
         <!-- Paginazione -->
         <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
-            <button class="btn btn-success" th:disabled="${pagina <= 0}"
-                th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
-                Precedente
+            <button class="pagination-btn" th:disabled="${pagina <= 0}"
+                    th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
+                <i class="fa-solid fa-arrow-left"></i> Precedente
             </button>
 
-            <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
+            <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"
+                    class="text-verde"></strong>
 
-            <button class="btn btn-success" th:disabled="${pagina >= pagineTotali-1}"
-                th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
-                Successivo
+            <button class="pagination-btn" th:disabled="${pagina >= pagineTotali-1}"
+                    th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
+                Successivo <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <th:block th:insert="~{fragments/footbar}"></th:block>
-    <th:block th:insert="~{fragments/scripts}"></th:block>
 
-    <!-- Bootstrap JS -->
+    <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Script AJAX -->
     <script>
-        // 🔄 Carica annunci tramite AJAX
+        // 🔄 AJAX caricamento annunci
         function loadAnnunci(pagina = 0) {
             const nomeAttivita = document.getElementById("nomeAttivita").value;
             const serviziOfferti = document.getElementById("serviziOfferti").value;
@@ -154,17 +282,15 @@
             })
                 .then(resp => resp.text())
                 .then(html => {
-                    const parsedHTML = new DOMParser().parseFromString(html, "text/html");
+                    const parsed = new DOMParser().parseFromString(html, "text/html");
                     document.getElementById("risultati").innerHTML =
-                        parsedHTML.getElementById("risultati").innerHTML;
+                        parsed.getElementById("risultati").innerHTML;
                 });
         }
 
         // 🔍 Ricerca live
         document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci());
         document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
-
-        // 🔄 Prima chiamata all’avvio
         window.onload = () => loadAnnunci();
     </script>
 </body>

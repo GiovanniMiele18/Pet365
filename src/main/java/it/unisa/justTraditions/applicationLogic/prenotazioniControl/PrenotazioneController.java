@@ -45,6 +45,6 @@ public class PrenotazioneController {
         // ✅ Elimina la prenotazione
         prenotazioneDao.delete(prenotazione);
         
-        return ResponseEntity.ok("Prenotazione eliminata con successo ✅");
+        return "redirect:/visualizzazioneProfiloPersonale";
     }
 }

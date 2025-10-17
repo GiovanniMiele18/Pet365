@@ -2,115 +2,126 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
   <th:block th:insert="~{fragments/head}"></th:block>
-  <title>Cerca Annunci - Pet365</title>
-
+  <title>Pet365 - Ricerca Annunci</title>
+  
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
   <style>
     :root {
-      --verde: #013b27;
-      --verde-chiaro: #00a86b;
-      --oro: #ffd700;
-      --oro-soft: #fff8c7;
-      --bianco: #ffffff;
-      --sfondo: #f8f8f8;
+      --lux-green: #013b27;
+      --lux-gold: #d4af37;
+      --lux-gold-light: #ffefb7;
+      --lux-white: #ffffff;
+      --lux-bg: #f6f6f6;
+      --glass: rgba(255, 255, 255, 0.6);
     }
 
     body {
-      background-color: var(--sfondo);
+      background: linear-gradient(180deg, #fefefe, #f8f8f8);
       font-family: 'Poppins', sans-serif;
       color: #222;
       overflow-x: hidden;
     }
 
-    /* ==== HERO HEADER ==== */
+    /* ====== HERO ====== */
     .hero {
-      background: linear-gradient(135deg, var(--verde), var(--verde-chiaro));
-      color: var(--oro);
+      background: linear-gradient(135deg, var(--lux-green), #005f3e);
+      color: var(--lux-gold);
       text-align: center;
       padding: 5rem 1rem 4rem;
       position: relative;
       overflow: hidden;
+      border-bottom: 3px solid var(--lux-gold);
     }
 
-    .hero::before {
+    .hero::after {
       content: "";
       position: absolute;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
-      top: -150px;
-      right: -150px;
-      filter: blur(30px);
-      animation: pulseGlow 6s infinite ease-in-out;
+      top: -100px;
+      left: -150px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255,215,0,0.3), transparent 70%);
+      animation: glow 6s infinite ease-in-out alternate;
+      filter: blur(40px);
+      z-index: 0;
     }
 
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.2); }
+    @keyframes glow {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; }
     }
 
     .hero h1 {
       font-size: 3rem;
       font-weight: 800;
-      text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+      text-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+      position: relative;
+      z-index: 1;
     }
 
     .hero p {
       color: #fff;
       font-size: 1.25rem;
-      margin-top: 0.5rem;
+      position: relative;
+      z-index: 1;
     }
 
-    /* ==== SEARCH BAR SECTION ==== */
+    /* ====== GLASS SEARCH BOX ====== */
     .search-section {
-      background: var(--bianco);
-      border-radius: 40px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      max-width: 950px;
+      margin: -3rem auto 3rem;
+      background: var(--glass);
+      backdrop-filter: blur(14px);
+      border-radius: 30px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
       padding: 1.5rem 2rem;
-      margin: -2.5rem auto 3rem;
-      max-width: 1000px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
       gap: 1rem;
+      z-index: 5;
+      position: relative;
+      border: 1px solid rgba(212, 175, 55, 0.3);
     }
 
     .search-bar, .service-select {
-      border: 2px solid var(--verde-chiaro);
       border-radius: 50px;
+      border: 2px solid rgba(1, 59, 39, 0.3);
       padding: 0.8rem 1.2rem;
-      font-size: 1.05rem;
+      font-size: 1rem;
       transition: all 0.3s ease;
-      flex: 1 1 300px;
-      min-width: 200px;
+      flex: 1 1 250px;
+      background: rgba(255,255,255,0.8);
     }
 
     .search-bar:focus, .service-select:focus {
-      border-color: var(--oro);
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
+      border-color: var(--lux-gold);
+      box-shadow: 0 0 12px rgba(255,215,0,0.6);
       outline: none;
     }
 
-    .btn-search {
-      background: linear-gradient(135deg, var(--oro), var(--oro-soft));
-      border: none;
-      color: var(--verde);
+    .btn-luxury {
+      background: linear-gradient(135deg, var(--lux-gold), var(--lux-gold-light));
+      color: var(--lux-green);
       font-weight: 700;
+      border: none;
       border-radius: 50px;
       padding: 0.9rem 2rem;
       transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(255,215,0,0.3);
+      box-shadow: 0 4px 20px rgba(255,215,0,0.4);
+      position: relative;
+      overflow: hidden;
     }
 
-    .btn-search:hover {
+    .btn-luxury:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(255,215,0,0.6);
+      box-shadow: 0 0 25px rgba(255,215,0,0.7);
     }
 
-    /* ==== ANNUNCI GRID ==== */
+    /* ====== ANNUNCI GRID ====== */
     #annunciContainer {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -122,21 +133,21 @@
     .card-annuncio {
       border: none;
       border-radius: 20px;
-      background: #fff;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
-      transition: all 0.3s ease;
+      background: var(--lux-white);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: all 0.4s ease;
       overflow: hidden;
+      height: 440px;
+      width: 100%;
+      max-width: 320px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 430px;
-      width: 100%;
-      max-width: 320px;
       position: relative;
     }
 
     .card-annuncio img {
-      height: 200px;
+      height: 210px;
       width: 100%;
       object-fit: cover;
       transition: transform 0.4s ease;
@@ -147,45 +158,41 @@
     }
 
     .card-annuncio:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 15px 40px rgba(212,175,55,0.3);
     }
 
     .card-body h5 {
       font-weight: 700;
-      color: var(--verde);
+      color: var(--lux-green);
     }
 
     .card-body p {
-      color: #555;
+      color: #666;
       font-size: 0.95rem;
-      margin-bottom: 1rem;
     }
 
-    .btn-outline-gold {
-      border: 2px solid var(--oro);
-      color: var(--verde);
+    .btn-outline-lux {
+      border: 2px solid var(--lux-gold);
+      color: var(--lux-green);
       border-radius: 50px;
       padding: 0.6rem 1.4rem;
       font-weight: 600;
       transition: all 0.3s ease;
+      background-color: transparent;
     }
 
-    .btn-outline-gold:hover {
-      background: var(--oro);
-      color: var(--verde);
+    .btn-outline-lux:hover {
+      background: var(--lux-gold);
+      color: var(--lux-green);
       box-shadow: 0 0 20px rgba(255,215,0,0.6);
     }
 
-    /* ==== PAGINAZIONE ==== */
-    #paginationContainer {
-      margin-top: 3rem;
-    }
-
+    /* ====== PAGINAZIONE ====== */
     .pagination-btn {
-      border: 2px solid var(--oro);
+      border: 2px solid var(--lux-gold);
       background: transparent;
-      color: var(--verde);
+      color: var(--lux-green);
       border-radius: 50px;
       padding: 0.7rem 1.4rem;
       font-weight: 600;
@@ -193,25 +200,20 @@
     }
 
     .pagination-btn:hover {
-      background: var(--oro);
-      color: var(--verde);
+      background: var(--lux-gold);
+      color: var(--lux-green);
       box-shadow: 0 0 15px rgba(255,215,0,0.5);
     }
 
-    /* ==== RESPONSIVE ==== */
+    /* ====== RESPONSIVE ====== */
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
 
       .search-section {
         flex-direction: column;
         border-radius: 25px;
-        padding: 1rem 1.2rem;
+        padding: 1rem;
         width: 90%;
       }
 
@@ -221,13 +223,12 @@
         padding: 0.6rem 1rem;
       }
 
-      .btn-search {
+      .btn-luxury {
         width: 100%;
       }
 
       .card-annuncio {
         height: 400px;
-        max-width: 100%;
       }
     }
   </style>
@@ -237,58 +238,50 @@
 <th:block th:insert="~{fragments/navbar}"></th:block>
 
 <section class="hero">
-  <h1>Pet365 Marketplace</h1>
-  <p>Scopri i migliori servizi per il tuo animale domestico 🐾</p>
+  <h1>Pet365 Luxury Marketplace</h1>
+  <p>Trova il meglio per il tuo amico a quattro zampe 🐾</p>
 </section>
 
-<!-- FILTRI -->
+<!-- SEARCH -->
 <div class="search-section container">
   <input type="text" id="nomeAttivita"
          th:value="${nomeAttivita}"
          placeholder="🔍 Cerca attività o nome..."
          class="form-control search-bar">
-
   <select id="serviziOfferti" class="form-select service-select">
     <option value="">-- Tutti i servizi --</option>
-    <option th:each="serv : ${listaServizi}"
-            th:value="${serv}" th:text="${serv}"
+    <option th:each="serv : ${listaServizi}" th:value="${serv}" th:text="${serv}"
             th:selected="${serv.toString() == serviziOfferti}"></option>
   </select>
-
-  <button class="btn btn-search" onclick="loadAnnunci()">
+  <button class="btn btn-luxury" onclick="loadAnnunci()">
     <i class="fa-solid fa-magnifying-glass me-2"></i> Cerca
   </button>
 </div>
 
-<!-- RISULTATI -->
 <section id="risultati" th:fragment="risultati">
   <div id="annunciContainer" class="container">
     <div th:each="annuncio : ${annunci}" class="card card-annuncio">
       <img th:if="${!#lists.isEmpty(annuncio.foto)}"
-           th:src="@{/img(id=${annuncio.foto[0].id})}"
-           alt="Foto annuncio">
+           th:src="@{/img(id=${annuncio.foto[0].id})}" alt="foto annuncio">
       <img th:if="${#lists.isEmpty(annuncio.foto)}"
-           src="/images/default-pet.png" alt="Foto annuncio">
+           src="/images/default-pet.png" alt="foto annuncio">
 
       <div class="card-body text-center">
         <h5 th:text="${annuncio.nomeAttivita}"></h5>
         <p th:text="${annuncio.serviziOfferti}"></p>
-        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-gold">
+        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-lux">
           Vai alla scheda
         </a>
       </div>
     </div>
   </div>
 
-  <!-- PAGINAZIONE -->
   <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
     <button class="pagination-btn" th:disabled="${pagina <= 0}"
             th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
       <i class="fa-solid fa-arrow-left"></i> Precedente
     </button>
-
     <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
-
     <button class="pagination-btn" th:disabled="${pagina >= pagineTotali-1}"
             th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
       Successivo <i class="fa-solid fa-arrow-right"></i>
@@ -297,8 +290,8 @@
 </section>
 
 <th:block th:insert="~{fragments/footbar}"></th:block>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
   function loadAnnunci(pagina = 0) {
     const nomeAttivita = document.getElementById("nomeAttivita").value;

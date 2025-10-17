@@ -1,208 +1,324 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
-    <th:block th:insert="~{fragments/head}"></th:block>
-    <title>Cerca Annunci - Pet365</title>
+  <th:block th:insert="~{fragments/head}"></th:block>
+  <title>Cerca Annunci - Pet365</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <style>
-        body {
-            background-color: #f9f9f9;
-            font-family: 'Poppins', sans-serif;
-        }
+  <style>
+    :root {
+      --verde: #013b27;
+      --verde-chiaro: #00a86b;
+      --oro: #ffd700;
+      --oro-soft: #fff8c7;
+      --bianco: #ffffff;
+      --sfondo: #f8f8f8;
+    }
 
-        h1 {
-            color: #013b27;
-        }
+    body {
+      background-color: var(--sfondo);
+      font-family: 'Poppins', sans-serif;
+      color: #222;
+      overflow-x: hidden;
+    }
 
-        .search-bar {
-            border-radius: 50px;
-            padding: 0.75rem 1.2rem;
-            font-size: 1.1rem;
-            border: 2px solid #28a745;
-            transition: all 0.3s ease;
-            color: #222;
-        }
-        .search-bar:focus {
-            border-color: #d4af37;
-            box-shadow: 0 0 8px #d4af37;
-            outline: none;
-        }
+    /* ==== HERO HEADER ==== */
+    .hero {
+      background: linear-gradient(135deg, var(--verde), var(--verde-chiaro));
+      color: var(--oro);
+      text-align: center;
+      padding: 5rem 1rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .service-select {
-            border-radius: 50px;
-            padding: 0.6rem 1rem;
-            font-size: 1.05rem;
-            border: 2px solid #28a745;
-            transition: all 0.3s ease;
-            color: #222;
-        }
-        .service-select:focus {
-            border-color: #d4af37;
-            box-shadow: 0 0 8px #d4af37;
-            outline: none;
-        }
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+      top: -150px;
+      right: -150px;
+      filter: blur(30px);
+      animation: pulseGlow 6s infinite ease-in-out;
+    }
 
-        .card-annuncio {
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #ccc;
-            transition: transform 0.3s, box-shadow 0.3s;
-            background-color: #fff;
-            color: #333;
-        }
-        .card-annuncio:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
 
-        .card-annuncio .btn-outline-success {
-            border-color: #d4af37;
-            color: #013b27;
-        }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+    }
 
-        .card-annuncio .btn-outline-success:hover {
-            background-color: #d4af37;
-            border-color: #d4af37;
-            color: #013b27;
-        }
+    .hero p {
+      color: #fff;
+      font-size: 1.25rem;
+      margin-top: 0.5rem;
+    }
 
-        /* PAGINAZIONE */
-        #paginationContainer button {
-            border-radius: 30px;
-            padding: 0.6rem 1.4rem;
-            font-weight: 600;
-        }
+    /* ==== SEARCH BAR SECTION ==== */
+    .search-section {
+      background: var(--bianco);
+      border-radius: 40px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      padding: 1.5rem 2rem;
+      margin: -2.5rem auto 3rem;
+      max-width: 1000px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
 
-        #paginationContainer strong {
-            color: #013b27;
-        }
-    </style>
+    .search-bar, .service-select {
+      border: 2px solid var(--verde-chiaro);
+      border-radius: 50px;
+      padding: 0.8rem 1.2rem;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+      flex: 1 1 300px;
+      min-width: 200px;
+    }
+
+    .search-bar:focus, .service-select:focus {
+      border-color: var(--oro);
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
+      outline: none;
+    }
+
+    .btn-search {
+      background: linear-gradient(135deg, var(--oro), var(--oro-soft));
+      border: none;
+      color: var(--verde);
+      font-weight: 700;
+      border-radius: 50px;
+      padding: 0.9rem 2rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255,215,0,0.3);
+    }
+
+    .btn-search:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(255,215,0,0.6);
+    }
+
+    /* ==== ANNUNCI GRID ==== */
+    #annunciContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      justify-items: center;
+      padding: 1rem;
+    }
+
+    .card-annuncio {
+      border: none;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 430px;
+      width: 100%;
+      max-width: 320px;
+      position: relative;
+    }
+
+    .card-annuncio img {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .card-annuncio:hover img {
+      transform: scale(1.05);
+    }
+
+    .card-annuncio:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 40px rgba(255, 215, 0, 0.35);
+    }
+
+    .card-body h5 {
+      font-weight: 700;
+      color: var(--verde);
+    }
+
+    .card-body p {
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn-outline-gold {
+      border: 2px solid var(--oro);
+      color: var(--verde);
+      border-radius: 50px;
+      padding: 0.6rem 1.4rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-gold:hover {
+      background: var(--oro);
+      color: var(--verde);
+      box-shadow: 0 0 20px rgba(255,215,0,0.6);
+    }
+
+    /* ==== PAGINAZIONE ==== */
+    #paginationContainer {
+      margin-top: 3rem;
+    }
+
+    .pagination-btn {
+      border: 2px solid var(--oro);
+      background: transparent;
+      color: var(--verde);
+      border-radius: 50px;
+      padding: 0.7rem 1.4rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .pagination-btn:hover {
+      background: var(--oro);
+      color: var(--verde);
+      box-shadow: 0 0 15px rgba(255,215,0,0.5);
+    }
+
+    /* ==== RESPONSIVE ==== */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .search-section {
+        flex-direction: column;
+        border-radius: 25px;
+        padding: 1rem 1.2rem;
+        width: 90%;
+      }
+
+      .search-bar, .service-select {
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 0.6rem 1rem;
+      }
+
+      .btn-search {
+        width: 100%;
+      }
+
+      .card-annuncio {
+        height: 400px;
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 
 <body>
 <th:block th:insert="~{fragments/navbar}"></th:block>
 
-<section class="py-4 text-center">
-    <h1 class="fw-bold">Ricerca Annunci</h1>
-    <p class="text-muted">Trova i migliori professionisti per i tuoi animali 🐾</p>
+<section class="hero">
+  <h1>Pet365 Marketplace</h1>
+  <p>Scopri i migliori servizi per il tuo animale domestico 🐾</p>
 </section>
 
-<!-- 🔍 Filtri -->
-<div class="container mb-4">
-    <div class="row g-3 justify-content-center">
-        <div class="col-md-4">
-            <input type="text" id="nomeAttivita"
-                   th:value="${nomeAttivita}"
-                   placeholder="🔍 Cerca attività..."
-                   class="form-control search-bar">
-        </div>
-        <div class="col-md-3">
-            <select id="serviziOfferti" class="form-select service-select">
-                <option value="">-- Tutti i servizi --</option>
-                <option th:each="serv : ${listaServizi}"
-                        th:value="${serv}"
-                        th:text="${serv}"
-                        th:selected="${serviziOfferti != null and serv.equals(serviziOfferti)}">
-                </option>
-            </select>
-        </div>
-    </div>
+<!-- FILTRI -->
+<div class="search-section container">
+  <input type="text" id="nomeAttivita"
+         th:value="${nomeAttivita}"
+         placeholder="🔍 Cerca attività o nome..."
+         class="form-control search-bar">
+
+  <select id="serviziOfferti" class="form-select service-select">
+    <option value="">-- Tutti i servizi --</option>
+    <option th:each="serv : ${listaServizi}"
+            th:value="${serv}" th:text="${serv}"
+            th:selected="${serv.toString() == serviziOfferti}"></option>
+  </select>
+
+  <button class="btn btn-search" onclick="loadAnnunci()">
+    <i class="fa-solid fa-magnifying-glass me-2"></i> Cerca
+  </button>
 </div>
 
-<!-- 🔄 Risultati AJAX -->
-<div id="risultati" th:fragment="risultati">
-    <!-- Lista annunci -->
-    <div id="annunciContainer" class="d-flex flex-wrap justify-content-center">
-        <div th:each="annuncio : ${annunci}" class="card card-annuncio m-3" style="width: 15rem;">
-            <img th:if="${annuncio.foto != null and !#lists.isEmpty(annuncio.foto)}"
-                 th:src="@{/img(id=${annuncio.foto[0].id})}"
-                 class="card-img-top"
-                 style="height: 200px; object-fit: cover;"
-                 th:alt="'Foto di ' + ${annuncio.nomeAttivita}">
-            <img th:if="${annuncio.foto == null or #lists.isEmpty(annuncio.foto)}"
-                 src="/images/default-pet.png"
-                 class="card-img-top"
-                 style="height: 200px; object-fit: cover;"
-                 alt="Foto predefinita">
+<!-- RISULTATI -->
+<section id="risultati" th:fragment="risultati">
+  <div id="annunciContainer" class="container">
+    <div th:each="annuncio : ${annunci}" class="card card-annuncio">
+      <img th:if="${!#lists.isEmpty(annuncio.foto)}"
+           th:src="@{/img(id=${annuncio.foto[0].id})}"
+           alt="Foto annuncio">
+      <img th:if="${#lists.isEmpty(annuncio.foto)}"
+           src="/images/default-pet.png" alt="Foto annuncio">
 
-            <div class="card-body text-center">
-                <h5 th:text="${annuncio.nomeAttivita != null ? annuncio.nomeAttivita : 'Attività sconosciuta'}" class="card-title"></h5>
-                <p th:text="${annuncio.serviziOfferti != null ? annuncio.serviziOfferti : 'Servizi non specificati'}"></p>
-                <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}"
-                   class="btn btn-outline-success">Vai alla scheda</a>
-            </div>
-        </div>
+      <div class="card-body text-center">
+        <h5 th:text="${annuncio.nomeAttivita}"></h5>
+        <p th:text="${annuncio.serviziOfferti}"></p>
+        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-gold">
+          Vai alla scheda
+        </a>
+      </div>
     </div>
+  </div>
 
-    <!-- PAGINAZIONE -->
-    <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
-        <button class="btn btn-success"
-                th:disabled="${pagina <= 0}"
-                th:attr="data-pagina=${pagina - 1}">
-            ⬅️ Precedente
-        </button>
+  <!-- PAGINAZIONE -->
+  <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
+    <button class="pagination-btn" th:disabled="${pagina <= 0}"
+            th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
+      <i class="fa-solid fa-arrow-left"></i> Precedente
+    </button>
 
-        <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
+    <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
 
-        <button class="btn btn-success"
-                th:disabled="${pagina >= pagineTotali-1}"
-                th:attr="data-pagina=${pagina + 1}">
-            Successivo ➡️
-        </button>
-    </div>
-</div>
+    <button class="pagination-btn" th:disabled="${pagina >= pagineTotali-1}"
+            th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
+      Successivo <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+</section>
 
 <th:block th:insert="~{fragments/footbar}"></th:block>
-<th:block th:insert="~{fragments/scripts}"></th:block>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
-    // 🔄 Funzione AJAX principale
-    function loadAnnunci(pagina = 0) {
-        const nomeAttivita = document.getElementById("nomeAttivita").value;
-        const serviziOfferti = document.getElementById("serviziOfferti").value;
+  function loadAnnunci(pagina = 0) {
+    const nomeAttivita = document.getElementById("nomeAttivita").value;
+    const serviziOfferti = document.getElementById("serviziOfferti").value;
 
-        fetch(`/ricercaAnnunci?nomeAttivita=${encodeURIComponent(nomeAttivita)}&serviziOfferti=${encodeURIComponent(serviziOfferti)}&pagina=${pagina}`, {
-            headers: { "X-Requested-With": "XMLHttpRequest" }
-        })
-            .then(resp => resp.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const parsed = parser.parseFromString(html, "text/html");
-                const newContent = parsed.getElementById("risultati").innerHTML;
-                document.getElementById("risultati").innerHTML = newContent;
+    fetch(`/ricercaAnnunci?nomeAttivita=${encodeURIComponent(nomeAttivita)}&serviziOfferti=${encodeURIComponent(serviziOfferti)}&pagina=${pagina}`, {
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    })
+      .then(resp => resp.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const parsed = parser.parseFromString(html, "text/html");
+        document.getElementById("risultati").innerHTML =
+          parsed.getElementById("risultati").innerHTML;
+      });
+  }
 
-                // 🔁 Ricollega gli eventi ai nuovi bottoni
-                bindPaginationEvents();
-            })
-            .catch(err => console.error("Errore caricamento annunci:", err));
-    }
-
-    // 🔁 Associa click alla paginazione (dopo ogni refresh AJAX)
-    function bindPaginationEvents() {
-        document.querySelectorAll("#paginationContainer button[data-pagina]").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const pagina = btn.getAttribute("data-pagina");
-                loadAnnunci(pagina);
-            });
-        });
-    }
-
-    // 🔍 Trigger ricerca live con debounce
-    let timeout;
-    document.getElementById("nomeAttivita").addEventListener("input", () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => loadAnnunci(), 500);
-    });
-    document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
-
-    // ⚙️ Prima chiamata
-    window.onload = () => {
-        loadAnnunci();
-        bindPaginationEvents();
-    };
+  document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci());
+  document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
+  window.onload = () => loadAnnunci();
 </script>
 </body>
 </html>

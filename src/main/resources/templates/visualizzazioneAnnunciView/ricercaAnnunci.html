@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
-
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Cerca Servizio - Pet365</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css'>
     <link rel="shortcut icon"
           href="https://favicon-generator.org/favicon-generator/htdocs/favicons/2022-12-30/d3f3b5e9f0d2ed5a7e3c4d3025ab6734.ico.png"/>
 
     <th:block th:insert="~{fragments/head}"></th:block>
-    
 
     <style>
         :root {
@@ -22,16 +22,18 @@
             --verde-chiaro: #01613d;
             --oro: #FFD700;
             --oro-chiaro: #ffef88;
-            --bianco: #fff;
+            --bianco: #ffffff;
             --sfondo: #f9f9f9;
         }
 
         body {
             background-color: var(--sfondo);
             font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Titolo */
+        /* HEADER */
         .search-header {
             text-align: center;
             padding: 3rem 1rem 1rem 1rem;
@@ -52,7 +54,7 @@
             font-size: 1.1rem;
         }
 
-        /* Barra di ricerca */
+        /* BARRA DI RICERCA */
         .search-box {
             background: var(--bianco);
             border-radius: 50px;
@@ -72,12 +74,13 @@
             border: 2px solid var(--verde-chiaro);
             padding: 0.75rem 1.2rem;
             font-size: 1.05rem;
+            width: 250px;
             transition: all 0.3s ease;
         }
 
         .search-bar:focus, .service-select:focus {
             border-color: var(--oro);
-            box-shadow: 0 0 12px rgba(255,215,0,0.6);
+            box-shadow: 0 0 10px rgba(255,215,0,0.6);
             outline: none;
         }
 
@@ -89,7 +92,7 @@
             border-radius: 50px;
             padding: 0.75rem 2rem;
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(255,215,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         .btn-gold:hover {
@@ -97,9 +100,16 @@
             box-shadow: 0 0 20px rgba(255,215,0,0.6);
         }
 
-        /* Sezione risultati */
+        /* RISULTATI */
         #risultati {
             padding: 3rem 1rem;
+        }
+
+        #annunciContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            justify-items: center;
         }
 
         .card-annuncio {
@@ -107,37 +117,54 @@
             border-radius: 20px;
             overflow: hidden;
             background: #fff;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             cursor: pointer;
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
         }
 
         .card-annuncio:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 12px 28px rgba(255,215,0,0.35);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(255,215,0,0.35);
         }
 
         .card-annuncio img {
-            height: 220px;
+            height: 200px;
             width: 100%;
             object-fit: cover;
+        }
+
+        .card-body {
+            text-align: center;
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .card-body h5 {
             color: var(--verde);
             font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
         .card-body p {
             color: #555;
             font-size: 0.95rem;
+            margin-bottom: 1rem;
         }
 
         .btn-outline-gold {
             border: 2px solid var(--oro);
             color: var(--verde);
             border-radius: 50px;
-            padding: 8px 18px;
+            padding: 0.5rem 1.5rem;
             font-weight: 600;
             transition: all 0.3s ease;
         }
@@ -148,13 +175,13 @@
             box-shadow: 0 0 15px rgba(255,215,0,0.5);
         }
 
-        /* Paginazione */
+        /* PAGINAZIONE */
         #paginationContainer {
             margin-top: 3rem;
         }
 
         .pagination-btn {
-            border: 1px solid var(--oro);
+            border: 2px solid var(--oro);
             background-color: transparent;
             color: var(--verde);
             border-radius: 50px;
@@ -168,29 +195,20 @@
             color: var(--verde);
         }
 
-        /* Griglia responsive */
-        #annunciContainer {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            justify-items: center;
-        }
-
-        @media (max-width: 576px) {
-            .search-box {
-                flex-direction: column;
-                border-radius: 30px;
-            }
+        @media (max-width: 768px) {
             .search-bar, .service-select {
                 width: 100%;
             }
+            .search-box {
+                border-radius: 30px;
+            }
             #annunciContainer {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 1.5rem;
             }
         }
 
-        /* Shimmer Title */
+        /* Effetto shimmer titolo */
         .shimmer {
             background: linear-gradient(120deg, var(--oro) 0%, #fff 25%, var(--oro) 50%, var(--oro-chiaro) 75%, var(--oro) 100%);
             -webkit-background-clip: text;
@@ -209,92 +227,86 @@
 
 <body>
 
-    <!-- Navbar -->
-    <th:block th:insert="~{fragments/navbar}"></th:block>
+<th:block th:insert="~{fragments/navbar}"></th:block>
 
-    <!-- Titolo -->
-    <header class="search-header">
-        <h1 class="shimmer">Cerca Annunci Professionali</h1>
-        <p>Trova i migliori servizi per il tuo animale domestico in tutta Italia</p>
-    </header>
+<header class="search-header">
+    <h1 class="shimmer">Cerca Annunci Professionali</h1>
+    <p>Trova i migliori servizi per il tuo animale domestico in tutta Italia</p>
+</header>
 
-    <!-- Barra ricerca -->
-    <div class="search-box">
-        <input type="text" id="nomeAttivita" th:value="${nomeAttivita}" placeholder="🔍 Cerca attività o nome..."
-               class="form-control search-bar">
-        <select id="serviziOfferti" class="form-select service-select">
-            <option value="">-- Tutti i servizi --</option>
-            <option th:each="serv : ${listaServizi}" th:value="${serv}" th:text="${serv}"
-                    th:selected="${serv.toString() == serviziOfferti}"></option>
-        </select>
-        <button class="btn btn-gold" onclick="loadAnnunci()">
-            <i class="fa-solid fa-search me-1"></i> Cerca
-        </button>
-    </div>
+<div class="search-box">
+    <input type="text" id="nomeAttivita" th:value="${nomeAttivita}" placeholder="🔍 Cerca attività o nome..."
+           class="form-control search-bar">
+    <select id="serviziOfferti" class="form-select service-select">
+        <option value="">-- Tutti i servizi --</option>
+        <option th:each="serv : ${listaServizi}" th:value="${serv}" th:text="${serv}"
+                th:selected="${serv.toString() == serviziOfferti}"></option>
+    </select>
+    <button class="btn btn-gold" onclick="loadAnnunci()">
+        <i class="fa fa-search me-1"></i> Cerca
+    </button>
+</div>
 
-    <!-- Risultati -->
-    <section id="risultati" th:fragment="risultati">
-        <div id="annunciContainer" class="container">
-            <div th:each="annuncio : ${annunci}" class="card card-annuncio">
-                <img th:if="${!#lists.isEmpty(annuncio.foto)}"
-                     th:src="@{/img(id=${annuncio.foto[0].id})}"
-                     alt="foto annuncio">
-                <img th:if="${#lists.isEmpty(annuncio.foto)}"
-                     src="/images/default-pet.png" alt="foto annuncio">
+<section id="risultati" th:fragment="risultati">
+    <div id="annunciContainer" class="container">
+        <div th:each="annuncio : ${annunci}" class="card card-annuncio">
+            <img th:if="${!#lists.isEmpty(annuncio.foto)}"
+                 th:src="@{/img(id=${annuncio.foto[0].id})}"
+                 alt="foto annuncio">
+            <img th:if="${#lists.isEmpty(annuncio.foto)}"
+                 src="/images/default-pet.png" alt="foto annuncio">
 
-                <div class="card-body text-center">
+            <div class="card-body">
+                <div>
                     <h5 th:text="${annuncio.nomeAttivita}"></h5>
                     <p th:text="${annuncio.serviziOfferti}"></p>
-                    <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-gold">
-                        Vai alla scheda
-                    </a>
                 </div>
+                <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-gold mt-auto">
+                    Vai alla scheda
+                </a>
             </div>
         </div>
+    </div>
 
-        <!-- Paginazione -->
-        <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
-            <button class="pagination-btn" th:disabled="${pagina <= 0}"
-                    th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
-                <i class="fa-solid fa-arrow-left"></i> Precedente
-            </button>
+    <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
+        <button class="pagination-btn" th:disabled="${pagina <= 0}"
+                th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
+            <i class="fa fa-arrow-left"></i> Precedente
+        </button>
 
-            <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"
-                    class="text-verde"></strong>
+        <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"
+                class="text-verde"></strong>
 
-            <button class="pagination-btn" th:disabled="${pagina >= pagineTotali-1}"
-                    th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
-                Successivo <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        </div>
-    </section>
+        <button class="pagination-btn" th:disabled="${pagina >= pagineTotali-1}"
+                th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
+            Successivo <i class="fa fa-arrow-right"></i>
+        </button>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <th:block th:insert="~{fragments/footbar}"></th:block>
+<th:block th:insert="~{fragments/footbar}"></th:block>
 
-    <!-- JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // 🔄 AJAX caricamento annunci
-        function loadAnnunci(pagina = 0) {
-            const nomeAttivita = document.getElementById("nomeAttivita").value;
-            const serviziOfferti = document.getElementById("serviziOfferti").value;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function loadAnnunci(pagina = 0) {
+        const nomeAttivita = document.getElementById("nomeAttivita").value;
+        const serviziOfferti = document.getElementById("serviziOfferti").value;
 
-            fetch(`/ricercaAnnunci?nomeAttivita=${nomeAttivita}&serviziOfferti=${serviziOfferti}&pagina=${pagina}`, {
-                headers: { "X-Requested-With": "XMLHttpRequest" }
-            })
-                .then(resp => resp.text())
-                .then(html => {
-                    const parsed = new DOMParser().parseFromString(html, "text/html");
-                    document.getElementById("risultati").innerHTML =
-                        parsed.getElementById("risultati").innerHTML;
-                });
-        }
+        fetch(`/ricercaAnnunci?nomeAttivita=${nomeAttivita}&serviziOfferti=${serviziOfferti}&pagina=${pagina}`, {
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+            .then(resp => resp.text())
+            .then(html => {
+                const parsed = new DOMParser().parseFromString(html, "text/html");
+                document.getElementById("risultati").innerHTML =
+                    parsed.getElementById("risultati").innerHTML;
+            });
+    }
 
-        // 🔍 Ricerca live
-        document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci());
-        document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
-        window.onload = () => loadAnnunci();
-    </script>
+    document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci());
+    document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
+    window.onload = () => loadAnnunci();
+</script>
+
 </body>
 </html>

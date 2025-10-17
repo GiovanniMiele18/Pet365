@@ -95,8 +95,12 @@ public class EffettuaPrenotazioneController {
     cliente.addPrenotazione(prenotazione);
     visita.addPrenotazione(prenotazione);
 
+     // Disattiva la visita una volta prenotata
+    visita.setValidita(false);
+
     // Salva nel database
     prenotazioneDao.save(prenotazione);
+    visitaDao.save(visita);
 
     return ESITO_PRENOTAZIONE_VIEW;
   }

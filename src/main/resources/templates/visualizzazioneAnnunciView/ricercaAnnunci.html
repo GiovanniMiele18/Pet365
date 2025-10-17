@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
-<head>
-    <!-- 🌐 Meta e intestazione -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Ricerca annunci - Pet365">
-    <meta name="author" content="Pet365">
 
+<head>
+    <th:block th:insert="~{fragments/head}"></th:block>
     <title>Cerca Annunci - Pet365</title>
 
-    <!-- 🎨 Bootstrap -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- 💅 Stile personalizzato -->
+    <!-- Stili personalizzati -->
     <style>
         body {
             background-color: #f9f9f9;
@@ -63,93 +58,93 @@
 </head>
 
 <body>
-    <!-- 🔝 Navbar -->
+
+    <!-- Navbar -->
     <th:block th:insert="~{fragments/navbar}"></th:block>
 
-    <!-- 🐾 Titolo -->
+    <!-- Titolo -->
     <section class="py-4 text-center">
         <h1 class="fw-bold">Ricerca Annunci</h1>
     </section>
 
-    <!-- 🔍 Filtri di ricerca -->
+    <!-- 🔍 Filtri -->
     <div class="container mb-4">
         <div class="row g-3 justify-content-center">
+            <!-- Campo ricerca -->
             <div class="col-md-4">
-                <input type="text"
-                       id="nomeAttivita"
-                       th:value="${nomeAttivita}"
-                       placeholder="🔍 Cerca attività..."
-                       class="form-control search-bar">
+                <input type="text" id="nomeAttivita" th:value="${nomeAttivita}" placeholder="🔍 Cerca attività..."
+                    class="form-control search-bar">
             </div>
 
+            <!-- Selezione servizio -->
             <div class="col-md-3">
                 <select id="serviziOfferti" class="form-select service-select">
                     <option value="">-- Tutti i servizi --</option>
-                    <option th:each="serv : ${listaServizi}"
-                            th:value="${serv}"
-                            th:text="${serv}"
-                            th:selected="${serv.toString() == serviziOfferti}">
+                    <option th:each="serv : ${listaServizi}" th:value="${serv}" th:text="${serv}"
+                        th:selected="${serv.toString() == serviziOfferti}">
                     </option>
                 </select>
             </div>
         </div>
     </div>
 
-    <!-- 🧾 Risultati -->
+    <!-- 🔄 Risultati AJAX -->
     <div id="risultati" th:fragment="risultati">
+
+        <!-- Lista annunci -->
         <div id="annunciContainer" class="d-flex flex-wrap justify-content-center">
-            <div th:each="annuncio : ${annunci}"
-                 class="card card-annuncio m-3"
-                 style="width: 15rem;">
+            <div th:each="annuncio : ${annunci}" class="card card-annuncio m-3" style="width: 15rem;">
+
+                <!-- Immagine -->
                 <img th:if="${!#lists.isEmpty(annuncio.foto)}"
-                     th:src="@{/img(id=${annuncio.foto[0].id})}"
-                     class="card-img-top"
-                     style="height: 200px; object-fit: cover;"
-                     alt="foto annuncio">
+                    th:src="@{/img(id=${annuncio.foto[0].id})}"
+                    class="card-img-top"
+                    style="height: 200px; object-fit: cover;"
+                    alt="foto annuncio">
 
                 <img th:if="${#lists.isEmpty(annuncio.foto)}"
-                     src="/images/default-pet.png"
-                     class="card-img-top"
-                     style="height: 200px; object-fit: cover;"
-                     alt="foto annuncio">
+                    src="/images/default-pet.png"
+                    class="card-img-top"
+                    style="height: 200px; object-fit: cover;"
+                    alt="foto annuncio">
 
+                <!-- Corpo della card -->
                 <div class="card-body text-center">
                     <h5 th:text="${annuncio.nomeAttivita}" class="card-title"></h5>
                     <p th:text="${annuncio.serviziOfferti}"></p>
-                    <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}"
-                       class="btn btn-outline-success">
+                    <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-success">
                         Vai alla scheda
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- 📄 Paginazione -->
+        <!-- Paginazione -->
         <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
-            <button class="btn btn-success"
-                    th:disabled="${pagina <= 0}"
-                    th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
+            <button class="btn btn-success" th:disabled="${pagina <= 0}"
+                th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
                 Precedente
             </button>
 
             <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
 
-            <button class="btn btn-success"
-                    th:disabled="${pagina >= pagineTotali-1}"
-                    th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
+            <button class="btn btn-success" th:disabled="${pagina >= pagineTotali-1}"
+                th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
                 Successivo
             </button>
         </div>
     </div>
 
-    <!-- ⚙️ Frammenti footer e script -->
+    <!-- Footer -->
     <th:block th:insert="~{fragments/footbar}"></th:block>
     <th:block th:insert="~{fragments/scripts}"></th:block>
 
-    <!-- 📦 Script -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script AJAX -->
     <script>
-        // 🔄 Funzione per caricare gli annunci
+        // 🔄 Carica annunci tramite AJAX
         function loadAnnunci(pagina = 0) {
             const nomeAttivita = document.getElementById("nomeAttivita").value;
             const serviziOfferti = document.getElementById("serviziOfferti").value;
@@ -157,18 +152,19 @@
             fetch(`/ricercaAnnunci?nomeAttivita=${nomeAttivita}&serviziOfferti=${serviziOfferti}&pagina=${pagina}`, {
                 headers: { "X-Requested-With": "XMLHttpRequest" }
             })
-            .then(resp => resp.text())
-            .then(html => {
-                document.getElementById("risultati").innerHTML =
-                    new DOMParser().parseFromString(html, "text/html").getElementById("risultati").innerHTML;
-            });
+                .then(resp => resp.text())
+                .then(html => {
+                    const parsedHTML = new DOMParser().parseFromString(html, "text/html");
+                    document.getElementById("risultati").innerHTML =
+                        parsedHTML.getElementById("risultati").innerHTML;
+                });
         }
 
-        // 🔍 Ricerca dinamica
+        // 🔍 Ricerca live
         document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci());
         document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
 
-        // 🚀 Prima chiamata al caricamento
+        // 🔄 Prima chiamata all’avvio
         window.onload = () => loadAnnunci();
     </script>
 </body>

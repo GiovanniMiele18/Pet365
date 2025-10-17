@@ -263,7 +263,23 @@
     </div>
   </div>
 </section>
+ <!-- Paginazione -->
+    <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
+        <button class="btn btn-success"
+                th:disabled="${pagina <= 0}"
+                th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
+            Precedente
+        </button>
 
+        <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
+
+        <button class="btn btn-success"
+                th:disabled="${pagina >= pagineTotali-1}"
+                th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
+            Successivo
+        </button>
+    </div>
+</div>
 <th:block th:insert="~{fragments/footbar}"></th:block>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,39 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
-    <meta charset="utf-8">
+    <!-- 🌐 Meta e intestazione -->
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Ricerca annunci - Pet365">
+    <meta name="author" content="Pet365">
 
     <title>Cerca Annunci - Pet365</title>
 
-    <!-- ✅ CSS principali -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css'>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="shortcut icon"
-          href="https://favicon-generator.org/favicon-generator/htdocs/favicons/2022-12-30/d3f3b5e9f0d2ed5a7e3c4d3025ab6734.ico.png"/>
+    <!-- 🎨 Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- ✅ Stili personalizzati -->
+    <!-- 💅 Stile personalizzato -->
     <style>
         body {
             background-color: #f9f9f9;
             font-family: 'Poppins', sans-serif;
         }
 
-        h1 {
-            color: #333;
-        }
-
-        /* 🔍 Barra ricerca */
         .search-bar {
             border-radius: 50px;
             padding: 0.75rem 1.2rem;
             font-size: 1.1rem;
             border: 2px solid #28a745;
             transition: all 0.3s ease;
-            width: 100%;
         }
 
         .search-bar:focus {
@@ -42,14 +34,12 @@
             outline: none;
         }
 
-        /* 🏷️ Select servizi */
         .service-select {
             border-radius: 50px;
             padding: 0.6rem 1rem;
             font-size: 1.05rem;
             border: 2px solid #28a745;
             transition: all 0.3s ease;
-            width: 100%;
         }
 
         .service-select:focus {
@@ -58,157 +48,128 @@
             outline: none;
         }
 
-        /* 🐾 Card annuncio */
         .card-annuncio {
             border-radius: 15px;
             overflow: hidden;
             border: 1px solid #ddd;
             transition: transform 0.3s, box-shadow 0.3s;
-            width: 15rem;
         }
 
         .card-annuncio:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
-
-        /* 📱 Responsive */
-        @media (max-width: 992px) {
-            h1 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .search-bar, .service-select {
-                font-size: 1rem;
-                padding: 0.6rem 1rem;
-            }
-
-            .card-annuncio {
-                width: 100% !important;
-                margin: 0.75rem 0;
-            }
-
-            #annunciContainer {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .card-annuncio {
-                width: 90% !important;
-            }
-
-            button.btn {
-                width: 100%;
-            }
-        }
     </style>
 </head>
 
 <body>
-<th:block th:insert="~{fragments/navbar}"></th:block>
+    <!-- 🔝 Navbar -->
+    <th:block th:insert="~{fragments/navbar}"></th:block>
 
-<!-- 🔹 Titolo -->
-<section class="py-4 text-center">
-    <h1 class="fw-bold">Ricerca Annunci</h1>
-</section>
+    <!-- 🐾 Titolo -->
+    <section class="py-4 text-center">
+        <h1 class="fw-bold">Ricerca Annunci</h1>
+    </section>
 
-<!-- 🔍 Filtri -->
-<div class="container mb-4">
-    <div class="row g-3 justify-content-center">
-        <div class="col-12 col-md-6 col-lg-4">
-            <input type="text" id="nomeAttivita"
-                   th:value="${nomeAttivita}"
-                   placeholder="🔍 Cerca attività..."
-                   class="form-control search-bar">
-        </div>
-        <div class="col-12 col-md-6 col-lg-3">
-            <select id="serviziOfferti" class="form-select service-select">
-                <option value="">-- Tutti i servizi --</option>
-                <option th:each="serv : ${listaServizi}"
-                        th:value="${serv}"
-                        th:text="${serv}"
-                        th:selected="${serv.toString() == serviziOfferti}">
-                </option>
-            </select>
-        </div>
-    </div>
-</div>
+    <!-- 🔍 Filtri di ricerca -->
+    <div class="container mb-4">
+        <div class="row g-3 justify-content-center">
+            <div class="col-md-4">
+                <input type="text"
+                       id="nomeAttivita"
+                       th:value="${nomeAttivita}"
+                       placeholder="🔍 Cerca attività..."
+                       class="form-control search-bar">
+            </div>
 
-<!-- 🔄 Risultati AJAX -->
-<div id="risultati" th:fragment="risultati" class="container">
-    <!-- Lista annunci -->
-    <div id="annunciContainer" class="d-flex flex-wrap justify-content-center">
-        <div th:each="annuncio : ${annunci}" class="card card-annuncio m-3">
-            <img th:if="${!#lists.isEmpty(annuncio.foto)}"
-                 th:src="@{/img(id=${annuncio.foto[0].id})}"
-                 class="card-img-top" style="height: 200px; object-fit: cover;" alt="foto annuncio">
-            <img th:if="${#lists.isEmpty(annuncio.foto)}"
-                 src="/images/default-pet.png"
-                 class="card-img-top" style="height: 200px; object-fit: cover;" alt="foto annuncio">
-            <div class="card-body text-center">
-                <h5 th:text="${annuncio.nomeAttivita}" class="card-title"></h5>
-                <p th:text="${annuncio.serviziOfferti}"></p>
-                <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}"
-                   class="btn btn-outline-success w-100">Vai alla scheda</a>
+            <div class="col-md-3">
+                <select id="serviziOfferti" class="form-select service-select">
+                    <option value="">-- Tutti i servizi --</option>
+                    <option th:each="serv : ${listaServizi}"
+                            th:value="${serv}"
+                            th:text="${serv}"
+                            th:selected="${serv.toString() == serviziOfferti}">
+                    </option>
+                </select>
             </div>
         </div>
     </div>
 
-    <!-- Paginazione -->
-    <div id="paginationContainer" class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-4">
-        <button class="btn btn-success"
-                th:disabled="${pagina <= 0}"
-                th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
-            ◀️ Precedente
-        </button>
+    <!-- 🧾 Risultati -->
+    <div id="risultati" th:fragment="risultati">
+        <div id="annunciContainer" class="d-flex flex-wrap justify-content-center">
+            <div th:each="annuncio : ${annunci}"
+                 class="card card-annuncio m-3"
+                 style="width: 15rem;">
+                <img th:if="${!#lists.isEmpty(annuncio.foto)}"
+                     th:src="@{/img(id=${annuncio.foto[0].id})}"
+                     class="card-img-top"
+                     style="height: 200px; object-fit: cover;"
+                     alt="foto annuncio">
 
-        <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
+                <img th:if="${#lists.isEmpty(annuncio.foto)}"
+                     src="/images/default-pet.png"
+                     class="card-img-top"
+                     style="height: 200px; object-fit: cover;"
+                     alt="foto annuncio">
 
-        <button class="btn btn-success"
-                th:disabled="${pagina >= pagineTotali-1}"
-                th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
-            Successivo ▶️
-        </button>
+                <div class="card-body text-center">
+                    <h5 th:text="${annuncio.nomeAttivita}" class="card-title"></h5>
+                    <p th:text="${annuncio.serviziOfferti}"></p>
+                    <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}"
+                       class="btn btn-outline-success">
+                        Vai alla scheda
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📄 Paginazione -->
+        <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
+            <button class="btn btn-success"
+                    th:disabled="${pagina <= 0}"
+                    th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
+                Precedente
+            </button>
+
+            <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
+
+            <button class="btn btn-success"
+                    th:disabled="${pagina >= pagineTotali-1}"
+                    th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
+                Successivo
+            </button>
+        </div>
     </div>
-</div>
 
-<!-- 🔹 Footer -->
-<th:block th:insert="~{fragments/footbar}"></th:block>
-<th:block th:insert="~{fragments/scripts}"></th:block>
+    <!-- ⚙️ Frammenti footer e script -->
+    <th:block th:insert="~{fragments/footbar}"></th:block>
+    <th:block th:insert="~{fragments/scripts}"></th:block>
 
-<!-- ✅ JS Bootstrap e AJAX -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 📦 Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 🔄 Funzione per caricare gli annunci
+        function loadAnnunci(pagina = 0) {
+            const nomeAttivita = document.getElementById("nomeAttivita").value;
+            const serviziOfferti = document.getElementById("serviziOfferti").value;
 
-<script>
-    // 🔄 Funzione AJAX
-    function loadAnnunci(pagina = 0) {
-        const nomeAttivita = document.getElementById("nomeAttivita").value;
-        const serviziOfferti = document.getElementById("serviziOfferti").value;
-
-        fetch(`/ricercaAnnunci?nomeAttivita=${nomeAttivita}&serviziOfferti=${serviziOfferti}&pagina=${pagina}`, {
-            headers: {"X-Requested-With": "XMLHttpRequest"}
-        })
+            fetch(`/ricercaAnnunci?nomeAttivita=${nomeAttivita}&serviziOfferti=${serviziOfferti}&pagina=${pagina}`, {
+                headers: { "X-Requested-With": "XMLHttpRequest" }
+            })
             .then(resp => resp.text())
             .then(html => {
                 document.getElementById("risultati").innerHTML =
                     new DOMParser().parseFromString(html, "text/html").getElementById("risultati").innerHTML;
             });
-    }
+        }
 
-    // 🔍 Trigger ricerca live
-    document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci());
-    document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
+        // 🔍 Ricerca dinamica
+        document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci());
+        document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
 
-    // Prima chiamata
-    window.onload = () => loadAnnunci();
-</script>
+        // 🚀 Prima chiamata al caricamento
+        window.onload = () => loadAnnunci();
+    </script>
 </body>
 </html>

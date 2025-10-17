@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
-    <th:block th:insert="~{fragments/head}"></th:block>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet365 - Shop</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- ✅ Framework e risorse principali -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="shortcut icon"
+          href="https://favicon-generator.org/favicon-generator/htdocs/favicons/2022-12-30/d3f3b5e9f0d2ed5a7e3c4d3025ab6734.ico.png"/>
+
+    <!-- ✅ Stili personalizzati -->
     <style>
         body {
             background: #f6f7f9;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         /* --- CARD PRODOTTO --- */
@@ -19,6 +29,7 @@
             transition: .3s;
             overflow: hidden;
         }
+
         .product-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -39,7 +50,10 @@
             font-weight: 600;
             border-radius: 25px;
         }
-        .btn-add:hover { background: #00924e; }
+
+        .btn-add:hover {
+            background: #00924e;
+        }
 
         .btn-out {
             background: #f8d7da !important;
@@ -52,30 +66,128 @@
         }
 
         /* --- MINI-CART --- */
-        #mini-cart { position: fixed; top: 0; right: -400px; width: 360px; height: 100vh; background: #fff;
-            box-shadow: -3px 0 10px rgba(0,0,0,.2); transition: right .4s ease; z-index: 3000; overflow-y: auto; }
-        #mini-cart.open { right: 0; }
+        #mini-cart {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 360px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -3px 0 10px rgba(0, 0, 0, .2);
+            transition: right .4s ease;
+            z-index: 3000;
+            overflow-y: auto;
+        }
 
-        #mini-cart-header { background: #00a859; color: white; padding: 1rem; font-weight: 700; }
-        #close-cart { background: transparent; border: none; color: #fff; font-size: 1.3rem; }
+        #mini-cart.open {
+            right: 0;
+        }
 
-        .mini-cart-item { border-bottom: 1px solid #eee; padding: .75rem 1rem; display: flex; justify-content: space-between; }
+        #mini-cart-header {
+            background: #00a859;
+            color: white;
+            padding: 1rem;
+            font-weight: 700;
+        }
+
+        #close-cart {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.3rem;
+        }
+
+        .mini-cart-item {
+            border-bottom: 1px solid #eee;
+            padding: .75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
 
         /* --- TOAST --- */
-        .toast-custom { position: fixed; top: 1rem; right: 1rem; z-index: 4000; display: flex; gap: .5rem; align-items: center;
-            border-radius: 12px; padding: .9rem 1.2rem; color: white; font-weight: 500;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15); animation: slideIn .4s ease, fadeOut .5s ease 3.5s forwards; }
-        .toast-success { background: linear-gradient(135deg,#00a859,#0cb065); }
-        .toast-error { background: linear-gradient(135deg,#dc3545,#b52d39); }
-        @keyframes slideIn { from { transform: translateX(150%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeOut { to { opacity: 0; transform: translateX(150%); } }
+        .toast-custom {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 4000;
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+            border-radius: 12px;
+            padding: .9rem 1.2rem;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            animation: slideIn .4s ease, fadeOut .5s ease 3.5s forwards;
+        }
+
+        .toast-success {
+            background: linear-gradient(135deg, #00a859, #0cb065);
+        }
+
+        .toast-error {
+            background: linear-gradient(135deg, #dc3545, #b52d39);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(150%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateX(150%);
+            }
+        }
+
+        /* --- PAGINAZIONE --- */
+        .pagination-container {
+            margin-top: 3rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 1.7rem;
+            }
+
+            .carousel-item img {
+                height: 200px;
+            }
+
+            #mini-cart {
+                width: 90%;
+            }
+
+            .product-card {
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn-add,
+            .btn-out {
+                font-size: 0.9rem;
+            }
+
+            .qty-input {
+                width: 60px !important;
+            }
+        }
     </style>
 </head>
 
 <body>
 <th:block th:insert="~{fragments/navbar}"></th:block>
 
-<!-- MINI-CARRELLO -->
+<!-- 🛒 MINI-CARRELLO -->
 <div id="mini-cart">
     <div id="mini-cart-header" class="d-flex justify-content-between align-items-center">
         <span>Il tuo carrello 🛒</span>
@@ -87,30 +199,35 @@
     </div>
 </div>
 
-<!-- --- MAIN --- -->
+<!-- 🐾 SEZIONE PRINCIPALE -->
 <main class="container py-5">
     <h2 class="text-center text-success fw-bold mb-4">🐾 Prodotti Pet365 🐾</h2>
 
+    <!-- 🔄 Lista prodotti -->
     <div class="row g-4 justify-content-center">
-        <div class="col-md-4 col-sm-6" th:each="p : ${prodotti}">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each="p : ${prodotti}">
             <div class="product-card p-3 text-center">
 
-                <!-- Carousel foto -->
-                <div th:if="${!#lists.isEmpty(p.foto)}" th:id="'carouselProdotto' + ${p.id}" class="carousel slide mb-3" data-bs-ride="carousel">
+                <!-- 🖼️ Carousel foto -->
+                <div th:if="${!#lists.isEmpty(p.foto)}" th:id="'carouselProdotto' + ${p.id}" class="carousel slide mb-3"
+                     data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div th:each="foto, iterStat : ${p.foto}" class="carousel-item" th:classappend="${iterStat.index == 0} ? ' active'">
+                        <div th:each="foto, iterStat : ${p.foto}" class="carousel-item"
+                             th:classappend="${iterStat.index == 0} ? ' active'">
                             <img th:src="@{/imgProdotto(id=${foto.id})}" class="d-block w-100" alt="foto prodotto">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" th:attr="data-bs-target='#carouselProdotto' + ${p.id}" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button"
+                            th:attr="data-bs-target='#carouselProdotto' + ${p.id}" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon"></span>
                     </button>
-                    <button class="carousel-control-next" type="button" th:attr="data-bs-target='#carouselProdotto' + ${p.id}" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button"
+                            th:attr="data-bs-target='#carouselProdotto' + ${p.id}" data-bs-slide="next">
                         <span class="carousel-control-next-icon"></span>
                     </button>
                 </div>
 
-                <!-- Immagine placeholder -->
+                <!-- Placeholder -->
                 <div th:unless="${!#lists.isEmpty(p.foto)}">
                     <img src="https://img.icons8.com/color/200/dog-bone.png" class="img-fluid mb-3" alt="placeholder">
                 </div>
@@ -120,7 +237,7 @@
                 <p class="text-muted small" th:text="${p.categoria}"></p>
                 <p class="fw-bold text-success" th:text="${#numbers.formatDecimal(p.prezzo,1,2)} + ' €'"></p>
 
-                <!-- Aggiunta al carrello -->
+                <!-- Pulsanti -->
                 <div th:if="${p.quantitaDisponibile > 0}">
                     <div class="d-flex justify-content-center align-items-center mb-2">
                         <input type="number" class="form-control text-center qty-input" min="1"
@@ -136,19 +253,49 @@
             </div>
         </div>
     </div>
+
+    <!-- 🔢 PAGINAZIONE -->
+    <div class="pagination-container d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
+        <button class="btn btn-success"
+                th:disabled="${pagina <= 0}"
+                th:onclick="'loadProdotti(' + (${pagina}-1) + ');'">
+            ◀️ Precedente
+        </button>
+
+        <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
+
+        <button class="btn btn-success"
+                th:disabled="${pagina >= pagineTotali-1}"
+                th:onclick="'loadProdotti(' + (${pagina}+1) + ');'">
+            Successivo ▶️
+        </button>
+    </div>
 </main>
 
 <th:block th:insert="~{fragments/footbar}"></th:block>
 <th:block th:insert="~{fragments/scripts}"></th:block>
 
+<!-- ✅ Script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+    // --- AJAX caricamento prodotti ---
+    function loadProdotti(pagina = 0) {
+        fetch(`/shop?pagina=${pagina}`, { headers: { "X-Requested-With": "XMLHttpRequest" } })
+            .then(resp => resp.text())
+            .then(html => {
+                document.querySelector("main").innerHTML =
+                    new DOMParser().parseFromString(html, "text/html").querySelector("main").innerHTML;
+                attachEvents();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+    }
+
     // --- Toast ---
-    function showToast(msg, type='success') {
+    function showToast(msg, type = 'success') {
         const t = document.createElement('div');
-        t.className = `toast-custom ${type==='error'?'toast-error':'toast-success'}`;
-        t.innerHTML = `<i class="fa ${type==='error'?'fa-triangle-exclamation':'fa-circle-check'}"></i><span>${msg}</span>`;
+        t.className = `toast-custom ${type === 'error' ? 'toast-error' : 'toast-success'}`;
+        t.innerHTML = `<i class="fa ${type === 'error' ? 'fa-triangle-exclamation' : 'fa-circle-check'}"></i><span>${msg}</span>`;
         document.body.appendChild(t);
         setTimeout(() => t.remove(), 4000);
     }
@@ -181,25 +328,31 @@
         });
     }
 
-    document.querySelectorAll('.add-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const id = btn.dataset.id;
-            const qty = parseInt(btn.closest('.product-card').querySelector('input').value);
-            try {
-                const res = await fetch(`/carrello/aggiungi/${id}?quantita=${qty}`, { method: 'POST' });
-                const data = await res.json();
-                if (data.ok) {
-                    showToast(data.msg);
-                    await refreshCart();
-                    openCart();
-                } else {
-                    showToast(data.msg, 'error');
+    // --- Eventi dinamici ---
+    function attachEvents() {
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const id = btn.dataset.id;
+                const qty = parseInt(btn.closest('.product-card').querySelector('input').value);
+                try {
+                    const res = await fetch(`/carrello/aggiungi/${id}?quantita=${qty}`, { method: 'POST' });
+                    const data = await res.json();
+                    if (data.ok) {
+                        showToast(data.msg);
+                        await refreshCart();
+                        openCart();
+                    } else {
+                        showToast(data.msg, 'error');
+                    }
+                } catch {
+                    showToast('Errore di connessione ❌', 'error');
                 }
-            } catch {
-                showToast('Errore di connessione ❌', 'error');
-            }
+            });
         });
-    });
+    }
+
+    // Inizializzazione
+    window.onload = () => attachEvents();
 </script>
 </body>
 </html>

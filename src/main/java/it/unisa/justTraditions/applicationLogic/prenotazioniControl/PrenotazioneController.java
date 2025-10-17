@@ -1,5 +1,6 @@
 package it.unisa.justTraditions.applicationLogic.prenotazioniControl;
 
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.dao.VisitaDao;
 import it.unisa.justTraditions.applicationLogic.autenticazioneControl.util.SessionCliente;
 import it.unisa.justTraditions.storage.prenotazioniStorage.dao.PrenotazioneDao;
 import it.unisa.justTraditions.storage.prenotazioniStorage.entity.Prenotazione;

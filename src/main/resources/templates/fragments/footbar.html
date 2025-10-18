@@ -1,113 +1,128 @@
-<footer th:fragment="footbar" class="page-footer center-on-small-only custom-footer">
+<footer th:fragment="footbar" class="custom-footer text-center text-lg-start">
+  <div class="container py-5">
+    <div class="row gy-4">
 
-    <!--Footer Links-->
-    <div class="container">
-        <div class="row">
+      <!-- Colonna 1 -->
+      <div class="col-12 col-md-4 text-center text-md-start">
+        <h5 class="fw-bold mb-3 text-gold">PET365</h5>
+        <img src="https://i.imgur.com/mYm8eGJ.png" alt="Pet365 Logo" width="120" class="img-fluid mb-3">
+        <p class="small text-light opacity-75">
+          Il tuo portale completo per servizi, shop e cura del mondo animale.
+        </p>
+      </div>
 
-            <!--First column-->
-            <div class="col-md-4">
-                <h5 class="title mb-4 mt-3 font-bold">PET365</h5>
-                <img src="https://i.imgur.com/mYm8eGJ.png" style="width: 125px;">
-            </div>
-            <!--/.First column-->
+      <!-- Colonna 2 -->
+      <div class="col-6 col-md-2">
+        <h6 class="fw-bold mb-3 text-gold">Servizi Offerti</h6>
+        <ul class="list-unstyled">
+          <li><a href="/ricercaAnnunci?serviziOfferti=SERVIZI_DI_ACCOPPIAMENTO">Accoppia il tuo cucciolo</a></li>
+          <li><a href="/ricercaAnnunci?serviziOfferti=PETSITTER">Pet Sitter</a></li>
+          <li><a href="/ricercaAnnunci?serviziOfferti=PENSIONI">Pensione Luxury</a></li>
+          <li><a href="/ricercaAnnunci?serviziOfferti=ADDESTRAMENTO">Addestra il tuo animale</a></li>
+        </ul>
+      </div>
 
-            <hr class="clearfix w-100 d-md-none">
+      <!-- Colonna 3 -->
+      <div class="col-6 col-md-2">
+        <h6 class="fw-bold mb-3 text-gold">Maggiori Informazioni</h6>
+        <ul class="list-unstyled">
+          <li><a href="/">Home</a></li>
+          <li><a href="/ricercaAnnunci">Annunci</a></li>
+          <li><a href="/chisiamo">Chi Siamo</a></li>
+        </ul>
+      </div>
 
-            <!--Second column-->
-            <div class="col-md-2 mx-auto">
-                <h5 class="title mb-4 mt-3 font-bold">Servizi Offerti</h5>
-                <ul>
-                    <li><a href="/ricercaAnnunci?serviziOfferti=SERVIZI_DI_ACCOPPIAMENTO">Accoppia il tuo cucciolo!</a></li>
-                    <li><a href="/ricercaAnnunci?serviziOfferti=PETSITTER">PetSitter!</a></li>
-                    <li><a href="/ricercaAnnunci?serviziOfferti=PENSIONI">Pensione luxury!</a></li>
-                    <li><a href="/ricercaAnnunci?serviziOfferti=ADDESTRAMENTO">Addestra il tuo animale!</a></li>
-                </ul>
-            </div>
-
-            <hr class="clearfix w-100 d-md-none">
-
-            <!--Third column-->
-            <div class="col-md-2 mx-auto">
-                <h5 class="title mb-4 mt-3 font-bold">Maggiori Informazioni</h5>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/ricercaAnnunci">Annunci</a></li>
-                    <li><a href="/chisiamo">Chi siamo?</a></li>
-                </ul>
-            </div>
-
-            <hr class="clearfix w-100 d-md-none">
-
-            <!--Fourth column-->
-            <div class="col-md-2 mx-auto">
-                <h5 class="title mb-4 mt-3 font-bold ">Support</h5>
-                <ul>
-                    <li><a th:if="${cliente != null}"
-                           th:href="@{'mailto:pet365support@gmail.com?subject=Domanda generale&body=Salve sono l utente, ' + ${cliente.nome} +' '+ ${cliente.cognome}+' il mio codice fiscale è il seguente: '+${cliente.codiceFiscale}+' e vi scrivo per la seguente problematica:'}">Inviaci
-                        una mail</a></li>
-                    <li><a th:if="${cliente == null}"
-                           th:href="@{'mailto:pet365support?subject=Domanda generale&body=Salve sono un utente non registrato e vi scrivo per la seguente problematica:'}">Inviaci
-                        una mail</a></li>
-                    <li><a href="/loginAmministratore">Area Staff</a></li>
-                </ul>
-            </div>
-
-        </div>
+      <!-- Colonna 4 -->
+      <div class="col-12 col-md-3">
+        <h6 class="fw-bold mb-3 text-gold">Supporto</h6>
+        <ul class="list-unstyled">
+          <li>
+            <a th:if="${cliente != null}"
+               th:href="@{'mailto:pet365support@gmail.com?subject=Domanda generale&body=Salve sono l utente ' + ${cliente.nome} + ' ' + ${cliente.cognome} + ', codice fiscale: ' + ${cliente.codiceFiscale} + '. Vi scrivo per la seguente problematica:'}">
+               Inviaci una mail
+            </a>
+          </li>
+          <li>
+            <a th:if="${cliente == null}"
+               th:href="@{'mailto:pet365support@gmail.com?subject=Domanda generale&body=Salve, sono un utente non registrato e vi scrivo per la seguente problematica:'}">
+               Inviaci una mail
+            </a>
+          </li>
+          <li><a href="/loginAmministratore">Area Staff</a></li>
+        </ul>
+      </div>
     </div>
+  </div>
 
-    <hr>
+  <!-- Linea divisoria -->
+  <hr class="m-0 border-gold">
 
-    <div class="call-to-action">
-        <div class="container-fluid">
-            <p>©&nbsp;<strong>Copyright 2025 - PET365 v1.0</strong><br><strong>Tutti i diritti sono riservati ai corrispettivi proprietari.</strong></p>
-        </div>
-    </div>
-
+  <!-- Copyright -->
+  <div class="text-center py-3 small">
+    <p class="mb-0 text-gold">
+      © 2025 <strong>PET365 v1.0</strong> – Tutti i diritti riservati.  
+      <br><span class="opacity-75">Creato con passione per gli amici a 4 zampe 🐾</span>
+    </p>
+  </div>
 </footer>
 
+<!-- 🎨 STYLE -->
 <style>
-    /* Sovrascrive eventuali classi bg-dark di Bootstrap */
-    .custom-footer {
-        background-color: #013220 !important; /* verde scuro */
-        color: #FFD700 !important; /* oro */
-        padding-top: 40px;
-        padding-bottom: 20px;
-    }
+:root {
+  --verde: #013220;
+  --oro: #ffd700;
+  --oro-chiaro: #fff4a3;
+  --bianco: #ffffff;
+}
 
-    /* Titoli */
-    .custom-footer .title {
-        color: #FFD700 !important;
-        font-weight: bold;
-    }
+/* --- FOOTER --- */
+.custom-footer {
+  background: linear-gradient(180deg, rgba(1,50,32,0.98), rgba(0,30,20,1));
+  color: var(--bianco);
+  border-top: 2px solid rgba(255,215,0,0.3);
+  font-family: 'Montserrat', sans-serif;
+}
 
-    /* Link */
-    .custom-footer a {
-        color: #FFD700 !important;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
+.text-gold { color: var(--oro); }
+.border-gold { border-color: rgba(255,215,0,0.5) !important; }
 
-    .custom-footer a:hover {
-        color: #ffffff !important;
-    }
+/* LINK */
+.custom-footer a {
+  color: var(--oro);
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  display: inline-block;
+  padding: 3px 0;
+}
+.custom-footer a:hover {
+  color: var(--bianco);
+  text-shadow: 0 0 10px rgba(255,215,0,0.8);
+}
 
-    /* HR linee */
-    .custom-footer hr {
-        border-top: 1px solid #FFD700 !important;
-    }
+/* TITOLI */
+.custom-footer h6, .custom-footer h5 {
+  letter-spacing: 0.5px;
+  margin-bottom: 0.8rem;
+}
 
-    /* Copyright */
-    .custom-footer .call-to-action {
-        text-align: center;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        color: #FFD700 !important;
-        font-weight: 500;
-    }
+/* HR */
+.custom-footer hr {
+  border-top: 1px solid rgba(255,215,0,0.4);
+}
 
-    /* Immagine logo */
-    .custom-footer img {
-        margin-top: 10px;
-        margin-bottom: 20px;
-    }
+/* COPYRIGHT */
+.custom-footer p {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* RESPONSIVE */
+@media (max-width: 767.98px) {
+  .custom-footer img {
+    margin: 0 auto 15px;
+  }
+  .custom-footer ul {
+    padding-left: 0;
+  }
+}
 </style>

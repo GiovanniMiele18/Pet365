@@ -1,36 +1,148 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
-
 <head>
-    <th:block th:include="fragments/head"></th:block>
-    <title>Si è verificato un errore</title>
+  <meta charset="UTF-8">
+  <title>Oops! Si è verificato un errore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --verde: #013b27;
+      --oro: #d4af37;
+      --oro-chiaro: #ffe48f;
+      --rosso: #e74c3c;
+      --bianco: #ffffff;
+      --grigio: #f5f8f7;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #012a1d, #03452f, #013b27);
+      color: var(--bianco);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* ---- PARTICELLE ANIMATE ---- */
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      animation: float 8s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      50% { transform: translateY(-80px) scale(1.2); opacity: 0.4; }
+      100% { transform: translateY(0) scale(1); opacity: 0.8; }
+    }
+
+    /* ---- CARD ---- */
+    .error-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.2);
+      z-index: 10;
+      max-width: 700px;
+      width: 90%;
+    }
+
+    .error-card img {
+      width: 280px;
+      height: auto;
+      animation: floatUp 3s ease-in-out infinite;
+    }
+
+    @keyframes floatUp {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .error-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--oro);
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    }
+
+    .error-subtitle {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      color: #f5f5f5;
+    }
+
+    .error-details {
+      margin-top: 1.2rem;
+      background: rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 1rem;
+      color: #ffe48f;
+    }
+
+    /* ---- BOTTONI ---- */
+    .btn-home {
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      border: none;
+      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+      color: var(--verde);
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+
+    .btn-home:hover {
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+      color: var(--bianco);
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .error-title { font-size: 2rem; }
+      .error-card img { width: 200px; }
+    }
+  </style>
 </head>
 
 <body>
-<div class="d-flex align-items-center justify-content-center vh-100">
-    <div class="text-center row">
-        <div class=" col-md-6">
-            <img style="width: 350px; height: 270px;" src="https://bit.ly/3vDJZ8a" alt=""
-                 class="img-fluid">
-        </div>
+  <!-- Sfere decorative -->
+  <div class="particle" style="width:40px;height:40px;top:10%;left:20%;animation-delay:0s;"></div>
+  <div class="particle" style="width:25px;height:25px;top:60%;left:70%;animation-delay:2s;"></div>
+  <div class="particle" style="width:50px;height:50px;top:80%;left:30%;animation-delay:4s;"></div>
+  <div class="particle" style="width:15px;height:15px;top:30%;left:80%;animation-delay:1s;"></div>
 
-        <div class=" col-md-6 mt-5">
-            <p class="fs-3"><span class="text-danger">Opps!</span> Abbiamo riscontrato un errore.</p>
+  <div class="error-card">
+    <img src="https://i.imgur.com/qIufhof.png" alt="Errore">
+    <h1 class="error-title">Oops! Qualcosa è andato storto 😿</h1>
+    <p class="error-subtitle">Ci scusiamo per l’inconveniente, ma si è verificato un errore imprevisto.</p>
 
-            <p class="lead"> Errore riscontrato: <span th:text="${status}"></span>
-            </p>
-            <p class="lead"> Problema riscontrato: <span th:text="${message}"></span>
-            </p>
-
-
-            <a th:if="${amministratore != null}" href="/homeAmministratore" class="btn btn-primary">Vai alla Home</a>
-            <a th:if="${cliente != null}" href="/" class="btn btn-primary">Vai alla Home</a>
-
-        </div>
-
+    <div class="error-details">
+      <p><strong>Codice errore:</strong> <span th:text="${status}"></span></p>
+      <p><strong>Descrizione:</strong> <span th:text="${message}"></span></p>
     </div>
-</div>
-<th:block th:include="fragments/scripts"></th:block>
-</body>
 
+    <a th:if="${amministratore != null}" href="/homeAmministratore" class="btn btn-home mt-3">
+      <i class="fa-solid fa-house me-2"></i> Torna alla Home
+    </a>
+    <a class="btn btn-home mt-3">
+      <i class="fa-solid fa-paw me-2"></i> Torna alla Home
+    </a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

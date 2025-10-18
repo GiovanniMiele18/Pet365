@@ -4,42 +4,47 @@
   <meta charset="UTF-8">
   <title>Pet365 • Prenotazione Servizio</title>
 
-  <!-- Bootstrap e Font -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap, Font Awesome e Font -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --green: #013b27;
-      --green-light: #046b49;
-      --gold: #d4af37;
-      --gold-light: #ffe48f;
-      --white: #fff;
-      --bg: #f5f8f6;
-      --muted: #6b7a75;
+      --verde: #013b27;
+      --verde-chiaro: #046b49;
+      --oro: #d4af37;
+      --oro-chiaro: #ffe48f;
+      --bianco: #fff;
+      --grigio: #f6f8f7;
+      --testo: #334;
     }
 
     body {
-      background: var(--bg);
-      font-family: "Poppins", sans-serif;
-      color: var(--green);
+      font-family: 'Montserrat', sans-serif;
+      background: var(--grigio);
+      color: var(--testo);
+      margin: 0;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
+    /* ===== STRUTTURA PRINCIPALE ===== */
     .booking-shell {
       max-width: 1100px;
       margin: 3rem auto;
-      background: var(--white);
-      border-radius: 18px;
+      background: var(--bianco);
+      border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
       display: flex;
       flex-wrap: wrap;
     }
 
-    /* ===== LEFT SIDE ===== */
+    /* ===== COLONNA SINISTRA ===== */
     .left-col {
       flex: 1 1 360px;
-      background: linear-gradient(135deg, var(--green), var(--green-light));
+      background: linear-gradient(135deg, var(--verde), var(--verde-chiaro));
       color: #fff;
       padding: 2rem;
       display: flex;
@@ -56,14 +61,14 @@
 
     .activity-title {
       font-weight: 800;
-      color: var(--gold);
+      color: var(--oro);
       font-size: 1.5rem;
-      margin: 1rem 0 0.5rem;
+      margin-top: 1rem;
     }
 
     .activity-desc {
+      color: #eaf6ee;
       font-size: 0.95rem;
-      color: #e9f5ee;
       margin-bottom: 1rem;
     }
 
@@ -76,13 +81,12 @@
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      margin: 0.4rem 0;
       color: #f5f5f5;
-      font-size: 0.93rem;
+      font-size: 0.9rem;
     }
 
     .activity-meta i {
-      color: var(--gold);
+      color: var(--oro);
       width: 20px;
     }
 
@@ -92,8 +96,7 @@
 
     .animal-block label {
       font-weight: 600;
-      color: var(--gold-light);
-      margin-bottom: 0.5rem;
+      color: var(--oro-chiaro);
     }
 
     .animal-block select {
@@ -104,7 +107,7 @@
       font-size: 1rem;
     }
 
-    /* ===== RIGHT SIDE ===== */
+    /* ===== COLONNA DESTRA ===== */
     .right-col {
       flex: 2 1 700px;
       padding: 2rem;
@@ -114,7 +117,7 @@
     }
 
     .calendar-box, .slots-box {
-      background: var(--white);
+      background: var(--bianco);
       border: 1px solid #eef2ef;
       border-radius: 15px;
       padding: 1.2rem;
@@ -123,31 +126,28 @@
 
     .box-title {
       font-weight: 700;
-      color: var(--green);
-      margin-bottom: 0.8rem;
+      color: var(--verde);
       text-align: center;
+      margin-bottom: 0.8rem;
     }
 
     .cal-head {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.8rem;
+      align-items: center;
     }
 
     .cal-nav button {
       border: none;
-      background: var(--white);
+      background: var(--bianco);
       border-radius: 50%;
       width: 35px;
       height: 35px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
-      color: var(--green);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      color: var(--verde);
     }
 
-    .cal-month {
-      font-weight: 700;
-    }
+    .cal-month { font-weight: 700; }
 
     .weekday {
       display: grid;
@@ -155,8 +155,8 @@
       text-align: center;
       font-weight: 600;
       font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
+      color: #999;
+      margin: 0.6rem 0;
     }
 
     .cal-grid {
@@ -169,10 +169,15 @@
       padding: 0.65rem 0;
       text-align: center;
       border-radius: 50%;
-      cursor: pointer;
       background: #f1f4f3;
       font-weight: 600;
-      transition: all 0.3s ease;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .day:hover:not(.is-disabled) {
+      background: var(--oro);
+      color: var(--verde);
     }
 
     .day.is-disabled {
@@ -180,60 +185,52 @@
       cursor: not-allowed;
     }
 
-    .day:hover:not(.is-disabled) {
-      background: var(--gold);
-      color: var(--green);
-    }
-
     .day.is-selected {
-      background: var(--green);
+      background: var(--verde);
       color: #fff;
+      outline: 2px solid var(--oro);
+      outline-offset: 2px;
     }
 
     .slot {
-      border: 2px solid var(--gold);
-      border-radius: 50px;
-      padding: 0.5rem;
+      border: 2px solid var(--oro);
+      border-radius: 40px;
+      padding: 0.6rem;
       text-align: center;
       margin-bottom: 0.6rem;
       font-weight: 600;
-      transition: 0.3s;
       cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .slot:hover:not(.disabled) {
+      background: var(--oro);
+      color: var(--verde);
+    }
+
+    .slot.is-selected {
+      background: var(--verde);
+      color: #fff;
     }
 
     .slot.disabled {
       opacity: 0.5;
       cursor: not-allowed;
-      background: #f4f4f4;
-      color: #888;
-      border-color: #ddd;
-    }
-
-    .slot:hover:not(.disabled) {
-      background: var(--gold);
-      color: var(--green);
-    }
-
-    .slot.is-selected {
-      background: var(--green);
-      color: #fff;
-      border-color: var(--green);
     }
 
     .submit-wrap {
-      width: 100%;
       text-align: center;
-      padding: 1.5rem 0 2rem;
+      padding: 2rem 0 3rem;
     }
 
     .btn-lux {
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: var(--green);
+      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+      color: var(--verde);
       font-weight: 700;
       border: none;
       border-radius: 40px;
       padding: 0.9rem 2.5rem;
-      box-shadow: 0 8px 25px rgba(212,175,55,0.4);
+      box-shadow: inset 0 0 3px rgba(255,255,255,0.5), 0 8px 25px rgba(212,175,55,0.4);
       transition: 0.3s ease;
     }
 
@@ -243,207 +240,185 @@
     }
 
     .btn-lux:disabled {
-      opacity: 0.5;
+      opacity: 0.6;
       cursor: not-allowed;
     }
 
     @media (max-width: 900px) {
       .right-col { flex-direction: column; }
+      .left-col { padding: 2rem 1.5rem; }
     }
   </style>
 </head>
 
 <body>
+  <th:block th:insert="~{fragments/navbar}"></th:block>
 
-<th:block th:insert="~{fragments/navbar}"></th:block>
+  <form id="formPrenotazione" method="get" action="/effettuaPrenotazione" th:object="${prenotazioneForm}">
+    <input type="hidden" id="idAnnuncio" name="idAnnuncio" th:value="${annuncio.id}" />
 
-<form id="formPrenotazione" method="get" action="/effettuaPrenotazione" th:object="${prenotazioneForm}">
-  <input type="hidden" id="idAnnuncio" name="idAnnuncio" th:value="${annuncio.id}"/>
-
-  <div class="booking-shell">
-    <!-- SINISTRA -->
-    <aside class="left-col">
-      <div id="carouselFoto" class="carousel slide mb-3" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active" th:if="${!#lists.isEmpty(annuncio.foto)}"
-               th:each="foto, stat : ${annuncio.foto}"
-               th:classappend="${stat.index == 0}? 'active'">
-            <img th:src="@{/img(id=${foto.id})}" alt="foto">
+    <div class="booking-shell">
+      <!-- SINISTRA -->
+      <aside class="left-col">
+        <div id="carouselFoto" class="carousel slide mb-3" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div th:each="foto, stat : ${annuncio.foto}" class="carousel-item" th:classappend="${stat.index == 0}? 'active'">
+              <img th:src="@{/img(id=${foto.id})}" alt="foto">
+            </div>
+            <div th:if="${#lists.isEmpty(annuncio.foto)}" class="carousel-item active">
+              <img src="/images/default-pet.png" alt="foto default">
+            </div>
           </div>
-          <div class="carousel-item" th:if="${#lists.isEmpty(annuncio.foto)}">
-            <img src="/images/default-pet.png" alt="foto default">
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselFoto" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselFoto" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+
+        <div>
+          <div class="activity-title" th:text="${annuncio.nomeAttivita}">Attività</div>
+          <p class="activity-desc" th:text="${annuncio.descrizione}"></p>
+          <ul class="activity-meta">
+            <li><i class="fa-solid fa-paw"></i><span th:text="${annuncio.serviziOfferti}"></span></li>
+            <li><i class="fa-solid fa-location-dot"></i>
+              <span th:text="${annuncio.indirizzoAttivita + ', ' + annuncio.provinciaAttivita}"></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="animal-block">
+          <label for="animale">🐾 Seleziona animale</label>
+          <select id="animale" name="idAnimale" required>
+            <option value="" disabled selected>— Scegli —</option>
+            <option th:each="animale : ${cliente != null ? cliente.animali : {}}"
+                    th:value="${animale.id}" th:text="${animale.nome}"></option>
+          </select>
+        </div>
+      </aside>
+
+      <!-- DESTRA -->
+      <section class="right-col">
+        <div class="calendar-box">
+          <div class="box-title">📅 Scegli una data</div>
+          <div class="cal-head">
+            <button type="button" id="prevMonth"><i class="fa-solid fa-chevron-left"></i></button>
+            <div id="calMonthLabel" class="cal-month"></div>
+            <button type="button" id="nextMonth"><i class="fa-solid fa-chevron-right"></i></button>
           </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselFoto" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselFoto" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
-      </div>
 
-      <div>
-        <div class="activity-title" th:text="${annuncio.nomeAttivita}">DoctorVet</div>
-        <p class="activity-desc" th:text="${annuncio.descrizione}">
-          Prenota un consulto personalizzato per il tuo amico a quattro zampe.
-        </p>
-        <ul class="activity-meta">
-          <li><i class="fa-solid fa-paw"></i><span th:text="${annuncio.serviziOfferti}">Servizi Offerti</span></li>
-          <li><i class="fa-solid fa-location-dot"></i><span th:text="${annuncio.indirizzoAttivita + ', ' + annuncio.provinciaAttivita}">Roma (RM)</span></li>
-        </ul>
-      </div>
-
-      <div class="animal-block">
-        <label for="animale">🐾 Seleziona animale</label>
-        <select id="animale" name="idAnimale" required>
-          <option value="" disabled selected>— Scegli —</option>
-          <option th:each="animale : ${cliente != null ? cliente.animali : {}}"
-                  th:value="${animale.id}"
-                  th:text="${animale.nome}">
-          </option>
-        </select>
-      </div>
-    </aside>
-
-    <!-- DESTRA -->
-    <section class="right-col">
-      <div class="calendar-box">
-        <div class="box-title">📅 Scegli una data</div>
-        <div class="cal-head">
-          <button type="button" id="prevMonth"><i class="fa-solid fa-chevron-left"></i></button>
-          <div class="cal-month" id="calMonthLabel"></div>
-          <button type="button" id="nextMonth"><i class="fa-solid fa-chevron-right"></i></button>
+          <div class="weekday">
+            <div>LUN</div><div>MAR</div><div>MER</div><div>GIO</div><div>VEN</div><div>SAB</div><div>DOM</div>
+          </div>
+          <div id="calGrid" class="cal-grid"></div>
+          <input type="date" id="dataVisita" name="dataVisita" class="d-none" required>
         </div>
 
-        <div class="weekday">
-          <div>LUN</div><div>MAR</div><div>MER</div><div>GIO</div><div>VEN</div><div>SAB</div><div>DOM</div>
+        <div class="slots-box">
+          <div class="box-title">🕒 Orari disponibili</div>
+          <div id="slotsList" aria-live="polite"><p class="text-muted">Seleziona una data.</p></div>
+          <select id="listavisite" name="idVisita" class="d-none" required></select>
         </div>
+      </section>
+    </div>
 
-        <div id="calGrid" class="cal-grid"></div>
-        <input type="date" id="dataVisita" name="dataVisita" class="d-none" required>
-      </div>
+    <div class="submit-wrap">
+      <button id="btnPrenota" class="btn btn-lux" type="submit" disabled>Prenota Ora</button>
+    </div>
+  </form>
 
-      <div class="slots-box">
-        <div class="box-title">🕒 Orari disponibili</div>
-        <div id="slotsList">
-          <p class="text-muted">Seleziona una data per vedere gli orari disponibili.</p>
-        </div>
-        <select id="listavisite" name="idVisita" class="d-none" required></select>
-      </div>
-    </section>
-  </div>
+  <th:block th:insert="~{fragments/footbar}"></th:block>
 
-  <div class="submit-wrap">
-    <button id="btnPrenota" class="btn btn-lux" type="submit" disabled>Prenota Ora</button>
-  </div>
-</form>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+  <script src="/js/AjaxVisite.js" defer></script>
 
-<th:block th:insert="~{fragments/footbar}"></th:block>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const calGrid = document.getElementById('calGrid');
+      const monthLabel = document.getElementById('calMonthLabel');
+      const dataVisitaInput = document.getElementById('dataVisita');
+      const listavisite = document.getElementById('listavisite');
+      const slotsList = document.getElementById('slotsList');
+      const btnPrenota = document.getElementById('btnPrenota');
+      const animale = document.getElementById('animale');
+      let viewYear, viewMonth;
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/js/AjaxVisite.js"></script>
+      function setView(date) {
+        viewYear = date.getFullYear();
+        viewMonth = date.getMonth();
+        renderCalendar();
+      }
 
-<script>
-  const calGrid = document.getElementById('calGrid');
-  const monthLabel = document.getElementById('calMonthLabel');
-  const dataVisitaInput = document.getElementById('dataVisita');
-  const listavisite = document.getElementById('listavisite');
-  const slotsList = document.getElementById('slotsList');
-  const btnPrenota = document.getElementById('btnPrenota');
-  const animale = document.getElementById('animale');
-  let viewYear, viewMonth;
+      function monthName(y, m) {
+        return new Date(y, m).toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+      }
 
-  function setViewTo(date) {
-    viewYear = date.getFullYear();
-    viewMonth = date.getMonth();
-    renderCalendar();
-  }
+      function renderCalendar() {
+        calGrid.innerHTML = '';
+        monthLabel.textContent = monthName(viewYear, viewMonth);
+        const first = new Date(viewYear, viewMonth, 1);
+        const startIdx = (first.getDay() + 6) % 7;
+        const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+        const today = new Date(); today.setHours(0, 0, 0, 0);
 
-  function itMonthName(y, m) {
-    return new Date(y, m, 1).toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
-  }
+        for (let i = 0; i < startIdx; i++) calGrid.appendChild(document.createElement('div'));
+        for (let d = 1; d <= daysInMonth; d++) {
+          const cell = document.createElement('div');
+          cell.className = 'day';
+          cell.textContent = d;
+          const date = new Date(viewYear, viewMonth, d); date.setHours(0,0,0,0);
+          if (date <= today) cell.classList.add('is-disabled');
+          else cell.onclick = () => {
+            document.querySelectorAll('.day').forEach(el => el.classList.remove('is-selected'));
+            cell.classList.add('is-selected');
+            const iso = `${viewYear}-${String(viewMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            dataVisitaInput.value = iso;
+            dataVisitaInput.dispatchEvent(new Event('change', { bubbles: true }));
+            slotsList.innerHTML = '<p class="text-muted">Caricamento orari...</p>';
+            btnPrenota.disabled = true;
+          };
+          calGrid.appendChild(cell);
+        }
+      }
 
-  function renderCalendar() {
-    calGrid.innerHTML = '';
-    monthLabel.textContent = itMonthName(viewYear, viewMonth);
-    const firstDay = new Date(viewYear, viewMonth, 1);
-    const startIndex = (firstDay.getDay() + 6) % 7;
-    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-    const today = new Date(); today.setHours(0, 0, 0, 0);
+      document.getElementById('prevMonth').onclick = () => setView(new Date(viewYear, viewMonth - 1, 1));
+      document.getElementById('nextMonth').onclick = () => setView(new Date(viewYear, viewMonth + 1, 1));
 
-    for (let i = 0; i < startIndex; i++) calGrid.appendChild(document.createElement('div'));
+      new MutationObserver(() => setTimeout(buildSlots, 100)).observe(listavisite, { childList: true });
 
-    for (let d = 1; d <= daysInMonth; d++) {
-      const cell = document.createElement('div');
-      cell.className = 'day';
-      cell.textContent = d;
-      const date = new Date(viewYear, viewMonth, d); date.setHours(0, 0, 0, 0);
-
-      // Disabilita il giorno corrente e quelli nel passato
-      if (date <= today) cell.classList.add('is-disabled');
-      else {
-        cell.addEventListener('click', () => {
-          document.querySelectorAll('.day').forEach(el => el.classList.remove('is-selected'));
-          cell.classList.add('is-selected');
-          const iso = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-          dataVisitaInput.value = iso;
-
-          // Trigger AjaxVisite.js
-          dataVisitaInput.dispatchEvent(new Event('change', { bubbles: true }));
-          dataVisitaInput.dispatchEvent(new Event('blur', { bubbles: true }));
-
-          slotsList.innerHTML = '<p class="text-muted">Caricamento orari...</p>';
-          btnPrenota.disabled = true;
+      function buildSlots() {
+        slotsList.innerHTML = '';
+        const opts = [...listavisite.options];
+        if (!opts.length) return slotsList.innerHTML = '<p class="text-muted">Nessun orario disponibile.</p>';
+        opts.forEach(opt => {
+          const div = document.createElement('div');
+          div.className = 'slot';
+          div.textContent = opt.textContent;
+          if (opt.textContent.includes('Seleziona') || opt.textContent.includes('passato'))
+            div.classList.add('disabled');
+          else div.onclick = () => {
+            document.querySelectorAll('.slot').forEach(s => s.classList.remove('is-selected'));
+            div.classList.add('is-selected');
+            listavisite.value = opt.value;
+            listavisite.dispatchEvent(new Event('change'));
+            enableSubmit();
+          };
+          slotsList.appendChild(div);
         });
       }
-      calGrid.appendChild(cell);
-    }
-  }
 
-  document.getElementById('prevMonth').onclick = () => setViewTo(new Date(viewYear, viewMonth - 1, 1));
-  document.getElementById('nextMonth').onclick = () => setViewTo(new Date(viewYear, viewMonth + 1, 1));
-
-  const observer = new MutationObserver(() => setTimeout(rebuildSlots, 100));
-  observer.observe(listavisite, { childList: true });
-
-  function rebuildSlots() {
-    slotsList.innerHTML = '';
-    const opts = [...listavisite.options];
-    if (!opts.length) {
-      slotsList.innerHTML = '<p class="text-muted">Nessun orario disponibile.</p>';
-      return;
-    }
-    opts.forEach(opt => {
-      const div = document.createElement('div');
-      div.className = 'slot';
-      div.textContent = opt.textContent;
-
-      if (opt.textContent.includes('Seleziona') || opt.textContent.includes('Data nel passato')) {
-        div.classList.add('disabled');
-      } else {
-        div.onclick = () => {
-          document.querySelectorAll('.slot').forEach(s => s.classList.remove('is-selected'));
-          div.classList.add('is-selected');
-          listavisite.value = opt.value;
-          listavisite.dispatchEvent(new Event('change', { bubbles: true }));
-          maybeEnableSubmit();
-        };
+      function enableSubmit() {
+        btnPrenota.disabled = !(animale.value && dataVisitaInput.value && listavisite.value);
       }
 
-      slotsList.appendChild(div);
+      animale.onchange = enableSubmit;
+      listavisite.onchange = enableSubmit;
+      dataVisitaInput.onchange = enableSubmit;
+
+      setView(new Date());
     });
-  }
-
-  function maybeEnableSubmit() {
-    btnPrenota.disabled = !(animale.value && dataVisitaInput.value && listavisite.value);
-  }
-
-  animale.addEventListener('change', maybeEnableSubmit);
-  listavisite.addEventListener('change', maybeEnableSubmit);
-  dataVisitaInput.addEventListener('change', maybeEnableSubmit);
-
-  setViewTo(new Date());
-</script>
+  </script>
 </body>
 </html>

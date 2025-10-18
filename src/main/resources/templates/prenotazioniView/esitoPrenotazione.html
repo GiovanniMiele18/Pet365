@@ -1,36 +1,152 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="it">
-
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="fragments/head"></th:block>
-    <title>Just Traditions - Esito Prenotazione</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <th:block th:insert="~{fragments/head}"></th:block>
+  <title>Pet365 - Esito Prenotazione</title>
+
+  <!-- ✅ Bootstrap 5.3.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ✅ Font Awesome 6.6.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <!-- ✅ Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --verde: #013220;
+      --verde-scuro: #021f13;
+      --oro: #ffd700;
+      --oro-chiaro: #fff4a3;
+      --bianco: #ffffff;
+      --rosso: #ff4d4d;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-scuro) 100%);
+      color: var(--oro);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Contenitore centrale */
+    .result-container {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card-result {
+      background: rgba(1, 46, 31, 0.95);
+      border: 2px solid var(--oro);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      color: var(--oro);
+      text-align: center;
+      padding: 2rem;
+      max-width: 700px;
+      width: 100%;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card-result:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+    }
+
+    .card-result img {
+      width: 280px;
+      height: auto;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h2 {
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(255,215,0,0.4);
+      margin-bottom: 1rem;
+    }
+
+    .lead {
+      color: var(--oro-chiaro);
+      font-weight: 500;
+      font-size: 1.2rem;
+    }
+
+    .text-danger {
+      color: var(--rosso) !important;
+      font-weight: 600;
+    }
+
+    /* Pulsante home */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+      color: var(--verde);
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 22px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #fff, var(--oro));
+      color: var(--verde);
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(255,215,0,0.6);
+    }
+  </style>
 </head>
 
 <body>
-<th:block th:include="fragments/navbar"></th:block>
 
-<div class="d-flex align-items-center justify-content-center vh-100">
-    <div class="text-center row">
-        <div class=" col-md-6">
-            <img style="width: 350px; height: 270px;" src="https://bit.ly/3w76ceZ" alt=""
-                 class="img-fluid">
-        </div>
+  <!-- ✅ Navbar -->
+  <th:block th:insert="~{fragments/navbar}"></th:block>
 
-        <div class=" col-md-6 mt-5">
-            <p class="fs-3"><span class="text-danger">Il sistema bancario</span> ha fornito la seguente risposta:</p>
+  <!-- ✅ Contenuto principale -->
+  <div class="result-container">
+    <div class="card-result">
+      <img src="https://i.imgur.com/8zNQh4L.png" alt="Successo" />
 
-            <p class="lead"> Il pagamento è andato a buon fine
-            </p>
-            <a href="/" class="btn btn-primary">Vai alla Home</a>
-        </div>
+      <h2><i class="fa-solid fa-circle-check me-2"></i>Prenotazione completata!</h2>
 
+      <p class="fs-5">
+        <span class="text-danger">Il sistema bancario</span> ha fornito la seguente risposta:
+      </p>
+
+      <p class="lead mt-3">
+        ✅ Il pagamento è andato <strong>a buon fine</strong>!<br>
+        Riceverai una conferma via e-mail a breve.
+      </p>
+
+      <div class="mt-4">
+        <a href="/" class="btn btn-primary">
+          <i class="fa-solid fa-house me-2"></i>Vai alla Home
+        </a>
+      </div>
     </div>
-</div>
+  </div>
 
-<th:block th:include="fragments/footbar"></th:block>
+  <!-- ✅ Footer -->
+  <th:block th:insert="~{fragments/footbar}"></th:block>
+  <th:block th:insert="~{fragments/scripts}"></th:block>
 
-<th:block th:include="fragments/scripts"></th:block>
-<script src="/js/navbar.js"></script>
+  <!-- ✅ Script -->
+  <script src="/js/navbar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

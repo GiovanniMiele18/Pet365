@@ -4,207 +4,142 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <th:block th:insert="~{fragments/head}"></th:block>
-  <title>Pet365 - Sottometti Annuncio</title>
+  <title>Pet365 – Sottometti Annuncio</title>
 
-  <!-- ✅ Bootstrap 5.3.3 -->
+  <!-- ✅ Bootstrap & Font -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- ✅ Font Awesome 6.6.0 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
-
-  <!-- ✅ Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --verde: #013220;
       --verde-scuro: #021f13;
+      --verde-medio: #064d30;
       --oro: #ffd700;
-      --oro-chiaro: #fff4a3;
-      --rosso: #ff6666;
-      --bianco: #ffffff;
+      --oro-chiaro: #fff8b3;
+      --rosso: #ff5c5c;
+      --bianco: #fefefe;
     }
 
     body {
-      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-scuro) 100%);
-      color: var(--oro);
+      background: linear-gradient(145deg, var(--verde-medio), var(--verde-scuro));
       font-family: 'Montserrat', sans-serif;
+      color: var(--bianco);
       min-height: 100vh;
     }
 
     .card {
-      background-color: rgba(1, 50, 32, 0.9);
+      background-color: rgba(1, 40, 25, 0.9);
       border: 2px solid var(--oro);
-      border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+      padding: 2rem;
     }
 
     .card-header {
       background: linear-gradient(90deg, var(--verde), var(--verde-scuro));
-      color: var(--oro);
       border-bottom: 2px solid var(--oro);
-      font-size: 1.5rem;
+      color: var(--oro);
       font-weight: 700;
+      font-size: 1.6rem;
+      text-align: center;
+      border-radius: 12px 12px 0 0;
     }
 
     label {
       font-weight: 600;
-      margin-bottom: 0.3rem;
+      color: var(--oro-chiaro);
     }
 
     .form-control, .form-select {
-      background-color: #022a1c;
-      color: var(--oro);
+      background-color: rgba(255,255,255,0.08);
+      color: var(--bianco);
       border: 1px solid var(--oro);
-      transition: all 0.3s ease;
+      transition: 0.3s;
     }
-
     .form-control:focus, .form-select:focus {
-      background-color: var(--verde);
-      border-color: var(--oro-chiaro);
-      box-shadow: 0 0 10px var(--oro);
+      border-color: var(--oro);
+      box-shadow: 0 0 10px rgba(255,215,0,0.6);
+      background-color: rgba(255,255,255,0.15);
     }
 
-    textarea {
-      resize: none;
-    }
+    textarea { resize: none; }
 
-    .text-danger {
-      color: var(--rosso) !important;
-      font-weight: 600;
-      margin-top: 5px;
-    }
+    .text-danger { color: var(--rosso) !important; font-weight: 600; }
 
     .btn-primary {
       background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
       color: var(--verde);
-      font-weight: 600;
+      font-weight: 700;
       border: none;
       border-radius: 10px;
-      padding: 10px 30px;
-      transition: all 0.3s ease;
+      padding: 12px 30px;
       box-shadow: 0 0 10px rgba(255,215,0,0.4);
+      transition: 0.3s;
     }
-
     .btn-primary:hover {
       background: linear-gradient(135deg, #fff, var(--oro));
-      color: var(--verde);
       transform: translateY(-2px);
-      box-shadow: 0 0 20px rgba(255,215,0,0.6);
     }
 
-    .add_form_field0, .add_form_field1, .add_form_field2,
-    .add_form_field3, .add_form_field4, .add_form_field5, .add_form_field6 {
-      background: none;
-      border: none;
-      color: var(--oro);
-      cursor: pointer;
-      transition: all 0.2s;
+    /* Giorni */
+    .day-container {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,215,0,0.3);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
     }
-    .add_form_field0:hover, .add_form_field1:hover,
-    .add_form_field2:hover, .add_form_field3:hover,
-    .add_form_field4:hover, .add_form_field5:hover,
-    .add_form_field6:hover {
-      color: var(--oro-chiaro);
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--oro);
+      margin-bottom: .8rem;
+    }
+    .btn-add {
+      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+      border: none;
+      color: var(--verde);
+      font-weight: 600;
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+    .btn-add:hover {
+      background: linear-gradient(135deg, #fff, var(--oro));
+      box-shadow: 0 0 10px rgba(255,215,0,0.5);
+    }
+
+    .time-row {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,215,0,0.25);
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .btn-delete {
+      color: var(--rosso);
+      background: transparent;
+      border: none;
+      font-size: 1.1rem;
+      transition: 0.3s;
+    }
+    .btn-delete:hover {
+      color: #ff1e1e;
       transform: scale(1.1);
     }
 
-    .delete {
-      color: var(--rosso);
-      font-weight: bold;
-      margin-left: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .delete:hover {
-      color: #ff9999;
-      text-shadow: 0 0 8px #ff6666;
-    }
-
-    .day-container {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,215,0,0.3);
-  border-radius: 15px;
-  padding: 1rem 1.5rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.day-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--oro);
-  margin-bottom: .8rem;
-}
-
-.btn-add {
-  background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
-  border: none;
-  color: var(--verde);
-  font-weight: 600;
-  border-radius: 50px;
-  padding: 6px 16px;
-  font-size: 0.9rem;
-  transition: 0.3s;
-}
-.btn-add:hover {
-  background: linear-gradient(135deg, #fff, var(--oro));
-  box-shadow: 0 0 10px rgba(255,215,0,0.5);
-}
-
-.time-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  background-color: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,215,0,0.25);
-  border-radius: 10px;
-  padding: 0.6rem 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.time-inputs {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.time-field {
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,215,0,0.4);
-  color: var(--oro);
-  border-radius: 8px;
-  padding: 0.3rem 0.6rem;
-  transition: all 0.3s ease;
-}
-.time-field:focus {
-  border-color: var(--oro);
-  box-shadow: 0 0 8px rgba(255,215,0,0.4);
-  background: rgba(255,255,255,0.25);
-  color: var(--bianco);
-  outline: none;
-}
-
-.btn-delete {
-  color: #ff5c5c;
-  background: transparent;
-  border: none;
-  font-size: 1.1rem;
-  transition: 0.3s;
-}
-.btn-delete:hover {
-  color: #ff1e1e;
-  transform: scale(1.1);
-}
-
-.text-gold { color: var(--oro); }
-
     @media (max-width: 768px) {
-      .col-md-8 { width: 90% !important; }
+      .col-md-8 { width: 95% !important; }
+      .time-row { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -214,30 +149,29 @@
 
   <div class="container py-5">
     <div class="card mx-auto col-md-8">
-      <div class="card-header text-center">
+      <div class="card-header">
         <i class="fa-solid fa-bullhorn me-2"></i>Pubblicazione Annuncio
       </div>
 
       <div class="card-body">
         <form th:action="@{/sottomissioneAnnuncio}" th:object="${annuncioForm}" th:method="post" enctype="multipart/form-data">
-          <!-- Nome Attività -->
+          
           <div class="mb-3">
             <label for="nomeAttivita"><i class="fa-solid fa-building me-2"></i>Nome Attività</label>
-            <input type="text" th:field="*{nomeAttivita}" id="nomeAttivita" class="form-control" placeholder="Nome dell'attività" required>
-            <div class="text-danger" th:if="${#fields.hasErrors('nomeAttivita')}" th:errors="*{nomeAttivita}"></div>
+            <input type="text" id="nomeAttivita" th:field="*{nomeAttivita}" class="form-control" required>
           </div>
 
-          <!-- Descrizione -->
           <div class="mb-3">
             <label for="descAttivita"><i class="fa-solid fa-quote-left me-2"></i>Descrizione</label>
-            <textarea id="descAttivita" th:field="*{descrizione}" class="form-control" placeholder="Descrizione attività" rows="6" required></textarea>
-            <div class="text-danger" th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}"></div>
+            <textarea id="descAttivita" th:field="*{descrizione}" class="form-control" rows="5" required></textarea>
           </div>
 
-      
-       GIORNI DELLA SETTIMANA
-  ============================ -->
-  <div class="form-group mb-4">
+          <!-- Giorni -->
+          <div class="form-group mb-4">
+            <label class="fw-bold fs-5 mb-3 text-warning">Inserisci giorni e fasce orarie:</label>
+
+            <!-- Lunedì → Domenica -->
+             <div class="form-group mb-4">
   <label class="fw-bold fs-5 mb-3 text-gold">Inserisci giorni e fasce orarie:</label>
 
   <!-- Esempio ripetuto per ciascun giorno -->
@@ -412,43 +346,34 @@
   </div>
 </div>
 
-          <!-- Indirizzo -->
           <div class="mb-3">
-            <label for="indirizzo"><i class="fa-solid fa-location-dot me-2"></i>Indirizzo</label>
-            <input type="text" th:field="*{indirizzoAttivita}" id="indirizzo" class="form-control" placeholder="Inserisci l'indirizzo" required>
-            <div class="text-danger" th:if="${#fields.hasErrors('indirizzoAttivita')}" th:errors="*{indirizzoAttivita}"></div>
+            <label><i class="fa-solid fa-location-dot me-2"></i>Indirizzo</label>
+            <input type="text" th:field="*{indirizzoAttivita}" class="form-control" required>
           </div>
 
-          <!-- Provincia -->
           <div class="mb-3">
             <label><i class="fa-solid fa-map me-2"></i>Provincia</label>
             <select th:field="*{provinciaAttivita}" class="form-select">
               <option value="">Seleziona provincia</option>
               <option th:each="provincia : ${@province.province}" th:value="${provincia}" th:text="${provincia}"></option>
             </select>
-            <div class="text-danger" th:if="${#fields.hasErrors('provinciaAttivita')}" th:errors="*{provinciaAttivita}"></div>
           </div>
 
-          <!-- Servizi Offerti -->
           <div class="mb-3">
             <label><i class="fa-solid fa-paw me-2"></i>Servizi Offerti</label>
             <select th:field="*{serviziOfferti}" class="form-select">
               <option value="">Seleziona servizio</option>
               <option th:each="servizio : ${@servizi.servizi}" th:value="${servizio}" th:text="${servizio}"></option>
             </select>
-            <div class="text-danger" th:if="${#fields.hasErrors('serviziOfferti')}" th:errors="*{serviziOfferti}"></div>
           </div>
 
-          <!-- Foto -->
           <div class="mb-4">
-            <label for="formFileSm"><i class="fa-regular fa-images me-2"></i>Inserisci foto</label>
-            <input class="form-control form-control-sm" type="file" multiple th:field="*{foto}" id="formFileSm" required>
-            <div class="text-danger" th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}"></div>
+            <label><i class="fa-regular fa-images me-2"></i>Inserisci Foto</label>
+            <input class="form-control form-control-sm" type="file" multiple th:field="*{foto}">
           </div>
 
-          <!-- Submit -->
           <div class="text-center">
-            <button id="bottonSubmit" class="btn btn-primary w-50" type="submit">
+            <button class="btn btn-primary w-50" type="submit">
               <i class="fa-solid fa-paper-plane me-2"></i>Sottometti Annuncio
             </button>
           </div>
@@ -459,10 +384,6 @@
 
   <th:block th:insert="~{fragments/footbar}"></th:block>
   <th:block th:insert="~{fragments/scripts}"></th:block>
-
-  <!-- ✅ Bootstrap + JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/navbar.js"></script>
-  <script src="/js/sottomettiannuncio.js"></script>
 </body>
 </html>

@@ -1,70 +1,166 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="it">
-
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="fragments/head"></th:block>
-    <title>Just Traditions - Le Mie Prenotazioni</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <th:block th:insert="~{fragments/head}"></th:block>
+  <title>Pet365 - Le Mie Prenotazioni</title>
+
+  <!-- ✅ Bootstrap 5.3.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ✅ Font Awesome 6.6.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <!-- ✅ Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --verde: #013220;
+      --verde-scuro: #021f13;
+      --oro: #ffd700;
+      --oro-chiaro: #fff4a3;
+      --bianco: #ffffff;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-scuro) 100%);
+      color: var(--oro);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+    }
+
+    h2 {
+      color: var(--oro);
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ✅ Tabella prenotazioni */
+    .table {
+      border: 2px solid var(--oro);
+      border-radius: 12px;
+      overflow: hidden;
+      color: var(--oro);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .table thead {
+      background: linear-gradient(135deg, var(--verde), var(--verde-scuro));
+      color: var(--oro);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .table tbody tr:hover {
+      background-color: rgba(255, 215, 0, 0.15);
+      transition: 0.3s ease;
+    }
+
+    th, td {
+      vertical-align: middle;
+      text-align: center;
+      padding: 14px 10px;
+    }
+
+    img.rounded-circle {
+      border: 2px solid var(--oro);
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    img.rounded-circle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+
+    /* ✅ Pulsanti */
+    .btn-outline-success {
+      border: 2px solid var(--oro);
+      color: var(--oro);
+      font-weight: 600;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-success:hover {
+      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+      color: var(--verde);
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+    }
+
+    .table td p {
+      margin: 0;
+      font-weight: 600;
+      color: var(--oro-chiaro);
+    }
+
+    hr {
+      border-top: 1px solid rgba(255,215,0,0.3);
+    }
+  </style>
 </head>
 
 <body>
-<th:block th:include="fragments/navbar"></th:block>
-<br><br> <br><br>
-<div class="container">
-    <div class="row">
-        <div align="left">
 
+  <!-- ✅ Navbar -->
+  <th:block th:insert="~{fragments/navbar}"></th:block>
 
-        </div>
-        <div class="panel-body">
-            <table class="table align-middle mb-0 bg-white">
-                <thead class="bg-light">
-                <tr>
-                    <th>Nome attività</th>
-                    <th>Data della visita</th>
-                    <th>Prezzo Della Visita</th>
-                    <th>Numero Delle Persone Prenotate</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr th:each="prenotazione :${prenotazioni}">
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <img
-                                    th:src="@{/img(id=${prenotazione.getVisita().getAnnuncio().getFoto().get(0).id})}"
-                                    class="rounded-circle"
-                                    alt=""
-                                    style="width: 45px; height: 45px"
-                            />
-                            <div class="ms-3">
-                                <p class="fw-bold mb-1"
-                                   th:text="${prenotazione.getVisita().getAnnuncio().getNomeAttivita()}"></p>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="fw-bold mb-1" th:text="${prenotazione.getDataVisita()}"></span>
-                    </td>
-                    <td class="fw-bold mb-1" th:text="${prenotazione.getPrezzoVisita()}">€</td>
-                    <td class="fw-bold mb-1" th:text="${prenotazione.getNumPersonePrenotate()}">persone</td>
-                    <td>
-                        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${prenotazione.getVisita().getAnnuncio().getId()})}"
-                           class="btn btn-outline-success">Vai alla scheda</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
+  <!-- ✅ Contenuto -->
+  <div class="container my-5">
+    <div class="text-center mb-4">
+      <h2><i class="fa-solid fa-calendar-days me-2"></i>Le Mie Prenotazioni</h2>
+      <hr class="mx-auto" style="width: 80%; border-color: var(--oro);" />
     </div>
-</div>
 
-</div>
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Attività</th>
+            <th>Data Visita</th>
+            <th>Prezzo (€)</th>
+            <th>Prenotati</th>
+            <th></th>
+          </tr>
+        </thead>
 
-<th:block th:include="fragments/footbar"></th:block>
+        <tbody>
+          <tr th:each="prenotazione : ${prenotazioni}">
+            <td>
+              <div class="d-flex align-items-center justify-content-center">
+                <img th:src="@{/img(id=${prenotazione.visita.annuncio.foto.get(0).id})}"
+                     class="rounded-circle me-3" alt="Foto attività"
+                     style="width: 55px; height: 55px;">
+                <p th:text="${prenotazione.visita.annuncio.nomeAttivita}"></p>
+              </div>
+            </td>
 
-<th:block th:include="fragments/scripts"></th:block>
-<script src="/js/navbar.js"></script>
+            <td th:text="${prenotazione.dataVisita}"></td>
+            <td th:text="${prenotazione.prezzoVisita} + ' €'"></td>
+            <td th:text="${prenotazione.numPersonePrenotate}"></td>
+
+            <td>
+              <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${prenotazione.visita.annuncio.id})}"
+                 class="btn btn-outline-success">
+                <i class="fa-solid fa-paw me-1"></i> Vai alla Scheda
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ✅ Footer -->
+  <th:block th:insert="~{fragments/footbar}"></th:block>
+  <th:block th:insert="~{fragments/scripts}"></th:block>
+
+  <!-- ✅ Script -->
+  <script src="/js/navbar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
-
 </html>

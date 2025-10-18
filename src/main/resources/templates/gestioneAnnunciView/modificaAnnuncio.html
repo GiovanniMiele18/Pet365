@@ -194,17 +194,185 @@
           </div>
 
           <!-- Nuove fasce orarie -->
-          <div class="mb-3">
-            <label>Inserisci giorni e fasce orarie</label>
-            <div th:each="i : ${#numbers.sequence(0,6)}">
-              <div class="mb-2">
-                <label th:text="${#lists.arrayList('Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica')[i]}"></label>
-                <button type="button" th:attr="class='btn btn-sm btn-outline-warning add_form_field' + ${i}">
-                  <i class="fa fa-plus-square"></i>
-                </button>
-              </div>
-            </div>
+         
+       GIORNI DELLA SETTIMANA
+  ============================ -->
+  <div class="form-group mb-4">
+  <label class="fw-bold fs-5 mb-3 text-gold">Inserisci giorni e fasce orarie:</label>
+
+  <!-- Esempio ripetuto per ciascun giorno -->
+  <!-- ✅ Lunedì -->
+  <div class="day-container">
+    <div class="day-header">
+      <h6><i class="fa-solid fa-calendar-day me-2"></i>Lunedì</h6>
+      <button type="button" class="add_form_field0 btn-add"><i class="fa fa-plus"></i> Aggiungi fascia</button>
+    </div>
+    <div class="day-body container0">
+      <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+        <div th:if="${visita.giorno == T(java.time.DayOfWeek).MONDAY}" class="time-row">
+          <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="MONDAY"/>
+          <div class="time-inputs">
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}" class="form-control time-field"/>
+            <span class="mx-2 text-gold fw-bold">→</span>
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}" class="form-control time-field"/>
           </div>
+          <a href="#" class="btn-delete" title="Rimuovi fascia"><i class="fa fa-trash"></i></a>
+
+          <!-- ⚠️ Messaggi di errore -->
+          <div class="text-danger small mt-1" 
+               th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" 
+               th:errors="*{visite[__${iStat.index}__]}"></div>
+        </div>
+      </th:block>
+    </div>
+  </div>
+
+  <!-- ✅ Martedì -->
+  <div class="day-container">
+    <div class="day-header">
+      <h6><i class="fa-solid fa-calendar-day me-2"></i>Martedì</h6>
+      <button type="button" class="add_form_field1 btn-add"><i class="fa fa-plus"></i> Aggiungi fascia</button>
+    </div>
+    <div class="day-body container1">
+      <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+        <div th:if="${visita.giorno == T(java.time.DayOfWeek).TUESDAY}" class="time-row">
+          <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="TUESDAY"/>
+          <div class="time-inputs">
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}" class="form-control time-field"/>
+            <span class="mx-2 text-gold fw-bold">→</span>
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}" class="form-control time-field"/>
+          </div>
+          <a href="#" class="btn-delete"><i class="fa fa-trash"></i></a>
+          <div class="text-danger small mt-1" 
+               th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" 
+               th:errors="*{visite[__${iStat.index}__]}"></div>
+        </div>
+      </th:block>
+    </div>
+  </div>
+
+  <!-- ✅ Mercoledì -->
+  <div class="day-container">
+    <div class="day-header">
+      <h6><i class="fa-solid fa-calendar-day me-2"></i>Mercoledì</h6>
+      <button type="button" class="add_form_field2 btn-add"><i class="fa fa-plus"></i> Aggiungi fascia</button>
+    </div>
+    <div class="day-body container2">
+      <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+        <div th:if="${visita.giorno == T(java.time.DayOfWeek).WEDNESDAY}" class="time-row">
+          <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="WEDNESDAY"/>
+          <div class="time-inputs">
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}" class="form-control time-field"/>
+            <span class="mx-2 text-gold fw-bold">→</span>
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}" class="form-control time-field"/>
+          </div>
+          <a href="#" class="btn-delete"><i class="fa fa-trash"></i></a>
+          <div class="text-danger small mt-1" 
+               th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" 
+               th:errors="*{visite[__${iStat.index}__]}"></div>
+        </div>
+      </th:block>
+    </div>
+  </div>
+
+  <!-- ✅ Giovedì -->
+  <div class="day-container">
+    <div class="day-header">
+      <h6><i class="fa-solid fa-calendar-day me-2"></i>Giovedì</h6>
+      <button type="button" class="add_form_field3 btn-add"><i class="fa fa-plus"></i> Aggiungi fascia</button>
+    </div>
+    <div class="day-body container3">
+      <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+        <div th:if="${visita.giorno == T(java.time.DayOfWeek).THURSDAY}" class="time-row">
+          <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="THURSDAY"/>
+          <div class="time-inputs">
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}" class="form-control time-field"/>
+            <span class="mx-2 text-gold fw-bold">→</span>
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}" class="form-control time-field"/>
+          </div>
+          <a href="#" class="btn-delete"><i class="fa fa-trash"></i></a>
+          <div class="text-danger small mt-1" 
+               th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" 
+               th:errors="*{visite[__${iStat.index}__]}"></div>
+        </div>
+      </th:block>
+    </div>
+  </div>
+
+  <!-- ✅ Venerdì -->
+  <div class="day-container">
+    <div class="day-header">
+      <h6><i class="fa-solid fa-calendar-day me-2"></i>Venerdì</h6>
+      <button type="button" class="add_form_field4 btn-add"><i class="fa fa-plus"></i> Aggiungi fascia</button>
+    </div>
+    <div class="day-body container4">
+      <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+        <div th:if="${visita.giorno == T(java.time.DayOfWeek).FRIDAY}" class="time-row">
+          <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="FRIDAY"/>
+          <div class="time-inputs">
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}" class="form-control time-field"/>
+            <span class="mx-2 text-gold fw-bold">→</span>
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}" class="form-control time-field"/>
+          </div>
+          <a href="#" class="btn-delete"><i class="fa fa-trash"></i></a>
+          <div class="text-danger small mt-1" 
+               th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" 
+               th:errors="*{visite[__${iStat.index}__]}"></div>
+        </div>
+      </th:block>
+    </div>
+  </div>
+
+  <!-- ✅ Sabato -->
+  <div class="day-container">
+    <div class="day-header">
+      <h6><i class="fa-solid fa-calendar-day me-2"></i>Sabato</h6>
+      <button type="button" class="add_form_field5 btn-add"><i class="fa fa-plus"></i> Aggiungi fascia</button>
+    </div>
+    <div class="day-body container5">
+      <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+        <div th:if="${visita.giorno == T(java.time.DayOfWeek).SATURDAY}" class="time-row">
+          <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="SATURDAY"/>
+          <div class="time-inputs">
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}" class="form-control time-field"/>
+            <span class="mx-2 text-gold fw-bold">→</span>
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}" class="form-control time-field"/>
+          </div>
+          <a href="#" class="btn-delete"><i class="fa fa-trash"></i></a>
+          <div class="text-danger small mt-1" 
+               th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" 
+               th:errors="*{visite[__${iStat.index}__]}"></div>
+        </div>
+      </th:block>
+    </div>
+  </div>
+
+  <!-- ✅ Domenica -->
+  <div class="day-container">
+    <div class="day-header">
+      <h6><i class="fa-solid fa-calendar-day me-2"></i>Domenica</h6>
+      <button type="button" class="add_form_field6 btn-add"><i class="fa fa-plus"></i> Aggiungi fascia</button>
+    </div>
+    <div class="day-body container6">
+      <th:block th:each="visita, iStat : ${annuncioForm.visite}">
+        <div th:if="${visita.giorno == T(java.time.DayOfWeek).SUNDAY}" class="time-row">
+          <input type="hidden" th:field="*{visite[__${iStat.index}__].giorno}" value="SUNDAY"/>
+          <div class="time-inputs">
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioInizio}" class="form-control time-field"/>
+            <span class="mx-2 text-gold fw-bold">→</span>
+            <input type="time" th:field="*{visite[__${iStat.index}__].orarioFine}" class="form-control time-field"/>
+          </div>
+          <a href="#" class="btn-delete"><i class="fa fa-trash"></i></a>
+          <div class="text-danger small mt-1" 
+               th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}" 
+               th:errors="*{visite[__${iStat.index}__]}"></div>
+        </div>
+      </th:block>
+    </div>
+  </div>
+</div>
+
+
 
           <!-- Pulsante submit -->
           <div class="text-center mt-4">

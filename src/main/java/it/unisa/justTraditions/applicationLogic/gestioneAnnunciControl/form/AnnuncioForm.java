@@ -1,6 +1,7 @@
 package it.unisa.justTraditions.applicationLogic.gestioneAnnunciControl.form;
 
 import it.unisa.justTraditions.storage.gestioneAnnunciStorage.entity.Visita;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,9 @@ public class AnnuncioForm {
   @NotNull(message = "Il servizio offerto è obbligatorio")
   private ServiziOffertiEnum serviziOfferti;
 
+  @Valid
   private List<VisitaForm> visite = new ArrayList<>();
+  
   private List<MultipartFile> foto = new ArrayList<>();
 
   public enum ServiziOffertiEnum {

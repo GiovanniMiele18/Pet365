@@ -1,4 +1,4 @@
-<footer th:fragment="footbar" class="custom-footer text-center text-lg-start">
+<footer th:fragment="footbar" class="custom-footer text-center text-lg-start mt-auto">
   <div class="container py-5">
     <div class="row gy-4">
 
@@ -75,18 +75,31 @@
   --bianco: #ffffff;
 }
 
-/* --- FOOTER --- */
+/* --- FOOTER BASE --- */
 .custom-footer {
   background: linear-gradient(180deg, rgba(1,50,32,0.98), rgba(0,30,20,1));
   color: var(--bianco);
   border-top: 2px solid rgba(255,215,0,0.3);
   font-family: 'Montserrat', sans-serif;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
 }
 
-.text-gold { color: var(--oro); }
-.border-gold { border-color: rgba(255,215,0,0.5) !important; }
+/* --- DISTANZA DAL CONTENUTO --- */
+.custom-footer::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(to top, rgba(1,30,20,1) 0%, transparent 100%);
+  box-shadow: 0 -5px 15px rgba(255,215,0,0.2);
+  pointer-events: none;
+}
 
-/* LINK */
+/* --- LINK --- */
 .custom-footer a {
   color: var(--oro);
   text-decoration: none;
@@ -99,24 +112,22 @@
   text-shadow: 0 0 10px rgba(255,215,0,0.8);
 }
 
-/* TITOLI */
-.custom-footer h6, .custom-footer h5 {
+/* --- TESTI --- */
+.text-gold { color: var(--oro); }
+.border-gold { border-color: rgba(255,215,0,0.5) !important; }
+
+.custom-footer h5, .custom-footer h6 {
   letter-spacing: 0.5px;
   margin-bottom: 0.8rem;
 }
 
-/* HR */
-.custom-footer hr {
-  border-top: 1px solid rgba(255,215,0,0.4);
-}
-
-/* COPYRIGHT */
+/* --- COPYRIGHT --- */
 .custom-footer p {
   margin: 0;
   font-weight: 500;
 }
 
-/* RESPONSIVE */
+/* --- RESPONSIVE --- */
 @media (max-width: 767.98px) {
   .custom-footer img {
     margin: 0 auto 15px;
@@ -124,5 +135,19 @@
   .custom-footer ul {
     padding-left: 0;
   }
+}
+
+/* --- STICKY FOOTER LOGIC --- */
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+body > *:not(.custom-footer) {
+  flex: 1 0 auto;
+}
+.custom-footer {
+  flex-shrink: 0;
+  margin-top: 2rem; /* Distanza visiva sopra il footer */
 }
 </style>

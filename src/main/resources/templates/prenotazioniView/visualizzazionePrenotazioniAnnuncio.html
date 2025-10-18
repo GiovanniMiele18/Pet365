@@ -1,106 +1,214 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="it">
-
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="fragments/head"></th:block>
-    <title>Just Traditions - Lista Prenotazioni</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <th:block th:insert="~{fragments/head}"></th:block>
+  <title>Pet365 - Lista Prenotazioni</title>
+
+  <!-- ✅ Bootstrap 5.3.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ✅ Font Awesome 6.6.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <!-- ✅ Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --verde: #013220;
+      --verde-scuro: #021f13;
+      --oro: #ffd700;
+      --oro-chiaro: #fff4a3;
+      --bianco: #ffffff;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-scuro) 100%);
+      color: var(--oro);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+    }
+
+    h2 {
+      color: var(--oro);
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(255,215,0,0.4);
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--oro);
+      margin-bottom: 8px;
+    }
+
+    input[type="date"] {
+      border: 1px solid var(--oro);
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--oro);
+      padding: 8px 10px;
+      transition: all 0.3s ease;
+    }
+
+    input[type="date"]:focus {
+      background-color: rgba(255, 255, 255, 0.2);
+      outline: none;
+      box-shadow: 0 0 10px rgba(255,215,0,0.5);
+    }
+
+    /* ✅ Tabella */
+    .table {
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 2px solid var(--oro);
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: rgba(255,255,255,0.05);
+      color: var(--oro);
+    }
+
+    .table thead {
+      background: linear-gradient(135deg, var(--verde), var(--verde-scuro));
+      color: var(--oro);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .table tbody tr:hover {
+      background-color: rgba(255,215,0,0.15);
+      transition: background-color 0.3s ease;
+    }
+
+    th, td {
+      padding: 12px;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    /* ✅ Pulsanti */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+      color: var(--verde);
+      border: none;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 8px 18px;
+      box-shadow: 0 0 10px rgba(255,215,0,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #fff, var(--oro));
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(255,215,0,0.6);
+    }
+
+    /* ✅ Paginazione */
+    .paging-wrapper {
+      margin-top: 30px;
+    }
+
+    strong {
+      color: var(--oro-chiaro);
+      font-weight: 600;
+      margin: 0 15px;
+    }
+
+    hr {
+      border-top: 1px solid rgba(255,215,0,0.4);
+    }
+
+    @media (max-width: 768px) {
+      .table {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<th:block th:include="fragments/navbar"></th:block>
-<br><br> <br><br>
-<div class="container">
-    <div class="row">
 
-        <div align="center">
+  <!-- ✅ Navbar -->
+  <th:block th:insert="~{fragments/navbar}"></th:block>
 
-            <h2>Prenotazioni</h2>
-
-
-        </div>
-        <hr>
-
-        <div class="form-group">
-            <form id="formdata" action="/visualizzazionePrenotazioniAnnuncio" method="post">
-                <input type="hidden" name="idAnnuncio" th:value="${idAnnuncio}">
-                <label class="active" for="dateStandard">Inserisci data</label>
-                <input type="date" id="dateStandard" name="dataVisita" th:value="${dataVisita}">
-            </form>
-        </div>
-
-        <div class="panel-body">
-            <table class="table align-middle mb-0 bg-white">
-                <thead class="bg-light">
-                <tr>
-                    <th>Nome</th>
-                    <th>Cognome</th>
-                    <th>Codice Fiscale</th>
-                    <th>Data Prenotazione</th>
-                    <th>Fascia oraria</th>
-                    <th>Numero di prenotati</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr th:each="prenotazione :${prenotazioni}">
-                    <td class="fw-bold mb-1" th:text="${prenotazione.cliente.nome}"></td>
-                    <td class="fw-bold mb-1" th:text="${prenotazione.cliente.cognome}"></td>
-                    <td class="fw-bold mb-1" th:text="${prenotazione.cliente.codiceFiscale}"></td>
-                    <td class="fw-bold mb-1" th:text="${prenotazione.dataVisita}"></td>
-                    <td class="fw-bold mb-1"
-                        th:text="${prenotazione.visita.orarioInizio} +' '+ ${prenotazione.visita.orarioFine}"></td>
-                    <td class="fw-bold mb-1" th:text="${prenotazione.numPersonePrenotate}"></td>
-                </tr>
-
-                </tbody>
-            </table>
-
-        </div>
-
-        <!-- Page navigation -->
-
-        <div th:if="${pagina} != null" class="paging-wrapper d-flex flex-wrap justify-content-center mt-3">
-            <form th:method="get" th:action="@{/visualizzazionePrenotazioniAnnuncio}">
-                <input type="hidden" th:field="${dataVisita}">
-                <input type="hidden" th:field="${idAnnuncio}">
-                <input type="hidden" name="pagina" th:value="${pagina -1}">
-
-
-                <button th:if="${pagina > 0}" type="submit" value="Precedente" class="btn btn-primary">Precedente
-                </button>
-                <button th:unless="${pagina > 0}" type="submit" value="Precedente" class="btn btn-primary" disabled>
-                    Precedente
-                </button>
-
-            </form>
-
-            <strong class="paging-wrapper d-flex flex-wrap justify-content-center mt-3"
-                    th:text="'Pagina:'+${pagina+1}"></strong>
-
-            <form th:method="get" th:action="@{/visualizzazioneListaAnnunci}">
-                <input type="hidden" th:field="${dataVisita}">
-                <input type="hidden" th:field="${idAnnuncio}">
-                <input type="hidden" name="pagina" th:value="${pagina +1}">
-
-                <button th:if="${pagineTotali -1 > pagina}" type="submit" value="Precedente" class="btn btn-primary">
-                    Successivo
-                </button>
-                <button th:unless="${pagineTotali -1 > pagina}" type="submit" value="Precedente" class="btn btn-primary"
-                        disabled>Successivo
-                </button>
-            </form>
-
-        </div>
+  <!-- ✅ Contenuto -->
+  <div class="container my-5">
+    <div class="text-center mb-4">
+      <h2><i class="fa-solid fa-calendar-check me-2"></i>Lista Prenotazioni</h2>
+      <hr class="mx-auto" style="width: 80%; border-color: var(--oro);" />
     </div>
-</div>
 
-<th:block th:include="fragments/footbar"></th:block>
+    <!-- ✅ Filtro Data -->
+    <div class="form-group mb-4 text-center">
+      <form id="formdata" th:action="@{/visualizzazionePrenotazioniAnnuncio}" method="post" class="d-inline-flex flex-column flex-md-row align-items-center gap-3">
+        <input type="hidden" name="idAnnuncio" th:value="${idAnnuncio}">
+        <label for="dateStandard" class="form-label mb-0"><i class="fa-solid fa-calendar-day me-2"></i>Seleziona Data:</label>
+        <input type="date" id="dateStandard" name="dataVisita" th:value="${dataVisita}">
+        <button type="submit" class="btn btn-primary ms-md-3 mt-3 mt-md-0"><i class="fa-solid fa-search me-2"></i>Filtra</button>
+      </form>
+    </div>
 
-<th:block th:include="fragments/scripts"></th:block>
+    <!-- ✅ Tabella Prenotazioni -->
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Codice Fiscale</th>
+            <th>Data Prenotazione</th>
+            <th>Fascia Oraria</th>
+            <th>Prenotati</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="prenotazione : ${prenotazioni}">
+            <td th:text="${prenotazione.cliente.nome}"></td>
+            <td th:text="${prenotazione.cliente.cognome}"></td>
+            <td th:text="${prenotazione.cliente.codiceFiscale}"></td>
+            <td th:text="${prenotazione.dataVisita}"></td>
+            <td th:text="${prenotazione.visita.orarioInizio} + ' - ' + ${prenotazione.visita.orarioFine}"></td>
+            <td th:text="${prenotazione.numPersonePrenotate}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-<script src="/js/visualizzazioneprenotazioniannuncio.js"></script>
+    <!-- ✅ Paginazione -->
+    <div th:if="${pagina} != null" class="paging-wrapper d-flex flex-wrap justify-content-center align-items-center mt-4">
+      <form th:method="get" th:action="@{/visualizzazionePrenotazioniAnnuncio}">
+        <input type="hidden" th:field="${dataVisita}">
+        <input type="hidden" th:field="${idAnnuncio}">
+        <input type="hidden" name="pagina" th:value="${pagina - 1}">
+        <button th:disabled="${pagina == 0}" class="btn btn-primary me-2">
+          <i class="fa-solid fa-arrow-left me-1"></i>Precedente
+        </button>
+      </form>
 
-<script src="/js/navbar.js"></script>
+      <strong th:text="'Pagina ' + (${pagina + 1}) + ' di ' + ${pagineTotali}"></strong>
+
+      <form th:method="get" th:action="@{/visualizzazioneListaAnnunci}">
+        <input type="hidden" th:field="${dataVisita}">
+        <input type="hidden" th:field="${idAnnuncio}">
+        <input type="hidden" name="pagina" th:value="${pagina + 1}">
+        <button th:disabled="${pagina >= pagineTotali - 1}" class="btn btn-primary ms-2">
+          Successivo <i class="fa-solid fa-arrow-right ms-1"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Footer -->
+  <th:block th:insert="~{fragments/footbar}"></th:block>
+  <th:block th:insert="~{fragments/scripts}"></th:block>
+
+  <!-- ✅ Script -->
+  <script src="/js/visualizzazioneprenotazioniannuncio.js"></script>
+  <script src="/js/navbar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
-
 </html>

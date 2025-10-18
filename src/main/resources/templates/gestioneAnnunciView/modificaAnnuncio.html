@@ -1,212 +1,228 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="it">
-
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="fragments/head"></th:block>
-    <title>Just Traditions - Modifica Annuncio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <th:block th:insert="~{fragments/head}"></th:block>
+  <title>Pet365 – Modifica Annuncio</title>
+
+  <!-- ✅ Bootstrap 5.3.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- ✅ Font Awesome 6.6.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <!-- ✅ Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --verde: #013220;
+      --verde-scuro: #021f13;
+      --oro: #ffd700;
+      --oro-chiaro: #fff4a3;
+      --rosso: #ff6666;
+      --bianco: #ffffff;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-scuro) 100%);
+      font-family: 'Montserrat', sans-serif;
+      color: var(--oro);
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-weight: 700;
+      color: var(--oro);
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+      margin: 1rem 0;
+    }
+
+    .card {
+      background-color: rgba(1, 50, 32, 0.9);
+      border: 2px solid var(--oro);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    .form-control, select {
+      background-color: #022a1c;
+      color: var(--oro);
+      border: 1px solid var(--oro);
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus, select:focus {
+      background-color: var(--verde);
+      border-color: var(--oro-chiaro);
+      box-shadow: 0 0 10px var(--oro);
+    }
+
+    .invalid-feedback {
+      display: block;
+      color: var(--rosso);
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+      color: var(--verde);
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #fff, var(--oro));
+      color: var(--verde);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .delete {
+      color: var(--rosso);
+      font-weight: bold;
+      margin-left: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .delete:hover {
+      color: #ff9999;
+      text-shadow: 0 0 8px #ff6666;
+    }
+
+    .card-header {
+      background: linear-gradient(90deg, var(--verde), var(--verde-scuro));
+      color: var(--oro);
+      font-size: 1.4rem;
+      font-weight: 600;
+      border-bottom: 2px solid var(--oro);
+    }
+
+    @media (max-width: 768px) {
+      .col-md-6 { width: 100% !important; }
+    }
+  </style>
 </head>
 
 <body>
-<th:block th:include="fragments/navbar"></th:block>
+  <th:block th:insert="~{fragments/navbar}"></th:block>
 
-<div class="row">
-    <div class="card card-register mx-auto mt-5 col-md-8">
-        <div class="card-header text-center">Modifica Annuncio</div>
-        <div class="card-body card-header" align="center">
+  <div class="container py-5">
+    <div class="card mx-auto col-md-10">
+      <div class="card-header text-center">
+        <i class="fa-solid fa-pen-to-square me-2"></i>Modifica Annuncio
+      </div>
 
-            <form th:action="@{/modificaAnnuncio}" enctype="multipart/form-data" th:method="post"
-                  th:object="${annuncioForm}">
-                <input type="hidden" th:field="*{idAnnuncio}">
-                <div class="form-group">
+      <div class="card-body">
+        <form th:action="@{/modificaAnnuncio}" th:method="post" enctype="multipart/form-data" th:object="${annuncioForm}">
+          <input type="hidden" th:field="*{idAnnuncio}" />
 
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <h1>Modifiche con riapprovazione</h1>
-                            <div class="form-label-group">
-                                <label for="nomeAttivita">Nome Attività:</label>
-                                <input type="text" th:field="*{nomeAttivita}" id="nomeAttivita" class="form-control"
-                                       placeholder="Nome dell'attività"
-                                       required="required" autofocus="autofocus">
-                                <div class=" d-inline invalid-feedback " th:if="${#fields.hasErrors('nomeAttivita')}"
-                                     th:errors="*{nomeAttivita}"></div>
-                            </div>
-                        </div>
+          <!-- Sezione: Modifiche con riapprovazione -->
+          <h1>Modifiche con Riapprovazione</h1>
 
-                        <br>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                        <label for="descAttivita">Inserisci descrizione:</label>
-                                        <textarea id="descAttivita" th:field="*{descrizione}" class="form-control"
-                                                  placeholder="Descrizione attività"
-                                                  required="required" autofocus="autofocus" rows="6"></textarea>
-                                        <div class=" d-inline invalid-feedback "
-                                             th:if="${#fields.hasErrors('descrizione')}"
-                                             th:errors="*{descrizione}"></div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="form-group">
-                                    <div class="form-row">
-                                        <div class="col-md-6">
-                                            <div class="form-label-group">
-                                                <label for="indirizzo">Inserisci l'indirizzo:</label>
-                                                <input type="text" th:field="*{indirizzoAttivita}" id="indirizzo"
-                                                       class="form-control"
-                                                       placeholder="Inserisci l'indirizzo"
-                                                       required="required" autofocus="autofocus">
-                                                <div class=" d-inline invalid-feedback "
-                                                     th:if="${#fields.hasErrors('indirizzoAttivita')}"
-                                                     th:errors="*{indirizzoAttivita}"></div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="form-group">
-                                            <div class="form-row">
-                                                <div class="col-md-6">
-                                                    <div class="form-label-group">
-                                                        <label>Inserisci provincia</label>
-                                                        <div>
-                                                            <select th:field="*{provinciaAttivita}">
-                                                                <option th:value="null">Inserisci provincia:</option>
-                                                                <option th:each="provincia, iStat : ${@province.province}"
-                                                                        th:for="|provincia${iStat.count}|"
-                                                                        th:text="${provincia}"
-                                                                        th:value="${provincia}"></option>
-                                                            </select>
-                                                            <div class=" d-inline invalid-feedback "
-                                                                 th:if="${#fields.hasErrors('provinciaAttivita')}"
-                                                                 th:errors="*{provinciaAttivita}"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="col-md-6">
-                                                    <div class="form-label-group">
-                                                        <label for="serviziAttivita">Servizi offerti:</label>
-                                                        <input type="text" th:field="*{serviziOfferti}"
-                                                               id="serviziAttivita"
-                                                               class="form-control"
-                                                               placeholder="Servizi offerti"
-                                                               required="required">
-                                                        <div class=" d-inline invalid-feedback "
-                                                             th:if="${#fields.hasErrors('serviziOfferti')}"
-                                                             th:errors="*{serviziOfferti}"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="form-group">
-                                            <div class="form-row">
-                                                <div class="col-md-6">
-                                                    <div class="form-label-group">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="nomeAttivita">Nome Attività</label>
+              <input type="text" id="nomeAttivita" th:field="*{nomeAttivita}" class="form-control" placeholder="Nome dell'attività" required />
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('nomeAttivita')}" th:errors="*{nomeAttivita}"></div>
+            </div>
 
+            <div class="col-md-6">
+              <label for="indirizzo">Indirizzo Attività</label>
+              <input type="text" id="indirizzo" th:field="*{indirizzoAttivita}" class="form-control" placeholder="Inserisci indirizzo" required />
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('indirizzoAttivita')}" th:errors="*{indirizzoAttivita}"></div>
+            </div>
 
-                                                        <div class="container">
-                                                            <label class="form-label">Le tue foto</label>
-                                                            <div class="row row-cols-3">
-                                                                <div th:each="foto : ${idFoto}">
-                                                                    <div class="col">
-                                                                        <img style="width:125px;height:125px;"
-                                                                             th:src="@{/img(id=${foto})}">
-                                                                        <input type="hidden" name="idFoto"
-                                                                               th:value='${foto}'>
-                                                                        <a class="delete"> x</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <input class="form-control form-control-sm" type="file"
-                                                                   multiple
-                                                                   th:field="*{foto}">
-                                                            <div class=" d-inline invalid-feedback "
-                                                                 th:if="${nessunaFoto != null}">Inserire almeno una foto
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <br>
+            <div class="col-md-6">
+              <label for="provinciaAttivita">Provincia</label>
+              <select id="provinciaAttivita" class="form-select" th:field="*{provinciaAttivita}">
+                <option value="">Seleziona provincia</option>
+                <option th:each="provincia : ${@province.province}" th:value="${provincia}" th:text="${provincia}"></option>
+              </select>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('provinciaAttivita')}" th:errors="*{provinciaAttivita}"></div>
+            </div>
 
-                                                <h1>Modifica senza Riapprovazione</h1>
+            <div class="col-md-6">
+              <label for="serviziAttivita">Servizi Offerti</label>
+              <input type="text" id="serviziAttivita" th:field="*{serviziOfferti}" class="form-control" placeholder="Servizi offerti" required />
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('serviziOfferti')}" th:errors="*{serviziOfferti}"></div>
+            </div>
 
-                                
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                        <label>Visite già inserite</label>
-                                        <div th:each="visita, iStat : ${annuncioForm.visite}">
-                                            <input type="text" class="inputGiorno" th:value="${visita.giorno}" disabled>
-                                            <input type="time" th:value="${visita.orarioInizio}" disabled>
-                                            <input type="time" th:value="${visita.orarioFine}" disabled>
-                                            <a class="delete"> x</a>
-                                            <div class=" d-inline invalid-feedback "
-                                                 th:if="${#fields.hasErrors('visite[__${iStat.index}__]')}"
-                                                 th:errors="*{visite[__${iStat.index}__]}"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="col-md-6">
-                                    <div class="form-label-group">
-                                        <label id="fasciaoraria">Inserisci giorni e fasce orarie:</label>
-                                        <br>
+            <div class="col-12">
+              <label for="descAttivita">Descrizione Attività</label>
+              <textarea id="descAttivita" th:field="*{descrizione}" class="form-control" rows="6" placeholder="Inserisci descrizione" required></textarea>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}"></div>
+            </div>
 
-                                        <div class="container0">
-                                            <label id="lunedi">Lunedì</label>
-                                            <button class="add_form_field0"><i class="fa fa-plus-square"></i></button>
-                                            <br>
-
-                                        </div>
-                                        <div class="container1">
-                                            <label id="martedi">Martedì</label>
-                                            <button class="add_form_field1"><i class="fa fa-plus-square"></i></button>
-                                            <br>
-                                        </div>
-                                        <div class="container2">
-                                            <label id="mercoledi">Mercoledì</label>
-                                            <button class="add_form_field2"><i class="fa fa-plus-square"></i></button>
-                                            <br>
-                                        </div>
-                                        <div class="container3">
-                                            <label id="giovedi">Giovedì</label>
-                                            <button class="add_form_field3"><i class="fa fa-plus-square"></i></button>
-                                            <br>
-                                        </div>
-                                        <div class="container4">
-                                            <label id="venerdi">Venerdì</label>
-                                            <button class="add_form_field4"><i class="fa fa-plus-square"></i></button>
-                                            <br>
-                                        </div>
-                                        <div class="container5">
-                                            <label id="sabato">Sabato</label>
-                                            <button class="add_form_field5"><i class="fa fa-plus-square"></i></button>
-                                            <br>
-                                        </div>
-                                        <div class="container6">
-                                            <label id="domenica">Domenica</label>
-                                            <button class="add_form_field6"><i class="fa fa-plus-square"></i></button>
-                                            <br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </div>
+            <!-- Foto -->
+            <div class="col-12 mt-3">
+              <label class="form-label"><i class="fa-regular fa-images me-2"></i>Le tue foto</label>
+              <div class="row row-cols-3 g-2 mb-3" th:each="foto : ${idFoto}">
+                <div class="col text-center">
+                  <img th:src="@{/img(id=${foto})}" class="rounded shadow" style="width:120px;height:120px;object-fit:cover;" alt="Foto attività" />
+                  <input type="hidden" name="idFoto" th:value="${foto}" />
+                  <div><a class="delete">×</a></div>
                 </div>
+              </div>
 
-                <input id="bottonSubmit" class="btn btn-primary btn-block" type="submit" value="Modifica annuncio">
-            </form>
+              <input class="form-control form-control-sm" type="file" multiple th:field="*{foto}" />
+              <div class="invalid-feedback" th:if="${nessunaFoto != null}">Inserire almeno una foto.</div>
+            </div>
+          </div>
 
-            <br><br>
+          <!-- Sezione: Modifica senza riapprovazione -->
+          <hr class="my-4 border-warning">
+          <h1>Modifiche senza Riapprovazione</h1>
 
-        </div>
+          <!-- Visite già inserite -->
+          <div class="mb-3">
+            <label>Visite già inserite</label>
+            <div th:each="visita, iStat : ${annuncioForm.visite}" class="mb-2">
+              <input type="text" class="form-control d-inline w-auto" th:value="${visita.giorno}" disabled />
+              <input type="time" class="form-control d-inline w-auto" th:value="${visita.orarioInizio}" disabled />
+              <input type="time" class="form-control d-inline w-auto" th:value="${visita.orarioFine}" disabled />
+              <a class="delete ms-2">×</a>
+            </div>
+          </div>
+
+          <!-- Nuove fasce orarie -->
+          <div class="mb-3">
+            <label>Inserisci giorni e fasce orarie</label>
+            <div th:each="i : ${#numbers.sequence(0,6)}">
+              <div class="mb-2">
+                <label th:text="${#lists.arrayList('Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica')[i]}"></label>
+                <button type="button" th:attr="class='btn btn-sm btn-outline-warning add_form_field' + ${i}">
+                  <i class="fa fa-plus-square"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pulsante submit -->
+          <div class="text-center mt-4">
+            <button id="bottonSubmit" type="submit" class="btn btn-primary w-50">
+              <i class="fa-solid fa-floppy-disk me-2"></i>Salva Modifiche
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-</div>
-<th:block th:include="fragments/footbar"></th:block>
-<th:block th:include="fragments/scripts"></th:block>
-<script src="/js/navbar.js"></script>
-<script src="/js/modificaannuncio.js"></script>
+  </div>
+
+  <th:block th:insert="~{fragments/footbar}"></th:block>
+  <th:block th:insert="~{fragments/scripts}"></th:block>
+
+  <!-- ✅ JS Bootstrap + personalizzati -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/navbar.js"></script>
+  <script src="/js/modificaannuncio.js"></script>
 </body>
 </html>
-

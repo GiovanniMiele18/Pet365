@@ -1,270 +1,211 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="it">
 <head>
-   <th:block th:insert="~{fragments/head}"></th:block>
-    <title>Pet365 - HomePage</title>
-    
+  <th:block th:insert="~{fragments/head}"></th:block>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pet365 - Home</title>
 
-<style>
-/* --- BASE --- */
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-  overflow-x: hidden;
-  font-size: 16px;
-  line-height: 1.6;
-}
+  <!-- ✅ Bootstrap & Font -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+  <style>
+    :root {
+      --verde: #0a6847;
+      --verde-scuro: #013220;
+      --oro: #ffd700;
+      --oro-chiaro: #fff6b3;
+      --grigio: #f9f9f9;
+    }
 
-a { text-decoration: none; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--grigio);
+      color: #222;
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.6;
+    }
 
-/* --- PRELOADER --- */
-#preloader {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-#preloader img {
-  width: 150px;
-  animation: expandRotate 2s forwards;
-}
-@keyframes expandRotate {
-  0% { transform: scale(1) rotate(0deg); opacity: 1; }
-  50% { transform: scale(3) rotate(180deg); opacity: 1; }
-  100% { transform: scale(20) rotate(360deg); opacity: 0; }
-}
-#main-content { opacity: 0; transition: opacity 0.5s ease-in; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; }
 
-/* --- HERO --- */
-.hero {
-  background: linear-gradient(-45deg, #3d8b37, #f5c300, #6aa84f, #ffd700);
-  background-size: 400% 400%;
-  color: #fff;
-  padding: 100px 20px;
-  text-align: center;
-  animation: gradientBG 15s ease infinite;
-}
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.hero h1 {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-.hero p {
-  font-size: 1.5rem;
-  margin-bottom: 30px;
-}
+    /* --- PRELOADER --- */
+    #preloader {
+      position: fixed; inset: 0;
+      background-color: #fff;
+      display: flex; justify-content: center; align-items: center;
+      z-index: 9999;
+    }
+    #preloader img {
+      width: 150px;
+      animation: expandRotate 2s forwards;
+    }
+    @keyframes expandRotate {
+      0% { transform: scale(1) rotate(0deg); opacity: 1; }
+      50% { transform: scale(3) rotate(180deg); opacity: 1; }
+      100% { transform: scale(20) rotate(360deg); opacity: 0; }
+    }
+    #main-content { opacity: 0; transition: opacity 0.6s ease-in; }
 
-/* --- BOTTONI --- */
-.btn-primary {
-  background-color: #3d8b37;
-  border-color: #f5c300;
-  border-radius: 50px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-.btn-primary:hover {
-  transform: scale(1.1) rotate(-2deg);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  background-color: #6aa84f;
-  border-color: #ffd700;
-}
-.btn-outline-primary {
-  color: #3d8b37;
-  border-color: #3d8b37;
-  transition: all 0.3s ease;
-}
-.btn-outline-primary:hover {
-  background-color: #3d8b37;
-  color: #fff;
-  transform: scale(1.05);
-}
+    /* --- HERO --- */
+    .hero {
+      background: linear-gradient(-45deg, var(--verde), var(--oro), var(--verde-scuro), var(--oro-chiaro));
+      background-size: 400% 400%;
+      color: #fff;
+      padding: 120px 20px;
+      text-align: center;
+      animation: gradientBG 12s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .hero p {
+      font-size: 1.3rem;
+      color: #fffbea;
+      margin-bottom: 30px;
+    }
 
-/* --- TITOLI SEZIONI --- */
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  position: relative;
-  display: inline-block;
-  padding-bottom: 15px;
-  color: #222;
-}
-.section-title::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 6px;
-  background: linear-gradient(90deg, #007bff, #00c3ff);
-  border-radius: 3px;
-}
+    /* --- BOTTONI --- */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+      border: none;
+      color: var(--verde-scuro);
+      border-radius: 40px;
+      font-weight: 700;
+      padding: 12px 30px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px rgba(255,215,0,0.4);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--oro-chiaro), #fff);
+      transform: translateY(-2px);
+      color: var(--verde);
+      box-shadow: 0 0 20px rgba(255,215,0,0.6);
+    }
+    .btn-outline-primary {
+      color: var(--verde);
+      border-color: var(--verde);
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+    .btn-outline-primary:hover {
+      background-color: var(--verde);
+      color: #fff;
+    }
 
-/* --- SERVIZI --- */
-.services {
-  padding: 60px 0;
-}
+    /* --- SERVIZI --- */
+    .services {
+      padding: 70px 0;
+    }
+    .section-title {
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: var(--verde);
+      text-transform: uppercase;
+      position: relative;
+      margin-bottom: 40px;
+      display: inline-block;
+    }
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px; height: 5px;
+      border-radius: 5px;
+      background: linear-gradient(90deg, var(--oro), var(--verde));
+    }
 
-/* Griglia principale */
-.services .services-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1.5rem;
-  padding: 0 15px;
-}
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
 
-/* Card uniforme e ottimizzata */
-.services .card {
-  background: #fff;
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  justify-content: space-between; /* 🔥 allinea bottone in basso */
-  height: 100%;
-  min-height: 280px;
-}
+    .services .card {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .services .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .services .card img {
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+    }
+    .services .card h5 {
+      font-weight: 700;
+      margin-bottom: .4rem;
+      color: var(--verde-scuro);
+    }
+    .services .card p {
+      font-size: .9rem;
+      color: #555;
+      min-height: 35px;
+    }
 
-.services .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
+    /* --- ANNUNCI --- */
+    #annunci h1 {
+      color: var(--verde-scuro);
+      font-weight: 700;
+    }
+    #annunci a {
+      color: var(--verde);
+      text-decoration: underline;
+    }
 
-/* Immagine */
-.services .card img {
-  max-height: 90px;
-  object-fit: contain;
-  margin-bottom: 1rem;
-}
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1rem; }
+      .services { padding: 50px 0; }
+    }
 
-/* Titolo */
-.services .card h5 {
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-  font-size: 1rem;
-}
-
-/* Descrizione */
-.services .card p {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 0.5rem;
-  min-height: 20px;
-}
-
-/* Bottone centrato e allineato */
-.services .card a {
-  display: inline-block;
-  font-size: 0.85rem;
-  align-self: center;
-  margin-top: auto; /* 🔥 resta in fondo */
-  text-align: center;
-}
-
-/* --- MOBILE SCROLL ORIZZONTALE --- */
-@media (max-width: 576px) {
-  .services .services-grid {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(130px, 1fr);
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    gap: 0.8rem;
-    padding-bottom: 10px;
-    scroll-snap-type: x mandatory;
-  }
-
-  .services .card {
-    min-width: 130px;
-    flex-shrink: 0;
-    scroll-snap-align: center;
-    border: 1px solid #ddd;
-    box-shadow: none;
-    padding: 0.6rem;
-    justify-content: space-between; /* mantiene il bottone in fondo */
-    min-height: auto; /* 🔥 adattabile */
-  }
-
-  .services .card img {
-    max-height: 55px;
-    margin-bottom: 0.4rem;
-  }
-
-  .services .card h5 {
-    font-size: 0.8rem;
-    line-height: 1.2;
-  }
-
-  .services .card p {
-    display: none;
-  }
-
-  .services .card a {
-    font-size: 0.65rem;
-    padding: 0.25rem 0.5rem;
-    margin-top: auto;
-  }
-
-  .services .services-grid::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-/* --- ANNUNCI --- */
-.annuncio-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.annuncio-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-}
-</style>
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
 </head>
 
 <body>
-<!-- Preloader -->
+<!-- PRELOADER -->
 <div id="preloader">
-    <img src="https://i.imgur.com/mYm8eGJ.png" alt="Pet365 Logo">
+  <img src="https://i.imgur.com/mYm8eGJ.png" alt="Pet365 Logo">
 </div>
 
 <div id="main-content">
-    <th:block th:insert="~{fragments/navbar}"></th:block>
+  <th:block th:insert="~{fragments/navbar}"></th:block>
 
-    <!-- Hero -->
-    <section class="hero fade-in">
-        <h1>Benvenuto su PET365!</h1>
-        <p>Il mondo degli animali a portata di click: petsitter, veterinari, shop e servizi professionali.</p>
-        <a href="#servizi" class="btn btn-primary btn-lg">Scopri Ora</a>
-    </section>
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Benvenuto su <span class="fw-bold">Pet365</span> 🐾</h1>
+    <p>Il mondo degli animali a portata di click: petsitter, veterinari, shop e servizi professionali.</p>
+    <a href="#servizi" class="btn btn-primary btn-lg"><i class="fa-solid fa-paw me-2"></i>Scopri Ora</a>
+  </section>
 
-    <!-- Servizi principali -->
-    <section id="servizi" class="services py-4 bg-light fade-in">
-        <div class="container text-center">
-            <h2 class="section-title mb-4">I nostri servizi principali</h2>
-            <div class="services-grid">
-                <!-- Tutti i 15 servizi -->
+  <!-- SERVIZI -->
+  <section id="servizi" class="services bg-light">
+    <div class="container text-center">
+      <h2 class="section-title">I nostri servizi principali</h2>
+      <div class="services-grid">
+         <!-- Tutti i 15 servizi -->
                 <div class="card"><img src="https://i.postimg.cc/SQvhW1MC/petsitter.png"><h5>Petsitter</h5><p>Trova il petsitter ideale vicino a te.</p><a href="/ricercaAnnunci?serviziOfferti=PETSITTER" class="btn btn-outline-primary btn-sm">Scopri</a></div>
                 <div class="card"><img src="https://i.postimg.cc/1RrLB9Yk/telemedicina.png"><h5>Veterinari h24</h5><p>Prenota visite e consulenze.</p><a href="/ricercaAnnunci?serviziOfferti=VETERINARI_H24" class="btn btn-outline-primary btn-sm">Scopri</a></div>
                 <div class="card"><img src="https://i.postimg.cc/rm95BtS2/shop.png"><h5>Shop</h5><p>Acquista prodotti per animali.</p><a href="/ricercaAnnunci?serviziOfferti=SHOP" class="btn btn-outline-primary btn-sm">Scopri</a></div>
@@ -280,37 +221,35 @@ a { text-decoration: none; }
                 <div class="card"><img src="https://i.postimg.cc/s27X8d5k/fotografia.png"><h5>Fotografia</h5><p>Scatti professionali.</p><a href="/ricercaAnnunci?serviziOfferti=PET_PHOTOGRAPHY" class="btn btn-outline-primary btn-sm">Scopri</a></div>
                 <div class="card"><img src="https://i.postimg.cc/ydxGxBn5/terapia.png"><h5>Terapie & Benessere</h5><p>Trattamenti rilassanti.</p><a href="/ricercaAnnunci?serviziOfferti=TERAPIE_E_BENESSERE" class="btn btn-outline-primary btn-sm">Scopri</a></div>
                 <div class="card"><img src="https://i.postimg.cc/8kM5wrhZ/nutrizione.png"><h5>Nutrizione</h5><p>Piani alimentari su misura.</p><a href="/ricercaAnnunci?serviziOfferti=NUTRIZIONE_PERSONALIZZATA" class="btn btn-outline-primary btn-sm">Scopri</a></div>
-            </div>
-        </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Annunci -->
-    <section id="annunci" class="py-5 fade-in">
-        <div class="container text-center">
-            <h1 class="mb-4">✨ Annunci in Vetrina ✨</h1>
-            <p class="text-muted mb-4">
-                Solo <strong>alcune attività selezionate</strong> hanno accesso a questa sezione esclusiva.<br>
-                Vuoi anche tu comparire qui? <a href="/premium" class="fw-bold text-success">Scopri i piani premium</a>.
-            </p>
-        </div>
-    </section>
-
+  <!-- ANNUNCI -->
+  <section id="annunci" class="py-5">
+    <div class="container text-center">
+      <h1>✨ Annunci in Vetrina ✨</h1>
+      <p class="text-muted mb-4">
+        Solo <strong>alcune attività selezionate</strong> hanno accesso a questa sezione esclusiva.<br>
+        Vuoi anche tu comparire qui?
+        <a href="/premium" class="fw-bold">Scopri i piani premium</a>.
+      </p>
+    </div>
+  </section>
 </div>
-    
+
 <th:block th:insert="~{fragments/footbar}"></th:block>
 <th:block th:insert="~{fragments/scripts}"></th:block>
 
-  <!-- ✅ JS (ordine corretto) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+..." crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.min.js"></script>
-
+<!-- ✅ SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 const preloader = document.getElementById('preloader');
 const mainContent = document.getElementById('main-content');
 preloader.querySelector('img').addEventListener('animationend', () => {
-    preloader.style.display = 'none';
-    mainContent.style.opacity = '1';
-    document.body.style.overflow = 'auto';
+  preloader.style.display = 'none';
+  mainContent.style.opacity = '1';
+  document.body.style.overflow = 'auto';
 });
 </script>
 </body>

@@ -1,5 +1,5 @@
 <!-- =======================================================
-     🌟 Pet365 Navbar Fissa e Ottimizzata
+     🌟 PET365 NAVBAR FISSA
      ======================================================= -->
 
 <!-- Google Fonts -->
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
 
 <!-- ✅ NAVBAR -->
-<nav th:fragment="navbar" class="navbar navbar-expand-lg pet365-navbar fixed-top">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg pet365-navbar">
   <div class="container-fluid px-4">
 
     <!-- 🔸 Brand -->
@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <!-- 🔸 Linea dorata animata -->
+  <!-- 🔸 Linea dorata -->
   <div class="gold-line"></div>
 </nav>
 
@@ -62,15 +62,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
 <!-- =======================================================
-     ✨ Script interattivo - menu mobile
+     ✨ Script menu mobile
      ======================================================= -->
 <script>
 /* ✅ Chiusura automatica del menu su mobile */
 document.addEventListener('click', function (event) {
   const navbarToggler = document.querySelector('.navbar-toggler');
   const navbarCollapse = document.querySelector('#navbarNav');
-
-  // Chiude se si clicca fuori dal menu
   if (
     navbarCollapse.classList.contains('show') &&
     !navbarToggler.contains(event.target) &&
@@ -81,7 +79,6 @@ document.addEventListener('click', function (event) {
   }
 });
 
-// Chiude anche cliccando su un link
 document.querySelectorAll('.navbar-nav a').forEach(link => {
   link.addEventListener('click', () => {
     const navbarCollapse = document.querySelector('#navbarNav');
@@ -92,7 +89,6 @@ document.querySelectorAll('.navbar-nav a').forEach(link => {
   });
 });
 
-// Gestione del toggle hamburger manuale
 document.querySelector('.navbar-toggler').addEventListener('click', function () {
   const navbarCollapse = document.querySelector('#navbarNav');
   const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
@@ -105,34 +101,33 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
 </script>
 
 <!-- =======================================================
-     🎨 Stile Navbar Fissa Pet365
+     🎨 STILE NAVBAR FISSA
      ======================================================= -->
 <style>
 :root {
   --verde: #012e1f;
-  --verde-chiaro: #01613d;
   --oro: #ffd700;
   --oro-chiaro: #ffef88;
   --bianco: #ffffff;
 }
 
-/* --- NAVBAR --- */
+/* --- NAVBAR FISSA --- */
 .pet365-navbar {
-  position: fixed;
+  position: fixed !important;
   top: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(135deg, rgba(1,46,31,0.98), rgba(1,91,56,0.9)) !important;
-  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, rgba(1,46,31,1), rgba(1,91,56,0.95)) !important;
   border-bottom: 2px solid rgba(255,215,0,0.3);
   font-family: 'Montserrat', sans-serif;
   padding: 1rem 1.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 18px rgba(255,215,0,0.25);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
   border-radius: 0 0 20px 20px;
-  z-index: 3000;
+  z-index: 5000;
+  transition: none !important;
 }
 
-/* --- Logo --- */
+/* --- LOGO --- */
 .logo {
   width: 64px;
   height: 64px;
@@ -145,12 +140,11 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
   filter: drop-shadow(0 0 12px rgba(255,215,0,0.4));
 }
 
-/* --- Brand --- */
+/* --- BRAND --- */
 .brand-text {
   font-size: 2rem;
   font-weight: 700;
   color: var(--oro);
-  letter-spacing: 1px;
 }
 .brand-text .accent { color: var(--bianco); }
 .shimmer {
@@ -166,32 +160,19 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
   100% { background-position: 0% 50%; }
 }
 
-/* --- Link --- */
+/* --- LINK --- */
 .navbar-nav .nav-link {
   color: var(--oro) !important;
   font-weight: 500;
-  position: relative;
-  transition: all 0.3s ease;
   padding: 0.4rem 0.7rem;
+  transition: all 0.3s ease;
 }
 .navbar-nav .nav-link:hover {
   color: var(--oro-chiaro) !important;
   text-shadow: 0 0 10px rgba(255,215,0,0.6);
 }
-.navbar-nav .nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background: var(--oro);
-  transition: width 0.3s ease;
-  border-radius: 2px;
-}
-.navbar-nav .nav-link:hover::after { width: 100%; }
 
-/* --- Icone --- */
+/* --- ICONA --- */
 .nav-icon {
   color: var(--oro);
   transition: all 0.3s ease;
@@ -200,37 +181,20 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
 .navbar-nav .nav-link:hover .nav-icon {
   color: var(--oro-chiaro);
   transform: translateY(-2px) scale(1.1);
-  text-shadow: 0 0 6px rgba(255,215,0,0.8);
-}
-.pulse {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
-@keyframes pulseGlow {
-  0%, 100% {
-    text-shadow: 0 0 6px rgba(255,215,0,0.3);
-    transform: scale(1);
-  }
-  50% {
-    text-shadow: 0 0 20px rgba(255,215,0,0.8);
-    transform: scale(1.15);
-  }
 }
 
-/* --- Pulsanti --- */
+/* --- BOTTONI --- */
 .btn-gold {
   background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
   color: var(--verde);
+  border-radius: 50px;
   font-weight: 600;
   border: none;
-  border-radius: 50px;
   padding: 8px 22px;
-  transition: all 0.3s ease;
   box-shadow: 0 0 8px rgba(255,215,0,0.3);
 }
 .btn-gold:hover {
   background: linear-gradient(135deg, #fff, var(--oro));
-  color: var(--verde);
-  box-shadow: 0 0 20px rgba(255,215,0,0.6);
 }
 
 .btn-outline-gold {
@@ -238,20 +202,17 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
   color: var(--oro);
   border-radius: 50px;
   padding: 8px 20px;
-  transition: all 0.3s ease;
 }
 .btn-outline-gold:hover {
   background-color: var(--oro);
   color: var(--verde);
-  box-shadow: 0 0 15px rgba(255,215,0,0.5);
 }
 
-/* --- Dropdown --- */
+/* --- DROPDOWN --- */
 .custom-dropdown {
   background-color: var(--verde);
   border: 1px solid rgba(255,215,0,0.3);
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
 .custom-dropdown .dropdown-item {
   color: var(--oro) !important;
@@ -259,10 +220,9 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
 .custom-dropdown .dropdown-item:hover {
   background-color: var(--oro) !important;
   color: var(--verde) !important;
-  font-weight: 600;
 }
 
-/* --- Linea Dorata Animata --- */
+/* --- LINEA DORATA --- */
 .gold-line {
   position: absolute;
   bottom: 0;
@@ -272,14 +232,13 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
   background: linear-gradient(90deg, transparent, var(--oro-chiaro), var(--oro), transparent);
   background-size: 200% auto;
   animation: goldFlow 4s linear infinite;
-  box-shadow: 0 0 10px rgba(255,215,0,0.6);
 }
 @keyframes goldFlow {
   0% { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
 
-/* --- Responsive --- */
+/* --- RESPONSIVE --- */
 @media (max-width: 991px) {
   .pet365-navbar {
     padding: 0.8rem 1rem;
@@ -287,11 +246,10 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
   }
   .logo { width: 52px; height: 52px; }
   .brand-text { font-size: 1.6rem; }
-  .navbar-nav .nav-link { font-size: 1rem; }
 }
 
-/* --- Compensazione corpo --- */
+/* --- EVITA SOVRAPPOSIZIONE CONTENUTO --- */
 body {
-  padding-top: 110px;
+  padding-top: 110px; /* distanza sufficiente per non coprire il contenuto */
 }
 </style>

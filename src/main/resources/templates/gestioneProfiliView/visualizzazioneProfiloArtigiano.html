@@ -1,84 +1,205 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="fragments/head"></th:block>
-    <title>Just Traditions - Profilo Artigiano</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <th:block th:insert="~{fragments/head}"></th:block>
+  <title>Pet365 - Profilo PetWorker</title>
+
+  <!-- ✅ Bootstrap 5.3.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ✅ Font Awesome 6.6.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <!-- ✅ Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --verde: #013220;
+      --verde-scuro: #021f13;
+      --oro: #ffd700;
+      --oro-chiaro: #fff4a3;
+      --bianco: #ffffff;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-scuro) 100%);
+      font-family: 'Montserrat', sans-serif;
+      color: var(--oro);
+      min-height: 100vh;
+    }
+
+    /* --- CARD PROFILO --- */
+    .profile-card {
+      border: 2px solid var(--oro);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+      background-color: rgba(1, 50, 32, 0.9);
+      color: var(--oro);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(255,215,0,0.3);
+    }
+
+    .profile-card img {
+      border-bottom: 2px solid var(--oro);
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .profile-card h5 {
+      font-weight: 600;
+    }
+
+    .profile-card .badge {
+      background-color: var(--oro);
+      color: var(--verde);
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .profile-card .badge:hover {
+      background-color: var(--oro-chiaro);
+      color: var(--verde);
+      box-shadow: 0 0 10px rgba(255,215,0,0.4);
+    }
+
+    /* --- ANNUNCI --- */
+    .annunci-section {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: inset 0 0 10px rgba(255,215,0,0.2);
+    }
+
+    .annuncio-card {
+      background-color: rgba(1, 50, 32, 0.95);
+      border: 1px solid var(--oro);
+      color: var(--oro);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .annuncio-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255,215,0,0.3);
+    }
+
+    .annuncio-card img {
+      border-radius: 12px 12px 0 0;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .annuncio-card .btn-outline-success {
+      color: var(--oro);
+      border-color: var(--oro);
+      font-weight: 600;
+    }
+
+    .annuncio-card .btn-outline-success:hover {
+      background-color: var(--oro);
+      color: var(--verde);
+      box-shadow: 0 0 10px rgba(255,215,0,0.4);
+    }
+
+    /* --- PAGINAZIONE --- */
+    .paging-wrapper button {
+      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+      color: var(--verde);
+      border: none;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 8px 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 8px rgba(255,215,0,0.3);
+    }
+
+    .paging-wrapper button:hover {
+      background: linear-gradient(135deg, #fff, var(--oro));
+      transform: translateY(-2px);
+    }
+
+    strong {
+      color: var(--oro-chiaro);
+    }
+
+    @media (max-width: 768px) {
+      .profile-card img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<th:block th:include="fragments/navbar"></th:block>
+  <!-- ✅ Navbar -->
+  <th:block th:insert="~{fragments/navbar}"></th:block>
 
-<!-- Sezione profilo artigiano -->
-<section class="container mt-4">
-    <div class="card">
-        <center>
-            <img style="width: 564px; height: 163px;"
-                 src="https://i.imgur.com/KCRFkmU.png"
-                 class="card-img-top">
-        </center>
-        <div class="card-body text-center mt-3">
-            <h5 class="card-title fw-bold"
-                th:text="'Salve sono l\'artigiano ' + ${artigiano.nome} + ' ' + ${artigiano.cognome} + ', per qualsiasi informazione puoi inviarmi una mail!'">
-            </h5>
-        </div>
-        <div class="card-footer text-center">
-            <a th:href="@{'mailto:' + ${artigiano.email}}">
-                <span class="badge bg-primary shadow fs-6">
-                    <i class="bi bi-envelope-fill px-1"></i>Clicca qui per inviarmi una mail
-                </span>
-            </a>
-        </div>
+  <!-- ✅ PROFILO ARTIGIANO -->
+  <section class="container mt-5">
+    <div class="profile-card p-3">
+      <div class="text-center">
+        <img src="https://i.imgur.com/mYm8eGJ.png" alt="Banner Artigiano" class="img-fluid mb-3" style="max-height:180px;">
+        <h5 class="card-title fw-bold mt-3"
+            th:text="'Ciao! Sono ' + ${artigiano.nome} + ' ' + ${artigiano.cognome} + ', contattami per maggiori informazioni!'">
+        </h5>
+      </div>
+      <div class="text-center mt-3 mb-2">
+        <a th:href="@{'mailto:' + ${artigiano.email}}">
+          <span class="badge fs-6 p-3">
+            <i class="fa-solid fa-envelope me-2"></i> Scrivimi una mail
+          </span>
+        </a>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- Sezione annunci artigiano -->
-<section class="container mt-4">
-    <div class="bg-light p-5 rounded-3">
-        <div class="container-fluid">
-            <center><h1 class="display-5 fw-bold">I Miei Annunci</h1></center>
-            <div class="d-flex flex-wrap justify-content-center mt-3">
-
-                <div th:each="annuncio : ${annunci}" class="card m-3" style="width: 15rem;">
-                    <!-- Gestione immagine -->
-                    <img th:if="${annuncio.foto.size() > 0}"
-                         th:src="@{/img(id=${annuncio.foto.get(0).id})}"
-                         class="card-img-top" style="width: 240px; height: 225px;">
-                    <img th:unless="${annuncio.foto.size() > 0}"
-                         src="/img/default.jpg"
-                         class="card-img-top" style="width: 240px; height: 225px;">
-
-                    <div class="card-body d-flex flex-column align-items-center">
-                        <h5 th:text="${annuncio.nomeAttivita}" class="card-title"></h5>
-                        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}"
-                           class="btn btn-outline-success">Vai alla scheda</a>
-                    </div>
-                </div>
-
-            </div>
+  <!-- ✅ ANNUNCI DELL’ARTIGIANO -->
+  <section class="container mt-5 annunci-section">
+    <h2 class="text-center fw-bold mb-4"><i class="fa-solid fa-briefcase me-2"></i>I Miei Annunci</h2>
+    <div class="d-flex flex-wrap justify-content-center">
+      <div th:each="annuncio : ${annunci}" class="annuncio-card m-3" style="width: 16rem;">
+        <img th:if="${annuncio.foto.size() > 0}" th:src="@{/img(id=${annuncio.foto.get(0).id})}" alt="Foto annuncio">
+        <img th:unless="${annuncio.foto.size() > 0}" src="/img/default.jpg" alt="Foto predefinita">
+        <div class="card-body text-center">
+          <h5 th:text="${annuncio.nomeAttivita}" class="card-title mb-3"></h5>
+          <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}" class="btn btn-outline-success">
+            <i class="fa-solid fa-eye me-2"></i>Vai alla scheda
+          </a>
         </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- Navigazione pagine -->
-<div class="paging-wrapper d-flex flex-wrap justify-content-center mt-3">
-    <form th:action="@{/visualizzazioneProfiloArtigiano}" method="get" class="d-flex gap-2 align-items-center">
-        <input type="hidden" name="id" th:value="${artigiano.id}" />
-
-        <button type="submit" name="pagina" th:value="${pagina - 1}"
-                th:disabled="${pagina == 0}" class="btn btn-success">
-            Precedente
-        </button>
-
-        <strong th:text="'Pagina: ' + (${pagina + 1})"></strong>
-
-        <button type="submit" name="pagina" th:value="${pagina + 1}"
-                th:disabled="${pagina >= pagineTotali - 1}" class="btn btn-success">
-            Successivo
-        </button>
+  <!-- ✅ PAGINAZIONE -->
+  <div class="paging-wrapper d-flex justify-content-center align-items-center gap-3 mt-4">
+    <form th:action="@{/visualizzazioneProfiloArtigiano}" method="get" class="d-flex align-items-center gap-3">
+      <input type="hidden" name="id" th:value="${artigiano.id}" />
+      <button type="submit" name="pagina" th:value="${pagina - 1}" th:disabled="${pagina == 0}">
+        <i class="fa-solid fa-arrow-left me-1"></i> Precedente
+      </button>
+      <strong th:text="'Pagina ' + (${pagina + 1}) + ' di ' + ${pagineTotali}"></strong>
+      <button type="submit" name="pagina" th:value="${pagina + 1}" th:disabled="${pagina >= pagineTotali - 1}">
+        Successivo <i class="fa-solid fa-arrow-right ms-1"></i>
+      </button>
     </form>
-</div>
+  </div>
 
-<th:block th:include="fragments/footbar"></th:block>
-<th:block th:include="fragments/scripts"></th:block>
-<script src="/js/navbar.js"></script>
+  <!-- ✅ Footer -->
+  <th:block th:insert="~{fragments/footbar}"></th:block>
+  <th:block th:insert="~{fragments/scripts}"></th:block>
+
+  <!-- ✅ Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/navbar.js"></script>
 </body>
 </html>

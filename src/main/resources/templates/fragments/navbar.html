@@ -1,14 +1,15 @@
 <!-- =======================================================
-     ✅ Pet365 Navbar Fragment - Universale e Ottimizzata
+     🌟 Pet365 Navbar Fragment - Fissa + Scroll Effect + Mobile Fix
      ======================================================= -->
+
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Font Awesome 6.6.0 -->
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
 
 <!-- Navbar Fragment -->
-<nav th:fragment="navbar" class="navbar navbar-expand-lg pet365-navbar sticky-top">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg pet365-navbar fixed-top">
   <div class="container-fluid px-4">
 
     <!-- Brand -->
@@ -60,10 +61,50 @@
 <!-- Bootstrap Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
+<!-- ✨ Effetti interattivi -->
+<script>
+/* Effetto dorato allo scroll */
+document.addEventListener('scroll', () => {
+  const navbar = document.querySelector('.pet365-navbar');
+  if (window.scrollY > 10) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+/* ✅ Chiusura automatica menu mobile */
+document.addEventListener('click', function (event) {
+  const navbarToggler = document.querySelector('.navbar-toggler');
+  const navbarCollapse = document.querySelector('#navbarNav');
+  
+  // Chiudi se clicchi fuori dal menu
+  if (
+    navbarCollapse.classList.contains('show') &&
+    !navbarToggler.contains(event.target) &&
+    !navbarCollapse.contains(event.target)
+  ) {
+    const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: true });
+    bsCollapse.hide();
+  }
+});
+
+// Chiudi anche cliccando su un link
+document.querySelectorAll('.navbar-nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    const navbarCollapse = document.querySelector('#navbarNav');
+    if (navbarCollapse.classList.contains('show')) {
+      const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: true });
+      bsCollapse.hide();
+    }
+  });
+});
+</script>
+
+<!-- =======================================================
+     🎨 STYLE GLOBALE NAVBAR
+     ======================================================= -->
 <style>
-/* =====================================================
-   🌟 PET365 NAVBAR GLOBAL STYLE
-   ===================================================== */
 :root {
   --verde: #012e1f;
   --verde-chiaro: #01613d;
@@ -74,30 +115,41 @@
 
 /* --- NAVBAR --- */
 .pet365-navbar {
-  background: linear-gradient(135deg, rgba(1,46,31,0.95), rgba(1,91,56,0.85)) !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(1,46,31,0.98), rgba(1,91,56,0.9)) !important;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,215,0,0.25);
   font-family: 'Montserrat', sans-serif;
   padding: 1rem 1.5rem;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 18px rgba(255,215,0,0.25);
   border-radius: 0 0 20px 20px;
-  z-index: 1000;
+  z-index: 2000;
+  transition: all 0.3s ease;
 }
 
-/* LOGO */
-.pet365-navbar .logo {
+/* Effetto dorato allo scroll */
+.pet365-navbar.scrolled {
+  box-shadow: 0 0 25px rgba(255,215,0,0.4);
+  border-bottom: 2px solid rgba(255,215,0,0.4);
+}
+
+/* Logo */
+.logo {
   width: 64px;
   height: 64px;
   border-radius: 50%;
   transition: transform 0.4s ease, filter 0.4s ease;
   filter: drop-shadow(0 0 8px rgba(255,215,0,0.25));
 }
-.pet365-navbar .logo:hover {
+.logo:hover {
   transform: rotate(-5deg) scale(1.07);
   filter: drop-shadow(0 0 12px rgba(255,215,0,0.4));
 }
 
-/* BRAND */
+/* Brand */
 .brand-text {
   font-size: 2rem;
   font-weight: 700;
@@ -118,7 +170,7 @@
   100% { background-position: 0% 50%; }
 }
 
-/* LINKS */
+/* Links */
 .navbar-nav .nav-link {
   color: var(--oro) !important;
   font-weight: 500;
@@ -143,7 +195,7 @@
 }
 .navbar-nav .nav-link:hover::after { width: 100%; }
 
-/* ICONS */
+/* Icone */
 .nav-icon {
   color: var(--oro);
   transition: all 0.3s ease;
@@ -168,7 +220,7 @@
   }
 }
 
-/* BUTTONS */
+/* Buttons */
 .btn-gold {
   background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
   color: var(--verde);
@@ -198,7 +250,7 @@
   box-shadow: 0 0 15px rgba(255,215,0,0.5);
 }
 
-/* DROPDOWN */
+/* Dropdown */
 .custom-dropdown {
   background-color: var(--verde);
   border: 1px solid rgba(255,215,0,0.3);
@@ -216,7 +268,7 @@
   font-weight: 600;
 }
 
-/* LINEA ORO ANIMATA */
+/* Linea dorata animata */
 .gold-line {
   position: absolute;
   bottom: 0;
@@ -233,7 +285,7 @@
   100% { background-position: -200% center; }
 }
 
-/* RESPONSIVE */
+/* Responsive */
 @media (max-width: 991px) {
   .pet365-navbar {
     padding: 0.8rem 1rem;
@@ -242,5 +294,10 @@
   .logo { width: 52px; height: 52px; }
   .brand-text { font-size: 1.6rem; }
   .navbar-nav .nav-link { font-size: 1rem; }
+}
+
+/* Evita sovrapposizione con contenuto */
+body {
+  padding-top: 110px;
 }
 </style>

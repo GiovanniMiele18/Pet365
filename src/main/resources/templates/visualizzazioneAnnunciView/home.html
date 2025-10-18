@@ -10,15 +10,20 @@
 
 <style>
     /* --- NAVBAR OVERRIDE (colore identico al login) --- */
-.navbar.pet365-navbar {
-  background: linear-gradient(135deg, rgba(1,46,31,0.95), rgba(1,91,56,0.85)) !important;
-  border-bottom: 1px solid rgba(255,215,0,0.25) !important;
-  box-shadow:
-      0 4px 20px rgba(0, 0, 0, 0.5),
-      0 0 18px rgba(255, 215, 0, 0.25),
-      inset 0 -1px 0 rgba(255, 215, 0, 0.2) !important;
-  border-radius: 0 0 20px 20px !important;
+.pet365-navbar {
+    background: linear-gradient(135deg, #013220 0%, #021f13 100%) !important;
+    border-bottom: 2px solid #FFD700 !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.7);
 }
+.navbar .nav-link, 
+.navbar .nav-icon {
+    color: #FFD700 !important;
+}
+.navbar .nav-link:hover, 
+.navbar .nav-icon:hover {
+    color: #fff !important;
+}
+
 /* --- BASE --- */
 body {
   font-family: 'Poppins', sans-serif;

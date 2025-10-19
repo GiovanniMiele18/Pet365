@@ -96,7 +96,7 @@
 
     /* --- Navbar principale --- */
     .pet365-navbar {
-  background: linear-gradient(135deg, rgba(1,46,31,0.95), rgba(1,91,56,0.85));
+        background: linear-gradient(135deg, rgba(1,46,31,0.95), rgba(1,91,56,0.85));
         backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(255,215,0,0.25);
         font-family: 'Montserrat', sans-serif;
@@ -271,5 +271,35 @@
         .logo { width: 52px; height: 52px; }
         .brand-text { font-size: 1.6rem; }
         .navbar-nav .nav-link { font-size: 1rem; }
+        
+        /* Miglioramenti per il menu mobile */
+        .navbar-collapse {
+            background: linear-gradient(135deg, rgba(1,46,31,0.98), rgba(1,91,56,0.95));
+            margin-top: 10px;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+        
+        .navbar-nav {
+            gap: 10px !important;
+        }
+        
+        .navbar-nav .nav-link {
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255,215,0,0.1);
+        }
+        
+        .btn-gold, .btn-outline-gold {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+        }
     }
 </style>

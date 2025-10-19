@@ -26,11 +26,10 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(180deg, #fafafa, #f6f6f6);
-      color: #222;
-      overflow-x: hidden;
+            background: linear-gradient(180deg, #fafafa, #f6f6f6);
+            color: #222;
+            overflow-x: hidden;
         }
-
 
     /* ===== HERO ===== */
     .hero {
@@ -197,6 +196,10 @@
     }
 
     /* ===== PAGINATION ===== */
+    #paginationContainer {
+      margin-bottom: 6rem; /* 🔥 Spazio extra sopra il footbar */
+    }
+
     .pagination-btn {
       border: 2px solid var(--oro);
       background: transparent;
@@ -257,7 +260,7 @@
       <option th:each="serv : ${listaServizi}" th:value="${serv}" th:text="${serv}"
               th:selected="${serv.toString() == serviziOfferti}"></option>
     </select>
-    <button class="btn btn-luxury" onclick="loadAnnunci()">
+    <button class="btn btn-luxury" onclick="loadAnnunci(0, true)">
       <i class="fa-solid fa-magnifying-glass me-2"></i>Cerca
     </button>
   </div>
@@ -281,12 +284,12 @@
     <!-- PAGINATION -->
     <div id="paginationContainer" class="d-flex justify-content-center align-items-center gap-3 mt-4">
       <button class="pagination-btn" th:disabled="${pagina <= 0}"
-              th:onclick="'loadAnnunci(' + (${pagina}-1) + ');'">
+              th:onclick="'loadAnnunci(' + (${pagina}-1) + ', true);'">
         <i class="fa-solid fa-arrow-left"></i> Precedente
       </button>
       <strong th:text="'Pagina ' + (${pagina}+1) + ' di ' + ${pagineTotali}"></strong>
       <button class="pagination-btn" th:disabled="${pagina >= pagineTotali-1}"
-              th:onclick="'loadAnnunci(' + (${pagina}+1) + ');'">
+              th:onclick="'loadAnnunci(' + (${pagina}+1) + ', true);'">
         Successivo <i class="fa-solid fa-arrow-right"></i>
       </button>
     </div>
@@ -296,9 +299,9 @@
   <th:block th:insert="~{fragments/scripts}"></th:block>
 
   <!-- 📦 SCRIPT -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    function loadAnnunci(pagina = 0) {
+    function loadAnnunci(pagina = 0, scroll = false) {
       const nomeAttivita = document.getElementById("nomeAttivita").value;
       const serviziOfferti = document.getElementById("serviziOfferti").value;
 
@@ -311,13 +314,18 @@
           const parsed = parser.parseFromString(html, "text/html");
           document.getElementById("risultati").innerHTML =
             parsed.getElementById("risultati").innerHTML;
-          document.getElementById("annunciContainer").scrollIntoView({ behavior: "smooth" });
+          if (scroll) {
+            document.getElementById("annunciContainer").scrollIntoView({ behavior: "smooth" });
+          }
         });
     }
 
-    document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci());
-    document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci());
+    // 🔸 Nessuno scroll al primo caricamento
     window.onload = () => loadAnnunci();
+
+    // 🔸 Scroll solo su interazione
+    document.getElementById("nomeAttivita").addEventListener("input", () => loadAnnunci(0, true));
+    document.getElementById("serviziOfferti").addEventListener("change", () => loadAnnunci(0, true));
   </script>
 </body>
 </html>

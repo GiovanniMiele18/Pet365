@@ -4,8 +4,11 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <!-- Navbar -->
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark pet365-navbar">
+<nav class="navbar navbar-expand-lg navbar-dark pet365-navbar">
     <div class="container-fluid px-4">
 
         <!-- Logo Brand -->
@@ -53,14 +56,14 @@
                 </li>
 
                 <!-- Login -->
-                <li th:if="${cliente == null}" class="nav-item">
-                    <a href="/login" class="btn btn-gold ms-2">
+                <li class="nav-item d-lg-none" th:if="${cliente == null}">
+                    <a href="/login" class="btn btn-gold w-100 mt-3">
                         <i class="fa-regular fa-user me-1"></i>Login
                     </a>
                 </li>
 
                 <!-- Profilo Dropdown -->
-                <li th:if="${cliente != null}" class="nav-item dropdown">
+                <li class="nav-item dropdown" th:if="${cliente != null}">
                     <a class="nav-link dropdown-toggle btn btn-outline-gold ms-2" href="#" id="userDropdown"
                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-user-gear"></i>
@@ -102,8 +105,9 @@
         backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(255,215,0,0.25);
         padding: 1rem 1.5rem;
-        position: relative;
-        z-index: 1000;
+        position: sticky;
+        top: 0;
+        z-index: 1050;
         box-shadow:
             0 4px 20px rgba(0, 0, 0, 0.5),
             0 0 18px rgba(255, 215, 0, 0.25),
@@ -111,7 +115,6 @@
         border-radius: 0 0 20px 20px;
     }
 
-    /* Logo */
     .logo {
         width: 64px;
         height: 64px;
@@ -125,7 +128,6 @@
         filter: drop-shadow(0 0 12px rgba(255,215,0,0.4));
     }
 
-    /* Brand */
     .brand-text {
         font-size: 2rem;
         font-weight: 700;
@@ -149,7 +151,6 @@
         100% { background-position: 0% 50%; }
     }
 
-    /* Link navbar */
     .navbar-nav .nav-link {
         color: var(--oro);
         font-weight: 500;
@@ -178,7 +179,6 @@
 
     .navbar-nav .nav-link:hover::after { width: 100%; }
 
-    /* Icone */
     .nav-icon {
         color: var(--oro);
         transition: all 0.3s ease;
@@ -191,7 +191,6 @@
         text-shadow: 0 0 6px rgba(255,215,0,0.8);
     }
 
-    /* Effetto Pulse */
     .pulse {
         animation: pulseGlow 3s ease-in-out infinite;
     }
@@ -207,7 +206,6 @@
         }
     }
 
-    /* Bottoni */
     .btn-gold {
         background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
         color: var(--verde);
@@ -239,7 +237,6 @@
         box-shadow: 0 0 15px rgba(255,215,0,0.5);
     }
 
-    /* Dropdown */
     .custom-dropdown {
         background-color: var(--verde);
         border: 1px solid rgba(255,215,0,0.3);
@@ -258,7 +255,6 @@
         font-weight: 600;
     }
 
-    /* Linea dorata */
     .gold-line {
         position: absolute;
         bottom: 0;
@@ -276,7 +272,6 @@
         100% { background-position: -200% center; }
     }
 
-    /* Responsive */
     @media (max-width: 991px) {
         .pet365-navbar {
             padding: 0.8rem 1rem;
@@ -285,6 +280,12 @@
 
         .logo { width: 52px; height: 52px; }
         .brand-text { font-size: 1.6rem; }
-        .navbar-nav .nav-link { font-size: 1rem; }
+        .navbar-nav .nav-link { font-size: 1rem; text-align: center; }
+        .navbar-collapse {
+            background: rgba(1,46,31,0.95);
+            border-radius: 0 0 15px 15px;
+            padding: 1rem;
+            box-shadow: inset 0 0 10px rgba(255,215,0,0.15);
+        }
     }
 </style>

@@ -1,205 +1,204 @@
 <!DOCTYPE html>
 <html lang="it" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <th:block th:insert="~{fragments/head}"></th:block>
-  <title>Pet365 - Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- ✅ Bootstrap 5.3.3 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- ✅ Font Awesome 6.6.0 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
-  <!-- ✅ Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <th:block th:insert="~{fragments/head}"></th:block>
 
-  <style>
-    :root {
-      --verde: #0a6847;
-      --verde-scuro: #064d36;
-      --oro: #ffd700;
-      --oro-chiaro: #fff4a3;
-      --rosso: #ff6b6b;
-      --bianco: #ffffff;
-    }
+    <title>Pet365 - Login</title>
 
-    body {
-      background: linear-gradient(135deg, var(--verde-scuro), var(--verde));
-      color: var(--oro);
-      font-family: 'Montserrat', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+    <!-- ✅ Bootstrap 5.3.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    /* ===== CONTAINER ===== */
-    .login-wrapper {
-      flex-grow: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 3rem 1rem;
-    }
+    <!-- ✅ Font Awesome 6.6.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 
-    .card-login {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(15px);
-      border: 2px solid rgba(255, 215, 0, 0.5);
-      border-radius: 20px;
-      padding: 2.5rem;
-      width: 100%;
-      max-width: 430px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-      color: var(--oro);
-    }
+    <!-- ✅ Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    h1 {
-      text-align: center;
-      font-weight: 800;
-      color: var(--oro);
-      text-shadow: 0 0 15px rgba(255,215,0,0.5);
-      margin-bottom: 2rem;
-    }
+    <style>
+        :root {
+            --verde: #013220;
+            --verde-scuro: #012214;
+            --oro: #FFD700;
+            --oro-chiaro: #fff4a3;
+            --rosso: #ff6666;
+            --bianco: #ffffff;
+        }
 
-    /* ===== INPUTS ===== */
-    .form-control {
-      background-color: rgba(255,255,255,0.1);
-      border: 1px solid var(--oro);
-      color: var(--oro);
-      border-radius: 10px;
-      padding: 0.8rem 1rem;
-      transition: all 0.3s ease;
-    }
+        /* --- BASE --- */
+        body {
+            background: linear-gradient(135deg, var(--verde) 0%, var(--verde-scuro) 100%);
+            color: var(--oro);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+        }
 
-    .form-control:focus {
-      background-color: rgba(255,255,255,0.15);
-      border-color: var(--oro-chiaro);
-      box-shadow: 0 0 10px rgba(255,215,0,0.6);
-      color: var(--oro);
-    }
+        h1 {
+            color: var(--oro);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
 
-    ::placeholder { color: rgba(255,215,0,0.6); }
+        /* --- CARD --- */
+        .card {
+            background-color: rgba(1, 50, 32, 0.9);
+            border: 2px solid var(--oro);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    /* ===== PASSWORD TOGGLE ===== */
-    .password-container {
-      position: relative;
-    }
-    .toggle-password {
-      position: absolute;
-      top: 50%;
-      right: 15px;
-      transform: translateY(-50%);
-      cursor: pointer;
-      color: var(--oro);
-      transition: color 0.3s ease;
-    }
-    .toggle-password:hover {
-      color: var(--oro-chiaro);
-    }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+        }
 
-    /* ===== BUTTON ===== */
-    .btn-luxury {
-      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
-      color: var(--verde-scuro);
-      font-weight: 700;
-      border: none;
-      border-radius: 10px;
-      padding: 0.8rem 1.2rem;
-      transition: 0.3s ease;
-      box-shadow: 0 4px 15px rgba(255,215,0,0.4);
-    }
+        .card-title {
+            color: var(--oro);
+            font-weight: 600;
+            margin-top: 10px;
+        }
 
-    .btn-luxury:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px rgba(255,215,0,0.7);
-    }
+        /* --- FORM --- */
+        .form-control {
+            border: 1px solid var(--oro);
+            background-color: #022a1c;
+            color: var(--oro);
+            transition: all 0.3s ease;
+        }
 
-    /* ===== LINKS ===== */
-    .extra-links {
-      margin-top: 1rem;
-      text-align: center;
-      font-size: 0.95rem;
-    }
+        .form-control:focus {
+            border-color: var(--oro-chiaro);
+            box-shadow: 0 0 10px var(--oro);
+            background-color: var(--verde);
+            color: var(--oro);
+        }
 
-    .extra-links a {
-      color: var(--oro);
-      text-decoration: underline;
-      transition: 0.3s ease;
-    }
+        /* --- ERRORI --- */
+        .invalid-feedback {
+            display: block;
+            color: var(--rosso);
+            font-weight: 600;
+            margin-top: 6px;
+        }
 
-    .extra-links a:hover {
-      color: var(--bianco);
-      text-shadow: 0 0 10px rgba(255,215,0,0.6);
-    }
+        .form-control.is-invalid {
+            border-color: var(--rosso) !important;
+            box-shadow: 0 0 8px var(--rosso);
+            color: var(--oro);
+        }
 
-    /* ===== ERROR ===== */
-    .invalid-feedback {
-      color: var(--rosso);
-      font-weight: 600;
-      margin-top: 6px;
-      display: block;
-    }
-  </style>
+        /* --- BUTTON --- */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+            color: var(--verde);
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--bianco), var(--oro));
+            color: var(--verde);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+
+        /* --- LINK --- */
+        a {
+            color: var(--oro);
+            text-decoration: underline;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--bianco);
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .col-md-5 {
+                width: 90% !important;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <th:block th:insert="~{fragments/navbar}"></th:block>
 
-  <div class="login-wrapper">
-    <div class="card-login">
-      <h1 th:if="${nameLogin.equals('/login')}">Login</h1>
-      <h1 th:if="${nameLogin.equals('/loginAmministratore')}">Login Amministratore</h1>
+    <th:block th:insert="~{fragments/navbar}"></th:block>
 
-      <form th:action="${nameLogin.toString()}" th:object="${loginForm}" method="post">
-
-        <!-- EMAIL -->
-        <div class="mb-3">
-          <input th:field="*{email}" type="email" class="form-control" placeholder="E-mail">
-          <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-          <div class="invalid-feedback" th:if="${existsEmail != null}" th:text="'Email non registrata'"></div>
-        </div>
-
-        <!-- PASSWORD -->
-        <div class="mb-4 password-container">
-          <input th:field="*{password}" id="password" type="password" class="form-control" placeholder="Password">
-          <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
-          <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-          <div class="invalid-feedback" th:if="${passwordErrata != null}" th:text="'Password errata'"></div>
-        </div>
-
-        <!-- LINK RECUPERO -->
-        <div class="text-end mb-3">
-          <a th:href="@{/recuperaPassword}">Hai dimenticato la password?</a>
-        </div>
-
-        <!-- BUTTON -->
-        <button type="submit" class="btn btn-luxury w-100">
-          <i class="fa-solid fa-right-to-bracket me-2"></i>Accedi
-        </button>
-      </form>
-
-      <!-- REGISTRAZIONE -->
-      <div th:if="${nameLogin.toString().equals('/login')}" class="extra-links mt-3">
-        <p>Nuovo utente? <a th:href="@{/registrazione}">Registrati qui</a></p>
-      </div>
+    <!-- Titolo -->
+    <div class="py-5 text-center">
+        <h1 th:if="${nameLogin.equals('/login')}">Login</h1>
+        <h1 th:if="${nameLogin.equals('/loginAmministratore')}">Login Amministratore</h1>
     </div>
-  </div>
 
-  <th:block th:insert="~{fragments/footbar}"></th:block>
-  <th:block th:insert="~{fragments/scripts}"></th:block>
+    <!-- Contenuto principale -->
+    <div class="container d-flex justify-content-center align-items-start pb-5">
+        <div class="col-md-5">
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Card Login -->
+            <div class="card mb-3">
+                <div class="card-body p-4">
+                    <form th:action="${nameLogin.toString()}" th:object="${loginForm}" method="post">
 
-  <!-- 👁️ Mostra/Nascondi Password -->
-  <script>
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-    togglePassword.addEventListener('click', () => {
-      const isPassword = passwordInput.type === 'password';
-      passwordInput.type = isPassword ? 'text' : 'password';
-      togglePassword.classList.toggle('fa-eye');
-      togglePassword.classList.toggle('fa-eye-slash');
-    });
-  </script>
+                        <!-- Email -->
+                        <h5 class="card-title"><i class="fa fa-user me-2"></i>E-mail</h5>
+                        <div class="form-group mb-3">
+                            <input th:field="*{email}" type="email" class="form-control" placeholder="Inserisci email">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            <div class="invalid-feedback" th:if="${existsEmail != null}" th:text="'Email non registrata'"></div>
+                        </div>
+
+                        <!-- Password -->
+                        <h5 class="card-title"><i class="fa fa-key me-2"></i>Password</h5>
+                        <div class="form-group mb-4">
+                            <input th:field="*{password}" type="password" class="form-control"
+                                placeholder="Inserisci password">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
+                                th:errors="*{password}"></div>
+                            <div class="invalid-feedback" th:if="${passwordErrata != null}" th:text="'Password errata'">
+                            </div>
+                        </div>
+
+                        <!-- Pulsante -->
+                        <button type="submit" class="btn btn-primary w-100 mb-2">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i>Login
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Registrazione -->
+            <div th:if="${nameLogin.toString().equals('/login')}" class="card text-center">
+                <div class="card-body">
+                    <small class="card-title">
+                        Nuovo utente? Registrati <a th:href="@{/registrazione}">qui</a>
+                    </small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <th:block th:insert="~{fragments/footbar}"></th:block>
+    <th:block th:insert="~{fragments/scripts}"></th:block>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

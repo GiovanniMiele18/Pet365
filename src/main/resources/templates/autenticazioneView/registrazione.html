@@ -195,7 +195,7 @@
             <h5 class="card-title"><i class="fa-solid fa-briefcase me-2"></i>Lavori nel mondo animale?</h5>
             <div class="form-check mb-3">
               <input class="form-check-input" type="checkbox" th:field="*{lavoratore}" id="lavoratoreCheck">
-              <label class="form-check-label" for="lavoratoreCheck">Sì, sono un lavoratore del settore</label>
+              <label class="form-check-label" class="card-title" for="lavoratoreCheck">Sì, sono un lavoratore del settore</label>
             </div>
 
             <!-- Pulsante -->
@@ -209,7 +209,7 @@
       <!-- Card Login -->
       <div class="card text-center">
         <div class="card-body">
-          <small>Sei già registrato? Accedi <a th:href="@{/login}">qui</a>.</small>
+          <small class="card-title">Sei già registrato? Accedi <a th:href="@{/login}">qui</a>.</small>
         </div>
       </div>
     </div>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <th:block th:insert="~{fragments/head}"></th:block>
+  <title>Pet365 - Recupera Password</title>
+
+  <!-- ✅ Bootstrap / Font / Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --verde: #0a6847;
+      --verde-scuro: #064d36;
+      --oro: #ffd700;
+      --oro-chiaro: #fff4a3;
+      --bianco: #ffffff;
+      --rosso: #ff6b6b;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--verde-scuro), var(--verde));
+      font-family: 'Montserrat', sans-serif;
+      color: var(--oro);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .recovery-wrapper {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 1rem;
+    }
+
+    .card-recovery {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      border: 2px solid rgba(255,215,0,0.5);
+      border-radius: 20px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 430px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      font-weight: 800;
+      text-shadow: 0 0 15px rgba(255,215,0,0.5);
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      color: var(--oro-chiaro);
+    }
+
+    .form-control {
+      background-color: rgba(255,255,255,0.1);
+      border: 1px solid var(--oro);
+      color: var(--oro);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-control:focus {
+      background-color: rgba(255,255,255,0.15);
+      border-color: var(--oro-chiaro);
+      box-shadow: 0 0 10px rgba(255,215,0,0.6);
+      color: var(--oro);
+    }
+
+    .btn-luxury {
+      background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+      color: var(--verde-scuro);
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      padding: 0.8rem 1.2rem;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255,215,0,0.4);
+      width: 100%;
+    }
+
+    .btn-luxury:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(255,215,0,0.7);
+    }
+
+    a {
+      color: var(--oro);
+      text-decoration: underline;
+      transition: 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--bianco);
+      text-shadow: 0 0 10px rgba(255,215,0,0.6);
+    }
+
+    .invalid-feedback {
+      color: var(--rosso);
+      font-weight: 600;
+      margin-top: 6px;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <th:block th:insert="~{fragments/navbar}"></th:block>
+
+  <div class="recovery-wrapper">
+    <div class="card-recovery">
+      <h1>Recupera Password</h1>
+      <p>Inserisci la tua e-mail e ti invieremo un link per reimpostare la password 🔐</p>
+
+      <form th:action="@{/recuperaPassword}" th:object="${recuperoForm}" method="post">
+        <input th:field="*{email}" type="email" class="form-control" placeholder="Inserisci la tua e-mail">
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+        <button type="submit" class="btn-luxury mt-2">
+          <i class="fa-solid fa-envelope me-2"></i>Invia link di recupero
+        </button>
+      </form>
+
+      <div class="mt-4">
+        <a th:href="@{/login}"><i class="fa-solid fa-arrow-left me-1"></i>Torna al login</a>
+      </div>
+    </div>
+  </div>
+
+  <th:block th:insert="~{fragments/footbar}"></th:block>
+  <th:block th:insert="~{fragments/scripts}"></th:block>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

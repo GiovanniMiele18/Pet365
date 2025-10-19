@@ -83,14 +83,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggler = document.querySelector('.navbar-toggler');
   const icon = toggler.querySelector('i');
   const menu = document.getElementById('navbarNav');
+  const bsCollapse = new bootstrap.Collapse(menu, { toggle: false });
 
-  // Eventi Bootstrap per apertura/chiusura
+  // Cambio icona quando si apre/chiude il menu
   menu.addEventListener('show.bs.collapse', () => {
     icon.classList.replace('fa-bars', 'fa-xmark');
   });
 
   menu.addEventListener('hide.bs.collapse', () => {
     icon.classList.replace('fa-xmark', 'fa-bars');
+  });
+
+  // Chiudi anche cliccando la "X"
+  toggler.addEventListener('click', () => {
+    if (menu.classList.contains('show')) {
+      bsCollapse.hide();
+    } else {
+      bsCollapse.show();
+    }
+  });
+
+  // Chiudi automaticamente dopo click su un link (comportamento mobile)
+  menu.querySelectorAll('a.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < 992 && menu.classList.contains('show')) {
+        bsCollapse.hide();
+      }
+    });
   });
 });
 </script>

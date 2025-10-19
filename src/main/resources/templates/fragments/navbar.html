@@ -65,28 +65,7 @@
 📱 Script menu mobile
 ======================================================= -->
 <script>
-document.addEventListener('click', function (event) {
-  const navbarToggler = document.querySelector('.navbar-toggler');
-  const navbarCollapse = document.querySelector('#navbarNav');
-
-  if (navbarCollapse.classList.contains('show') &&
-      !navbarToggler.contains(event.target) &&
-      !navbarCollapse.contains(event.target)) {
-    const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: true });
-    bsCollapse.hide();
-  }
-});
-
-document.querySelectorAll('.navbar-nav a').forEach(link => {
-  link.addEventListener('click', () => {
-    const navbarCollapse = document.querySelector('#navbarNav');
-    if (navbarCollapse.classList.contains('show')) {
-      const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: true });
-      bsCollapse.hide();
-    }
-  });
-});
-
+// ✅ Ora il menu si apre/chiude SOLO cliccando sull’hamburger.
 document.querySelector('.navbar-toggler').addEventListener('click', function () {
   const navbarCollapse = document.querySelector('#navbarNav');
   const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
@@ -105,18 +84,19 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
   --bianco: #ffffff;
 }
 
-/* --- NAVBAR FISSA --- */
+/* --- NAVBAR FISSA (NON SCROLLA) --- */
 .pet365-navbar {
-  position: fixed !important;
+  position: fixed;
   top: 0; left: 0;
   width: 100%;
-  background: linear-gradient(135deg, rgba(1,46,31,1), rgba(1,91,56,0.95)) !important;
+  height: 100px;
+  background: linear-gradient(135deg, rgba(1,46,31,1), rgba(1,91,56,0.95));
   border-bottom: 2px solid rgba(255,215,0,0.3);
   font-family: 'Montserrat', sans-serif;
   padding: 1rem 1.5rem;
   box-shadow: 0 4px 15px rgba(0,0,0,0.6);
   border-radius: 0 0 20px 20px;
-  z-index: 5000;
+  z-index: 9999;
 }
 
 /* --- LOGO --- */
@@ -138,9 +118,7 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
   font-weight: 700;
   color: var(--oro);
 }
-.brand-text .accent {
-  color: var(--bianco);
-}
+.brand-text .accent { color: var(--bianco); }
 .shimmer {
   background: linear-gradient(120deg, var(--oro) 0%, #fff 25%, var(--oro) 50%, var(--oro-chiaro) 75%, var(--oro) 100%);
   -webkit-background-clip: text;
@@ -189,7 +167,6 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
 .btn-gold:hover {
   background: linear-gradient(135deg, #fff, var(--oro));
 }
-
 .btn-outline-gold {
   border: 1px solid var(--oro);
   color: var(--oro);
@@ -233,7 +210,7 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
 @media (max-width: 991px) {
   .pet365-navbar {
     padding: 0.8rem 1rem;
-    border-radius: 0 0 15px 15px;
+    height: auto;
   }
   .logo { width: 52px; height: 52px; }
   .brand-text { font-size: 1.6rem; }
@@ -241,6 +218,7 @@ document.querySelector('.navbar-toggler').addEventListener('click', function () 
 
 /* --- MARGINE CONTENUTO --- */
 body {
-  padding-top: 110px;
+  padding-top: 120px;
+  overflow-x: hidden;
 }
 </style>

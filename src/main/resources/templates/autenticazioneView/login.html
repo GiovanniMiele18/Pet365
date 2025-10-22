@@ -28,6 +28,7 @@
       --bianco: #ffffff;
     }
 
+    /* --- BASE --- */
     body {
       background: radial-gradient(circle at center, var(--verde) 0%, var(--verde-scuro) 90%);
       color: var(--oro);
@@ -35,7 +36,6 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
     }
 
     main {
@@ -44,44 +44,11 @@
       justify-content: center;
       align-items: center;
       padding: 2rem 0;
-      opacity: 0;
-      animation: fadeIn 1.2s ease-out forwards;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* --- Shake animazione errore --- */
-    @keyframes shake {
-      0%, 100% {
-        transform: translateX(0);
-      }
-
-      20%, 60% {
-        transform: translateX(-8px);
-      }
-
-      40%, 80% {
-        transform: translateX(8px);
-      }
-    }
-
-    .shake {
-      animation: shake 0.5s ease-in-out;
-    }
-
-    /* --- Titolo --- */
+    /* --- TITOLO MODERNO --- */
     .login-title {
-      font-size: 2.6rem;
+      font-size: 2.5rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -90,7 +57,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-size: 300% auto;
-      animation: shimmer 4s linear infinite, fadeTitle 1.4s ease-out forwards;
+      animation: shimmer 4s linear infinite;
       margin-bottom: 2rem;
       text-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
     }
@@ -109,19 +76,7 @@
       }
     }
 
-    @keyframes fadeTitle {
-      0% {
-        opacity: 0;
-        transform: translateY(-15px);
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* --- Card --- */
+    /* --- CARD --- */
     .card {
       background-color: rgba(1, 50, 32, 0.95);
       border: 1px solid rgba(255, 215, 0, 0.5);
@@ -134,7 +89,8 @@
     }
 
     .card:hover {
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.4);
     }
 
     .card-title {
@@ -143,38 +99,51 @@
       margin-top: 10px;
     }
 
-    /* --- Alert globale --- */
-    .alert-box {
-      background-color: #fff3f3;
-      border: 2px solid #ff4d4d;
-      border-left: 6px solid #cc0000;
+    /* --- FORM --- */
+    .form-control {
+      border: 1px solid var(--oro);
+      background-color: #022a1c;
+      color: var(--oro);
+      transition: all 0.3s ease;
       border-radius: 10px;
-      padding: 14px 20px;
-      color: #660000;
+    }
+
+    .form-control:focus {
+      border-color: var(--oro-chiaro);
+      box-shadow: 0 0 12px var(--oro);
+      background-color: var(--verde);
+      color: var(--oro);
+    }
+
+    .input-group-text {
+      background-color: #022a1c;
+      border: 1px solid var(--oro);
+      color: var(--oro);
+      cursor: pointer;
+      border-left: none;
+      transition: all 0.3s ease;
+    }
+
+    .input-group-text:hover {
+      background-color: var(--oro);
+      color: var(--verde);
+    }
+
+    /* --- ERRORI --- */
+    .invalid-feedback {
+      display: block;
+      color: var(--rosso);
       font-weight: 600;
-      text-align: left;
-      margin-bottom: 15px;
-      animation: fadeAlert 0.5s ease-out;
+      margin-top: 6px;
     }
 
-    .alert-box i {
-      color: #cc0000;
-      font-size: 1.2rem;
+    .form-control.is-invalid {
+      border-color: var(--rosso) !important;
+      box-shadow: 0 0 8px var(--rosso);
+      color: var(--oro);
     }
 
-    @keyframes fadeAlert {
-      from {
-        opacity: 0;
-        transform: translateY(-8px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* --- Button --- */
+    /* --- BUTTON --- */
     .btn-primary {
       background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
       color: var(--verde);
@@ -187,23 +156,38 @@
 
     .btn-primary:hover {
       background: linear-gradient(135deg, var(--bianco), var(--oro));
+      color: var(--verde);
       transform: translateY(-2px);
       box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
     }
 
-    /* --- Card registrazione --- */
+    /* --- LINK --- */
+    a {
+      color: var(--oro);
+      text-decoration: underline;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--bianco);
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+
+    /* --- CARD REGISTRAZIONE CENTRATA --- */
     .register-card {
       background-color: rgba(1, 50, 32, 0.95);
       border: 1px solid rgba(255, 215, 0, 0.5);
-      border-top: none;
-      border-radius: 0 0 18px 18px;
-      box-shadow: 0 12px 25px rgba(255, 215, 0, 0.15);
+      border-radius: 18px;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
       width: 100%;
       max-width: 420px;
-      margin: 0 auto;
-      padding: 12px 0;
-      position: relative;
-      top: -10px;
+      margin: 20px auto 0 auto;
+      padding: 10px 0;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .register-card:hover {
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.4);
     }
 
     .register-card small {
@@ -211,44 +195,59 @@
       font-weight: 500;
       text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
     }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .login-title {
+        font-size: 2rem;
+      }
+
+      .card,
+      .register-card {
+        max-width: 90%;
+      }
+    }
   </style>
 </head>
 
 <body>
 
+  <th:block th:insert="~{fragments/navbar}"></th:block>
+
   <main>
     <div class="container text-center">
 
-      <h1 class="login-title">Login</h1>
+      <!-- Titolo -->
+      <h1 class="login-title" th:if="${nameLogin.equals('/login')}">Login</h1>
+      <h1 class="login-title" th:if="${nameLogin.equals('/loginAmministratore')}">Login Amministratore</h1>
 
-      <div class="card p-4" id="loginCard">
-
-        <!-- Messaggio errore dinamico -->
-        <div id="errorBox" class="alert-box d-none">
-          <i class="fa-solid fa-circle-exclamation me-2"></i>
-          <strong>Si è verificato un problema!</strong><br>
-          <span id="errorMessage"></span>
-        </div>
-
-        <form id="loginForm">
+      <!-- Card Login -->
+      <div class="card p-4">
+        <form th:action="${nameLogin.toString()}" th:object="${loginForm}" method="post">
 
           <!-- Email -->
           <h5 class="card-title text-start"><i class="fa fa-user me-2"></i>E-mail</h5>
           <div class="form-group mb-3">
-            <input id="emailField" type="email" class="form-control" placeholder="Inserisci email" required>
+            <input th:field="*{email}" type="email" class="form-control" placeholder="Inserisci email">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            <div class="invalid-feedback" th:if="${existsEmail != null}" th:text="'Email non registrata'"></div>
           </div>
 
           <!-- Password -->
           <h5 class="card-title text-start"><i class="fa fa-key me-2"></i>Password</h5>
           <div class="form-group mb-4">
             <div class="input-group">
-              <input id="passwordField" type="password" class="form-control" placeholder="Inserisci password" required>
+              <input th:field="*{password}" type="password" id="passwordField" class="form-control"
+                placeholder="Inserisci password">
               <span class="input-group-text" id="togglePassword">
                 <i class="fa-solid fa-eye"></i>
               </span>
             </div>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            <div class="invalid-feedback" th:if="${passwordErrata != null}" th:text="'Password errata'"></div>
           </div>
 
+          <!-- Pulsante -->
           <button type="submit" class="btn btn-primary w-100 mb-2">
             <i class="fa-solid fa-right-to-bracket me-2"></i>Login
           </button>
@@ -256,72 +255,38 @@
         </form>
       </div>
 
-      <div class="register-card">
+      <!-- Card Registrazione centrata -->
+      <div th:if="${nameLogin.toString().equals('/login')}" class="register-card">
         <div class="card-body p-2">
-          <small>Nuovo utente? Registrati <a href="/registrazione">qui</a></small>
+          <small>
+            Nuovo utente? Registrati <a th:href="@{/registrazione}">qui</a>
+          </small>
         </div>
       </div>
-
     </div>
   </main>
+
+  <th:block th:insert="~{fragments/footbar}"></th:block>
+  <th:block th:insert="~{fragments/scripts}"></th:block>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Script interattivo -->
+  <!-- 👁️‍🗨️ Script mostra/nascondi password -->
   <script>
-    // Mostra/Nascondi password
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordField = document.getElementById('passwordField');
-    const icon = togglePassword.querySelector('i');
+    document.addEventListener('DOMContentLoaded', () => {
+      const togglePassword = document.getElementById('togglePassword');
+      const passwordField = document.getElementById('passwordField');
+      const icon = togglePassword.querySelector('i');
 
-    togglePassword.addEventListener('click', () => {
-      const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-      passwordField.setAttribute('type', type);
-      icon.classList.toggle('fa-eye');
-      icon.classList.toggle('fa-eye-slash');
+      togglePassword.addEventListener('click', () => {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+      });
     });
-
-    // Simulazione login AJAX (senza refresh)
-    const form = document.getElementById('loginForm');
-    const errorBox = document.getElementById('errorBox');
-    const errorMessage = document.getElementById('errorMessage');
-    const card = document.getElementById('loginCard');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault(); // Evita il reload
-
-      const email = document.getElementById('emailField').value.trim();
-      const password = document.getElementById('passwordField').value.trim();
-
-      // Simulazione lato client (qui potresti collegare il fetch al tuo backend REST)
-      if (email === "" || password === "") {
-        showError("Compila tutti i campi");
-        return;
-      }
-
-      if (email !== "utente@pet365.it") {
-        showError("Non riusciamo a trovare un account con quell’indirizzo e-mail");
-        return;
-      }
-
-      if (password !== "12345") {
-        showError("La password che hai inserito non è corretta");
-        return;
-      }
-
-      // Login riuscito
-      errorBox.classList.add("d-none");
-      alert("✅ Login effettuato con successo!");
-    });
-
-    // Mostra errore globale con effetto shake
-    function showError(message) {
-      errorMessage.textContent = message;
-      errorBox.classList.remove("d-none");
-      card.classList.add("shake");
-      setTimeout(() => card.classList.remove("shake"), 500);
-    }
   </script>
+
 </body>
 </html>

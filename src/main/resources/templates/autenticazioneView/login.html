@@ -36,6 +36,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
 
     main {
@@ -44,11 +45,25 @@
       justify-content: center;
       align-items: center;
       padding: 2rem 0;
+      opacity: 0;
+      animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* --- TITOLO MODERNO --- */
     .login-title {
-      font-size: 2.5rem;
+      font-size: 2.6rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -57,7 +72,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-size: 300% auto;
-      animation: shimmer 4s linear infinite;
+      animation: shimmer 4s linear infinite, fadeTitle 1.4s ease-out forwards;
       margin-bottom: 2rem;
       text-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
     }
@@ -76,6 +91,18 @@
       }
     }
 
+    @keyframes fadeTitle {
+      0% {
+        opacity: 0;
+        transform: translateY(-15px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* --- CARD --- */
     .card {
       background-color: rgba(1, 50, 32, 0.95);
@@ -86,11 +113,24 @@
       width: 100%;
       max-width: 420px;
       margin: 0 auto;
+      animation: fadeCard 1.3s ease-out forwards;
+    }
+
+    @keyframes fadeCard {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 35px rgba(255, 215, 0, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
     }
 
     .card-title {
@@ -129,18 +169,43 @@
       color: var(--verde);
     }
 
-    /* --- ERRORI --- */
-    .invalid-feedback {
-      display: block;
-      color: var(--rosso);
-      font-weight: 600;
-      margin-top: 6px;
+    /* --- ALERT GLOBALE --- */
+    .alert-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .form-control.is-invalid {
-      border-color: var(--rosso) !important;
-      box-shadow: 0 0 8px var(--rosso);
-      color: var(--oro);
+    .alert-box {
+      background-color: #fff3f3;
+      border: 2px solid #ff4d4d;
+      border-left: 6px solid #cc0000;
+      border-radius: 10px;
+      padding: 14px 20px;
+      color: #660000;
+      font-weight: 600;
+      width: 100%;
+      max-width: 380px;
+      text-align: left;
+      box-shadow: 0 0 12px rgba(255, 0, 0, 0.1);
+      animation: fadeAlert 0.5s ease-out;
+    }
+
+    .alert-box i {
+      color: #cc0000;
+      font-size: 1.2rem;
+    }
+
+    @keyframes fadeAlert {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* --- BUTTON --- */
@@ -173,21 +238,20 @@
       text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
     }
 
-    /* --- CARD REGISTRAZIONE CENTRATA --- */
+    /* --- CARD REGISTRAZIONE UNITA --- */
     .register-card {
       background-color: rgba(1, 50, 32, 0.95);
       border: 1px solid rgba(255, 215, 0, 0.5);
-      border-radius: 18px;
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+      border-top: none;
+      border-radius: 0 0 18px 18px;
+      box-shadow: 0 12px 25px rgba(255, 215, 0, 0.15);
       width: 100%;
       max-width: 420px;
-      margin: 20px auto 0 auto;
-      padding: 10px 0;
-      transition: box-shadow 0.3s ease;
-    }
-
-    .register-card:hover {
-      box-shadow: 0 0 35px rgba(255, 215, 0, 0.4);
+      margin: 0 auto;
+      padding: 12px 0;
+      position: relative;
+      top: -10px;
+      animation: fadeCard 1.5s ease-out forwards;
     }
 
     .register-card small {
@@ -223,14 +287,23 @@
 
       <!-- Card Login -->
       <div class="card p-4">
+
+        <!-- 🔴 Messaggio di errore globale -->
+        <div th:if="${existsEmail != null or passwordErrata != null}" class="alert-container mb-3">
+          <div class="alert-box">
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            <strong>Si è verificato un problema!</strong><br>
+            <span th:if="${existsEmail != null}" th:text="'Non riusciamo a trovare un account con quell\'indirizzo e-mail'"></span>
+            <span th:if="${passwordErrata != null}" th:text="'La password che hai inserito non è corretta'"></span>
+          </div>
+        </div>
+
         <form th:action="${nameLogin.toString()}" th:object="${loginForm}" method="post">
 
           <!-- Email -->
           <h5 class="card-title text-start"><i class="fa fa-user me-2"></i>E-mail</h5>
           <div class="form-group mb-3">
             <input th:field="*{email}" type="email" class="form-control" placeholder="Inserisci email">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-            <div class="invalid-feedback" th:if="${existsEmail != null}" th:text="'Email non registrata'"></div>
           </div>
 
           <!-- Password -->
@@ -243,8 +316,6 @@
                 <i class="fa-solid fa-eye"></i>
               </span>
             </div>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-            <div class="invalid-feedback" th:if="${passwordErrata != null}" th:text="'Password errata'"></div>
           </div>
 
           <!-- Pulsante -->
@@ -255,7 +326,7 @@
         </form>
       </div>
 
-      <!-- Card Registrazione centrata -->
+      <!-- Card Registrazione -->
       <div th:if="${nameLogin.toString().equals('/login')}" class="register-card">
         <div class="card-body p-2">
           <small>

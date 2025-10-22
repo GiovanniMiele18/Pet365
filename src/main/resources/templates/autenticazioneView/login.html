@@ -9,7 +9,7 @@
 
   <title>Pet365 - Login</title>
 
-  <!-- ✅ Bootstrap 5.3.3 -->
+  <!-- ✅ Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- ✅ Font Awesome -->
@@ -28,7 +28,6 @@
       --bianco: #ffffff;
     }
 
-    /* --- BASE --- */
     body {
       background: radial-gradient(circle at center, var(--verde) 0%, var(--verde-scuro) 90%);
       color: var(--oro);
@@ -46,7 +45,7 @@
       padding: 2rem 0;
     }
 
-    /* --- TITOLO MODERNO --- */
+    /* --- Titolo --- */
     .login-title {
       font-size: 2.5rem;
       font-weight: 700;
@@ -63,17 +62,9 @@
     }
 
     @keyframes shimmer {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      50% {
-        background-position: 100% 50%;
-      }
-
-      100% {
-        background-position: 0% 50%;
-      }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     /* --- CARD --- */
@@ -86,6 +77,7 @@
       width: 100%;
       max-width: 420px;
       margin: 0 auto;
+      padding: 1.5rem;
     }
 
     .card:hover {
@@ -104,7 +96,6 @@
       border: 1px solid var(--oro);
       background-color: #022a1c;
       color: var(--oro);
-      transition: all 0.3s ease;
       border-radius: 10px;
     }
 
@@ -121,7 +112,6 @@
       color: var(--oro);
       cursor: pointer;
       border-left: none;
-      transition: all 0.3s ease;
     }
 
     .input-group-text:hover {
@@ -129,18 +119,28 @@
       color: var(--verde);
     }
 
-    /* --- ERRORI --- */
-    .invalid-feedback {
-      display: block;
-      color: var(--rosso);
+    /* --- ALERT GLOBALE --- */
+    .alert-box {
+      background-color: #fff3f3;
+      border: 2px solid #ff4d4d;
+      border-left: 6px solid #cc0000;
+      border-radius: 10px;
+      padding: 14px 20px;
+      color: #660000;
       font-weight: 600;
-      margin-top: 6px;
+      text-align: left;
+      margin-bottom: 15px;
+      animation: fadeAlert 0.4s ease-out;
     }
 
-    .form-control.is-invalid {
-      border-color: var(--rosso) !important;
-      box-shadow: 0 0 8px var(--rosso);
-      color: var(--oro);
+    .alert-box i {
+      color: #cc0000;
+      font-size: 1.2rem;
+    }
+
+    @keyframes fadeAlert {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* --- BUTTON --- */
@@ -148,42 +148,27 @@
       background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
       color: var(--verde);
       font-weight: 700;
-      border: none;
       border-radius: 12px;
-      transition: all 0.3s ease;
       box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
     }
 
     .btn-primary:hover {
       background: linear-gradient(135deg, var(--bianco), var(--oro));
-      color: var(--verde);
-      transform: translateY(-2px);
       box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+      transform: translateY(-2px);
     }
 
-    /* --- LINK --- */
-    a {
-      color: var(--oro);
-      text-decoration: underline;
-      transition: all 0.3s ease;
-    }
-
-    a:hover {
-      color: var(--bianco);
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-    }
-
-    /* --- CARD REGISTRAZIONE CENTRATA --- */
+    /* --- CARD REGISTRAZIONE --- */
     .register-card {
       background-color: rgba(1, 50, 32, 0.95);
       border: 1px solid rgba(255, 215, 0, 0.5);
       border-radius: 18px;
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
       width: 100%;
       max-width: 420px;
-      margin: 20px auto 0 auto;
+      margin: 20px auto 0;
       padding: 10px 0;
-      transition: box-shadow 0.3s ease;
+      text-align: center;
+      transition: 0.3s ease;
     }
 
     .register-card:hover {
@@ -198,14 +183,8 @@
 
     /* --- RESPONSIVE --- */
     @media (max-width: 768px) {
-      .login-title {
-        font-size: 2rem;
-      }
-
-      .card,
-      .register-card {
-        max-width: 90%;
-      }
+      .login-title { font-size: 2rem; }
+      .card, .register-card { max-width: 90%; }
     }
   </style>
 </head>
@@ -223,14 +202,21 @@
 
       <!-- Card Login -->
       <div class="card p-4">
+
+        <!-- 🔴 Messaggio di errore globale -->
+        <div th:if="${existsEmail != null or passwordErrata != null}" class="alert-box">
+          <i class="fa-solid fa-circle-exclamation me-2"></i>
+          <strong>Si è verificato un problema!</strong><br>
+          <span th:if="${existsEmail != null}" th:text="'Non riusciamo a trovare un account con quell\'indirizzo e-mail'"></span>
+          <span th:if="${passwordErrata != null}" th:text="'La password che hai inserito non è corretta'"></span>
+        </div>
+
         <form th:action="${nameLogin.toString()}" th:object="${loginForm}" method="post">
 
           <!-- Email -->
           <h5 class="card-title text-start"><i class="fa fa-user me-2"></i>E-mail</h5>
           <div class="form-group mb-3">
             <input th:field="*{email}" type="email" class="form-control" placeholder="Inserisci email">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-            <div class="invalid-feedback" th:if="${existsEmail != null}" th:text="'Email non registrata'"></div>
           </div>
 
           <!-- Password -->
@@ -243,8 +229,6 @@
                 <i class="fa-solid fa-eye"></i>
               </span>
             </div>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-            <div class="invalid-feedback" th:if="${passwordErrata != null}" th:text="'Password errata'"></div>
           </div>
 
           <!-- Pulsante -->
@@ -255,7 +239,7 @@
         </form>
       </div>
 
-      <!-- Card Registrazione centrata -->
+      <!-- Card Registrazione -->
       <div th:if="${nameLogin.toString().equals('/login')}" class="register-card">
         <div class="card-body p-2">
           <small>
@@ -272,7 +256,7 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- 👁️‍🗨️ Script mostra/nascondi password -->
+  <!-- 👁️‍🗨️ Mostra/Nascondi password -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const togglePassword = document.getElementById('togglePassword');

@@ -85,6 +85,7 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       width: 100%;
       max-width: 420px;
+      margin: 0 auto;
     }
 
     .card:hover {
@@ -172,13 +173,37 @@
       text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
     }
 
+    /* --- CARD REGISTRAZIONE CENTRATA --- */
+    .register-card {
+      background-color: rgba(1, 50, 32, 0.95);
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      border-radius: 18px;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+      width: 100%;
+      max-width: 420px;
+      margin: 20px auto 0 auto;
+      padding: 10px 0;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .register-card:hover {
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.4);
+    }
+
+    .register-card small {
+      color: var(--oro-chiaro);
+      font-weight: 500;
+      text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
+    }
+
     /* --- RESPONSIVE --- */
     @media (max-width: 768px) {
       .login-title {
         font-size: 2rem;
       }
 
-      .card {
+      .card,
+      .register-card {
         max-width: 90%;
       }
     }
@@ -197,7 +222,7 @@
       <h1 class="login-title" th:if="${nameLogin.equals('/loginAmministratore')}">Login Amministratore</h1>
 
       <!-- Card Login -->
-      <div class="card mx-auto p-4 mt-3">
+      <div class="card p-4">
         <form th:action="${nameLogin.toString()}" th:object="${loginForm}" method="post">
 
           <!-- Email -->
@@ -230,10 +255,10 @@
         </form>
       </div>
 
-      <!-- Registrazione -->
-      <div th:if="${nameLogin.toString().equals('/login')}" class="card text-center">
-        <div class="card-body">
-          <small class="card-title">
+      <!-- Card Registrazione centrata -->
+      <div th:if="${nameLogin.toString().equals('/login')}" class="register-card">
+        <div class="card-body p-2">
+          <small>
             Nuovo utente? Registrati <a th:href="@{/registrazione}">qui</a>
           </small>
         </div>
@@ -257,7 +282,6 @@
       togglePassword.addEventListener('click', () => {
         const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordField.setAttribute('type', type);
-
         icon.classList.toggle('fa-eye');
         icon.classList.toggle('fa-eye-slash');
       });

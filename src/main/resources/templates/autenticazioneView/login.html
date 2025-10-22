@@ -28,7 +28,6 @@
       --bianco: #ffffff;
     }
 
-    /* --- BASE --- */
     body {
       background: radial-gradient(circle at center, var(--verde) 0%, var(--verde-scuro) 90%);
       color: var(--oro);
@@ -61,7 +60,26 @@
       }
     }
 
-    /* --- TITOLO MODERNO --- */
+    /* --- Shake animazione errore --- */
+    @keyframes shake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+
+      20%, 60% {
+        transform: translateX(-8px);
+      }
+
+      40%, 80% {
+        transform: translateX(8px);
+      }
+    }
+
+    .shake {
+      animation: shake 0.5s ease-in-out;
+    }
+
+    /* --- Titolo --- */
     .login-title {
       font-size: 2.6rem;
       font-weight: 700;
@@ -103,7 +121,7 @@
       }
     }
 
-    /* --- CARD --- */
+    /* --- Card --- */
     .card {
       background-color: rgba(1, 50, 32, 0.95);
       border: 1px solid rgba(255, 215, 0, 0.5);
@@ -113,23 +131,9 @@
       width: 100%;
       max-width: 420px;
       margin: 0 auto;
-      animation: fadeCard 1.3s ease-out forwards;
-    }
-
-    @keyframes fadeCard {
-      0% {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .card:hover {
-      transform: translateY(-3px);
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
     }
 
@@ -139,43 +143,7 @@
       margin-top: 10px;
     }
 
-    /* --- FORM --- */
-    .form-control {
-      border: 1px solid var(--oro);
-      background-color: #022a1c;
-      color: var(--oro);
-      transition: all 0.3s ease;
-      border-radius: 10px;
-    }
-
-    .form-control:focus {
-      border-color: var(--oro-chiaro);
-      box-shadow: 0 0 12px var(--oro);
-      background-color: var(--verde);
-      color: var(--oro);
-    }
-
-    .input-group-text {
-      background-color: #022a1c;
-      border: 1px solid var(--oro);
-      color: var(--oro);
-      cursor: pointer;
-      border-left: none;
-      transition: all 0.3s ease;
-    }
-
-    .input-group-text:hover {
-      background-color: var(--oro);
-      color: var(--verde);
-    }
-
-    /* --- ALERT GLOBALE --- */
-    .alert-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
+    /* --- Alert globale --- */
     .alert-box {
       background-color: #fff3f3;
       border: 2px solid #ff4d4d;
@@ -184,10 +152,8 @@
       padding: 14px 20px;
       color: #660000;
       font-weight: 600;
-      width: 100%;
-      max-width: 380px;
       text-align: left;
-      box-shadow: 0 0 12px rgba(255, 0, 0, 0.1);
+      margin-bottom: 15px;
       animation: fadeAlert 0.5s ease-out;
     }
 
@@ -208,7 +174,7 @@
       }
     }
 
-    /* --- BUTTON --- */
+    /* --- Button --- */
     .btn-primary {
       background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
       color: var(--verde);
@@ -221,24 +187,11 @@
 
     .btn-primary:hover {
       background: linear-gradient(135deg, var(--bianco), var(--oro));
-      color: var(--verde);
       transform: translateY(-2px);
       box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
     }
 
-    /* --- LINK --- */
-    a {
-      color: var(--oro);
-      text-decoration: underline;
-      transition: all 0.3s ease;
-    }
-
-    a:hover {
-      color: var(--bianco);
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-    }
-
-    /* --- CARD REGISTRAZIONE UNITA --- */
+    /* --- Card registrazione --- */
     .register-card {
       background-color: rgba(1, 50, 32, 0.95);
       border: 1px solid rgba(255, 215, 0, 0.5);
@@ -251,7 +204,6 @@
       padding: 12px 0;
       position: relative;
       top: -10px;
-      animation: fadeCard 1.5s ease-out forwards;
     }
 
     .register-card small {
@@ -259,66 +211,44 @@
       font-weight: 500;
       text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
     }
-
-    /* --- RESPONSIVE --- */
-    @media (max-width: 768px) {
-      .login-title {
-        font-size: 2rem;
-      }
-
-      .card,
-      .register-card {
-        max-width: 90%;
-      }
-    }
   </style>
 </head>
 
 <body>
 
-  <th:block th:insert="~{fragments/navbar}"></th:block>
-
   <main>
     <div class="container text-center">
 
-      <!-- Titolo -->
-      <h1 class="login-title" th:if="${nameLogin.equals('/login')}">Login</h1>
-      <h1 class="login-title" th:if="${nameLogin.equals('/loginAmministratore')}">Login Amministratore</h1>
+      <h1 class="login-title">Login</h1>
 
-      <!-- Card Login -->
-      <div class="card p-4">
+      <div class="card p-4" id="loginCard">
 
-        <!-- 🔴 Messaggio di errore globale -->
-        <div th:if="${existsEmail != null or passwordErrata != null}" class="alert-container mb-3">
-          <div class="alert-box">
-            <i class="fa-solid fa-circle-exclamation me-2"></i>
-            <strong>Si è verificato un problema!</strong><br>
-            <span th:if="${existsEmail != null}" th:text="'Non riusciamo a trovare un account con quell\'indirizzo e-mail'"></span>
-            <span th:if="${passwordErrata != null}" th:text="'La password che hai inserito non è corretta'"></span>
-          </div>
+        <!-- Messaggio errore dinamico -->
+        <div id="errorBox" class="alert-box d-none">
+          <i class="fa-solid fa-circle-exclamation me-2"></i>
+          <strong>Si è verificato un problema!</strong><br>
+          <span id="errorMessage"></span>
         </div>
 
-        <form th:action="${nameLogin.toString()}" th:object="${loginForm}" method="post">
+        <form id="loginForm">
 
           <!-- Email -->
           <h5 class="card-title text-start"><i class="fa fa-user me-2"></i>E-mail</h5>
           <div class="form-group mb-3">
-            <input th:field="*{email}" type="email" class="form-control" placeholder="Inserisci email">
+            <input id="emailField" type="email" class="form-control" placeholder="Inserisci email" required>
           </div>
 
           <!-- Password -->
           <h5 class="card-title text-start"><i class="fa fa-key me-2"></i>Password</h5>
           <div class="form-group mb-4">
             <div class="input-group">
-              <input th:field="*{password}" type="password" id="passwordField" class="form-control"
-                placeholder="Inserisci password">
+              <input id="passwordField" type="password" class="form-control" placeholder="Inserisci password" required>
               <span class="input-group-text" id="togglePassword">
                 <i class="fa-solid fa-eye"></i>
               </span>
             </div>
           </div>
 
-          <!-- Pulsante -->
           <button type="submit" class="btn btn-primary w-100 mb-2">
             <i class="fa-solid fa-right-to-bracket me-2"></i>Login
           </button>
@@ -326,38 +256,72 @@
         </form>
       </div>
 
-      <!-- Card Registrazione -->
-      <div th:if="${nameLogin.toString().equals('/login')}" class="register-card">
+      <div class="register-card">
         <div class="card-body p-2">
-          <small>
-            Nuovo utente? Registrati <a th:href="@{/registrazione}">qui</a>
-          </small>
+          <small>Nuovo utente? Registrati <a href="/registrazione">qui</a></small>
         </div>
       </div>
+
     </div>
   </main>
-
-  <th:block th:insert="~{fragments/footbar}"></th:block>
-  <th:block th:insert="~{fragments/scripts}"></th:block>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- 👁️‍🗨️ Script mostra/nascondi password -->
+  <!-- Script interattivo -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const togglePassword = document.getElementById('togglePassword');
-      const passwordField = document.getElementById('passwordField');
-      const icon = togglePassword.querySelector('i');
+    // Mostra/Nascondi password
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordField = document.getElementById('passwordField');
+    const icon = togglePassword.querySelector('i');
 
-      togglePassword.addEventListener('click', () => {
-        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordField.setAttribute('type', type);
-        icon.classList.toggle('fa-eye');
-        icon.classList.toggle('fa-eye-slash');
-      });
+    togglePassword.addEventListener('click', () => {
+      const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordField.setAttribute('type', type);
+      icon.classList.toggle('fa-eye');
+      icon.classList.toggle('fa-eye-slash');
     });
-  </script>
 
+    // Simulazione login AJAX (senza refresh)
+    const form = document.getElementById('loginForm');
+    const errorBox = document.getElementById('errorBox');
+    const errorMessage = document.getElementById('errorMessage');
+    const card = document.getElementById('loginCard');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); // Evita il reload
+
+      const email = document.getElementById('emailField').value.trim();
+      const password = document.getElementById('passwordField').value.trim();
+
+      // Simulazione lato client (qui potresti collegare il fetch al tuo backend REST)
+      if (email === "" || password === "") {
+        showError("Compila tutti i campi");
+        return;
+      }
+
+      if (email !== "utente@pet365.it") {
+        showError("Non riusciamo a trovare un account con quell’indirizzo e-mail");
+        return;
+      }
+
+      if (password !== "12345") {
+        showError("La password che hai inserito non è corretta");
+        return;
+      }
+
+      // Login riuscito
+      errorBox.classList.add("d-none");
+      alert("✅ Login effettuato con successo!");
+    });
+
+    // Mostra errore globale con effetto shake
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorBox.classList.remove("d-none");
+      card.classList.add("shake");
+      setTimeout(() => card.classList.remove("shake"), 500);
+    }
+  </script>
 </body>
 </html>

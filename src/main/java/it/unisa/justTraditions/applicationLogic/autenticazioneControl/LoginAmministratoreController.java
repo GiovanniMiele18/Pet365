@@ -36,12 +36,12 @@ public class LoginAmministratoreController {
   private PasswordEncryptor passwordEncryptor;
 
   /**
-   * Mostra la pagina di login per l’amministratore.
+   * Mostra la pagina di login dell’amministratore.
    * Se è già autenticato → viene reindirizzato alla home.
    */
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model) {
-    // Controlla se esiste un amministratore già loggato
+    // ✅ Evita loop: se loggato, manda alla home
     if (sessionAmministratore.getAmministratore().isPresent()) {
       return "redirect:" + homeAmministratoreController;
     }
@@ -51,7 +51,7 @@ public class LoginAmministratoreController {
   }
 
   /**
-   * Gestisce il login via chiamata AJAX (senza refresh).
+   * Gestisce il login via AJAX (JSON).
    */
   @PostMapping(consumes = "application/json", produces = "application/json")
   @ResponseBody
@@ -59,17 +59,14 @@ public class LoginAmministratoreController {
                                                 BindingResult bindingResult,
                                                 HttpSession session) {
 
-    // Campi mancanti o non validi
     if (bindingResult.hasErrors()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
           .body(new LoginResponse(false, "Campi non validi"));
     }
 
-    // Cerca l’amministratore tramite email
     Optional<Amministratore> optionalAmministratore =
         amministratoreDao.findByEmail(loginForm.getEmail());
 
-    // Email non trovata
     if (optionalAmministratore.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(new LoginResponse(false, "E-mail non registrata"));
@@ -77,28 +74,67 @@ public class LoginAmministratoreController {
 
     Amministratore amministratore = optionalAmministratore.get();
 
-    // Password errata
     if (!passwordEncryptor.checkPassword(loginForm.getPassword(), amministratore.getPassword())) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(new LoginResponse(false, "Password o e-mail errata"));
     }
 
-    // ✅ Login corretto → salva in sessione
+    // ✅ Login corretto
     sessionAmministratore.setAmministratore(amministratore);
 
-    // Se c’è un redirect salvato prima del login, usalo
     String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
     if (redirectAfterLogin != null) {
       session.removeAttribute("redirectAfterLogin");
       return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
-    // ✅ Default → home amministratore
     return ResponseEntity.ok(new LoginResponse(true, homeAmministratoreController));
   }
 
   /**
-   * Risposta standard in JSON.
+   * Gestisce il login via form classico (senza AJAX).
+   */
+  @PostMapping(consumes = "application/x-www-form-urlencoded")
+  public String postForm(@ModelAttribute @Valid LoginForm loginForm,
+                         BindingResult bindingResult,
+                         Model model,
+                         HttpSession session) {
+
+    model.addAttribute("nameLogin", "/loginAmministratore");
+
+    if (bindingResult.hasErrors()) {
+      return loginView;
+    }
+
+    Optional<Amministratore> optionalAmministratore =
+        amministratoreDao.findByEmail(loginForm.getEmail());
+
+    if (optionalAmministratore.isEmpty()) {
+      model.addAttribute("existsEmail", false);
+      return loginView;
+    }
+
+    Amministratore amministratore = optionalAmministratore.get();
+
+    if (!passwordEncryptor.checkPassword(loginForm.getPassword(), amministratore.getPassword())) {
+      model.addAttribute("passwordErrata", true);
+      return loginView;
+    }
+
+    // ✅ Login corretto
+    sessionAmministratore.setAmministratore(amministratore);
+
+    String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
+    if (redirectAfterLogin != null) {
+      session.removeAttribute("redirectAfterLogin");
+      return "redirect:" + redirectAfterLogin;
+    }
+
+    return "redirect:" + homeAmministratoreController;
+  }
+
+  /**
+   * Risposta JSON standard.
    */
   public record LoginResponse(boolean success, String message) {}
 }

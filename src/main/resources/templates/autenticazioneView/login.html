@@ -273,17 +273,7 @@
         icon.classList.toggle('fa-eye-slash');
       });
 
-      // ✨ Rimozione automatica dell’alert dopo 4 secondi
-      const alertBox = document.querySelector('.alert');
-      if (alertBox) {
-        setTimeout(() => {
-          alertBox.classList.add('fade');
-          alertBox.style.transition = 'opacity 0.5s';
-          alertBox.style.opacity = '0';
-          setTimeout(() => alertBox.remove(), 500);
-        }, 4000);
-      }
-    });
+    
   </script>
 
 </body>

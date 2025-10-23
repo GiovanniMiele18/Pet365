@@ -333,6 +333,34 @@
           Vuoi anche tu comparire qui?
           <a href="/premium" class="fw-bold text-success">Scopri i piani premium</a>.
         </p>
+         <div class="d-flex flex-wrap justify-content-center mt-3">
+                <div th:each="annuncio, iterStat : ${annunci}"
+                     th:if="${iterStat.index < 4}"
+                     class="card m-3 annuncio-card"
+                     style="width: 16rem;">
+
+                    <img th:if="${!#lists.isEmpty(annuncio.foto)}"
+                         th:src="@{/img(id=${annuncio.foto[0].id})}"
+                         class="card-img-top"
+                         style="width:100%;height:200px;object-fit:cover;"
+                         alt="foto annuncio">
+
+                    <img th:if="${#lists.isEmpty(annuncio.foto)}"
+                         src="/images/default-pet.png"
+                         class="card-img-top"
+                         style="width:100%;height:200px;object-fit:cover;"
+                         alt="foto annuncio">
+
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <h5 th:text="${annuncio.nomeAttivita}" class="card-title"></h5>
+                        <span class="badge bg-warning text-dark mb-2">In Vetrina</span>
+                        <a th:href="@{/visualizzazioneDettagliAnnuncio(id=${annuncio.id})}"
+                           class="btn btn-outline-success">
+                            PRENOTA ORA
+                        </a>
+                    </div>
+                </div>
+            </div>
       </div>
     </section>
   </div>

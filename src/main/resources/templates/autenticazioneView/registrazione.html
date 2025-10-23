@@ -60,6 +60,29 @@
       margin-bottom: 8px;
     }
 
+    /* --- PLACEHOLDER VISIBILI (FORZATI) --- */
+.form-control::placeholder {
+  color: #ffffff !important; /* bianco pieno */
+  opacity: 1 !important; /* visibilità massima */
+}
+
+/* Compatibilità cross-browser */
+.form-control::-webkit-input-placeholder {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.form-control::-ms-input-placeholder {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+
     /* --- FORM --- */
     .form-control {
       border: 1px solid var(--oro);

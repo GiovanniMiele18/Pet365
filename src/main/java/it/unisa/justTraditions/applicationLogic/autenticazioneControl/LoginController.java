@@ -16,6 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller per il login dei clienti.
+ */
 @Controller
 @RequestMapping("/login")
 public class LoginController {
@@ -32,22 +35,41 @@ public class LoginController {
   @Autowired
   private PasswordEncryptor passwordEncryptor;
 
+  /**
+   * Mostra la pagina di login solo se l'utente non è autenticato.
+   */
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model) {
+    // ✅ Se il cliente è già loggato → redirect alla home
+    if (sessionCliente != null && sessionCliente.getCliente().isPresent()) {
+      return "redirect:" + home;
+    }
+
     model.addAttribute("nameLogin", "/login");
     return loginView;
   }
 
+  /**
+   * Gestisce il login AJAX (JSON) senza refresh della pagina.
+   */
   @PostMapping(consumes = "application/json", produces = "application/json")
   @ResponseBody
   public ResponseEntity<LoginResponse> postJson(@RequestBody @Valid LoginForm loginForm,
                                                 BindingResult bindingResult,
                                                 HttpSession session) {
+    // ❌ Se l’utente è già autenticato, blocca l’accesso
+    if (sessionCliente != null && sessionCliente.getCliente().isPresent()) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN)
+          .body(new LoginResponse(false, "Sei già autenticato."));
+    }
+
+    // ❌ Validazione form
     if (bindingResult.hasErrors()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
           .body(new LoginResponse(false, "Campi non validi."));
     }
 
+    // 🔍 Cerca il cliente
     Optional<Cliente> optional = clienteDao.findByEmail(loginForm.getEmail());
     if (optional.isEmpty()) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -55,12 +77,23 @@ public class LoginController {
     }
 
     Cliente cliente = optional.get();
+
+    // 🔒 Verifica password
     if (!passwordEncryptor.checkPassword(loginForm.getPassword(), cliente.getPassword())) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-          .body(new LoginResponse(false, "Password errata."));
+          .body(new LoginResponse(false, "Password o e-mail errata."));
     }
 
+    // ✅ Login corretto → salva il cliente in sessione
     sessionCliente.setCliente(cliente);
+
+    // 🔁 Reindirizza dove serviva o alla home
+    String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
+    if (redirectAfterLogin != null) {
+      session.removeAttribute("redirectAfterLogin");
+      return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
+    }
+
     return ResponseEntity.ok(new LoginResponse(true, home));
   }
 

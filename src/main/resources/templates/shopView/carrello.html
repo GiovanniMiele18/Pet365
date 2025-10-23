@@ -18,17 +18,21 @@
     <style>
    :root {
       --verde: #013220;
-      --verde-scuro: #021f13;
-      --oro: #ffd700;
+      --verde-scuro: #012214;
+      --oro: #FFD700;
       --oro-chiaro: #fff4a3;
+      --rosso: #ff6666;
       --bianco: #ffffff;
     }
 
+    /* --- BASE --- */
     body {
-        font-family: 'Montserrat', sans-serif;
-        background: var(--sfondo);
-        color: var(--testo);
-        overflow-x: hidden;
+      background: radial-gradient(circle at center, var(--verde) 0%, var(--verde-scuro) 90%);
+      color: var(--oro);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     h2 {

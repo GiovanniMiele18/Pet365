@@ -15,177 +15,193 @@
     <!-- ✅ Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <style>
-        
-      :root {
-      --verde: #013220;
-      --verde-scuro: #021f13;
-      --oro: #ffd700;
-      --oro-chiaro: #fff4a3;
-      --rosso: #ff6666;
-      --bianco: #ffffff;
-    }
+<style>
+:root {
+  --verde: #013220;
+  --verde-scuro: #021f13;
+  --oro: #ffd700;
+  --oro-chiaro: #fff4a3;
+  --rosso: #ff6666;
+  --bianco: #ffffff;
+}
 
-    body {
-      background: #ffffff;
-      font-family: 'Montserrat', sans-serif;
-      color: var(--oro);
-      min-height: 100vh;
-    }
+/* 🌿 Corpo pagina */
+body {
+  background: linear-gradient(135deg, #ffffff 0%, #fffaf0 100%);
+  font-family: 'Montserrat', sans-serif;
+  color: var(--verde-scuro);
+  min-height: 100vh;
+}
 
+/* 🛒 Titolo pagina */
+h2 {
+  font-weight: 700;
+  color: var(--verde);
+  text-shadow: 0 0 8px rgba(10,104,71,0.2);
+}
 
-    h2 {
-        font-weight: 700;
-        color: var(--verde);
-        text-shadow: 0 0 8px rgba(10,104,71,0.2);
-    }
+/* 🛍️ Contenitore carrello */
+.cart-container {
+  background: var(--bianco);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
 
-    /* 🛍️ Cart Container */
-    .cart-container {
-        background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-        padding: 1.5rem;
-    }
+/* 📦 Tabella prodotti */
+.cart-table th {
+  background: linear-gradient(135deg, var(--verde), var(--verde-scuro));
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+}
 
-    .cart-table th {
-        background: linear-gradient(135deg, var(--verde), var(--verde-scuro));
-        color: white;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
+.cart-table td {
+  vertical-align: middle;
+  color: var(--verde-scuro);
+}
 
-    .cart-table td {
-        vertical-align: middle;
-        color: var(--verde-scuro);
-    }
+/* 🔢 Input quantità */
+.qty-input {
+  width: 80px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid var(--verde);
+  color: var(--verde-scuro);
+  background: #fafafa;
+  transition: all 0.3s ease;
+}
 
-    .qty-input {
-        width: 80px;
-        border-radius: 8px;
-        text-align: center;
-        border: 1px solid var(--verde);
-        color: var(--verde-scuro);
-        background: #fafafa;
-    }
+.qty-input:focus {
+  border-color: var(--oro);
+  box-shadow: 0 0 6px rgba(255,215,0,0.5);
+  outline: none;
+}
 
-    .qty-input:focus {
-        border-color: var(--oro);
-        box-shadow: 0 0 6px rgba(255,215,0,0.5);
-        outline: none;
-    }
+/* ❌ Pulsante rimozione */
+.btn-outline-danger {
+  border-radius: 10px;
+  font-weight: 600;
+  border-width: 2px;
+}
 
-    .btn-outline-danger {
-        border-radius: 10px;
-        font-weight: 600;
-    }
+/* 💳 Card riepilogo */
+.summary-card {
+  background: #fffaf0;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transition: all .3s ease;
+  color: var(--verde-scuro);
+}
 
-    /* 🧾 Summary */
-    .summary-card {
-        background: #fffaf0;
-        border-radius: 18px;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-        transition: all .3s ease;
-        color: var(--verde-scuro);
-    }
+.summary-card:hover {
+  transform: translateY(-4px);
+}
 
-    .summary-card:hover {
-        transform: translateY(-4px);
-    }
+.summary-card h5 {
+  color: var(--verde);
+  font-weight: 700;
+}
 
-    .summary-card h5 {
-        color: var(--verde);
-        font-weight: 700;
-    }
+/* 🧾 Pulsanti */
+#checkout-btn {
+  background: linear-gradient(135deg, var(--verde), var(--verde-scuro));
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 25px;
+  transition: all .3s ease;
+}
 
-    #checkout-btn {
-        background: linear-gradient(135deg, var(--verde), var(--verde-scuro));
-        color: white;
-        font-weight: 700;
-        border: none;
-        border-radius: 30px;
-        padding: 12px 25px;
-        transition: all .3s ease;
-    }
+#checkout-btn:hover {
+  background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
+  color: var(--verde-scuro);
+  box-shadow: 0 0 18px rgba(255,215,0,0.4);
+}
 
-    #checkout-btn:hover {
-        background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
-        color: var(--verde-scuro);
-        box-shadow: 0 0 18px rgba(255,215,0,0.4);
-    }
+.btn-outline-primary {
+  border: 2px solid var(--verde);
+  color: var(--verde);
+  border-radius: 30px;
+  transition: all .3s ease;
+}
 
-    .btn-outline-primary {
-        border: 2px solid var(--verde);
-        color: var(--verde);
-        border-radius: 30px;
-        transition: all .3s ease;
-    }
+.btn-outline-primary:hover {
+  background: var(--verde);
+  color: white;
+  box-shadow: 0 0 10px rgba(10,104,71,0.3);
+}
 
-    .btn-outline-primary:hover {
-        background: var(--verde);
-        color: white;
-        box-shadow: 0 0 10px rgba(10,104,71,0.3);
-    }
+/* ✨ Toast personalizzati */
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+}
 
-    /* ✨ Toast */
-    .toast-container {
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        z-index: 9999;
-    }
+.toast-custom {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  color: white;
+  font-weight: 500;
+  border-radius: 12px;
+  padding: .9rem 1.3rem;
+  margin-bottom: .5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  animation: slideIn .4s ease, fadeOut .5s ease 3.5s forwards;
+}
 
-    .toast-custom {
-        display: flex;
-        align-items: center;
-        gap: .7rem;
-        color: white;
-        font-weight: 500;
-        border-radius: 12px;
-        padding: .9rem 1.3rem;
-        margin-bottom: .5rem;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        animation: slideIn .4s ease, fadeOut .5s ease 3.5s forwards;
-    }
+.toast-success { background: linear-gradient(135deg, var(--verde), #0cb065); }
+.toast-error { background: linear-gradient(135deg, #dc3545, #b52d39); }
 
-    .toast-success { background: linear-gradient(135deg, var(--verde), #0cb065); }
-    .toast-error { background: linear-gradient(135deg, #dc3545, #b52d39); }
+@keyframes slideIn {
+  from { transform: translateX(120%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateX(120%); }
+}
 
-    @keyframes slideIn {
-        from { transform: translateX(120%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes fadeOut {
-        to { opacity: 0; transform: translateX(120%); }
-    }
+/* 🐾 Carrello vuoto */
+.empty-cart {
+  color: var(--verde-scuro);
+  background: #fffaf0;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 2rem;
+}
 
-    /* 📱 Responsive */
-    @media (max-width: 768px) {
-        .cart-container, .summary-card {
-            border-radius: 12px;
-            padding: 1rem;
-        }
-        .cart-table th, .cart-table td { font-size: 14px; }
-    }
+.empty-cart a {
+  color: white;
+  background: var(--verde);
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+}
 
-    /* 🐾 Carrello vuoto */
-    .text-center.py-5.text-white {
-        color: var(--verde-scuro) !important;
-        background: #fffaf0;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+.empty-cart a:hover {
+  background: var(--verde-scuro);
+}
 
-    .text-center.py-5.text-white a {
-        color: white;
-        background: var(--verde);
-        border: none;
-    }
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .cart-container, .summary-card {
+    border-radius: 12px;
+    padding: 1rem;
+  }
+  .cart-table th, .cart-table td {
+    font-size: 14px;
+  }
+  #checkout-btn, .btn-outline-primary {
+    border-radius: 25px;
+    padding: 10px 20px;
+  }
+}
+</style>
 
-    .text-center.py-5.text-white a:hover {
-        background: var(--verde-scuro);
-    }
-    </style>
 </head>
 
 <body>

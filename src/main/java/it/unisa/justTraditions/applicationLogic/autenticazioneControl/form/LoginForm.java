@@ -16,12 +16,6 @@ public class LoginForm {
   private String email;
 
   @NotBlank(message = "password vuota")
-  @Pattern(
-      regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*\\p{Punct})[A-Za-z\\d\\p{Punct}]{8,}$",
-      message =
-          "La password deve contenere almeno 8 caratteri, di cui almeno una lettera maiuscola, "
-              + "almeno una minuscola, almeno un numero e almeno un carattere speciale"
-  )
   private String password;
 
   public LoginForm() {

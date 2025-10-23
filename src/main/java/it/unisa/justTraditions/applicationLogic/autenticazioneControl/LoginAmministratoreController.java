@@ -40,7 +40,7 @@ public class LoginAmministratoreController {
    */
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model, HttpSession session) {
-    // ✅ Controllo robusto — reindirizza solo se davvero loggato
+    // ✅ Se è già loggato, lo manda alla home
     Amministratore amministratore = sessionAmministratore.getAmministratore();
     if (amministratore != null && amministratore.getId() != null) {
       return "redirect:" + homeAmministratoreController;
@@ -51,20 +51,22 @@ public class LoginAmministratoreController {
   }
 
   /**
-   * Gestisce il login tramite chiamata AJAX (JSON).
+   * Gestisce il login tramite JSON (AJAX).
    */
   @PostMapping(consumes = "application/json", produces = "application/json")
   @ResponseBody
-  public ResponseEntity<LoginResponse> postJson(@RequestBody @Valid LoginForm loginForm,
-                                                BindingResult bindingResult,
-                                                HttpSession session) {
+  public ResponseEntity<LoginResponse> postJson(
+      @RequestBody @Valid LoginForm loginForm,
+      BindingResult bindingResult,
+      HttpSession session) {
 
+    // ❌ Campi non validi
     if (bindingResult.hasErrors()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
           .body(new LoginResponse(false, "Campi non validi"));
     }
 
-    // ✅ Prendiamo l’Optional in modo corretto
+    // ✅ Recupera l'amministratore tramite Optional
     Optional<Amministratore> optionalAmministratore = amministratoreDao.findByEmail(loginForm.getEmail());
 
     if (optionalAmministratore.isEmpty()) {
@@ -72,23 +74,25 @@ public class LoginAmministratoreController {
           .body(new LoginResponse(false, "E-mail non registrata"));
     }
 
-    // ✅ Estraiamo l’oggetto effettivo
     Amministratore amministratore = optionalAmministratore.get();
 
+    // 🔒 Verifica la password cifrata
     if (!passwordEncryptor.checkPassword(loginForm.getPassword(), amministratore.getPassword())) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(new LoginResponse(false, "Password o e-mail errata"));
     }
 
-    // ✅ Login corretto → salva in sessione
+    // ✅ Login corretto: salva in sessione
     sessionAmministratore.setAmministratore(amministratore);
 
+    // 🔁 Se c’è un redirect salvato prima del login, lo usa
     String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
     if (redirectAfterLogin != null) {
       session.removeAttribute("redirectAfterLogin");
       return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
+    // ✅ Default: va alla home amministratore
     return ResponseEntity.ok(new LoginResponse(true, homeAmministratoreController));
   }
 

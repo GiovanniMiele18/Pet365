@@ -28,7 +28,6 @@
       --bianco: #ffffff;
     }
 
-    /* --- BASE --- */
     body {
       background: radial-gradient(circle at center, var(--verde) 0%, var(--verde-scuro) 90%);
       color: var(--oro);
@@ -46,7 +45,6 @@
       padding: 2rem 0;
     }
 
-    /* --- TITOLO MODERNO --- */
     .login-title {
       font-size: 2.5rem;
       font-weight: 700;
@@ -76,7 +74,6 @@
       }
     }
 
-    /* --- CARD --- */
     .card {
       background-color: rgba(1, 50, 32, 0.95);
       border: 1px solid rgba(255, 215, 0, 0.5);
@@ -99,7 +96,6 @@
       margin-top: 10px;
     }
 
-    /* --- FORM --- */
     .form-control {
       border: 1px solid var(--oro);
       background-color: #022a1c;
@@ -129,21 +125,6 @@
       color: var(--verde);
     }
 
-    /* --- ERRORI --- */
-    .invalid-feedback {
-      display: block;
-      color: var(--rosso);
-      font-weight: 600;
-      margin-top: 6px;
-    }
-
-    .form-control.is-invalid {
-      border-color: var(--rosso) !important;
-      box-shadow: 0 0 8px var(--rosso);
-      color: var(--oro);
-    }
-
-    /* --- BUTTON --- */
     .btn-primary {
       background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
       color: var(--verde);
@@ -161,7 +142,6 @@
       box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
     }
 
-    /* --- LINK --- */
     a {
       color: var(--oro);
       text-decoration: underline;
@@ -173,7 +153,6 @@
       text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
     }
 
-    /* --- CARD REGISTRAZIONE CENTRATA --- */
     .register-card {
       background-color: rgba(1, 50, 32, 0.95);
       border: 1px solid rgba(255, 215, 0, 0.5);
@@ -196,7 +175,6 @@
       text-shadow: 0 0 6px rgba(255, 215, 0, 0.4);
     }
 
-    /* --- RESPONSIVE --- */
     @media (max-width: 768px) {
       .login-title {
         font-size: 2rem;
@@ -221,6 +199,19 @@
       <h1 class="login-title" th:if="${nameLogin.equals('/login')}">Login</h1>
       <h1 class="login-title" th:if="${nameLogin.equals('/loginAmministratore')}">Login Amministratore</h1>
 
+      <!-- ⚠️ Alert globale -->
+      <div th:if="${existsEmail != null or passwordErrata != null}"
+           class="alert alert-danger d-flex align-items-center justify-content-between mt-3"
+           role="alert"
+           style="max-width: 420px; margin: 0 auto;">
+        <div>
+          <i class="fa-solid fa-circle-exclamation me-2"></i>
+          <strong>Si è verificato un problema!</strong>
+          <span th:if="${existsEmail != null}" th:text="' Non riusciamo a trovare un account con quell\'indirizzo e-mail.'"></span>
+          <span th:if="${passwordErrata != null}" th:text="' Password errata.'"></span>
+        </div>
+      </div>
+
       <!-- Card Login -->
       <div class="card p-4">
         <form th:action="${nameLogin.toString()}" th:object="${loginForm}" method="post">
@@ -229,8 +220,6 @@
           <h5 class="card-title text-start"><i class="fa fa-user me-2"></i>E-mail</h5>
           <div class="form-group mb-3">
             <input th:field="*{email}" type="email" class="form-control" placeholder="Inserisci email">
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-            <div class="invalid-feedback" th:if="${existsEmail != null}" th:text="'Email non registrata'"></div>
           </div>
 
           <!-- Password -->
@@ -243,8 +232,6 @@
                 <i class="fa-solid fa-eye"></i>
               </span>
             </div>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-            <div class="invalid-feedback" th:if="${passwordErrata != null}" th:text="'Password errata'"></div>
           </div>
 
           <!-- Pulsante -->
@@ -285,6 +272,17 @@
         icon.classList.toggle('fa-eye');
         icon.classList.toggle('fa-eye-slash');
       });
+
+      // ✨ Rimozione automatica dell’alert dopo 4 secondi
+      const alertBox = document.querySelector('.alert');
+      if (alertBox) {
+        setTimeout(() => {
+          alertBox.classList.add('fade');
+          alertBox.style.transition = 'opacity 0.5s';
+          alertBox.style.opacity = '0';
+          setTimeout(() => alertBox.remove(), 500);
+        }, 4000);
+      }
     });
   </script>
 

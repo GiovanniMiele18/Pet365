@@ -99,6 +99,26 @@
       margin-top: 10px;
     }
 
+    /* --- PLACEHOLDER BIANCO --- */
+::placeholder {
+  color: var(--bianco);
+  opacity: 0.9; /* per migliorare leggibilità */
+}
+
+/* Compatibilità con browser diversi */
+::-webkit-input-placeholder {
+  color: var(--bianco);
+  opacity: 0.9;
+}
+:-ms-input-placeholder {
+  color: var(--bianco);
+  opacity: 0.9;
+}
+::-ms-input-placeholder {
+  color: var(--bianco);
+  opacity: 0.9;
+}
+    
     /* --- ALERT GLOBALE --- */
     .custom-alert {
       background-color: var(--rosso);

@@ -83,7 +83,7 @@ public class LoginAmministratoreController {
 
     // ✅ Login corretto
     sessionAmministratore.setAmministratore(amministratore);
-
+  }
 
   /**
    * Piccola classe di risposta JSON.

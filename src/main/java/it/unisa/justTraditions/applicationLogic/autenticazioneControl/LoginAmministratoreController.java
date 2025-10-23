@@ -37,25 +37,21 @@ public class LoginAmministratoreController {
 
   /**
    * Mostra la pagina di login per l'amministratore.
-   * Se l'amministratore è già loggato → redirect automatico alla home amministratore.
    */
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model, HttpSession session) {
-
-    // ✅ Controllo più robusto
-    Amministratore loggedAdmin = sessionAmministratore.getAmministratore();
-    if (loggedAdmin != null && loggedAdmin.getId() != null) {
-      // Se effettivamente c’è un amministratore in sessione → redirect
+    // ✅ Controllo robusto — reindirizza solo se davvero loggato
+    Amministratore amministratore = sessionAmministratore.getAmministratore();
+    if (amministratore != null && amministratore.getId() != null) {
       return "redirect:" + homeAmministratoreController;
     }
 
-    // Altrimenti mostra la pagina di login
     model.addAttribute("nameLogin", "/loginAmministratore");
     return loginView;
   }
 
   /**
-   * Gestisce il login tramite chiamata AJAX (JSON) senza refresh.
+   * Gestisce il login tramite chiamata AJAX (JSON).
    */
   @PostMapping(consumes = "application/json", produces = "application/json")
   @ResponseBody
@@ -63,38 +59,36 @@ public class LoginAmministratoreController {
                                                 BindingResult bindingResult,
                                                 HttpSession session) {
 
-    // Campi non validi
     if (bindingResult.hasErrors()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
           .body(new LoginResponse(false, "Campi non validi"));
     }
 
-    // Cerca l’amministratore
+    // ✅ Prendiamo l’Optional in modo corretto
     Optional<Amministratore> optionalAmministratore = amministratoreDao.findByEmail(loginForm.getEmail());
+
     if (optionalAmministratore.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(new LoginResponse(false, "E-mail non registrata"));
     }
 
+    // ✅ Estraiamo l’oggetto effettivo
     Amministratore amministratore = optionalAmministratore.get();
 
-    // Password errata
     if (!passwordEncryptor.checkPassword(loginForm.getPassword(), amministratore.getPassword())) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(new LoginResponse(false, "Password o e-mail errata"));
     }
 
-    // ✅ Login corretto
+    // ✅ Login corretto → salva in sessione
     sessionAmministratore.setAmministratore(amministratore);
 
-    // Se esiste un redirect salvato in sessione
     String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
     if (redirectAfterLogin != null) {
       session.removeAttribute("redirectAfterLogin");
       return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
-    // ✅ Redirect di default
     return ResponseEntity.ok(new LoginResponse(true, homeAmministratoreController));
   }
 

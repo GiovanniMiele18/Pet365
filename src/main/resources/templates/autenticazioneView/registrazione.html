@@ -3,29 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <th:block th:insert="~{fragments/head}"></th:block>
   <title>Pet365 - Registrazione</title>
 
-  <!-- ✅ Bootstrap 5.3.3 -->
+  <!-- ✅ Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- ✅ Font Awesome 6.6.0 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
-
-  <!-- ✅ Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --verde: #013220;
       --verde-scuro: #012214;
-      --oro: #ffd700;
+      --oro: #FFD700;
       --oro-chiaro: #fff4a3;
       --rosso: #ff6666;
       --bianco: #ffffff;
     }
 
-    /* --- BASE --- */
     body {
       background: linear-gradient(135deg, var(--verde) 0%, var(--verde-scuro) 100%);
       color: var(--oro);
@@ -40,221 +34,151 @@
       font-weight: 700;
     }
 
-    /* --- CARD --- */
     .card {
       background-color: rgba(1,50,32,0.9);
       border: 2px solid var(--oro);
       border-radius: 15px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.8);
     }
 
-    .card-title {
-      color: var(--oro);
+    .custom-alert {
+      background-color: var(--rosso);
+      color: var(--bianco);
       font-weight: 600;
-      margin-top: 10px;
-      margin-bottom: 8px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255,102,102,0.4);
+      padding: 0.8rem 1rem;
+      margin: 0 auto 1rem auto;
+      max-width: 420px;
+      display: none;
+      animation: fadeIn 0.3s ease;
     }
 
-    /* --- PLACEHOLDER VISIBILI (FORZATI) --- */
-.form-control::placeholder {
-  color: #ffffff !important; /* bianco pieno */
-  opacity: 1 !important; /* visibilità massima */
-}
+    @keyframes fadeIn {
+      from {opacity:0; transform:translateY(-10px);}
+      to {opacity:1; transform:translateY(0);}
+    }
 
-/* Compatibilità cross-browser */
-.form-control::-webkit-input-placeholder {
-  color: #ffffff !important;
-  opacity: 1 !important;
-}
-
-.form-control:-ms-input-placeholder {
-  color: #ffffff !important;
-  opacity: 1 !important;
-}
-
-.form-control::-ms-input-placeholder {
-  color: #ffffff !important;
-  opacity: 1 !important;
-}
-
-
-    /* --- FORM --- */
     .form-control {
       border: 1px solid var(--oro);
       background-color: #022a1c;
       color: var(--oro);
-      transition: all 0.3s ease;
+      border-radius: 10px;
     }
+
     .form-control:focus {
       border-color: var(--oro-chiaro);
       box-shadow: 0 0 10px var(--oro);
-      background-color: var(--verde);
-      color: var(--oro);
     }
 
-    /* --- ERRORI --- */
-    .invalid-feedback {
-      display: block;
-      color: var(--rosso);
-      font-weight: 600;
-      margin-top: 6px;
-    }
-    .form-control.is-invalid {
-      border-color: var(--rosso) !important;
-      box-shadow: 0 0 8px var(--rosso);
-      color: var(--oro);
-    }
+    /* Placeholder visibili */
+    .form-control::placeholder { color: #ffffff !important; opacity: 1 !important; }
 
-    /* --- BOTTONI --- */
     .btn-primary {
       background: linear-gradient(135deg, var(--oro), var(--oro-chiaro));
       color: var(--verde);
-      font-weight: 600;
+      font-weight: 700;
       border: none;
       border-radius: 10px;
-      transition: all 0.3s ease;
       box-shadow: 0 0 10px rgba(255,215,0,0.4);
     }
+
     .btn-primary:hover {
       background: linear-gradient(135deg, #fff, var(--oro));
-      color: var(--verde);
       transform: translateY(-2px);
       box-shadow: 0 0 20px rgba(255,215,0,0.6);
-    }
-
-    .btn-outline-warning {
-      border: 1px solid var(--oro);
-      color: var(--oro);
-      transition: all 0.3s ease;
-      background: transparent;
-    }
-    .btn-outline-warning:hover {
-      background-color: var(--oro);
-      color: var(--verde);
-      box-shadow: 0 0 10px rgba(255,215,0,0.4);
-    }
-
-    /* --- LINK --- */
-    a {
-      color: var(--oro);
-      text-decoration: underline;
-      transition: all 0.3s ease;
-    }
-    a:hover {
-      color: var(--bianco);
-      text-shadow: 0 0 8px rgba(255,215,0,0.6);
-    }
-
-    /* --- RESPONSIVE --- */
-    @media (max-width: 768px) {
-      .col-md-5 {
-        width: 90% !important;
-      }
-      h1 { font-size: 1.8rem; }
     }
   </style>
 </head>
 
 <body>
-  <th:block th:insert="~{fragments/navbar}"></th:block>
 
-  <div class="py-5 text-center">
+  <div class="py-4 text-center">
     <h1>Registrazione</h1>
+  </div>
+
+  <div id="alertBox" class="custom-alert">
+    <i class="fa-solid fa-circle-exclamation me-2"></i>
+    <span id="alertMessage">Errore</span>
   </div>
 
   <div class="container d-flex justify-content-center align-items-start pb-5">
     <div class="col-md-5">
-      <!-- Card registrazione -->
-      <div class="card mb-3">
-        <div class="card-body p-4">
-          <form th:action="@{/registrazione}" th:object="${registrazioneForm}" method="post">
-            
-            <!-- Nome -->
-            <h5 class="card-title"><i class="fa-solid fa-user me-2"></i>Nome</h5>
-            <div class="mb-3">
-              <input type="text" th:field="*{nome}" class="form-control" placeholder="Inserisci nome" required>
-              <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
-            </div>
-
-            <!-- Cognome -->
-            <h5 class="card-title"><i class="fa-solid fa-user me-2"></i>Cognome</h5>
-            <div class="mb-3">
-              <input type="text" th:field="*{cognome}" class="form-control" placeholder="Inserisci cognome" required>
-              <div class="invalid-feedback" th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}"></div>
-            </div>
-
-            <!-- Codice fiscale -->
-            <h5 class="card-title"><i class="fa-solid fa-id-card me-2"></i>Codice Fiscale</h5>
-            <div class="mb-3">
-              <input type="text" th:field="*{codiceFiscale}"
-                     pattern="^[A-Za-z]{6}[0-9]{2}[A-Za-z][0-9]{2}[A-Za-z][0-9]{3}[A-Za-z]$"
-                     class="form-control" placeholder="Inserisci codice fiscale" required>
-              <div class="invalid-feedback" th:if="${#fields.hasErrors('codiceFiscale')}" th:errors="*{codiceFiscale}"></div>
-            </div>
-
-            <!-- Email -->
-            <h5 class="card-title"><i class="fa-solid fa-envelope me-2"></i>Email</h5>
-            <div class="mb-3">
-              <input type="email" th:field="*{email}" class="form-control" placeholder="Inserisci email" required>
-              <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-            </div>
-
-            <!-- Password -->
-            <h5 class="card-title"><i class="fa-solid fa-lock me-2"></i>Password</h5>
-            <div class="input-group mb-3">
-              <input type="password" th:field="*{password}" id="password" class="form-control" placeholder="Inserisci password" required>
-              <button class="btn btn-outline-warning" type="button" id="togglePassword">
-                <i class="fa-solid fa-eye"></i>
-              </button>
-            </div>
-            <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-
-            <!-- Checkbox lavoratore -->
-            <h5 class="card-title"><i class="fa-solid fa-briefcase me-2"></i>Lavori nel mondo animale?</h5>
-            <div class="form-check mb-3">
-              <input class="form-check-input" type="checkbox" th:field="*{lavoratore}" id="lavoratoreCheck">
-              <label class="form-check-label" for="lavoratoreCheck"><small class="card-title">Sì, sono un lavoratore del settore</small></label>
-            </div>
-
-            <!-- Pulsante -->
-            <button type="submit" class="btn btn-primary w-100 mb-2">
-              <i class="fa-solid fa-user-plus me-2"></i>Registrati
+      <div class="card p-4">
+        <form id="registrazioneForm">
+          <div class="mb-3">
+            <input type="text" name="nome" class="form-control" placeholder="Nome" required>
+          </div>
+          <div class="mb-3">
+            <input type="text" name="cognome" class="form-control" placeholder="Cognome" required>
+          </div>
+          <div class="mb-3">
+            <input type="text" name="codiceFiscale" class="form-control" placeholder="Codice Fiscale" required>
+          </div>
+          <div class="mb-3">
+            <input type="email" name="email" class="form-control" placeholder="Email" required>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+            <button class="btn btn-outline-warning" type="button" id="togglePassword">
+              <i class="fa-solid fa-eye"></i>
             </button>
-          </form>
-        </div>
-      </div>
+          </div>
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="lavoratore" id="lavoratoreCheck">
+            <label class="form-check-label" for="lavoratoreCheck">Lavori nel mondo animale?</label>
+          </div>
 
-      <!-- Card Login -->
-      <div class="card text-center">
-        <div class="card-body">
-          <small class="card-title">Sei già registrato? Accedi <a th:href="@{/login}">qui</a>.</small>
-        </div>
+          <button type="submit" class="btn btn-primary w-100">
+            <i class="fa-solid fa-user-plus me-2"></i>Registrati
+          </button>
+        </form>
       </div>
     </div>
   </div>
 
-  <th:block th:insert="~{fragments/footbar}"></th:block>
-  <th:block th:insert="~{fragments/scripts}"></th:block>
-
   <!-- ✅ Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- ✅ Mostra/Nascondi Password -->
   <script>
+    const form = document.getElementById('registrazioneForm');
+    const alertBox = document.getElementById('alertBox');
+    const alertMessage = document.getElementById('alertMessage');
+    const passwordField = document.getElementById('password');
     const togglePassword = document.getElementById('togglePassword');
-    const password = document.getElementById('password');
-    const icon = togglePassword.querySelector('i');
 
     togglePassword.addEventListener('click', () => {
-      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-      password.setAttribute('type', type);
-      icon.classList.toggle('fa-eye');
-      icon.classList.toggle('fa-eye-slash');
+      const type = passwordField.type === 'password' ? 'text' : 'password';
+      passwordField.type = type;
+      togglePassword.querySelector('i').classList.toggle('fa-eye');
+      togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        const response = await fetch('/registrazione', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          window.location.href = result.redirect;
+        } else {
+          alertMessage.textContent = result.message || 'Errore di registrazione.';
+          alertBox.style.display = 'block';
+          setTimeout(() => alertBox.style.display = 'none', 4000);
+        }
+      } catch (error) {
+        alertMessage.textContent = 'Errore di connessione. Riprova più tardi.';
+        alertBox.style.display = 'block';
+        setTimeout(() => alertBox.style.display = 'none', 4000);
+      }
     });
   </script>
 </body>

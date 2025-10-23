@@ -194,53 +194,67 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    const form = document.getElementById('registrazioneForm');
-    const alertBox = document.getElementById('alertBox');
-    const alertMessage = document.getElementById('alertMessage');
-    const card = document.getElementById('registrazioneCard');
-    const togglePassword = document.getElementById('togglePassword');
-    const password = document.getElementById('password');
+  const form = document.getElementById('registrazioneForm');
+  const alertBox = document.getElementById('alertBox');
+  const alertMessage = document.getElementById('alertMessage');
+  const card = document.getElementById('registrazioneCard');
+  const togglePassword = document.getElementById('togglePassword');
+  const password = document.getElementById('password');
 
-    togglePassword.addEventListener('click', () => {
-      const type = password.type === 'password' ? 'text' : 'password';
-      password.type = type;
-      togglePassword.querySelector('i').classList.toggle('fa-eye');
-      togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
-    });
+  // 👁️ Mostra/Nascondi password
+  togglePassword.addEventListener('click', () => {
+    const type = password.type === 'password' ? 'text' : 'password';
+    password.type = type;
+    togglePassword.querySelector('i').classList.toggle('fa-eye');
+    togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
+  });
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
+  // 🧠 Regex per validazione password (stesso del backend)
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\p{P}\p{S}])[A-Za-z\d\p{P}\p{S}]{8,}$/u;
 
-      try {
-        const response = await fetch('/registrazione', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(data)
-        });
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
 
-        const result = await response.json();
+    // 🔒 Validazione password prima di inviare al server
+    if (!passwordRegex.test(password.value)) {
+      showAlert(
+        "La password deve contenere almeno 8 caratteri, di cui almeno una lettera maiuscola, " +
+        "almeno una minuscola, almeno un numero e almeno un carattere speciale."
+      );
+      password.focus();
+      return;
+    }
 
-        if (response.ok && result.success) {
-          alertBox.classList.add('success');
-          alertMessage.textContent = result.message;
-          alertBox.style.display = 'block';
-          setTimeout(() => window.location.href = result.redirect, 2000);
-        } else {
-          alertBox.classList.remove('success');
-          alertMessage.textContent = result.message || 'Errore di registrazione.';
-          alertBox.style.display = 'block';
-          card.classList.add('shake');
-          setTimeout(() => card.classList.remove('shake'), 400);
-          setTimeout(() => alertBox.style.display = 'none', 4000);
-        }
-      } catch (err) {
-        alertBox.classList.remove('success');
-        alertMessage.textContent = 'Errore di connessione. Riprova più tardi.';
-        alertBox.style.display = 'block';
-        setTimeout(() => alertBox.style.display = 'none', 4000);
+    try {
+      const response = await fetch('/registrazione', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        showAlert(result.message, true);
+        setTimeout(() => window.location.href = result.redirect, 2000);
+      } else {
+        showAlert(result.message || 'Errore di registrazione.');
       }
-    });
-  </script>
+    } catch (err) {
+      showAlert('Errore di connessione. Riprova più tardi.');
+    }
+  });
+
+  function showAlert(message, success = false) {
+    alertMessage.textContent = message;
+    alertBox.classList.toggle('success', success);
+    alertBox.style.display = 'block';
+    card.classList.add('shake');
+    setTimeout(() => card.classList.remove('shake'), 400);
+    setTimeout(() => (alertBox.style.display = 'none'), 4000);
+  }
+</script>
+
 </body>
 </html>

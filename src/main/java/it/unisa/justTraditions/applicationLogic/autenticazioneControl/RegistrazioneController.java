@@ -7,19 +7,17 @@ import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Artigiano;
 import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Cliente;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/registrazione")
 public class RegistrazioneController {
 
-  private static final String registrazioneView = "autenticazioneView/registrazione";
-  private static final String loginController = "/login";
+  private static final String loginRedirect = "/login";
 
   @Autowired
   private ClienteDao clienteDao;
@@ -28,40 +26,32 @@ public class RegistrazioneController {
   private PasswordEncryptor passwordEncryptor;
 
   @GetMapping
-  public String get(@ModelAttribute RegistrazioneForm registrazioneForm) {
-    return registrazioneView;
+  public String get() {
+    return "autenticazioneView/registrazione";
   }
 
-  @PostMapping
-  public String post(@ModelAttribute @Valid RegistrazioneForm registrazioneForm,
-                     BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      return registrazioneView;
+  @PostMapping(consumes = "application/json", produces = "application/json")
+  @ResponseBody
+  public ResponseEntity<?> postJson(@RequestBody @Valid RegistrazioneForm form) {
+    try {
+      Cliente cliente = form.isLavoratore()
+          ? new Artigiano(form.getEmail(), passwordEncryptor.encryptPassword(form.getPassword()),
+              form.getNome(), form.getCognome(), form.getCodiceFiscale())
+          : new Cliente(form.getEmail(), passwordEncryptor.encryptPassword(form.getPassword()),
+              form.getNome(), form.getCognome(), form.getCodiceFiscale());
+
+      clienteDao.save(cliente);
+      return ResponseEntity.ok(new RegistrazioneResponse(true, "Registrazione avvenuta con successo!", loginRedirect));
+
+    } catch (DataIntegrityViolationException e) {
+      // Violazione chiave unica (email o CF già esistente)
+      return ResponseEntity.status(HttpStatus.CONFLICT)
+          .body(new RegistrazioneResponse(false, "Email o codice fiscale già registrati.", null));
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body(new RegistrazioneResponse(false, "Errore interno del server.", null));
     }
-
-    Cliente cliente;
-
-    if (registrazioneForm.isLavoratore()) {
-      // ✅ Se spunta "lavoratore" → creo un Artigiano
-      cliente = new Artigiano(
-              registrazioneForm.getEmail(),
-              passwordEncryptor.encryptPassword(registrazioneForm.getPassword()),
-              registrazioneForm.getNome(),
-              registrazioneForm.getCognome(),
-              registrazioneForm.getCodiceFiscale()
-      );
-    } else {
-      // ✅ Altrimenti creo un Cliente normale
-      cliente = new Cliente(
-              registrazioneForm.getEmail(),
-              passwordEncryptor.encryptPassword(registrazioneForm.getPassword()),
-              registrazioneForm.getNome(),
-              registrazioneForm.getCognome(),
-              registrazioneForm.getCodiceFiscale()
-      );
-    }
-
-    clienteDao.save(cliente);
-    return "redirect:" + loginController;
   }
+
+  public record RegistrazioneResponse(boolean success, String message, String redirect) {}
 }

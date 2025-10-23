@@ -36,10 +36,16 @@ public class LoginController {
   private PasswordEncryptor passwordEncryptor;
 
   /**
-   * Mostra la pagina di login classica.
+   * Mostra la pagina di login.
+   * Se l'utente è già loggato → redirect automatico alla home.
    */
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model) {
+    // ✅ Se c’è un cliente già in sessione → reindirizza alla home
+    if (sessionCliente.getCliente() != null) {
+      return "redirect:" + homeController;
+    }
+
     model.addAttribute("nameLogin", "/login");
     return loginView;
   }
@@ -53,7 +59,6 @@ public class LoginController {
                                     BindingResult bindingResult,
                                     HttpSession session) {
 
-    // Se ci sono errori di validazione (campo vuoto, ecc.)
     if (bindingResult.hasErrors()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
           .body(new LoginResponse(false, "Campi non validi"));
@@ -61,7 +66,6 @@ public class LoginController {
 
     Optional<Cliente> optionalCliente = clienteDao.findByEmail(loginForm.getEmail());
 
-    // Email non trovata → 404
     if (optionalCliente.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(new LoginResponse(false, "E-mail non registrata"));
@@ -69,7 +73,6 @@ public class LoginController {
 
     Cliente cliente = optionalCliente.get();
 
-    // Password errata → 401
     if (!passwordEncryptor.checkPassword(loginForm.getPassword(), cliente.getPassword())) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(new LoginResponse(false, "Password o e-mail errata"));
@@ -84,12 +87,12 @@ public class LoginController {
       return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
-    // Redirect di default alla home
+    // ✅ Redirect di default alla home
     return ResponseEntity.ok(new LoginResponse(true, homeController));
   }
 
   /**
-   * Piccola classe di risposta JSON.
+   * Risposta JSON standard per le chiamate AJAX.
    */
   public record LoginResponse(boolean success, String message) {}
 }

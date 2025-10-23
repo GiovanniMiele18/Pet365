@@ -33,6 +33,14 @@ public class RegistrazioneController {
   @PostMapping(consumes = "application/json", produces = "application/json")
   @ResponseBody
   public ResponseEntity<RegistrazioneResponse> registra(@RequestBody @Valid RegistrazioneForm form) {
+
+    // ❌ Se l’utente è già autenticato, blocca l’accesso
+    if (sessionCliente != null && sessionCliente.getCliente().isPresent()) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN)
+          .body(new LoginResponse(false, "Sei già autenticato."));
+    }
+
+    
     try {
       Cliente cliente = form.isLavoratore()
           ? new Artigiano(form.getEmail(), passwordEncryptor.encryptPassword(form.getPassword()),
@@ -54,6 +62,8 @@ public class RegistrazioneController {
           .body(new RegistrazioneResponse(false, "Errore interno del server.", null));
     }
   }
+  
+  
 
   public record RegistrazioneResponse(boolean success, String message, String redirect) {}
 }

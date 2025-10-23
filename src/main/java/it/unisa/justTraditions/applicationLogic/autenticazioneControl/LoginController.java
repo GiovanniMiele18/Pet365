@@ -9,13 +9,12 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Implementa il controller per il login del Cliente.
@@ -37,11 +36,7 @@ public class LoginController {
   private PasswordEncryptor passwordEncryptor;
 
   /**
-   * Implementa la funzionalità di smistare l'Cliente sulla view di autenticazioneView/login.
-   *
-   * @param loginForm utilizzato per mappare il Form della view.
-   * @param model     Utilizzato per passare degli attributi alla view.
-   * @return Restituisce la view da reindirizzare.
+   * Mostra la pagina di login classica.
    */
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model) {
@@ -50,43 +45,51 @@ public class LoginController {
   }
 
   /**
-   * Implementa la funzionalità di login di un Cliente.
-   *
-   * @param loginForm     Utilizzato per mappare il Form della view.
-   * @param bindingResult Utilizzato per mappare gli errori dei dati di loginForm.
-   * @param model         Utilizzato per passare degli attributi alla view.
-   * @return Restituisce la view da reindirizzare.
+   * Gestisce il login tramite chiamata AJAX (JSON) senza refresh.
    */
-  @PostMapping
-  public String post(@ModelAttribute @Valid LoginForm loginForm,
-                     BindingResult bindingResult, Model model, HttpSession session) {
-    model.addAttribute("nameLogin", "/login");
+  @PostMapping(consumes = "application/json", produces = "application/json")
+  @ResponseBody
+  public ResponseEntity<?> postJson(@RequestBody @Valid LoginForm loginForm,
+                                    BindingResult bindingResult,
+                                    HttpSession session) {
+
+    // Se ci sono errori di validazione (campo vuoto, ecc.)
     if (bindingResult.hasErrors()) {
-      return loginView;
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+          .body(new LoginResponse(false, "Campi non validi"));
     }
 
     Optional<Cliente> optionalCliente = clienteDao.findByEmail(loginForm.getEmail());
 
+    // Email non trovata → 404
     if (optionalCliente.isEmpty()) {
-      model.addAttribute("existsEmail", false);
-      return loginView;
+      return ResponseEntity.status(HttpStatus.NOT_FOUND)
+          .body(new LoginResponse(false, "E-mail non registrata"));
     }
 
     Cliente cliente = optionalCliente.get();
-    if (passwordEncryptor.checkPassword(loginForm.getPassword(), cliente.getPassword())) {
-      sessionCliente.setCliente(cliente);
-    } else {
-      model.addAttribute("passwordErrata", true);
 
-      return loginView;
+    // Password errata → 401
+    if (!passwordEncryptor.checkPassword(loginForm.getPassword(), cliente.getPassword())) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+          .body(new LoginResponse(false, "Password o e-mail errata"));
     }
+
+    // ✅ Login corretto
+    sessionCliente.setCliente(cliente);
 
     String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
     if (redirectAfterLogin != null) {
       session.removeAttribute("redirectAfterLogin");
-      return "redirect:" + redirectAfterLogin;
+      return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
-    return "redirect:" + homeController;
+    // Redirect di default alla home
+    return ResponseEntity.ok(new LoginResponse(true, homeController));
   }
+
+  /**
+   * Piccola classe di risposta JSON.
+   */
+  public record LoginResponse(boolean success, String message) {}
 }

@@ -99,25 +99,28 @@
       margin-top: 10px;
     }
 
-    /* --- PLACEHOLDER BIANCO --- */
-::placeholder {
-  color: var(--bianco);
-  opacity: 0.9; /* per migliorare leggibilità */
+/* --- PLACEHOLDER VISIBILI (FORZATI) --- */
+.form-control::placeholder {
+  color: #ffffff !important; /* bianco pieno */
+  opacity: 1 !important; /* visibilità massima */
 }
 
-/* Compatibilità con browser diversi */
-::-webkit-input-placeholder {
-  color: var(--bianco);
-  opacity: 0.9;
+/* Compatibilità cross-browser */
+.form-control::-webkit-input-placeholder {
+  color: #ffffff !important;
+  opacity: 1 !important;
 }
-:-ms-input-placeholder {
-  color: var(--bianco);
-  opacity: 0.9;
+
+.form-control:-ms-input-placeholder {
+  color: #ffffff !important;
+  opacity: 1 !important;
 }
-::-ms-input-placeholder {
-  color: var(--bianco);
-  opacity: 0.9;
+
+.form-control::-ms-input-placeholder {
+  color: #ffffff !important;
+  opacity: 1 !important;
 }
+
     
     /* --- ALERT GLOBALE --- */
     .custom-alert {

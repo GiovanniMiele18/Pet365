@@ -84,9 +84,6 @@ public class LoginAmministratoreController {
     // ✅ Login corretto
     sessionAmministratore.setAmministratore(amministratore);
 
-    // Redirect di default alla home amministratore
-    return ResponseEntity.ok(new LoginResponse(true, homeAmministratoreController));
-  }
 
   /**
    * Piccola classe di risposta JSON.

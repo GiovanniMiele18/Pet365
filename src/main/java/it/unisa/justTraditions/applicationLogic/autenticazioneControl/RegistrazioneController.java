@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/registrazione")
 public class RegistrazioneController {
 
-  private static final String loginRedirect = "/login";
-
   @Autowired
   private ClienteDao clienteDao;
 
   @Autowired
   private PasswordEncryptor passwordEncryptor;
+
+  private static final String LOGIN_REDIRECT = "/login";
 
   @GetMapping
   public String get() {
@@ -32,7 +32,7 @@ public class RegistrazioneController {
 
   @PostMapping(consumes = "application/json", produces = "application/json")
   @ResponseBody
-  public ResponseEntity<?> postJson(@RequestBody @Valid RegistrazioneForm form) {
+  public ResponseEntity<RegistrazioneResponse> registra(@RequestBody @Valid RegistrazioneForm form) {
     try {
       Cliente cliente = form.isLavoratore()
           ? new Artigiano(form.getEmail(), passwordEncryptor.encryptPassword(form.getPassword()),
@@ -41,10 +41,12 @@ public class RegistrazioneController {
               form.getNome(), form.getCognome(), form.getCodiceFiscale());
 
       clienteDao.save(cliente);
-      return ResponseEntity.ok(new RegistrazioneResponse(true, "Registrazione avvenuta con successo!", loginRedirect));
+
+      return ResponseEntity.ok(
+          new RegistrazioneResponse(true, "Registrazione completata con successo!", LOGIN_REDIRECT)
+      );
 
     } catch (DataIntegrityViolationException e) {
-      // Violazione chiave unica (email o CF già esistente)
       return ResponseEntity.status(HttpStatus.CONFLICT)
           .body(new RegistrazioneResponse(false, "Email o codice fiscale già registrati.", null));
     } catch (Exception e) {

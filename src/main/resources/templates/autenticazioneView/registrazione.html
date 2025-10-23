@@ -47,13 +47,12 @@
       box-shadow: 0 15px 30px rgba(0,0,0,0.8);
     }
 
-        .card-title {
+    .card-title {
       color: var(--oro);
       font-weight: 600;
       margin-top: 10px;
       margin-bottom: 8px;
     }
-
 
     /* --- ALERT --- */
     .custom-alert {
@@ -188,12 +187,36 @@
     </div>
   </div>
 
-    <th:block th:insert="~{fragments/footbar}"></th:block>
+  <!-- 🔔 MODAL CONFERMA LAVORATORE -->
+  <div class="modal fade" id="lavoratoreModal" tabindex="-1" aria-labelledby="lavoratoreModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background-color: rgba(1,50,32,0.95); border: 2px solid var(--oro); color: var(--oro); border-radius: 15px;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="lavoratoreModalLabel">
+            <i class="fa-solid fa-paw me-2"></i>Conferma attività nel settore animale
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi" style="filter: invert(1);"></button>
+        </div>
+        <div class="modal-body">
+          <p style="color: var(--oro-chiaro); font-weight: 500;">
+            Confermi di possedere o lavorare presso un’attività nel settore animale?
+            Questa informazione ci aiuta a offrirti servizi dedicati ai professionisti del mondo pet.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="noLavoratore" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-warning" id="yesLavoratore" data-bs-dismiss="modal">Sì, confermo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <th:block th:insert="~{fragments/footbar}"></th:block>
   <th:block th:insert="~{fragments/scripts}"></th:block>
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+  <script>
     const form = document.getElementById('registrazioneForm');
     const alertBox = document.getElementById('alertBox');
     const alertMessage = document.getElementById('alertMessage');
@@ -209,21 +232,28 @@
       togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
     });
 
-    // 🧠 Regex password (come in @Pattern Java)
+    // ✅ Popup conferma lavoratore
+    const lavoratoreCheck = document.getElementById('lavoratoreCheck');
+    const lavoratoreModal = new bootstrap.Modal(document.getElementById('lavoratoreModal'));
+    const yesBtn = document.getElementById('yesLavoratore');
+    const noBtn = document.getElementById('noLavoratore');
+
+    lavoratoreCheck.addEventListener('change', (e) => {
+      if (e.target.checked) lavoratoreModal.show();
+    });
+    noBtn.addEventListener('click', () => lavoratoreCheck.checked = false);
+
+    // 🧠 Regex password
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{8,}$/;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
-      data.lavoratore = formData.get("lavoratore") === "on"; // ✅ Fix checkbox
+      data.lavoratore = formData.get("lavoratore") === "on";
 
-      // 🔒 Validazione password client-side
       if (!passwordRegex.test(password.value)) {
-        return showAlert(
-          "La password deve contenere almeno 8 caratteri, di cui almeno una lettera maiuscola, " +
-          "almeno una minuscola, almeno un numero e almeno un carattere speciale."
-        );
+        return showAlert("La password deve contenere almeno 8 caratteri, di cui almeno una lettera maiuscola, una minuscola, un numero e un carattere speciale.");
       }
 
       try {
@@ -241,7 +271,7 @@
         } else {
           showAlert(result.message || 'Errore di registrazione.');
         }
-      } catch (err) {
+      } catch {
         showAlert('Errore di connessione. Riprova più tardi.');
       }
     });
@@ -252,25 +282,8 @@
       alertBox.style.display = 'block';
       card.classList.add('shake');
       setTimeout(() => card.classList.remove('shake'), 400);
-      setTimeout(() => (alertBox.style.display = 'none'), 4000);
+      setTimeout(() => alertBox.style.display = 'none', 4000);
     }
-
-      const lavoratoreCheck = document.getElementById('lavoratoreCheck');
-const lavoratoreModal = new bootstrap.Modal(document.getElementById('lavoratoreModal'));
-const yesBtn = document.getElementById('yesLavoratore');
-const noBtn = document.getElementById('noLavoratore');
-
-lavoratoreCheck.addEventListener('change', (e) => {
-  if (e.target.checked) {
-    lavoratoreModal.show();
-  }
-});
-
-// Se clicca "No", togli la spunta
-noBtn.addEventListener('click', () => {
-  lavoratoreCheck.checked = false;
-});
   </script>
-
 </body>
 </html>

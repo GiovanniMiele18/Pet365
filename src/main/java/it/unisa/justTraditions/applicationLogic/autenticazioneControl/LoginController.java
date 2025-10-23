@@ -37,13 +37,12 @@ public class LoginController {
 
   /**
    * Mostra la pagina di login.
-   * Se l'utente è già loggato → redirect automatico alla home.
+   * Se l'utente è già autenticato, viene reindirizzato alla home.
    */
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model) {
-    // ✅ Verifica robusta: cliente non nullo e con ID valido
-    Cliente cliente = sessionCliente.getCliente();
-    if (cliente != null && cliente.getId() != null) {
+    // ✅ Impedisce di accedere alla pagina di login se già loggato
+    if (sessionCliente.getCliente() != null) {
       return "redirect:" + homeController;
     }
 
@@ -52,19 +51,21 @@ public class LoginController {
   }
 
   /**
-   * Gestisce il login tramite chiamata AJAX (JSON) senza refresh.
+   * Gestisce il login tramite chiamata AJAX (JSON) senza refresh della pagina.
    */
   @PostMapping(consumes = "application/json", produces = "application/json")
   @ResponseBody
-  public ResponseEntity<?> postJson(@RequestBody @Valid LoginForm loginForm,
-                                    BindingResult bindingResult,
-                                    HttpSession session) {
+  public ResponseEntity<LoginResponse> postJson(@RequestBody @Valid LoginForm loginForm,
+                                                BindingResult bindingResult,
+                                                HttpSession session) {
 
+    // ❌ Campi non validi
     if (bindingResult.hasErrors()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
           .body(new LoginResponse(false, "Campi non validi"));
     }
 
+    // 🔍 Verifica se esiste un cliente con l’email fornita
     Optional<Cliente> optionalCliente = clienteDao.findByEmail(loginForm.getEmail());
 
     if (optionalCliente.isEmpty()) {
@@ -74,20 +75,23 @@ public class LoginController {
 
     Cliente cliente = optionalCliente.get();
 
+    // 🔒 Verifica la password cifrata
     if (!passwordEncryptor.checkPassword(loginForm.getPassword(), cliente.getPassword())) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(new LoginResponse(false, "Password o e-mail errata"));
     }
 
-    // ✅ Login corretto
+    // ✅ Login corretto → salva il cliente in sessione
     sessionCliente.setCliente(cliente);
 
+    // 🔁 Se esiste un redirect salvato prima del login, usa quello
     String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
     if (redirectAfterLogin != null) {
       session.removeAttribute("redirectAfterLogin");
       return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
+    // ✅ Altrimenti, redirect alla home di default
     return ResponseEntity.ok(new LoginResponse(true, homeController));
   }
 

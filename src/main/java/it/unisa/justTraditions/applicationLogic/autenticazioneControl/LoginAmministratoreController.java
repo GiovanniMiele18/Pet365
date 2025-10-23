@@ -36,7 +36,7 @@ public class LoginAmministratoreController {
   private PasswordEncryptor passwordEncryptor;
 
   /**
-   * Mostra la pagina di login dell’amministratore.
+   * Mostra la pagina di login per l’amministratore.
    * Se è già autenticato → viene reindirizzato alla home.
    */
   @GetMapping
@@ -64,9 +64,11 @@ public class LoginAmministratoreController {
           .body(new LoginResponse(false, "Campi non validi"));
     }
 
+    // 🔍 Cerca l’amministratore nella tabella AMMINISTRATORE
     Optional<Amministratore> optionalAmministratore =
         amministratoreDao.findByEmail(loginForm.getEmail());
 
+    // ❌ Email non trovata
     if (optionalAmministratore.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(new LoginResponse(false, "E-mail non registrata"));
@@ -74,25 +76,29 @@ public class LoginAmministratoreController {
 
     Amministratore amministratore = optionalAmministratore.get();
 
+    // 🔒 Password errata
     if (!passwordEncryptor.checkPassword(loginForm.getPassword(), amministratore.getPassword())) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(new LoginResponse(false, "Password o e-mail errata"));
     }
 
-    // ✅ Login corretto
+    // ✅ Login corretto → salva in sessione
     sessionAmministratore.setAmministratore(amministratore);
 
+    // 🔁 Se c’è un redirect salvato prima del login, usalo
     String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
     if (redirectAfterLogin != null) {
       session.removeAttribute("redirectAfterLogin");
       return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
+    // ✅ Default → home amministratore
     return ResponseEntity.ok(new LoginResponse(true, homeAmministratoreController));
   }
 
   /**
-   * Gestisce il login via form classico (senza AJAX).
+   * Gestisce anche il login via form classico (no AJAX),
+   * utile se non si usa fetch() o se JavaScript è disattivato.
    */
   @PostMapping(consumes = "application/x-www-form-urlencoded")
   public String postForm(@ModelAttribute @Valid LoginForm loginForm,

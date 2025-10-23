@@ -41,8 +41,9 @@ public class LoginController {
    */
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model) {
-    // ✅ Se c’è un cliente già in sessione → reindirizza alla home
-    if (sessionCliente.getCliente() != null) {
+    // ✅ Verifica robusta: cliente non nullo e con ID valido
+    Cliente cliente = sessionCliente.getCliente();
+    if (cliente != null && cliente.getId() != null) {
       return "redirect:" + homeController;
     }
 
@@ -87,7 +88,6 @@ public class LoginController {
       return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
-    // ✅ Redirect di default alla home
     return ResponseEntity.ok(new LoginResponse(true, homeController));
   }
 

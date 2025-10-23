@@ -17,7 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Implementa il controller per il login dell'Amministratore.
+ * Controller per la gestione del login dell'Amministratore.
  */
 @Controller
 @RequestMapping("/loginAmministratore")
@@ -36,12 +36,13 @@ public class LoginAmministratoreController {
   private PasswordEncryptor passwordEncryptor;
 
   /**
-   * Mostra la pagina di login per l'amministratore.
-   * Se è già autenticato → redirect automatico alla home.
+   * Mostra la pagina di login per l’amministratore.
+   * Se è già autenticato → viene reindirizzato alla home.
    */
   @GetMapping
-  public String get(@ModelAttribute LoginForm loginForm, Model model, HttpSession session) {
-    if (sessionAmministratore.getAmministratore() != null) {
+  public String get(@ModelAttribute LoginForm loginForm, Model model) {
+    // Controlla se esiste un amministratore già loggato
+    if (sessionAmministratore.getAmministratore().isPresent()) {
       return "redirect:" + homeAmministratoreController;
     }
 
@@ -50,7 +51,7 @@ public class LoginAmministratoreController {
   }
 
   /**
-   * Gestisce il login tramite AJAX (JSON) senza refresh.
+   * Gestisce il login via chiamata AJAX (senza refresh).
    */
   @PostMapping(consumes = "application/json", produces = "application/json")
   @ResponseBody
@@ -58,47 +59,46 @@ public class LoginAmministratoreController {
                                                 BindingResult bindingResult,
                                                 HttpSession session) {
 
-    // ❌ Campi non validi
+    // Campi mancanti o non validi
     if (bindingResult.hasErrors()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
           .body(new LoginResponse(false, "Campi non validi"));
     }
 
-    // 🔍 Ricerca amministratore per email
+    // Cerca l’amministratore tramite email
     Optional<Amministratore> optionalAmministratore =
         amministratoreDao.findByEmail(loginForm.getEmail());
 
-    // ⚠️ Email non trovata
+    // Email non trovata
     if (optionalAmministratore.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(new LoginResponse(false, "E-mail non registrata"));
     }
 
-    // ✅ Recupera l'amministratore
     Amministratore amministratore = optionalAmministratore.get();
 
-    // 🔒 Verifica la password cifrata
+    // Password errata
     if (!passwordEncryptor.checkPassword(loginForm.getPassword(), amministratore.getPassword())) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(new LoginResponse(false, "Password o e-mail errata"));
     }
 
-    // ✅ Login corretto: salva in sessione
+    // ✅ Login corretto → salva in sessione
     sessionAmministratore.setAmministratore(amministratore);
 
-    // 🔁 Se esiste un redirect salvato, usalo
+    // Se c’è un redirect salvato prima del login, usalo
     String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
     if (redirectAfterLogin != null) {
       session.removeAttribute("redirectAfterLogin");
       return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
-    // ✅ Default: vai alla home amministratore
+    // ✅ Default → home amministratore
     return ResponseEntity.ok(new LoginResponse(true, homeAmministratoreController));
   }
 
   /**
-   * Risposta JSON standard per le chiamate AJAX.
+   * Risposta standard in JSON.
    */
   public record LoginResponse(boolean success, String message) {}
 }

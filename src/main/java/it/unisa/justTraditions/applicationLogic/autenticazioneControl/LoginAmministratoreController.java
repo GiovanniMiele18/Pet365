@@ -40,11 +40,16 @@ public class LoginAmministratoreController {
    * Se l'amministratore è già loggato → redirect automatico alla home amministratore.
    */
   @GetMapping
-  public String get(@ModelAttribute LoginForm loginForm, Model model) {
-    if (sessionAmministratore.getAmministratore() != null) {
+  public String get(@ModelAttribute LoginForm loginForm, Model model, HttpSession session) {
+
+    // ✅ Controllo più robusto
+    Amministratore loggedAdmin = sessionAmministratore.getAmministratore();
+    if (loggedAdmin != null && loggedAdmin.getId() != null) {
+      // Se effettivamente c’è un amministratore in sessione → redirect
       return "redirect:" + homeAmministratoreController;
     }
 
+    // Altrimenti mostra la pagina di login
     model.addAttribute("nameLogin", "/loginAmministratore");
     return loginView;
   }
@@ -64,7 +69,7 @@ public class LoginAmministratoreController {
           .body(new LoginResponse(false, "Campi non validi"));
     }
 
-    // Ricerca amministratore per email
+    // Cerca l’amministratore
     Optional<Amministratore> optionalAmministratore = amministratoreDao.findByEmail(loginForm.getEmail());
     if (optionalAmministratore.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -73,7 +78,7 @@ public class LoginAmministratoreController {
 
     Amministratore amministratore = optionalAmministratore.get();
 
-    // Controllo password
+    // Password errata
     if (!passwordEncryptor.checkPassword(loginForm.getPassword(), amministratore.getPassword())) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(new LoginResponse(false, "Password o e-mail errata"));
@@ -82,19 +87,19 @@ public class LoginAmministratoreController {
     // ✅ Login corretto
     sessionAmministratore.setAmministratore(amministratore);
 
-    // Se c’è un redirect salvato in sessione, usa quello
+    // Se esiste un redirect salvato in sessione
     String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
     if (redirectAfterLogin != null) {
       session.removeAttribute("redirectAfterLogin");
       return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
-    // ✅ Default redirect
+    // ✅ Redirect di default
     return ResponseEntity.ok(new LoginResponse(true, homeAmministratoreController));
   }
 
   /**
-   * Piccola classe di risposta JSON.
+   * Risposta JSON standard per AJAX.
    */
   public record LoginResponse(boolean success, String message) {}
 }

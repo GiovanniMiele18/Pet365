@@ -254,6 +254,22 @@
       setTimeout(() => card.classList.remove('shake'), 400);
       setTimeout(() => (alertBox.style.display = 'none'), 4000);
     }
+
+      const lavoratoreCheck = document.getElementById('lavoratoreCheck');
+const lavoratoreModal = new bootstrap.Modal(document.getElementById('lavoratoreModal'));
+const yesBtn = document.getElementById('yesLavoratore');
+const noBtn = document.getElementById('noLavoratore');
+
+lavoratoreCheck.addEventListener('change', (e) => {
+  if (e.target.checked) {
+    lavoratoreModal.show();
+  }
+});
+
+// Se clicca "No", togli la spunta
+noBtn.addEventListener('click', () => {
+  lavoratoreCheck.checked = false;
+});
   </script>
 
 </body>

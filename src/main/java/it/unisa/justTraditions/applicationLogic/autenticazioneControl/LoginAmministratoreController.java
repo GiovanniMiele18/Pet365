@@ -41,7 +41,6 @@ public class LoginAmministratoreController {
    */
   @GetMapping
   public String get(@ModelAttribute LoginForm loginForm, Model model) {
-    // ✅ Se c’è un amministratore già in sessione → redirect
     if (sessionAmministratore.getAmministratore() != null) {
       return "redirect:" + homeAmministratoreController;
     }
@@ -55,19 +54,18 @@ public class LoginAmministratoreController {
    */
   @PostMapping(consumes = "application/json", produces = "application/json")
   @ResponseBody
-  public ResponseEntity<?> postJson(@RequestBody @Valid LoginForm loginForm,
-                                    BindingResult bindingResult,
-                                    HttpSession session) {
+  public ResponseEntity<LoginResponse> postJson(@RequestBody @Valid LoginForm loginForm,
+                                                BindingResult bindingResult,
+                                                HttpSession session) {
 
-    // Campi mancanti o non validi
+    // Campi non validi
     if (bindingResult.hasErrors()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
           .body(new LoginResponse(false, "Campi non validi"));
     }
 
+    // Ricerca amministratore per email
     Optional<Amministratore> optionalAmministratore = amministratoreDao.findByEmail(loginForm.getEmail());
-
-    // Email non trovata
     if (optionalAmministratore.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(new LoginResponse(false, "E-mail non registrata"));
@@ -75,7 +73,7 @@ public class LoginAmministratoreController {
 
     Amministratore amministratore = optionalAmministratore.get();
 
-    // Password errata
+    // Controllo password
     if (!passwordEncryptor.checkPassword(loginForm.getPassword(), amministratore.getPassword())) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(new LoginResponse(false, "Password o e-mail errata"));
@@ -83,6 +81,16 @@ public class LoginAmministratoreController {
 
     // ✅ Login corretto
     sessionAmministratore.setAmministratore(amministratore);
+
+    // Se c’è un redirect salvato in sessione, usa quello
+    String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
+    if (redirectAfterLogin != null) {
+      session.removeAttribute("redirectAfterLogin");
+      return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
+    }
+
+    // ✅ Default redirect
+    return ResponseEntity.ok(new LoginResponse(true, homeAmministratoreController));
   }
 
   /**

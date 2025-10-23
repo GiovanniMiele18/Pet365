@@ -29,7 +29,6 @@ public class RegistrazioneForm {
   @NotBlank(message = "Email vuota")
   @Email(message = "Formato email errato")
   @Size(max = 319, message = "Email troppo lunga")
-  @ExistsEmailConstraint
   private String email;
 
   @NotBlank(message = "Password vuota")

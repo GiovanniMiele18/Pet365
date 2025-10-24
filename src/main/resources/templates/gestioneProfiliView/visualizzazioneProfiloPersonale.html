@@ -205,9 +205,12 @@
                             class="list-group-item d-flex justify-content-between align-items-center"
                             th:attr="data-pren-id=${pren.id}">
                           <span>
-                            📌 <span th:text="${pren.visita.annuncio.nomeAttivita}">Visita</span> -
-                            <span th:text="${#temporals.format(pren.dataVisita, 'dd/MM/yyyy')}">15/10/2025</span>
+                              📌 
+                                <span th:text="${pren.visita.annuncio.nomeAttivita}">Visita</span> – 
+                                <span th:text="${#temporals.format(pren.dataVisita, 'dd/MM/yyyy')}">15/10/2025</span>
+                                <span th:text="'alle ' + ${#temporals.format(pren.visita.orarioInizio, 'HH:mm')}">alle 10:00</span>
                           </span>
+
                           <button type="button" class="btn-delete btn-sm delete-pren"
                                   th:attr="data-id=${pren.id}">
                             <i class="fa-solid fa-trash"></i>

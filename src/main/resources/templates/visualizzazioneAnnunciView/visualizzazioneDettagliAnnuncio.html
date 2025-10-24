@@ -36,7 +36,7 @@
       flex-wrap: wrap;
     }
 
-    /* ===== LEFT SIDE ===== */
+    /* ===== COLONNA SINISTRA ===== */
     .left-col {
       flex: 1 1 360px;
       background: linear-gradient(135deg, var(--green), var(--green-light));
@@ -86,6 +86,7 @@
       width: 20px;
     }
 
+    /* ===== BLOCCO ANIMALE ===== */
     .animal-block {
       margin-top: 1.5rem;
     }
@@ -104,7 +105,11 @@
       font-size: 1rem;
     }
 
-    /* ===== RIGHT SIDE ===== */
+    .text-gold {
+      color: var(--gold);
+    }
+
+    /* ===== COLONNA DESTRA ===== */
     .right-col {
       flex: 2 1 700px;
       padding: 2rem;
@@ -190,6 +195,7 @@
       color: #fff;
     }
 
+    /* ===== SLOT ORARI ===== */
     .slot {
       border: 2px solid var(--gold);
       border-radius: 50px;
@@ -201,25 +207,27 @@
       cursor: pointer;
     }
 
-    .slot.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      background: #f4f4f4;
-      color: #888;
-      border-color: #ddd;
-    }
-
-    .slot:hover:not(.disabled) {
-      background: var(--gold);
-      color: var(--green);
-    }
-
     .slot.is-selected {
       background: var(--green);
       color: #fff;
       border-color: var(--green);
     }
 
+    .slot:hover:not(.disabled-nice) {
+      background: var(--gold);
+      color: var(--green);
+    }
+
+    .slot.disabled-nice {
+      opacity: 0.6;
+      background: #faf9f7;
+      color: #999;
+      border: 2px dashed var(--gold);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ===== BOTTONE PRENOTA ===== */
     .submit-wrap {
       width: 100%;
       text-align: center;
@@ -261,8 +269,11 @@
   <input type="hidden" id="idAnnuncio" name="idAnnuncio" th:value="${annuncio.id}"/>
 
   <div class="booking-shell">
-    <!-- SINISTRA -->
+
+    <!-- ================== SINISTRA ================== -->
     <aside class="left-col">
+
+      <!-- FOTO -->
       <div id="carouselFoto" class="carousel slide mb-3" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active" th:if="${!#lists.isEmpty(annuncio.foto)}"
@@ -274,38 +285,53 @@
             <img src="/images/default-pet.png" alt="foto default">
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselFoto" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselFoto" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
       </div>
 
+      <!-- INFO ATTIVITÀ -->
       <div>
         <div class="activity-title" th:text="${annuncio.nomeAttivita}">DoctorVet</div>
-        <p class="activity-desc" th:text="${annuncio.descrizione}">
-          Prenota un consulto personalizzato per il tuo amico a quattro zampe.
-        </p>
+        <p class="activity-desc" th:text="${annuncio.descrizione}">Prenota un consulto per il tuo amico a quattro zampe.</p>
         <ul class="activity-meta">
           <li><i class="fa-solid fa-paw"></i><span th:text="${annuncio.serviziOfferti}">Servizi Offerti</span></li>
           <li><i class="fa-solid fa-location-dot"></i><span th:text="${annuncio.indirizzoAttivita + ', ' + annuncio.provinciaAttivita}">Roma (RM)</span></li>
         </ul>
       </div>
 
+      <!-- ANIMALE -->
       <div class="animal-block">
         <label for="animale">🐾 Seleziona animale</label>
-        <select id="animale" name="idAnimale" required>
-          <option value="" disabled selected>— Scegli —</option>
-          <option th:each="animale : ${cliente != null ? cliente.animali : {}}"
-                  th:value="${animale.id}"
-                  th:text="${animale.nome}">
-          </option>
-        </select>
+
+        <!-- Caso 1: Cliente loggato e con animali -->
+        <div th:if="${cliente != null and !#lists.isEmpty(cliente.animali)}">
+          <select id="animale" name="idAnimale" class="form-select" required>
+            <option value="" disabled selected>— Scegli —</option>
+            <option th:each="animale : ${cliente.animali}"
+                    th:value="${animale.id}"
+                    th:text="${animale.nome}"></option>
+          </select>
+        </div>
+
+        <!-- Caso 2: Cliente loggato ma senza animali -->
+        <div th:if="${cliente != null and #lists.isEmpty(cliente.animali)}" class="text-warning mt-2">
+          <p>
+            <i class="fa-solid fa-circle-info me-1"></i>
+            Non hai ancora registrato un animale.<br>
+            <a href="/profilo" class="text-decoration-none text-gold fw-bold">Aggiungilo al tuo profilo</a> per poter prenotare.
+          </p>
+        </div>
+
+        <!-- Caso 3: Cliente non loggato -->
+        <div th:if="${cliente == null}" class="text-warning mt-2">
+          <p>
+            <i class="fa-solid fa-user-lock me-1"></i>
+            Effettua il <a href="/login" class="text-decoration-none text-gold fw-bold">login</a> o
+            <a href="/registrazione" class="text-decoration-none text-gold fw-bold">registrati</a> per selezionare un animale.
+          </p>
+        </div>
       </div>
     </aside>
 
-    <!-- DESTRA -->
+    <!-- ================== DESTRA ================== -->
     <section class="right-col">
       <div class="calendar-box">
         <div class="box-title">📅 Scegli una data</div>
@@ -314,11 +340,9 @@
           <div class="cal-month" id="calMonthLabel"></div>
           <button type="button" id="nextMonth"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
-
         <div class="weekday">
           <div>LUN</div><div>MAR</div><div>MER</div><div>GIO</div><div>VEN</div><div>SAB</div><div>DOM</div>
         </div>
-
         <div id="calGrid" class="cal-grid"></div>
         <input type="date" id="dataVisita" name="dataVisita" class="d-none" required>
       </div>
@@ -380,7 +404,6 @@
       cell.textContent = d;
       const date = new Date(viewYear, viewMonth, d); date.setHours(0, 0, 0, 0);
 
-      // Disabilita il giorno corrente e quelli nel passato
       if (date <= today) cell.classList.add('is-disabled');
       else {
         cell.addEventListener('click', () => {
@@ -389,7 +412,6 @@
           const iso = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
           dataVisitaInput.value = iso;
 
-          // Trigger AjaxVisite.js
           dataVisitaInput.dispatchEvent(new Event('change', { bubbles: true }));
           dataVisitaInput.dispatchEvent(new Event('blur', { bubbles: true }));
 
@@ -419,8 +441,12 @@
       div.className = 'slot';
       div.textContent = opt.textContent;
 
-      if (opt.textContent.includes('Seleziona') || opt.textContent.includes('Data nel passato')) {
-        div.classList.add('disabled');
+      if (
+        opt.textContent.includes('Seleziona') ||
+        opt.textContent.includes('Data nel passato') ||
+        opt.textContent.includes('Nessuna visita')
+      ) {
+        div.classList.add('disabled-nice');
       } else {
         div.onclick = () => {
           document.querySelectorAll('.slot').forEach(s => s.classList.remove('is-selected'));
@@ -436,10 +462,10 @@
   }
 
   function maybeEnableSubmit() {
-    btnPrenota.disabled = !(animale.value && dataVisitaInput.value && listavisite.value);
+    btnPrenota.disabled = !(animale && animale.value && dataVisitaInput.value && listavisite.value);
   }
 
-  animale.addEventListener('change', maybeEnableSubmit);
+  if (animale) animale.addEventListener('change', maybeEnableSubmit);
   listavisite.addEventListener('change', maybeEnableSubmit);
   dataVisitaInput.addEventListener('change', maybeEnableSubmit);
 

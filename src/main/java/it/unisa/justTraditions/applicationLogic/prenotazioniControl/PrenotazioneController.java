@@ -1,17 +1,16 @@
 package it.unisa.justTraditions.applicationLogic.prenotazioniControl;
 
-import it.unisa.justTraditions.storage.gestioneAnnunciStorage.dao.VisitaDao;
 import it.unisa.justTraditions.applicationLogic.autenticazioneControl.util.SessionCliente;
+import it.unisa.justTraditions.storage.gestioneAnnunciStorage.dao.VisitaDao;
+import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Cliente;
 import it.unisa.justTraditions.storage.prenotazioniStorage.dao.PrenotazioneDao;
 import it.unisa.justTraditions.storage.prenotazioniStorage.entity.Prenotazione;
-import it.unisa.justTraditions.storage.gestioneProfiliStorage.entity.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.Map;
 

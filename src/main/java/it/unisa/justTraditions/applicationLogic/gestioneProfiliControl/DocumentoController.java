@@ -142,19 +142,30 @@ public class DocumentoController {
     // ==========================
     //      ELIMINA DOCUMENTO
     // ==========================
-    @PostMapping("/elimina/{documentoId}")
-    public String eliminaDocumento(@PathVariable Long documentoId, Model model) {
+  @DeleteMapping("/elimina/{documentoId}")
+@ResponseBody
+public ResponseEntity<Map<String, Object>> eliminaDocumento(@PathVariable Long documentoId) {
+    Map<String, Object> response = new HashMap<>();
+    try {
         Cliente cliente = getClienteAutenticato();
-
         Documento documento = documentoDao.findById(documentoId)
                 .orElseThrow(() -> new RuntimeException("Documento non trovato"));
 
         if (!documento.getAnimale().getCliente().getId().equals(cliente.getId())) {
-            model.addAttribute("message", "Non puoi eliminare un documento che non ti appartiene!");
-            return "error";
+            response.put("success", false);
+            response.put("message", "Non puoi eliminare un documento che non ti appartiene!");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
         }
 
         documentoDao.delete(documento);
-         return "redirect:/visualizzazioneProfiloPersonale";
+        response.put("success", true);
+        response.put("message", "Documento eliminato con successo!");
+        return ResponseEntity.ok(response);
+
+    } catch (RuntimeException e) {
+        response.put("success", false);
+        response.put("message", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+}
 }

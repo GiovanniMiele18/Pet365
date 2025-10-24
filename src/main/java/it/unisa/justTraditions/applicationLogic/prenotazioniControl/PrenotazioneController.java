@@ -23,8 +23,11 @@ public class PrenotazioneController {
      @Autowired
     private VisitaDao visitaDao;
 
-    @PostMapping("/elimina/{prenotazioneId}")
-    public String eliminaPrenotazione(@PathVariable Long prenotazioneId, Model model) {
+   @DeleteMapping("/elimina/{prenotazioneId}")
+@ResponseBody
+public ResponseEntity<Map<String, Object>> eliminaPrenotazione(@PathVariable Long prenotazioneId) {
+    Map<String, Object> response = new HashMap<>();
+    try {
         Cliente cliente = sessionCliente.getCliente()
                 .orElseThrow(() -> new RuntimeException("Cliente non loggato!"));
 
@@ -32,19 +35,27 @@ public class PrenotazioneController {
                 .orElseThrow(() -> new RuntimeException("Prenotazione non trovata"));
 
         if (!prenotazione.getCliente().getId().equals(cliente.getId())) {
-            model.addAttribute("message", "Non puoi eliminare una prenotazione che non ti appartiene!");
-            return "error";
+            response.put("success", false);
+            response.put("message", "Non puoi eliminare una prenotazione che non ti appartiene!");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
         }
 
-         // ✅ Ripristina la validità della visita associata
         if (prenotazione.getVisita() != null) {
             prenotazione.getVisita().setValidita(true);
             visitaDao.save(prenotazione.getVisita());
         }
 
-        // ✅ Elimina la prenotazione
         prenotazioneDao.delete(prenotazione);
-        
-        return "redirect:/visualizzazioneProfiloPersonale";
+
+        response.put("success", true);
+        response.put("message", "Prenotazione eliminata con successo!");
+        return ResponseEntity.ok(response);
+
+    } catch (RuntimeException e) {
+        response.put("success", false);
+        response.put("message", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+}
+
 }

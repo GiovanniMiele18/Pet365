@@ -13,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -37,12 +38,22 @@ public class RegistrazioneController {
   /**
    * ✅ Mostra la pagina di registrazione.
    * Se l'utente è già loggato → redirect alla home.
+   * Se è presente un parametro `redirect`, lo salva in sessione per dopo.
    */
   @GetMapping
-  public String get(HttpSession session) {
+  public String get(@RequestParam(value = "redirect", required = false) String redirect,
+                    HttpSession session,
+                    Model model) {
+
     if (sessionCliente != null && sessionCliente.getCliente().isPresent()) {
       return "redirect:" + HOME_REDIRECT;
     }
+
+    if (redirect != null && !redirect.isBlank()) {
+      session.setAttribute("redirectAfterRegistration", redirect);
+      model.addAttribute("redirect", redirect);
+    }
+
     return "autenticazioneView/registrazione";
   }
 
@@ -79,8 +90,20 @@ public class RegistrazioneController {
 
       clienteDao.save(cliente);
 
+      // ✅ Login automatico dopo la registrazione
+      sessionCliente.setCliente(cliente);
+
+      // 🔁 Redirect alla pagina precedente, se presente
+      String redirectAfterReg = (String) session.getAttribute("redirectAfterRegistration");
+      if (redirectAfterReg != null && !redirectAfterReg.isBlank()) {
+        session.removeAttribute("redirectAfterRegistration");
+        return ResponseEntity.ok(new RegistrazioneResponse(true,
+            "Registrazione completata con successo!", redirectAfterReg));
+      }
+
+      // Altrimenti vai alla home
       return ResponseEntity.ok(
-          new RegistrazioneResponse(true, "Registrazione completata con successo!", LOGIN_REDIRECT)
+          new RegistrazioneResponse(true, "Registrazione completata con successo!", HOME_REDIRECT)
       );
 
     } catch (DataIntegrityViolationException e) {

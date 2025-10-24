@@ -36,13 +36,22 @@ public class LoginController {
   private PasswordEncryptor passwordEncryptor;
 
   /**
-   * Mostra la pagina di login solo se l'utente non è autenticato.
+   * Mostra la pagina di login, gestendo eventuale redirect post-login.
    */
   @GetMapping
-  public String get(@ModelAttribute LoginForm loginForm, Model model) {
-    // ✅ Se il cliente è già loggato → redirect alla home
+  public String get(@ModelAttribute LoginForm loginForm,
+                    @RequestParam(value = "redirect", required = false) String redirect,
+                    Model model,
+                    HttpSession session) {
+
+    // ✅ Se l’utente è già loggato, reindirizza subito
     if (sessionCliente != null && sessionCliente.getCliente().isPresent()) {
       return "redirect:" + home;
+    }
+
+    // 🔁 Salva temporaneamente il redirect nella sessione
+    if (redirect != null && !redirect.isBlank()) {
+      session.setAttribute("redirectAfterLogin", redirect);
     }
 
     model.addAttribute("nameLogin", "/login");
@@ -57,19 +66,20 @@ public class LoginController {
   public ResponseEntity<LoginResponse> postJson(@RequestBody @Valid LoginForm loginForm,
                                                 BindingResult bindingResult,
                                                 HttpSession session) {
-    // ❌ Se l’utente è già autenticato, blocca l’accesso
+
+    // ❌ Se l’utente è già autenticato
     if (sessionCliente != null && sessionCliente.getCliente().isPresent()) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN)
           .body(new LoginResponse(false, "Sei già autenticato."));
     }
 
-    // ❌ Validazione form
+    // ❌ Validazione
     if (bindingResult.hasErrors()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
           .body(new LoginResponse(false, "Campi non validi."));
     }
 
-    // 🔍 Cerca il cliente
+    // 🔍 Cerca cliente
     Optional<Cliente> optional = clienteDao.findByEmail(loginForm.getEmail());
     if (optional.isEmpty()) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -84,17 +94,60 @@ public class LoginController {
           .body(new LoginResponse(false, "Password o e-mail errata."));
     }
 
-    // ✅ Login corretto → salva il cliente in sessione
+    // ✅ Login corretto
     sessionCliente.setCliente(cliente);
 
-    // 🔁 Reindirizza dove serviva o alla home
+    // 🔁 Recupera il redirect salvato nella sessione
     String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
-    if (redirectAfterLogin != null) {
+    if (redirectAfterLogin != null && !redirectAfterLogin.isBlank()) {
       session.removeAttribute("redirectAfterLogin");
       return ResponseEntity.ok(new LoginResponse(true, redirectAfterLogin));
     }
 
     return ResponseEntity.ok(new LoginResponse(true, home));
+  }
+
+  /**
+   * Gestisce anche il login classico (non-AJAX, con form POST normale).
+   */
+  @PostMapping(consumes = "application/x-www-form-urlencoded")
+  public String postForm(@ModelAttribute @Valid LoginForm loginForm,
+                         BindingResult bindingResult,
+                         @RequestParam(value = "redirect", required = false) String redirect,
+                         HttpSession session,
+                         Model model) {
+
+    if (bindingResult.hasErrors()) {
+      model.addAttribute("error", "Campi non validi.");
+      return loginView;
+    }
+
+    Optional<Cliente> optional = clienteDao.findByEmail(loginForm.getEmail());
+    if (optional.isEmpty()) {
+      model.addAttribute("error", "E-mail non registrata.");
+      return loginView;
+    }
+
+    Cliente cliente = optional.get();
+    if (!passwordEncryptor.checkPassword(loginForm.getPassword(), cliente.getPassword())) {
+      model.addAttribute("error", "Password o e-mail errata.");
+      return loginView;
+    }
+
+    sessionCliente.setCliente(cliente);
+
+    // 🔁 Redirect prioritario (parametro URL > sessione)
+    if (redirect != null && !redirect.isBlank()) {
+      return "redirect:" + redirect;
+    }
+
+    String redirectAfterLogin = (String) session.getAttribute("redirectAfterLogin");
+    if (redirectAfterLogin != null && !redirectAfterLogin.isBlank()) {
+      session.removeAttribute("redirectAfterLogin");
+      return "redirect:" + redirectAfterLogin;
+    }
+
+    return "redirect:" + home;
   }
 
   public record LoginResponse(boolean success, String message) {}

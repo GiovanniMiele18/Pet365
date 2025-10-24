@@ -321,13 +321,19 @@
         </div>
 
         <!-- Caso 3: Cliente non loggato -->
-        <div th:if="${cliente == null}" class="text-warning mt-2">
-          <p>
-            <i class="fa-solid fa-user-lock me-1"></i>
-            Effettua il <a href="/login" class="text-decoration-none text-gold fw-bold">login</a> o
-            <a href="/registrazione" class="text-decoration-none text-gold fw-bold">registrati</a> per selezionare un animale.
-          </p>
-        </div>
+       <!-- Caso 3: Cliente non loggato -->
+<div th:if="${cliente == null}" class="text-warning mt-2">
+  <p>
+    <i class="fa-solid fa-user-lock me-1"></i>
+    Effettua il
+    <a th:href="@{/login(redirect=${#httpServletRequest.requestURI + (#httpServletRequest.queryString != null ? '?' + #httpServletRequest.queryString : '')})}"
+       class="text-decoration-none text-gold fw-bold">login</a>
+    o
+    <a th:href="@{/registrazione(redirect=${#httpServletRequest.requestURI + (#httpServletRequest.queryString != null ? '?' + #httpServletRequest.queryString : '')})}"
+       class="text-decoration-none text-gold fw-bold">registrati</a>
+    per selezionare un animale.
+  </p>
+</div>
       </div>
     </aside>
 
